@@ -4,7 +4,7 @@
 title: <TechLearning.Me/>
 
 # Short description of your site
-description: A virtual proof that I'm awesome
+description: A place to learn tech!
 
 # --- Local development options ---
 # If your website is hosted locally rather than on GitHub, then you need to uncomment the next two parameters to set the url and baseurl
@@ -68,12 +68,12 @@ author:
 # If you want to add a new link that isn't here, you'll need to also edit the file _data/SocialNetworks.yml
 social-network-links:
   rss: true
-  email: "someone@example.com"
-  facebook: deanattali
-  github: daattali
-  twitter: daattali
+  email: "rmmartins@outlook.com"
+  facebook: ricmmartins
+  github: ricmmartins
+  twitter: ricmmartins
 #  reddit: yourname
-#  linkedin: daattali
+  linkedin: ricmmartins
 #  xing: yourname
 #  stackoverflow: "3943160/daattali"
 #  snapchat: deanat78
@@ -88,7 +88,8 @@ social-network-links:
 # Select which share links to show in posts
 share-links-active:
   twitter: true
-  facebook: true
+  facebook: false
+  github: true
   linkedin: true
 
 # How to display the link to the website in the footer
