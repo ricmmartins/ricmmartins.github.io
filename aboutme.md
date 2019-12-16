@@ -20,7 +20,7 @@ I was an Systems Administrator then become a Cloud Solution Architect. After tha
 
 TL;DR:
 
-Currently I'm a Service/Systems Engineer in Azure Infrastructure FastTrack Team with the mission to help customers to build and deploy Azure solutions quickly and confidently with personalized guidance. Before of this I was:
+Currently I'm a **Service/Systems Engineer** in Azure Infrastructure FastTrack Team with the mission to help customers to build and deploy Azure solutions quickly and confidently with personalized guidance. Before of this I was:
 
 * June/2019 - December/2019: **Azure Technical Trainer** teaching for developers, administrators and architects - and also learn a lot with them! (Redmond/WA - USA)
 
