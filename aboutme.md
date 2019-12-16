@@ -10,6 +10,7 @@ I've a special interest in Cloud Technologies, CloudOps, Reliability Engineering
 
 I'm also a huge passionate by communities, tech talks and an evangelist of the DevOps culture because I understand that this is the path we should all pursue, being closer and closer to software development, not necessarily as a developer, but as a person of infrastructure who knows what a developer really needs and the ability to deliver it in a simple, autonomous and fast way.
 
+Inspirated by the article [Do things, write about it](http://mdswanson.com/blog/2013/08/11/write-things-tell-people.html), I've created my [blog in PT-BR](http://www.ricardomartins.com.br) more than 10 years ago where I've been sharing learnings from my day-by-day in IT. With my move to Redmond, I've decided to start something similar in English ;-D
 
 ### My History
 
