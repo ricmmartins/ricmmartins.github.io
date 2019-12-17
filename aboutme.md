@@ -21,9 +21,8 @@ TL;DR:
 
 Currently I'm a Service/Systems Engineer in Azure Infrastructure FastTrack Team with the mission to help customers to build and deploy Azure solutions quickly and confidently with personalized guidance. Before of this I was:
 
-- June/2019 - December/2019: Azure Technical Trainer teaching for developers, administrators and architects - and also learn a lot with them! (Redmond - WA - USA )
-- December/2015 - June/2019: Cloud Solution Architect responsible for converting the technical requirements of projects into cloud architecture and design. I've worked bridging the gaps between complex business problems and solutions in the cloud.  (Rio de Janeiro - RJ - Brazil)
-- April/2003 - December/2015: I've started my journey in IT and I've worked in companies from different industries as systems administrator/service engineer with hybrid environments (Windows/Linux/OSS). Since 2012 handling those environments in cloud based architectures where I've been automating, designing cloud systems and developing their architecture driven reliability efforts including monitoring, alerting, automated deployment pipelines, failure resiliency and capacity management. (Rio de Janeiro - RJ - Brazil)
+- June/2019 - December/2019: Azure Technical Trainer teaching for developers, administrators and architects - and also learn a lot with them! (Redmond/WA - USA)
+- December/2015 - June/2019: Cloud Solution Architect responsible for converting the technical requirements of projects into cloud architecture and design. I've worked bridging the gaps between complex business problems and solutions in the cloud.  (Rio de Janeiro/RJ - Brazil)
+- April/2003 - December/2015: I've started my journey in IT and I've worked in companies from different industries as systems administrator/service engineer with hybrid environments (Windows/Linux/OSS). Since 2012 handling those environments in cloud based architectures where I've been automating, designing cloud systems and developing their architecture driven reliability efforts including monitoring, alerting, automated deployment pipelines, failure resiliency and capacity management. (Rio de Janeiro/RJ - Brazil)
 
 If you’d like to get in touch, feel free to say hello through any of the social links below.
-
