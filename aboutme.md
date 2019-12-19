@@ -12,7 +12,7 @@ I'm also a huge passionate by communities, tech talks and an evangelist of the D
 
 Inspirated by the article [Do things, write about it](http://mdswanson.com/blog/2013/08/11/write-things-tell-people.html), I've created my [blog in PT-BR](http://www.ricardomartins.com.br) more than 10 years ago where I've been sharing learnings from my day-by-day in IT. With my move to Redmond, I've decided to start something similar in English ;-D
 
-Besides to create content in English here, I'll also use this space to save all information that I've been sharing at LinkedIn and Twitter.
+Besides to create my own content in English here, I'll also use this space to save all information from different sources that I've been sharing at LinkedIn and Twitter.
 
 ### My History
 
