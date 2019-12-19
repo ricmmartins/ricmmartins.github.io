@@ -6,7 +6,7 @@ subtitle: whoami
 
 My name is Ricardo Martins. 
 
-I've a special interest in Cloud Technologies, CloudOps, Reliability Engineering, Infrastrucure as a Code and Content Development.
+I've a special interest in Cloud Technologies, DevOps, CloudOps, Reliability Engineering, Infrastrucure as a Code and Content Development.
 
 I'm also a huge passionate by communities, tech talks and an evangelist of the DevOps culture because I understand that this is the path we should all pursue, being closer and closer to software development, not necessarily as a developer, but as a person of infrastructure who knows what a developer really needs and the ability to deliver it in a simple, autonomous and fast way.
 
