@@ -23,6 +23,8 @@ navbar-links:
   About Me: "aboutme"
   Resources:
     - My blog in Portuguese: "http://www.ricardomartins.com.br/"
+    - Microsoft Learn: "http://aka.ms/learn/"
+    - Azure Readiness: "http://aka.ms/azreadiness" 
   #  - Learn markdown: "http://www.markdowntutorial.com/"
   #Author's home: "http://deanattali.com"
 
