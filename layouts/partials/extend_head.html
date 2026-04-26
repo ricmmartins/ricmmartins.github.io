@@ -1,0 +1,40 @@
+{{- /* Hreflang tags for multilingual SEO (PT ↔ EN) */ -}}
+{{- if .IsHome }}
+<link rel="alternate" hreflang="pt-BR" href="https://ricardomartins.com.br/" />
+<link rel="alternate" hreflang="en" href="https://rmmartins.com/" />
+<link rel="alternate" hreflang="x-default" href="https://rmmartins.com/" />
+{{- end }}
+
+{{- /* Enhanced Person Schema for homepage */ -}}
+{{- if .IsHome }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Ricardo Martins",
+  "jobTitle": "Principal Cloud Solution Architect",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Microsoft"
+  },
+  "url": "https://ricardomartins.com.br",
+  "image": "https://ricardomartins.com.br/images/profile.png",
+  "description": "Blog sobre Cloud Architecture, Azure, Kubernetes e DevOps por Ricardo Martins.",
+  "sameAs": [
+    "https://linkedin.com/in/ricmmartins",
+    "https://github.com/ricmmartins",
+    "https://x.com/ricmmartins",
+    "https://rmmartins.com"
+  ],
+  "knowsAbout": [
+    "Microsoft Azure",
+    "Cloud Computing",
+    "Kubernetes",
+    "DevOps",
+    "Linux",
+    "Docker",
+    "Infrastructure as Code"
+  ]
+}
+</script>
+{{- end }}
