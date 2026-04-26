@@ -15,3 +15,7 @@ Thumbs.db
 
 # Temp
 *.log
+
+tools/screenshots/auth-state.json
+tools/screenshots/browser-profile/
+tools/screenshots/node_modules/
