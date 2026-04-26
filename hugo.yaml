@@ -39,7 +39,7 @@ related:
 params:
   env: production
   title: "Ricardo Martins"
-  description: "Blog sobre Cloud Architecture, Azure, Kubernetes e DevOps por Ricardo Martins — Principal Cloud Solution Architect na Microsoft. Tutoriais, guias e boas práticas."
+  description: "Blog sobre Cloud, Azure, AI e DevOps por Ricardo Martins, Principal Solutions Engineer na Microsoft. Tutoriais, guias e boas práticas."
   keywords: [Cloud, Azure, Kubernetes, DevOps, Linux, Docker, AKS, Cloud Architecture, Blog]
   author: "Ricardo Martins"
   images: ["/images/profile.png"]
@@ -86,8 +86,8 @@ params:
     subtitle: |
       Estude. Crie. Documente.
 
-      Principal Cloud Solution Architect @ Microsoft.
-      Evangelista de Cloud e Tecnologia. Mentor e educador.
+      Principal Solutions Engineer @ Microsoft.
+      Escrevendo sobre Azure, AI e infraestrutura desde 2005.
       Faça coisas, escreva sobre isso. Crescemos quando compartilhamos!
     imageUrl: "/images/profile.png"
     imageTitle: "Ricardo Martins"
