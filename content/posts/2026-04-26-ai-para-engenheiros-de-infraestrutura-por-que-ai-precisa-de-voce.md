@@ -1,6 +1,6 @@
 ---
 slug: "ai-para-engenheiros-de-infraestrutura-por-que-ai-precisa-de-voce"
-title: "AI para Engenheiros de Infraestrutura: Por que AI Precisa de Você"
+title: "AI para engenheiros de infraestrutura: por que AI precisa de você"
 description: "Você não precisa virar data scientist pra trabalhar com AI. Suas habilidades de infra já te preparam mais do que imagina pra era da inteligência artificial."
 date: 2026-04-26T10:00:00-04:00
 categories:
