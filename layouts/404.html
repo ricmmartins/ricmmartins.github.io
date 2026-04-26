@@ -1,0 +1,114 @@
+{{- define "main" }}
+<style>
+  .not-found-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    text-align: center;
+    padding: 2rem 1rem;
+  }
+  .not-found-code {
+    font-size: clamp(80px, 20vw, 160px);
+    font-weight: 700;
+    line-height: 1;
+    opacity: 0.12;
+    position: absolute;
+    user-select: none;
+  }
+  .not-found-terminal {
+    background: var(--code-bg);
+    border-radius: 8px;
+    padding: 1.5rem 2rem;
+    max-width: 520px;
+    width: 100%;
+    text-align: left;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    line-height: 1.8;
+    position: relative;
+    z-index: 1;
+  }
+  .not-found-terminal .prompt {
+    color: var(--secondary);
+    opacity: 0.6;
+  }
+  .not-found-terminal .cmd {
+    color: var(--primary);
+  }
+  .not-found-terminal .output {
+    color: var(--secondary);
+  }
+  .not-found-terminal .error {
+    color: #e74c3c;
+  }
+  .not-found-message {
+    margin-top: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+  .not-found-message h2 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
+  .not-found-message p {
+    color: var(--secondary);
+    margin-bottom: 1rem;
+  }
+  .not-found-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1rem;
+    position: relative;
+    z-index: 1;
+  }
+  .not-found-links a {
+    padding: 0.5rem 1.2rem;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+  }
+  .not-found-links a:hover {
+    background: var(--code-bg);
+  }
+  .not-found-links a:first-child {
+    background: var(--primary);
+    color: var(--theme);
+    border-color: var(--primary);
+  }
+  .not-found-links a:first-child:hover {
+    opacity: 0.9;
+  }
+</style>
+
+<div class="not-found-page">
+  <div class="not-found-code">404</div>
+
+  <div class="not-found-terminal">
+    <div><span class="prompt">ricardo@blog:~$</span> <span class="cmd">curl {{ .Page.Permalink }}</span></div>
+    <div><span class="error">HTTP/1.1 404 Not Found</span></div>
+    <div><span class="output">Essa pagina nao existe. Talvez tenha sido movida,</span></div>
+    <div><span class="output">ou talvez nunca tenha existido. Acontece.</span></div>
+    <div>&nbsp;</div>
+    <div><span class="prompt">ricardo@blog:~$</span> <span class="cmd">_</span></div>
+  </div>
+
+  <div class="not-found-message">
+    <h2>Eita, essa pagina sumiu</h2>
+    <p>Mas tem bastante coisa boa por aqui ainda. Tenta uma dessas:</p>
+  </div>
+
+  <div class="not-found-links">
+    <a href="/">Pagina inicial</a>
+    <a href="/busca/">Buscar no blog</a>
+    <a href="/arquivo/">Todos os posts</a>
+    <a href="/sobre/">Sobre mim</a>
+  </div>
+</div>
+{{- end }}
