@@ -1,6 +1,6 @@
 ---
 title: "Arquivo"
 layout: "archives"
-url: "/archives/"
+url: "/arquivo/"
 summary: "Arquivo de posts"
 ---

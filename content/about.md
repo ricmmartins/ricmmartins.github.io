@@ -2,7 +2,7 @@
 title: "Sobre"
 description: "Conheça Ricardo Martins — Principal Cloud Solution Architect na Microsoft, com 20+ anos de experiência em Cloud, Azure, Kubernetes e DevOps."
 layout: "single"
-url: "/about/"
+url: "/sobre/"
 summary: "Sobre Ricardo Martins"
 ShowToc: false
 ShowBreadCrumbs: false

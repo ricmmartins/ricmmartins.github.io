@@ -97,9 +97,9 @@ params:
       - name: "📝 Posts"
         url: "/posts/"
       - name: "🚀 Projetos"
-        url: "/projects/"
+        url: "/projetos/"
       - name: "👤 Sobre"
-        url: "/about/"
+        url: "/sobre/"
 
   socialIcons:
     - name: linkedin
@@ -157,7 +157,7 @@ menu:
       weight: 10
     - identifier: projects
       name: "Projetos"
-      url: /projects/
+      url: /projetos/
       weight: 20
     - identifier: tags
       name: "Tags"
@@ -165,15 +165,15 @@ menu:
       weight: 30
     - identifier: archives
       name: "Arquivo"
-      url: /archives/
+      url: /arquivo/
       weight: 40
     - identifier: search
-      name: "🔍"
-      url: /search/
+      name: "Busca"
+      url: /busca/
       weight: 50
     - identifier: about
       name: "Sobre"
-      url: /about/
+      url: /sobre/
       weight: 60
 
 markup:

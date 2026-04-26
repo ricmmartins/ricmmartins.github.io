@@ -1,8 +1,8 @@
 ---
-title: "🚀 Projetos"
+title: "Projetos"
 description: "Projetos open-source de Ricardo Martins: guias Azure, calculadoras, landing zones, newsletters e ferramentas para Cloud, Kubernetes e DevOps."
 layout: "single"
-url: "/projects/"
+url: "/projetos/"
 summary: "Projetos e contribuições open-source"
 ShowToc: false
 ShowBreadCrumbs: false
