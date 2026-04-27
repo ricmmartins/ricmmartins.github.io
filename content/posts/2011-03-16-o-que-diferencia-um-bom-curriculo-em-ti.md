@@ -5,6 +5,10 @@ date: '2011-03-16T22:56:48-04:00'
 tags:
     - carreira
 description: "Empresas de recrutamento e outros especialistas em carreira costumam ter na ponta da língua uma lista de conselhos de como preparar um bom currículo"
+cover:
+  image: "/og/o-que-diferencia-um-bom-curriculo-em-ti.png"
+  alt: ""
+  hidden: true
 ---
 
 <div>Empresas de recrutamento e outros especialistas em carreira costumam ter na ponta da língua uma lista de conselhos de como preparar um bom currículo, especialmente para diferenciar-se da concorrência. A intenção é válida, mas o problema nesses casos está no fato de que nem sempre os conselhos se aplicam aos profissionais de TI e à natureza do trabalho do setor, analisa a gerente da Sapphire Technologies – empresa de recrutamento na área de tecnologia da informação –, Shana Westerman.

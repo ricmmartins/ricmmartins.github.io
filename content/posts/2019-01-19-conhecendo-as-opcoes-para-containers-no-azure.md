@@ -9,12 +9,16 @@ tags:
     - azure
     - docker
     - kubernetes
+cover:
+  image: "/og/conhecendo-as-opcoes-para-containers-no-azure.png"
+  alt: ""
+  hidden: true
 ---
 
 O Azure é uma excelente plataforma de computação em nuvem com muitos recursos e funcionalidades interessantes, sendo as opções para containers realmente incríveis. Porém uma coisa que percebo em muitos clientes hoje são dúvidas e desconhecimento sobre detalhes destas opções. Pensando nisso estou escrevendo esse artigo para esclarecer um pouco sobre este assunto.
 
 
-![](/wp-content/uploads/2019/01/docker-azure-new-1024x260.png)
+![Docker Azure New](/wp-content/uploads/2019/01/docker-azure-new-1024x260.png)
 
 Atualmente, as opções mais interessantes para containers no Azure são oferecidas nas soluções PaaS, que serão o objetivo deste post. Logo, não irei entrar nos detalhes sobre uso de containers em IaaS por ser o modelo mais tradicional e possuir a mesma forma de implementação independente do cloud provider.
 
@@ -49,45 +53,45 @@ Antes de entrarmos no contexto de containers, conforme mencionei acima vamos ver
 
 O primeiro passo é clicar em **Create a resource** e buscar por **Web App**. Na sequência escolher conforme abaixo e clicar em **Create**:
 
-![](/wp-content/uploads/2019/01/image-1-1024x490.png)
+![Image - Conhecendo as opções para containers do Azure](/wp-content/uploads/2019/01/image-1-1024x490.png)
 
 Neste exemplo, para criar vou escolher o nome da aplicação, a subscription a ser utilizada, o resource group à ser criado, fiz a escolha do sistema operacional onde quero que seja executado, informo que a publicação vai ser via código e não à partir de uma imagem Docker (ainda, veremos mais a frente) e por fim escolhi criar um [App Service Plan](https://docs.microsoft.com/en-us/azure/app-service/overview-hosting-plans) (S1 nesse caso).
 
-![](/wp-content/uploads/2019/01/image-2.png)
+![Image - Conhecendo as opções para containers do Azure](/wp-content/uploads/2019/01/image-2.png)
 
 Depois de clicar em **Create** o App Service Plan e o Web App são criados dentro do resource group:
 
-![](/wp-content/uploads/2019/01/image-4.png)
+![Image - Conhecendo as opções para containers do Azure](/wp-content/uploads/2019/01/image-4.png)
 
 Clicando no WebApp podemos ver alguns detalhes, dentre eles a URL:
 
-![](/wp-content/uploads/2019/01/image-5-1024x168.png)
+![Image - Conhecendo as opções para containers do Azure](/wp-content/uploads/2019/01/image-5-1024x168.png)
 
 Ao acessar a URL (neste exemplo http://demoricardo.azurewebsites.net) temos o conteúdo default sendo exibido:
 
-![](/wp-content/uploads/2019/01/image-6-1024x524.png)
+![Image - Conhecendo as opções para containers do Azure](/wp-content/uploads/2019/01/image-6-1024x524.png)
 
 Uma vez que queremos pegar o código fonte da aplicaçao no Github, o próximo passo é ir ao Deployment Center para fazer a configuração:
 
-![](/wp-content/uploads/2019/01/image-7-1024x495.png)
+![Image - Conhecendo as opções para containers do Azure](/wp-content/uploads/2019/01/image-7-1024x495.png)
   
 Dentre as opções disponíveis, neste caso vou escolher Github. Note que no meu exemplo eu já fiz a autorização do Github no Azure então basta clicar para continuar. Essa autorização consiste em uma tela pedindo o usuário e senha do Github que ao aceitar, você permite que o Azure acesse o seu Github para ler o conteúdo.
 
 Na tela seguinte, vamos escolher o Build Provider, nesse caso vou escolher o próprio Apache Kudu que já vem embutido no WebApp:
 
-![](/wp-content/uploads/2019/01/image-8-1024x442.png)
+![Image - Conhecendo as opções para containers do Azure](/wp-content/uploads/2019/01/image-8-1024x442.png)
 
 Na próxima tela escolhemos o usuário do Github, repositório da aplicação e o branch a ser usado:
 
-![](/wp-content/uploads/2019/01/image-9-1024x411.png)
+![Image - Conhecendo as opções para containers do Azure](/wp-content/uploads/2019/01/image-9-1024x411.png)
 
 Avançando é exibido um resumo, e depois basta clicar para finalizar:
 
-![](/wp-content/uploads/2019/01/image-10-1024x468.png)
+![Image - Conhecendo as opções para containers do Azure](/wp-content/uploads/2019/01/image-10-1024x468.png)
 
 Uma vez finalizado, será iniciado o deployment e ao acessar a URL novamente já conseguimos ver a nossa aplicação rodando:
 
-![](/wp-content/uploads/2019/01/image-11-1024x472.png)
+![Image - Conhecendo as opções para containers do Azure](/wp-content/uploads/2019/01/image-11-1024x472.png)
 
 ## Trabalhando com containers
 
@@ -173,7 +177,7 @@ curl localhost:8080
 
 Se tudo estiver ok, sua saída será similar à esta:
 
-![](/wp-content/uploads/2019/01/image-13.png)
+![Image - Conhecendo as opções para containers do Azure](/wp-content/uploads/2019/01/image-13.png)
 
 Agora basta fazer o push da imagem para o [Azure Container Registry ](https://docs.microsoft.com/en-us/azure/container-registry/)ou para o próprio Docker Hub que é como vou fazer aqui. Abaixo o procedimento:
 
@@ -181,7 +185,7 @@ Agora basta fazer o push da imagem para o [Azure Container Registry ](https://do
 sudo docker login
 ```
 
-![](/wp-content/uploads/2019/01/image-14.png)
+![Image - Conhecendo as opções para containers do Azure](/wp-content/uploads/2019/01/image-14.png)
 
 Agora vamos gerar uma tag para nossa imagem:
 
@@ -195,7 +199,7 @@ E enfim enviá-la para o Docker Hub:
 sudo docker push rmartins/simplephpapp
 ```
 
-![](/wp-content/uploads/2019/01/image-22-1024x440.png)
+![Image - Conhecendo as opções para containers do Azure](/wp-content/uploads/2019/01/image-22-1024x440.png)
 
 Agora que já temos a imagem da nossa aplicação, vamos ver as opções para usá-las no Azure.
 
@@ -215,13 +219,13 @@ O ACI provê grupos de containers. Um grupo de containers é uma coleção de co
 
 O passo a passo da criação do ACI pelo portal está muito bem demonstrado [neste link](https://docs.microsoft.com/en-us/azure/container-instances/container-instances-quickstart-portal) e por isto não vou mostrar todas as telas aqui do procedimento. No meu caso vou usar o mesmo resource group criado anteriormente:
 
-![](/wp-content/uploads/2019/01/image-15.png)
+![Image - Conhecendo as opções para containers do Azure](/wp-content/uploads/2019/01/image-15.png)
 
-![](/wp-content/uploads/2019/01/image-16.png)
+![Image - Conhecendo as opções para containers do Azure](/wp-content/uploads/2019/01/image-16.png)
 
 Depois de criar, imediatamente nossa aplicação já está disponível:
 
-![](/wp-content/uploads/2019/01/image-17-1024x510.png)
+![Image - Conhecendo as opções para containers do Azure](/wp-content/uploads/2019/01/image-17-1024x510.png)
 
 ## Azure WebApp for Containers
 
@@ -229,19 +233,19 @@ O [Azure WebApp for Containers ](https://docs.microsoft.com/en-us/azure/app-serv
 
 Pelo portal, escolha a opção para criar um novo recurso e busque por **Web App for Containers.** Em seguida escolha a opção correspondente e clique para criar:
 
-![](/wp-content/uploads/2019/01/image-18-1024x444.png)
+![Image - Conhecendo as opções para containers do Azure](/wp-content/uploads/2019/01/image-18-1024x444.png)
 
 O próximo passo é escolher o nome da app, a subscription a ser usada, o resource group (o mesmo que já estamos trabalhando), sistema operacional e criar um App Service Plan (P1v2 neste caso):
 
-![](/wp-content/uploads/2019/01/image-19.png)
+![Image - Conhecendo as opções para containers do Azure](/wp-content/uploads/2019/01/image-19.png)
 
 Na última opção de configuração do container, as opções exibidas são conforme a imagem abaixo:
 
-![](/wp-content/uploads/2019/01/image-20-1024x235.png)
+![Image - Conhecendo as opções para containers do Azure](/wp-content/uploads/2019/01/image-20-1024x235.png)
 
 No meu caso escolhi a configuração de um único container e apontei para meu repositório no Docker Hub, mas repare que existem opções para uso do Docker Compose e Kubernetes também. Uma vez aplicada a configuração basta clicar para criar. Em alguns instantes já é possível acessar a URL da aplicação:
 
-![](/wp-content/uploads/2019/01/image-21-1024x495.png)
+![Image - Conhecendo as opções para containers do Azure](/wp-content/uploads/2019/01/image-21-1024x495.png)
 
 ## Azure Kubernetes Service
 
@@ -359,7 +363,7 @@ ricardo@Azure:~$ kubectl get pods
 
 Ao acessar pelo ip externo obtido no comando kubectl get services (**104.209.196.76**) já conseguimos acessar a nossa aplicação. Como temos 5 réplicas, se você acessar diversas vezes irá perceber o funcionamento do balanceamento, uma vez que essa aplicação de exemplo exibe o nome do host (nó) que está respondendo pelo request.
 
-![](/wp-content/uploads/2019/01/image-23-1024x480.png)
+![Image - Conhecendo as opções para containers do Azure](/wp-content/uploads/2019/01/image-23-1024x480.png)
 
 Um outro teste manual que você pode fazer para validar o funcionamento do balanceamento é rodar o comando abaixo, que irá enviar 1000 requests ao serviço. Você também irá conseguir visualizar os diferentes nomes dos nós respondendo:
 
@@ -383,25 +387,25 @@ O procedimento de criação do cluster do Service Fabric no Azure, está complet
 
 Uma vez criado o cluster e feita a instalação do certificado PFX para acessar a console, você verá algo assim:
 
-![](/wp-content/uploads/2019/01/image-24-1024x367.png)
+![Image - Conhecendo as opções para containers do Azure](/wp-content/uploads/2019/01/image-24-1024x367.png)
 Dashboard do Service Fabric
 
-![](/wp-content/uploads/2019/01/image-30-1024x300.png)
+![Image - Conhecendo as opções para containers do Azure](/wp-content/uploads/2019/01/image-30-1024x300.png)
 Informações sobre os nodes
 
-![](/wp-content/uploads/2019/01/image-31.png)
+![Image - Conhecendo as opções para containers do Azure](/wp-content/uploads/2019/01/image-31.png)
 Mapa do cluster
 
 Para fazer o deploy da nossa aplicação no Service Fabric, vá até **Applications** e em seguida dentro do menu **Actions** escolha **Create Compose Application**:
 
-![](/wp-content/uploads/2019/01/image-25-1024x167.png)
+![Image - Conhecendo as opções para containers do Azure](/wp-content/uploads/2019/01/image-25-1024x167.png)
 Visão geral das aplicações
 
-![](/wp-content/uploads/2019/01/image-26.png)
+![Image - Conhecendo as opções para containers do Azure](/wp-content/uploads/2019/01/image-26.png)
 
 Criando uma aplicação via compose file
 
-![](/wp-content/uploads/2019/01/image-27.png)
+![Image - Conhecendo as opções para containers do Azure](/wp-content/uploads/2019/01/image-27.png)
 Conteúdo do compose file
 
 Abaixo o conteúdo do arquivo compose para você copiar:
@@ -419,15 +423,15 @@ version: '3'
 
 Após clicar para criar, será iniciado o deploy da aplicação de acordo com a configuração especificad no arquivo compose. Em seguida já temos a aplicação rodando dentro do Service Fabric e você pode explorar cada um dos detalhes apresentados:
 
-![](/wp-content/uploads/2019/01/image-28-1024x397.png)
+![Image - Conhecendo as opções para containers do Azure](/wp-content/uploads/2019/01/image-28-1024x397.png)
 Dashboard com a aplicação já implantada
 
-![](/wp-content/uploads/2019/01/image-29-1024x211.png)
+![Image - Conhecendo as opções para containers do Azure](/wp-content/uploads/2019/01/image-29-1024x211.png)
 Detalhe da aplicação
 
 Acessando a aplicação:
 
-![](/wp-content/uploads/2019/01/image-32-1024x500.png)
+![Image - Conhecendo as opções para containers do Azure](/wp-content/uploads/2019/01/image-32-1024x500.png)
 
 ## E o Azure Container Service?
 

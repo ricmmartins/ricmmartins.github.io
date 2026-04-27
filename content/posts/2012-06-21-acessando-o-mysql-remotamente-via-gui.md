@@ -5,6 +5,10 @@ date: '2012-06-21T12:13:23-04:00'
 tags:
     - mysql
 description: "Como configurar e usar o acesso remoto ao Mysql? Neste post vamos ver como fazer a configuração do Mysql permitindo o acesso remoto e utilizar o HeidiSQL"
+cover:
+  image: "/og/acessando-o-mysql-remotamente-via-gui.png"
+  alt: ""
+  hidden: true
 ---
 
 Como configurar e usar o acesso remoto ao Mysql? Neste post vamos ver como fazer a configuração do Mysql permitindo o acesso remoto e utilizar o HeidiSQL para acessar o MySQL via interface gráfica (GUI).
@@ -115,7 +119,7 @@ Abra o HeidiSQL e configure a conexão conforme a imagem abaixo:
 
 Tela do Heidi logado no banco:
 
-[![](/wp-content/uploads/2012/06/HeidiSQL2.png "HeidiSQL2")](/wp-content/uploads/2012/06/HeidiSQL2.png)
+[![HeidiSQL2](/wp-content/uploads/2012/06/HeidiSQL2.png "HeidiSQL2")](/wp-content/uploads/2012/06/HeidiSQL2.png)
 
 [  ](/wp-content/uploads/2012/06/HeidiSQL1.png)
 

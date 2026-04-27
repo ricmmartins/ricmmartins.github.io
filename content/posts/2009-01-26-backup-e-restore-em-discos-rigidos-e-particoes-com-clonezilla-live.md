@@ -6,6 +6,10 @@ tags:
     - backup
     - linux
 description: "Esse tutorial demonstra como realizar backup e restore de discos rígidos e partições com o CloneZilla Live, um Live-CD Linux que contém diversas"
+cover:
+  image: "/og/backup-e-restore-em-discos-rigidos-e-particoes-com-clonezilla-live.png"
+  alt: ""
+  hidden: true
 ---
 
 Esse tutorial demonstra como realizar backup e restore de discos rígidos e partições com o CloneZilla Live, um Live-CD Linux que contém diversas ferramentas para clonagem e backup, similar ao Norton Ghost…

@@ -5,6 +5,10 @@ date: '2015-02-20T20:47:20-05:00'
 tags:
     - nginx
 description: "Hoje vou mostrar um recurso interessante do Nginx para balanceamento de carga. O Nginx possui suporte para três mecanismos de balanceamento de carga:"
+cover:
+  image: "/og/nginx-configurando-como-load-balancer.png"
+  alt: ""
+  hidden: true
 ---
 
 Hoje vou mostrar um recurso interessante do Nginx para balanceamento de carga. O Nginx possui suporte para três mecanismos de balanceamento de carga:

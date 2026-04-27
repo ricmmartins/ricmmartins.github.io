@@ -5,9 +5,13 @@ date: '2010-08-18T21:48:24-04:00'
 tags:
     - windows
 description: "A maioria dos usuários estão impressionados com o mais recente sistema operacional Microsoft Windows 7 graças ao marketing agressivo da Microsoft."
+cover:
+  image: "/og/download-do-disco-de-restauracao-do-windows-7.png"
+  alt: ""
+  hidden: true
 ---
 
-![](/wp-content/uploads/2010/08/Windows-7-System-Recovery-Disc.png "Windows-7-System-Recovery-Disc")
+![Windows-7-System-Recovery-Disc](/wp-content/uploads/2010/08/Windows-7-System-Recovery-Disc.png "Windows-7-System-Recovery-Disc")
 
 A maioria dos usuários estão impressionados com o mais recente sistema operacional Microsoft Windows 7 graças ao <span class="bbli">marketing</span> agressivo da Microsoft.
 

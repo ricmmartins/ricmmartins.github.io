@@ -6,6 +6,10 @@ tags:
     - azure
     - cloud
 description: "Há algum tempo estou trabalhando com a Cloud da Amazon, mas até então ainda não tinha tido a oportunidade de testar a Cloud da Microsoft, a Azure. Há dois"
+cover:
+  image: "/og/conhecendo-a-plataforma-azure.png"
+  alt: ""
+  hidden: true
 ---
 
 Há algum tempo estou trabalhando com a Cloud da Amazon, mas até então ainda não tinha tido a oportunidade de testar a Cloud da Microsoft, a Azure. Há dois meses atrás, eu comecei a preparar este post, mas ainda não tinha finalizado. A idéia aqui é mostrar como criar um site e uma máquina virtual nesta plataforma. Então vamos lá.

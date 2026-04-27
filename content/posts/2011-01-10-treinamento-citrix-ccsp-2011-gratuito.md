@@ -6,6 +6,10 @@ tags:
     - certificação
     - citrix
 description: "Está disponível no link www.citrix.com/ccsp o treinamento CCSP 2011 gratuito. Basta acessar o link, fazer o cadastro e assistir as aulas."
+cover:
+  image: "/og/treinamento-citrix-ccsp-2011-gratuito.png"
+  alt: ""
+  hidden: true
 ---
 
 Está disponível no link [www.citrix.com/ccsp](http://www.citrix.com/ccsp) o treinamento CCSP 2011 gratuito. Basta acessar o link, fazer o cadastro e assistir as aulas.  

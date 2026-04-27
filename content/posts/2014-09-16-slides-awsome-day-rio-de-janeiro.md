@@ -7,6 +7,10 @@ tags:
     - aws
     - cloud
 description: "Slides do evento AWSomeday no Rio de Janeiro AWSome Day - Rio de Janeiro - Brasil from Amazon Web Services LATAM"
+cover:
+  image: "/og/slides-awsome-day-rio-de-janeiro.png"
+  alt: ""
+  hidden: true
 ---
 
 Slides do evento AWSomeday no Rio de Janeiro

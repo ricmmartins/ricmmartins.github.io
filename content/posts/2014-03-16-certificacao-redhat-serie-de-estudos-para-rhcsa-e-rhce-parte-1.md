@@ -7,6 +7,10 @@ tags:
     - redhat
     - estudo
 description: "Neste primeiro post da série de estudos, eu vou apenas indicar alguns links com referências adicionais para auxiliar no nosso plano de estudos. Acesse"
+cover:
+  image: "/og/certificacao-redhat-serie-de-estudos-para-rhcsa-e-rhce-parte-1.png"
+  alt: ""
+  hidden: true
 ---
 
 Neste primeiro post da série de estudos, eu vou apenas indicar alguns links com referências adicionais para auxiliar no nosso plano de estudos. Acesse, tome nota das informações e vá se preparando para o que vem por aí.

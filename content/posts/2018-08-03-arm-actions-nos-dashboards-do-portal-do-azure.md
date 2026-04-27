@@ -8,6 +8,10 @@ categories:
 tags:
     - azure
     - monitoramento
+cover:
+  image: "/og/arm-actions-nos-dashboards-do-portal-do-azure.png"
+  alt: ""
+  hidden: true
 ---
 
 Provavelmente você já sabe que o Portal do Azure é [totalmente customizável](https://docs.microsoft.com/en-us/azure/azure-portal/azure-portal-dashboards.), permitindo que você explore ao máximo as opções criando dashboards para atender as suas necessidades de visualização, organização e monitoramento.
@@ -18,21 +22,21 @@ Basicamente o ARM Data permite configurar a exibição de dados/informações so
 
 Neste artigo eu vou demonstrar como criar ARM Actions para ligar/desligar máquinas virtuais. Para isto a primeira coisa que precisamos fazer é pegar o Resource ID da VM que vamos usar. O Resource ID está disponível em Propriedades da VM, conforme abaixo:
 
-[![](/wp-content/uploads/2018/08/1-1.png)](/wp-content/uploads/2018/08/1-1.png)
+[![Imagem do post ARM Actions nos dashboards do portal do Azure](/wp-content/uploads/2018/08/1-1.png)](/wp-content/uploads/2018/08/1-1.png)
 
 Note que o nome da VM é **armaction**, e o Resource ID: **/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/armactions-resourcegroup/providers/Microsoft.Compute/virtualMachines/armaction**
 
 Agora precisamos editar o dashboard:
 
-[![](/wp-content/uploads/2018/08/2.png)](/wp-content/uploads/2018/08/2.png)
+[![Imagem do post ARM Actions nos dashboards do portal do Azure](/wp-content/uploads/2018/08/2.png)](/wp-content/uploads/2018/08/2.png)
 
 Em seguida escolher a opção ARM Actions e inserir no dashboard:
 
-[![](/wp-content/uploads/2018/08/3.png)](/wp-content/uploads/2018/08/3.png)
+[![Imagem do post ARM Actions nos dashboards do portal do Azure](/wp-content/uploads/2018/08/3.png)](/wp-content/uploads/2018/08/3.png)
 
 Quando fizer isto, note que serão abertos os campos para edição do ARM Actions:
 
-[![](/wp-content/uploads/2018/08/4.png)](/wp-content/uploads/2018/08/4.png)
+[![Imagem do post ARM Actions nos dashboards do portal do Azure](/wp-content/uploads/2018/08/4.png)](/wp-content/uploads/2018/08/4.png)
 
 E você deve preencher conforme vou mostrar abaixo:
 
@@ -45,7 +49,7 @@ Note que a URI, é o Resource ID da VM seguido da ação que deseja executar na 
 
 No meu caso ficou assim:
 
-[![](/wp-content/uploads/2018/08/5.png)](/wp-content/uploads/2018/08/5.png)
+[![Imagem do post ARM Actions nos dashboards do portal do Azure](/wp-content/uploads/2018/08/5.png)](/wp-content/uploads/2018/08/5.png)
 
 > Repare que ele já mostra um preview de como ficará.
 
@@ -55,10 +59,10 @@ Fiz a mesma coisa para criar um botão para desligar a VM, no caso alterando na 
 
 Ao fim, meu dashboard ficou assim:
 
-[![](/wp-content/uploads/2018/08/6.png)](/wp-content/uploads/2018/08/6.png)
+[![Imagem do post ARM Actions nos dashboards do portal do Azure](/wp-content/uploads/2018/08/6.png)](/wp-content/uploads/2018/08/6.png)
 
 E ao clicar em uma das opções após executar a ação você recebe as notificações também:
 
-[![](/wp-content/uploads/2018/08/7.png)](/wp-content/uploads/2018/08/7.png)
+[![Imagem do post ARM Actions nos dashboards do portal do Azure](/wp-content/uploads/2018/08/7.png)](/wp-content/uploads/2018/08/7.png)
 
 Até a próxima!

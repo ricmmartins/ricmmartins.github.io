@@ -5,6 +5,10 @@ date: '2010-12-13T14:42:59-05:00'
 tags:
     - windows
 description: "Esses dias recebí um pedido inusitado: O cliente queria uma configuração de GPO no seu servidor, que impedisse os usuários de usar o recurso de salvar"
+cover:
+  image: "/og/como-configurar-gpo-para-o-firefox.png"
+  alt: ""
+  hidden: true
 ---
 
 Esses dias recebí um pedido inusitado: O cliente queria uma configuração de GPO no seu servidor, que impedisse os usuários de usar o recurso de salvar senha em formulários.
@@ -32,13 +36,13 @@ Primeiro, você precisa baixar o arquivo compactado abaixo:
 Em seguida, crie uma nova GPO chamada Firefox. Nesta, configure um script de logon com o arquivo  
 firefox\_startup.vbs contido no anexo.
 
-[![](/wp-content/uploads/2010/12/script-300x240.png "script")](/wp-content/uploads/2010/12/script.png)
+[![script](/wp-content/uploads/2010/12/script-300x240.png "script")](/wp-content/uploads/2010/12/script.png)
 
 Depois, na mesma GPO, vá em “Configurações de Computador” e importe o modelo administrativo  
 “firefoxlock.adm” também contido no anexo.  
 Depois de importar o modelo administrativo, basta ir em Configurações do Computador &gt; Modelos  
 Administrativos &gt; Mozilla Firefox &gt; Security &gt; Disable Password Remembering e habilitar.
 
-[![](/wp-content/uploads/2010/12/modeloadm-300x240.png "modeloadm")](/wp-content/uploads/2010/12/modeloadm.png)
+[![modeloadm](/wp-content/uploads/2010/12/modeloadm-300x240.png "modeloadm")](/wp-content/uploads/2010/12/modeloadm.png)
 
 PS: Vocês poderão notar que no arquivo compactado, existe um arquivo PDF mostrando um overview sobre como fazer esta configuração. Porém eu resolví mostrar neste passo-a-passo como fazer.

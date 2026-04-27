@@ -5,6 +5,10 @@ date: '2015-07-02T15:30:56-04:00'
 tags:
     - linux
 description: "[](/wp-content/uploads/2015/05/coreos-logo.png) Conforme prometido, neste post vou mostrar a instalação do CoreOS fazendo uma continuação deste post"
+cover:
+  image: "/og/coreos-como-realizar-a-instalacao-basica.png"
+  alt: ""
+  hidden: true
 ---
 
 [![coreos-logo](/wp-content/uploads/2015/05/coreos-logo-300x116.png)](/wp-content/uploads/2015/05/coreos-logo.png)

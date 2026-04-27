@@ -6,6 +6,10 @@ tags:
     - windows
     - backup
 description: "Se você já teve que reinstalar uma máquina que você não tinha o cd com os drivers, sabe a dor de cabeça que é para sair procurando drivers pela internet."
+cover:
+  image: "/og/utilitario-gratuito-para-backup-de-drivers.png"
+  alt: ""
+  hidden: true
 ---
 
 Se você já teve que reinstalar uma máquina que você não tinha o cd com os drivers, sabe a dor de cabeça que é para sair procurando drivers pela internet.

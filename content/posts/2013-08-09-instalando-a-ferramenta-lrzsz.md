@@ -5,6 +5,10 @@ date: '2013-08-09T18:21:07-04:00'
 tags:
     - linux
 description: "O protocolo zmodem permite realizar de modo simples, downloads e uploads para um servidor linux pelo console. Abaixo vou mostrar como realizar a"
+cover:
+  image: "/og/instalando-a-ferramenta-lrzsz.png"
+  alt: ""
+  hidden: true
 ---
 
 O protocolo zmodem permite realizar de modo simples, downloads e uploads para um servidor linux pelo console. Abaixo vou mostrar como realizar a instalação da ferramenta.

@@ -6,6 +6,10 @@ tags:
     - scripts
     - windows
 description: "Recentemente, fiz um post aqui citando um programa para fazer o bloqueio/desbloqueio de pendrives. Este post você pode conferir aqui:"
+cover:
+  image: "/og/como-bloquear-pendrive-definitivamente.png"
+  alt: ""
+  hidden: true
 ---
 
 Recentemente, fiz um post aqui citando um programa para fazer o bloqueio/desbloqueio de pendrives. Este post você pode conferir aqui: <http://ricardomartins.com.br/como-bloquear-pendrive/>

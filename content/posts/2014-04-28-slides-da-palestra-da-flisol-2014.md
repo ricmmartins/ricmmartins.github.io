@@ -6,6 +6,10 @@ tags:
     - palestras
     - cloud
 description: "Para quem não pode ir, estou disponibilizando no SlideShare a miha palestra sobre CloudComputing no Flisol 2014."
+cover:
+  image: "/og/slides-da-palestra-da-flisol-2014.png"
+  alt: ""
+  hidden: true
 ---
 
 Para quem não pode ir, estou disponibilizando no SlideShare a miha palestra sobre CloudComputing no [Flisol 2014](http://flisol.info/FLISOL2014/Brasil/Niteroi "Flisol 2014").

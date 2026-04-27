@@ -5,6 +5,10 @@ date: '2014-03-24T14:59:38-04:00'
 tags:
     - chef
 description: "Hoje em dia muito tem se falado sobre automatização de infraestrutura. Isto está bastante relacionado com o conceito de DevOps, que bem resumidamente"
+cover:
+  image: "/og/conhecendo-o-chef-e-automatizando-seu-trabalho.png"
+  alt: ""
+  hidden: true
 ---
 
 Hoje em dia muito tem se falado sobre automatização de infraestrutura. Isto está bastante relacionado com o conceito de DevOps, que bem resumidamente posso dizer que é a integração entre desenvolvimento e operação na administração da infraestrutura de TI. Trabalhando juntos, devs e ops com foco no resultado com agilidade e desempenho. A infraestrutura passa a ser gerenciada e orquestrada via código utilizando ferramentas que viabilizam isto.

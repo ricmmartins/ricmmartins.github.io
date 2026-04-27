@@ -7,6 +7,10 @@ tags:
     - certificação
     - microsoft
 description: "Muita gente ainda se confunde quando o assunto é as novas certificações da Microsoft. Fiz um resumo abaixo de como elas funcionam e espero que seja útil."
+cover:
+  image: "/og/entenda-as-novas-certificacoes-microsoft.png"
+  alt: ""
+  hidden: true
 ---
 
 Muita gente ainda se confunde quando o assunto é as novas <span class="bbli">certificações</span> da <span class="bbli">Microsoft</span>. Fiz um resumo abaixo de como elas funcionam e espero que seja útil.
@@ -17,7 +21,7 @@ Você pode ler mais à respeito em <http://www.microsoft.com/learning/pt/br/cert
 
 Observe a figura abaixo, e você irá compreender melhor o que já foi explicado.
 
-[![](/wp-content/uploads/2010/11/Microsoft-Certification-Training-Classes-vertical.png "Microsoft-Certification-Training-Classes-vertical")](/wp-content/uploads/2010/11/Microsoft-Certification-Training-Classes-vertical.png)
+[![Microsoft-Certification-Training-Classes-vertical](/wp-content/uploads/2010/11/Microsoft-Certification-Training-Classes-vertical.png "Microsoft-Certification-Training-Classes-vertical")](/wp-content/uploads/2010/11/Microsoft-Certification-Training-Classes-vertical.png)
 
 O foco aqui será detalhar as certificações Microsoft voltadas para a área de infraestrutura, e não comentarei sobre as certificações votladas para desenvolvedores. Então vamos lá…
 

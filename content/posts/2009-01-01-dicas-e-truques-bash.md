@@ -5,6 +5,10 @@ date: '2009-01-01T04:09:20-05:00'
 tags:
     - bash
 description: "Neste documento, disponibilizado pelo ukuug.org, Simon Myers apresenta um conjunto de slides em formato contínuo contendo diversas dicas e truques úteis"
+cover:
+  image: "/og/dicas-e-truques-bash.png"
+  alt: ""
+  hidden: true
 ---
 
 Neste documento, disponibilizado pelo ukuug.org, Simon Myers apresenta um conjunto de slides em formato contínuo contendo diversas dicas e truques úteis para a utilização do Bash…

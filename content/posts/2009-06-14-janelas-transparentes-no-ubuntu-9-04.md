@@ -6,6 +6,10 @@ tags:
     - linux
     - ubuntu
 description: "Hoje tive que trabalhar de madrugada… Fazer o quê né ?! Como neste horário as coisas por aqui são bem tranquilas, eu resolví trazer o meu note para fazer"
+cover:
+  image: "/og/janelas-transparentes-no-ubuntu-9-04.png"
+  alt: ""
+  hidden: true
 ---
 
 Hoje tive que trabalhar de madrugada… Fazer o quê né ?!

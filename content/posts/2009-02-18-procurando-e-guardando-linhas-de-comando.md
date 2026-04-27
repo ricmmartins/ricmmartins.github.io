@@ -6,6 +6,10 @@ tags:
     - comandos
     - linux
 description: "Se você lida com linhas de comando no Linux, e não é necessariamente um ninja no assunto, vai gostar de conhecer o Command-line-fu."
+cover:
+  image: "/og/procurando-e-guardando-linhas-de-comando.png"
+  alt: ""
+  hidden: true
 ---
 
 Se você lida com linhas de comando no Linux, e não é necessariamente um ninja no assunto, vai gostar de conhecer o [Command-line-fu](http://www.commandlinefu.com/).

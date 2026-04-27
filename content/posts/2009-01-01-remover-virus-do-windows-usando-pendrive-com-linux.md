@@ -6,6 +6,10 @@ tags:
     - linux
     - windows
 description: "ste artigo, disponibilizado pelo VivaOLinux.com.br, descreve a criação de um pendrive com boot usando Linux e antivírus para remover vírus em Windows de"
+cover:
+  image: "/og/remover-virus-do-windows-usando-pendrive-com-linux.png"
+  alt: ""
+  hidden: true
 ---
 
 ste artigo, disponibilizado pelo VivaOLinux.com.br, descreve a criação de um pendrive com boot usando Linux e antivírus para remover vírus em Windows de uma maneira muito fácil…

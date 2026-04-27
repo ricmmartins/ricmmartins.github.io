@@ -5,6 +5,10 @@ date: '2010-08-11T23:40:01-04:00'
 tags:
     - windows
 description: "Eu sempre critiquei o novo menu iniciar do Windows 7. Cheguei a procurar algumas maneiras de deixá-lo no modo clássico no entanto ainda não havia"
+cover:
+  image: "/og/menu-iniciar-classico-no-windows-7.png"
+  alt: ""
+  hidden: true
 ---
 
 Eu sempre critiquei o novo menu iniciar do Windows 7. Cheguei a procurar algumas maneiras de deixá-lo no modo clássico no entanto ainda não havia descoberto uma forma de fazê-lo.

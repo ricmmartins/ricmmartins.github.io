@@ -5,6 +5,10 @@ date: '2009-12-21T01:02:25-05:00'
 tags:
     - carreira
 description: "A nossa educação é muito errada. Desde pequenos, os pais acreditam que, para educar uma criança, devem mostrar-lhe cosntantemente seus erros e, com isso"
+cover:
+  image: "/og/imagine-se-um-vencedor.png"
+  alt: ""
+  hidden: true
 ---
 
 A nossa educação é muito errada. Desde pequenos, os pais acreditam que, para educar uma criança, devem mostrar-lhe cosntantemente seus erros e, com isso, acabam reforçando-os. Vivem dizendo “você não vai dar em nada na vida”, ou “você é um burro”, ou “não sei o que você vai ser na vida”, “você não serve pra nada”. Assim, a criança cresce com a auto-estimadestruída. Esses momentos e palavras instalam-se em nosso subconsciente, e toda a nossa vida passa a ser governada po rimagens de fracasso e destruição.

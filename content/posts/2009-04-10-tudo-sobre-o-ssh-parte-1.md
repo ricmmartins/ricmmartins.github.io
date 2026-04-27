@@ -6,6 +6,10 @@ tags:
     - networking
     - ssh
 description: "Autor: Pedro Augusto de O. Pereira / Administrar máquinas remotamente é uma coisa extremamente comum não só nos últimos anos, mas desde que a Internet foi"
+cover:
+  image: "/og/tudo-sobre-o-ssh-parte-1.png"
+  alt: ""
+  hidden: true
 ---
 
 Autor: Pedro Augusto de O. Pereira / <http://augusto.pedro.googlepages.com/>

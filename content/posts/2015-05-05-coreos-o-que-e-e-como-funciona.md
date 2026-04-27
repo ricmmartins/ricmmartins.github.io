@@ -5,6 +5,10 @@ date: '2015-05-05T19:05:52-04:00'
 tags:
     - linux
 description: "Em tempos de computação em nuvem, micro serviços e containers, o CoreOS é uma distribuição Linux que vem ganhando força. Neste post vou compartilhar um"
+cover:
+  image: "/og/coreos-o-que-e-e-como-funciona.png"
+  alt: ""
+  hidden: true
 ---
 
 Em tempos de computação em nuvem, micro serviços e containers, o CoreOS é uma distribuição Linux que vem ganhando força. Neste post vou compartilhar um pouco do que tenho estudado e descoberto sobre ele com vocês.

@@ -5,9 +5,13 @@ date: '2010-02-18T00:05:01-05:00'
 tags:
     - carreira
 description: "Quantas vezes já ocorreu de você deixa alguma coisa pra depois e aoportunidade passar? Quantas idéias você teve, não implementou e, quando se deu conta"
+cover:
+  image: "/og/cuidado-com-o-habito-de-procrastinar.png"
+  alt: ""
+  hidden: true
 ---
 
-![](/wp-content/uploads/2010/02/art.sleep_.atwork.gi_-292x180.jpg "art.sleep.atwork.gi") 
+![art.sleep.atwork.gi](/wp-content/uploads/2010/02/art.sleep_.atwork.gi_-292x180.jpg "art.sleep.atwork.gi") 
 
 Quantas vezes já ocorreu de você deixa alguma coisa pra depois e aoportunidade passar? Quantas idéias você teve, não implementou e, quando se deu conta, elas não teriam mais o mesmo efeito se fossem implementadas?
 

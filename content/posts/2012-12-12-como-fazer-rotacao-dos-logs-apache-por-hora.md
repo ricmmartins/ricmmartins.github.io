@@ -6,6 +6,10 @@ tags:
     - apache
     - linux
 description: "Então você tem um servidor com Apache instalado gerando centenas de MB para lotar seu disco, certo? Vamos lá…"
+cover:
+  image: "/og/como-fazer-rotacao-dos-logs-apache-por-hora.png"
+  alt: ""
+  hidden: true
 ---
 
 Então você tem um servidor com Apache instalado gerando centenas de MB para lotar seu disco, certo? Vamos lá…

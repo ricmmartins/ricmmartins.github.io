@@ -9,13 +9,17 @@ tags:
     - azure
     - elasticsearch
     - monitoramento
+cover:
+  image: "/og/implementando-a-stack-elk-no-azure-via-cli.png"
+  alt: ""
+  hidden: true
 ---
 
 O objetivo deste artigo é descrever de forma detalhada como implementar a Stack ELK (Elasticsearch/Logstash/Kibana) no Azure.
 
 ## Introdução
 
-![](../wp-content/uploads/2018/10/elk-stack.png)
+![ELK Stack](../wp-content/uploads/2018/10/elk-stack.png)
 
 Este artigo é resultado de uma prova de conceito para mostrar a funcionalidade de implementação de toda a stack utilizando a ferramenta de linha de comando do Azure ([az-cli](https://docs.microsoft.com/pt-br/cli/azure))
 
@@ -23,7 +27,7 @@ Este artigo é resultado de uma prova de conceito para mostrar a funcionalidade 
 
 A ilustração abaixo se refere à arquitetura lógica implantada para provar o conceito. Esta arquitetura contempla um servidor de aplicação, o serviço de Redis do Azure, um servidor com o Logstash, um servidor com ElasticSearch e um servidor com o Kibana e serviço web (Nginx) instalados.
 
-![](../wp-content/uploads/2018/10/elk.png)
+![ELK - Implementando a Stack ELK no Azure via CLI](../wp-content/uploads/2018/10/elk.png)
 Arquitetura ELK
 
 ## Descrição dos componentes da arquitetura
@@ -32,7 +36,7 @@ Arquitetura ELK
 - **Filebeat:** Agente instalado no servidor de aplicação e configurado para enviar os logs gerados para o Azure Redis. O Filebeat tem a função de fazer o shipping dos logs usando o protocolo *lumberjack*.
 - **Azure Redis Service:** Serviço gerenciado de armazenamento de dados em memória. Foi utilizado pois mecanismos de busca podem ser um pesadelo operacional. A indexação pode derrubar um cluster tradicional e os dados podem acabar sendo reindexados por diversos motivos. Deste modo, a escolha do Redis entre a fonte de eventos e o parsing e processamento é apenas para indexar/parsear tão rápido quanto os nós e os bancos de dados envolvidos possam manipular estes dados permitindo que seja possível extrair diretamente do fluxo de eventos ao invés de ter eventos sendo inseridos no pipeline. Através do Redis Monitor é possível ver exatamente o que está acontecendo no Redis: O Filebeat enviando os dados e o Logstash pedindo por eles:
 
-![](../wp-content/uploads/2018/10/redis-monitor.png)
+![Redis Monitor](../wp-content/uploads/2018/10/redis-monitor.png)
 
 - **Logstash:** Faz o processamento e a indexação dos logs lendo do Redis e enviando ao ElasticSearch.
 - **ElasticSearch:** Faz o armazenamento dos logs
@@ -438,28 +442,28 @@ exit
 
 Para finalizar o setup, o próximo passo consiste em conectar no endereço IP público da VM do Kibana/Nginx. Uma vez conectado, a tela inicial deverá ser semelhante à esta:
 
-![](../wp-content/uploads/2018/10/kibana-1.png)
+![Kibana - Implementando a Stack ELK no Azure via CLI](../wp-content/uploads/2018/10/kibana-1.png)
 
 O próximo passo é clicar em **Discover** onde iremos criar o padrão de indexação:
 
-![](../wp-content/uploads/2018/10/kibana-2.png)
+![Kibana - Implementando a Stack ELK no Azure via CLI](../wp-content/uploads/2018/10/kibana-2.png)
 
 Neste caso será criado o padrão **logstash\***
 
-![](../wp-content/uploads/2018/10/kibana-3.png)
+![Kibana - Implementando a Stack ELK no Azure via CLI](../wp-content/uploads/2018/10/kibana-3.png)
 
-![](../wp-content/uploads/2018/10/kibana-4.png)
+![Kibana - Implementando a Stack ELK no Azure via CLI](../wp-content/uploads/2018/10/kibana-4.png)
 
-![](/..wp-content/uploads/2018/10/kibana-5.png)
+![Kibana - Implementando a Stack ELK no Azure via CLI](/..wp-content/uploads/2018/10/kibana-5.png)
 
-![](../wp-content/uploads/2018/10/kibana-6.png)
+![Kibana - Implementando a Stack ELK no Azure via CLI](../wp-content/uploads/2018/10/kibana-6.png)
 
-![](/wp-content/uploads/2018/10/kibana-7.png)
+![Kibana - Implementando a Stack ELK no Azure via CLI](/wp-content/uploads/2018/10/kibana-7.png)
 
 Agora clicando em ****Discover**** novamente já é possível ver os logs indexados e as mensagens geradas pelo Log Generator:
 
-![](../wp-content/uploads/2018/10/kibana-8.png)
+![Kibana - Implementando a Stack ELK no Azure via CLI](../wp-content/uploads/2018/10/kibana-8.png)
 
-![](../wp-content/uploads/2018/10/kibana-9.png)
+![Kibana - Implementando a Stack ELK no Azure via CLI](../wp-content/uploads/2018/10/kibana-9.png)
 
 Até o próximo artigo ;-D

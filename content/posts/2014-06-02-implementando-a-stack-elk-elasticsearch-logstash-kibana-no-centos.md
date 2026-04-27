@@ -6,6 +6,10 @@ tags:
     - elasticsearch
     - linux
 description: "A stack ELK nada mais é que o conjunto formado pelas ferramentas ElasticSearch, Logstash e o Kibana. O uso destas três ferramentas em conjunto, provê uma"
+cover:
+  image: "/og/implementando-a-stack-elk-elasticsearch-logstash-kibana-no-centos.png"
+  alt: ""
+  hidden: true
 ---
 
 ### O que é a stack ELK?
@@ -351,7 +355,7 @@ Um outro exemplo pode ser pesquisar por programas instalados. Basta usar o campo
 
 Agora nos resultados exibidos na parte inferior você terá apenas eventos registrados que possuam a palavra ***installed:***
 
-[![](/media/Screen-Shot-2014-06-02-at-17.41.06.png)](/media/Screen-Shot-2014-06-02-at-17.41.06.png)
+[![Captura de tela: Shot 2014](/media/Screen-Shot-2014-06-02-at-17.41.06.png)](/media/Screen-Shot-2014-06-02-at-17.41.06.png)
 
 Note que as informações foram registradas na configuração que criamos chamada yum-log. Observe o campo ***program*** acima.
 

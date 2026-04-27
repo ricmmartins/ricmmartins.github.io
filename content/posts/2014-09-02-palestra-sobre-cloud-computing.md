@@ -7,6 +7,10 @@ tags:
     - cloud
     - palestras
 description: "Minha palestra sobre Cloud Computing apresentada no I no dia 15 de Agosto de 2014"
+cover:
+  image: "/og/palestra-sobre-cloud-computing.png"
+  alt: ""
+  hidden: true
 ---
 
 Minha palestra sobre Cloud Computing apresentada no I no dia 15 de Agosto de 2014

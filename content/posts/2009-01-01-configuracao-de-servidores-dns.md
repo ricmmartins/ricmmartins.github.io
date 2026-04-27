@@ -5,6 +5,10 @@ date: '2009-01-01T03:41:48-05:00'
 tags:
     - dns
 description: "Em artigo disponibilizado pelo Dicas-L.com.br, Rubens Queiroz de Almeida descreve detalhadamente os passos necessários para a configuração básica de um"
+cover:
+  image: "/og/configuracao-de-servidores-dns.png"
+  alt: ""
+  hidden: true
 ---
 
 Em artigo disponibilizado pelo Dicas-L.com.br, Rubens Queiroz de Almeida descreve detalhadamente os passos necessários para a configuração básica de um servidor DNS…

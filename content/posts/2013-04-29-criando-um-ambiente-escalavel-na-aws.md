@@ -6,6 +6,10 @@ tags:
     - aws
     - cloud
 description: "Nesse post vou abordar como escalar seu site na estrutura de cloud computing da AWS."
+cover:
+  image: "/og/criando-um-ambiente-escalavel-na-aws.png"
+  alt: ""
+  hidden: true
 ---
 
 Nesse post vou abordar como escalar seu site na estrutura de cloud computing da AWS.

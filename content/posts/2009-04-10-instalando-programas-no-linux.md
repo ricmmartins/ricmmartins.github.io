@@ -5,6 +5,10 @@ date: '2009-04-10T17:41:07-04:00'
 tags:
     - linux
 description: "Autor: Pedro Augusto de O. Pereira / A instalação de aplicativos no GNU/Linux é um dos pontos que mais causam confusão nos iniciantes por ser um pouco"
+cover:
+  image: "/og/instalando-programas-no-linux.png"
+  alt: ""
+  hidden: true
 ---
 
 Autor: Pedro Augusto de O. Pereira / <http://augusto.pedro.googlepages.com/>

@@ -6,9 +6,13 @@ tags:
     - carreira
     - microsoft
 description: "Hoje eu completo meu primeiro ano trabalhando na Microsoft e por isto assim como eu fiz quando fui reprovado na primeira vez que participei no processo"
+cover:
+  image: "/og/meu-primeiro-ano-na-microsoft.png"
+  alt: ""
+  hidden: true
 ---
 
-![](/wp-content/uploads/2016/12/13246354_10206280130913371_918757031935210288_o.jpg)
+![Imagem do post Meu primeiro ano na Microsoft](/wp-content/uploads/2016/12/13246354_10206280130913371_918757031935210288_o.jpg)
 
 Hoje eu completo meu primeiro ano trabalhando na Microsoft e por isto assim como eu fiz quando fui [reprovado na primeira vez que participei no processo seletivo](https://www.ricardomartins.com.br/perdeu-a-tao-desejada-vaga-e-agora/), e em seguida quando eu consegui ser aprovado e [completava o terceiro mês](https://www.ricardomartins.com.br/como-e-trabalhar-onde-tantos-gostariam/), vou registrar aqui algumas palavras…
 

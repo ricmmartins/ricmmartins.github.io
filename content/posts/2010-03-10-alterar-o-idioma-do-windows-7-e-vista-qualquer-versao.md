@@ -5,9 +5,13 @@ date: '2010-03-10T23:44:39-05:00'
 tags:
     - windows
 description: "[](/wp-content/uploads/2010/03/windows7leak1.jpg) Se você está querendo saber como fazer para alterar o idioma do seu Windows 7 ou Vista, veio ao lugar"
+cover:
+  image: "/og/alterar-o-idioma-do-windows-7-e-vista-qualquer-versao.png"
+  alt: ""
+  hidden: true
 ---
 
-[![](/wp-content/uploads/2010/03/windows7leak1-300x300.jpg "windows7leak1")](/wp-content/uploads/2010/03/windows7leak1.jpg)
+[![windows7leak1](/wp-content/uploads/2010/03/windows7leak1-300x300.jpg "windows7leak1")](/wp-content/uploads/2010/03/windows7leak1.jpg)
 
 Se você está querendo saber como fazer para alterar o idioma do seu Windows 7 ou Vista, veio ao lugar correto. Aqui você vai ver que isto é possível pra qualquer versão, seja Starter Edition, Basic, Home, Professional, Ultimate, etc…
 

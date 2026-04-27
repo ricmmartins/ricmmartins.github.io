@@ -5,6 +5,10 @@ date: '2009-10-11T22:39:51-04:00'
 tags:
     - carreira
 description: "Texto interessante, que gostaria de compartilhar com vocês: “Dedicação é a capacidade de se entregar à realização de um objetivo."
+cover:
+  image: "/og/dedicacao-e-a-capacidade-de-se-entregar-a-realizacao-de-um-objetivo.png"
+  alt: ""
+  hidden: true
 ---
 
 Texto interessante, que gostaria de compartilhar com vocês:

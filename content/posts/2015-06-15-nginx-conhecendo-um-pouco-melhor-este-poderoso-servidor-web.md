@@ -5,6 +5,10 @@ date: '2015-06-15T12:06:46-04:00'
 tags:
     - nginx
 description: "[](/wp-content/uploads/2015/02/nginx_logo.gif) Pessoal este é um post rápido, apenas para compartilhar dois links interessantes sobre o Nginx."
+cover:
+  image: "/og/nginx-conhecendo-um-pouco-melhor-este-poderoso-servidor-web.png"
+  alt: ""
+  hidden: true
 ---
 
 [![nginx_logo](/wp-content/uploads/2015/02/nginx_logo-300x206.gif)](/wp-content/uploads/2015/02/nginx_logo.gif)

@@ -6,6 +6,10 @@ tags:
     - docker
     - linux
 description: "No cenário de constantes mudanças em ambientes web sempre surgem novas técnicas e ferramentas surpreendentes. Manter-se atualizado com todas as novidades"
+cover:
+  image: "/og/docker-um-engine-linux-container.png"
+  alt: ""
+  hidden: true
 ---
 
 No cenário de constantes mudanças em ambientes web sempre surgem novas técnicas e ferramentas surpreendentes. Manter-se atualizado com todas as novidades que surgem diariamente é um grande desafio, mas bastante emocionante.

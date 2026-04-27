@@ -6,6 +6,10 @@ tags:
     - php
     - windows
 description: "Hoje estive visitando o blog do Igor Humberto e encontrei uma dica bastante interessante: Como instalar o PHP no Windows."
+cover:
+  image: "/og/como-instalar-o-php-no-windows.png"
+  alt: ""
+  hidden: true
 ---
 
 Olá pessoas!

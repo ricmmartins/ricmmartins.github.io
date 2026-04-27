@@ -7,6 +7,10 @@ tags:
     - redhat
     - estudo
 description: "O tema “Certificação” levanta uma série de opiniões distintas e controversas sobre o assunto. Não vou entrar neste mérito uma vez que o objetivo deste"
+cover:
+  image: "/og/certificacao-redhat-serie-de-estudos-para-rhcsa-e-rhce.png"
+  alt: ""
+  hidden: true
 ---
 
 O tema “Certificação” levanta uma série de opiniões distintas e controversas sobre o assunto. Não vou entrar neste mérito uma vez que o objetivo deste post não é debater sobre certificações. Eu particularmente sempre disse o seguinte: “Estude para ser bom. Certificação e reconhecimento são consequências”.

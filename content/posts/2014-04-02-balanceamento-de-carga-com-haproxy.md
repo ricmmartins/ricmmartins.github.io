@@ -5,6 +5,10 @@ date: '2014-04-02T13:34:43-04:00'
 tags:
     - linux
 description: "Configurar o balanceamento de carga entre vários servidores web pode parecer um desafio, porém na verdade não é. O HAProxy é uma ferramenta poderosa"
+cover:
+  image: "/og/balanceamento-de-carga-com-haproxy.png"
+  alt: ""
+  hidden: true
 ---
 
 ![haproxy](/media/haproxy1.png)

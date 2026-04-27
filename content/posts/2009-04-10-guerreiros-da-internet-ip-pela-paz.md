@@ -5,6 +5,10 @@ date: '2009-04-10T17:55:21-04:00'
 tags:
     - networking
 description: "Produzido por Tomas Stephanson e Monte Reid – ERICSSON Medialab Site oficial: Warriors of The Net"
+cover:
+  image: "/og/guerreiros-da-internet-ip-pela-paz.png"
+  alt: ""
+  hidden: true
 ---
 
 <div class="snap_preview">Produzido por Tomas Stephanson e Monte Reid – ERICSSON Medialab

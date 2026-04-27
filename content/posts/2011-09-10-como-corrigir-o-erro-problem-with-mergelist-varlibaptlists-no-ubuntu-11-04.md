@@ -5,6 +5,10 @@ date: '2011-09-10T08:22:15-04:00'
 tags:
     - ubuntu
 description: "Se você estiver usando o gerenciador de pacotes ou tentando instalar algum problema pelo terminal, pode aparecer a seguinte mensagem de erro:"
+cover:
+  image: "/og/como-corrigir-o-erro-problem-with-mergelist-varlibaptlists-no-ubuntu-11-04.png"
+  alt: ""
+  hidden: true
 ---
 
 Se você estiver usando o gerenciador de pacotes ou tentando instalar algum problema pelo terminal, pode aparecer a seguinte mensagem de erro:

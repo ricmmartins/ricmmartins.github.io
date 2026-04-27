@@ -5,6 +5,10 @@ date: '2010-03-03T19:30:50-05:00'
 tags:
     - windows
 description: "Aproveitando o assunto anterior sobre redes, wireless e o Windows 7, encontrei no site do Plínio Torres um artigo muito interessante e vou transcrevê-lo"
+cover:
+  image: "/og/utilizando-windows-7-e-rede-sem-fios-como-gps.png"
+  alt: ""
+  hidden: true
 ---
 
 Aproveitando o assunto anterior sobre redes, wireless e o Windows 7, encontrei no site do Plínio Torres um artigo muito interessante e vou transcrevê-lo aqui. Trata de uma forma de usar o Windows 7 como se fosse um GPS através de redes sem fio.
@@ -13,7 +17,7 @@ O novo Windows 7 possui uma plataforma de suporte a sensores, estes usados para 
 
 Através do desenvolvimento de um drive especial, é possível utilizar o sistema de sensores para tringular sinais de conexão wireless e IP Lookup para determinar a localização física do micro em um determinado local.
 
-[![](/wp-content/uploads/2010/03/gpswindows-300x174.jpg "gpswindows-300x174")  ](http://www.pliniotorres.com/wp-content/uploads/2010/03/gpswindows.jpg)
+[![gpswindows-300x174](/wp-content/uploads/2010/03/gpswindows-300x174.jpg "gpswindows-300x174")  ](http://www.pliniotorres.com/wp-content/uploads/2010/03/gpswindows.jpg)
 
 Após determinar as coordenadas de localização, um aplicativo desenvolvido a partir do Google Maps, permite visualizar o local onde o micro se encontra naquele momento.
 

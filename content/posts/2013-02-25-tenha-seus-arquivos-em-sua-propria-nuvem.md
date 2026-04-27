@@ -5,6 +5,10 @@ date: '2013-02-25T15:30:58-05:00'
 tags:
     - utilitários
 description: "Depois de resolver meu problema com o Dropbox de só conseguir sincronizar arquivos que estivessem dentro da própria pasta do Dropbox, comecei a pensar se"
+cover:
+  image: "/og/tenha-seus-arquivos-em-sua-propria-nuvem.png"
+  alt: ""
+  hidden: true
 ---
 
 Depois de resolver meu problema com o Dropbox de só conseguir sincronizar arquivos que estivessem dentro da própria pasta do Dropbox, comecei a pensar se haveria alguma forma de ter os meus arquivos hospedado onde eu quisesse, e não nos servidores do Dropbox.

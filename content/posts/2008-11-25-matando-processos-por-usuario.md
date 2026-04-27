@@ -6,6 +6,10 @@ tags:
     - linux
     - shell
 description: "Essa é uma dica rápida para matar todos os processos de um usuário de uma vez só."
+cover:
+  image: "/og/matando-processos-por-usuario.png"
+  alt: ""
+  hidden: true
 ---
 
 <div class="entry">Essa é uma dica rápida para matar todos os processos de um usuário de uma vez só.

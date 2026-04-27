@@ -7,6 +7,10 @@ tags:
     - linux
     - networking
 description: "Esta dica vai te ensinar como instalar e configurar o IPPlan, uma ferramenta Web para gerenciar o endereçamento IP da sua rede. Você não vai mais precisar"
+cover:
+  image: "/og/ipplan-aprenda-como-instalar.png"
+  alt: ""
+  hidden: true
 ---
 
 Esta dica vai te ensinar como instalar e configurar o IPPlan, uma ferramenta Web para gerenciar o endereçamento IP da sua rede. Você não vai mais precisar usar planilhas!!!
@@ -104,7 +108,7 @@ Será exibida a tela abaixo. Clique em “Go:”
 
 Se tudo correr bem, você deverá ver uma tela igual a esta:
 
-[![](/wp-content/uploads/2012/06/tela2.png "tela2")](/wp-content/uploads/2012/06/tela2.png)[  ](/wp-content/uploads/2012/06/tela2.png)
+[![tela2](/wp-content/uploads/2012/06/tela2.png "tela2")](/wp-content/uploads/2012/06/tela2.png)[  ](/wp-content/uploads/2012/06/tela2.png)
 
 Ok, já temos o IPPlan instalado. Vamos agora para a configuração básica.
 
@@ -112,15 +116,15 @@ Ok, já temos o IPPlan instalado. Vamos agora para a configuração básica.
 
 Acesse: **http://localhost/ipplan**
 
-[![](/wp-content/uploads/2012/06/tela3.png "tela3")](/wp-content/uploads/2012/06/tela3.png)
+[![tela3](/wp-content/uploads/2012/06/tela3.png "tela3")](/wp-content/uploads/2012/06/tela3.png)
 
 Primeiro, criaremos o usuário que irá gerenciar a estrutura de endereçamento IP. Vá em Admin – Users – Create a new user. Preencha as informações referentes ao usuário:
 
-[![](/wp-content/uploads/2012/06/tela4.png "tela4")](/wp-content/uploads/2012/06/tela4.png)
+[![tela4](/wp-content/uploads/2012/06/tela4.png "tela4")](/wp-content/uploads/2012/06/tela4.png)
 
 Agora criaremos um grupo para inserirmos este usuário nele. Vá em Admin – Groups – Create a new group e preencha as informações.
 
-[![](/wp-content/uploads/2012/06/tela5.png "tela5")](/wp-content/uploads/2012/06/tela5.png)
+[![tela5](/wp-content/uploads/2012/06/tela5.png "tela5")](/wp-content/uploads/2012/06/tela5.png)
 
 Agora com usuário e grupo criados, precisamos criar o “Cliente”, ou seja, um nome qualquer para o ambiente onde a estrutura de endereços está configurada.
 
@@ -128,21 +132,21 @@ Vá em Customers > Create a New Customer/Autonomous System. Será solicitado um 
 
 Preencha pelo menos o primeiro campo (o único obrigatório). Informe o nome do cliente e em seguida clique em Submit:
 
-[![](/wp-content/uploads/2012/06/tela6.png "tela6")](/wp-content/uploads/2012/06/tela6.png)
+[![tela6](/wp-content/uploads/2012/06/tela6.png "tela6")](/wp-content/uploads/2012/06/tela6.png)
 
 O próximo passo é configurar o range da nossa rede. Vá em Network > Hierarchy > Create a new Network Range/Supernet:
 
-[![](/wp-content/uploads/2012/06/tela7.png "tela7")](/wp-content/uploads/2012/06/tela7.png)
+[![tela7](/wp-content/uploads/2012/06/tela7.png "tela7")](/wp-content/uploads/2012/06/tela7.png)
 
 Preencha o campo “Range Address” e “Range size” de acordo com o seu ambiente:
 
-[![](/wp-content/uploads/2012/06/tela8.png "tela8")](/wp-content/uploads/2012/06/tela8.png)[  ](/wp-content/uploads/2012/06/tela8.png)
+[![tela8](/wp-content/uploads/2012/06/tela8.png "tela8")](/wp-content/uploads/2012/06/tela8.png)[  ](/wp-content/uploads/2012/06/tela8.png)
 
 Agora precisamos criar as subredes. Vá em Network -&gt; Subnets -&gt; Create Subnet:
 
-[![](/wp-content/uploads/2012/06/tela9.png "tela9")](/wp-content/uploads/2012/06/tela9.png)[  ](/wp-content/uploads/2012/06/tela9.png)
+[![tela9](/wp-content/uploads/2012/06/tela9.png "tela9")](/wp-content/uploads/2012/06/tela9.png)[  ](/wp-content/uploads/2012/06/tela9.png)
 
-[![](/wp-content/uploads/2012/06/tela10.png "tela10")](/wp-content/uploads/2012/06/tela10.png)[  ](/wp-content/uploads/2012/06/tela10.png)
+[![tela10](/wp-content/uploads/2012/06/tela10.png "tela10")](/wp-content/uploads/2012/06/tela10.png)[  ](/wp-content/uploads/2012/06/tela10.png)
 
 Preencha os campos conforme o seu ambiente e neste ponto, você já terá o IPPlan instalado e com a configuração básica feita.
 

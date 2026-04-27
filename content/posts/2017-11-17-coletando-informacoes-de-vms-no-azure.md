@@ -5,6 +5,10 @@ date: '2017-11-17T12:01:03-05:00'
 tags:
     - azure
 description: "Recentemente precisei acessar um ambiente para coletar informações sobre VMs e estou compartilhando aqui os comandos usados (pode ser útil no futuro)."
+cover:
+  image: "/og/coletando-informacoes-de-vms-no-azure.png"
+  alt: ""
+  hidden: true
 ---
 
 Recentemente precisei acessar um ambiente para coletar informações sobre VMs e estou compartilhando aqui os comandos usados (pode ser útil no futuro).

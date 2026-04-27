@@ -9,6 +9,10 @@ tags:
     - azure
     - cloud
     - arquitetura
+cover:
+  image: "/og/guia-para-arquitetura-de-aplicacoes.png"
+  alt: ""
+  hidden: true
 ---
 
 Se você estiver desenvolvendo seus aplicativos nativos em nuvem, recomendo fortemente que você consulte este guia mesmo que não esteja usando Azure especificamente.

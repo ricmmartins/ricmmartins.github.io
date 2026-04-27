@@ -7,6 +7,10 @@ tags:
     - linux
     - cursos
 description: "Isso mesmo, agora não tem mais desculpa para não usar o Ubuntu. O time de desenvolvimento do Ubuntu libera um curso dividido em 10 lições, completamente"
+cover:
+  image: "/og/curso-oficial-do-ubuntu-linux-gratuito.png"
+  alt: ""
+  hidden: true
 ---
 
 Isso mesmo, agora não tem mais desculpa para não usar o Ubuntu.

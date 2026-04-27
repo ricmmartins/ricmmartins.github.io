@@ -5,6 +5,10 @@ date: '2016-11-10T00:35:22-05:00'
 tags:
     - azure
 description: "Nesta série de artigos gostaria de compartilhar algumas boas práticas para quem administra ambientes no Azure, abordando temas como organização dos"
+cover:
+  image: "/og/melhores-praticas-para-administradores-de-sistemas-na-nuvem-da-microsoft-azure-parte-i.png"
+  alt: ""
+  hidden: true
 ---
 
 Nesta série de artigos gostaria de compartilhar algumas boas práticas para quem administra ambientes no Azure, abordando temas como organização dos recursos, monitoramento, backup, segurança, auditoria, alta disponibilidade, limites, permissionamento, automação, entre outros.
@@ -30,13 +34,13 @@ Você pode acessar sua subscription acessando o portal do Azure em <https://port
 
 ## Entendendo a hierarquia entre Azure Account e Subscription
 
-![](/wp-content/uploads/2016/11/account.png)
+![Account - Melhores práticas para administradores de sistemas na nuvem da Microsoft (Azure) &#8211; Parte I](/wp-content/uploads/2016/11/account.png)
 
 Uma conta pode ter múltiplas subscriptions e uma única subscription pode ter múltiplos serviços.
 
 Se você é um cliente corporativo e possui um Enterprise Agreement (conhecido como contrato EA), então você pode associar múltiplas contas ao seu contrato EA. O principal benefício de ter um contrato EA é a possibilidade de ter maiores descontos no valor dos serviços que você venha a usar no Azure.
 
-![](/wp-content/uploads/2016/11/ea.png)
+![Imagem do post Melhores práticas para administradores de sistemas na nuvem da Microsoft (Azure) &#8211; Parte I](/wp-content/uploads/2016/11/ea.png)
 
 Se você possui um contrato EA você pode acessá-lo em <https://ea.windowsazure.com>
 
@@ -50,25 +54,25 @@ Em resumo:
 
 Dependendo da sua empresa, podem haver diversas formar de organizar contas e subscriptions. Se a empresa é uma multinacional por exemplo, você pode ter uma conta por região e gerenciar as assinaturas à nivel da região. Por exemplo:
 
-![](/wp-content/uploads/2016/11/region.png)
+![Region - Melhores práticas para administradores de sistemas na nuvem da Microsoft (Azure) &#8211; Parte I](/wp-content/uploads/2016/11/region.png)
 
 Então você pode usar a seguinte estrutura:
 
-![](/wp-content/uploads/2016/11/organization.png)
+![Organization - Melhores práticas para administradores de sistemas na nuvem da Microsoft (Azure) &#8211; Parte I](/wp-content/uploads/2016/11/organization.png)
 
 E no caso de uma região precisar ter mais de uma subscription associada a um determinado grupo/departamento, a convenção de nomenclatura deve incorporar uma forma de identificar os dados adicionais no nome da conta ou da subscription, por exemplo:
 
-![](/wp-content/uploads/2016/11/region2.png)
+![Region2 - Melhores práticas para administradores de sistemas na nuvem da Microsoft (Azure) &#8211; Parte I](/wp-content/uploads/2016/11/region2.png)
 
 E neste caso a organização poderia ser desta forma:
 
-![](/wp-content/uploads/2016/11/contoso-org.png)
+![Contoso Org](/wp-content/uploads/2016/11/contoso-org.png)
 
 ## Divisão por departamentos
 
 Na hierarquia de organização existe a categoria intermediária chamada departamentos. Ela pode estar entre o EA e as Accounts conforme a imagem abaixo:
 
-![](https://ricardomartins9888.blob.core.windows.net/wordpress/2016/11/dapartamentos.png)
+![Dapartamentos - Melhores práticas para administradores de sistemas na nuvem da Microsoft (Azure) &#8211; Parte I](https://ricardomartins9888.blob.core.windows.net/wordpress/2016/11/dapartamentos.png)
 
 Ela é mais uma segmentação que você pode usar na sua estrutura de modo a ter uma organização mais eficiente.
 

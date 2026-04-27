@@ -9,6 +9,10 @@ tags:
     - azure
     - linux
     - storage
+cover:
+  image: "/og/configurando-lvm-no-linux-rodando-no-azure.png"
+  alt: ""
+  hidden: true
 ---
 
 Este é um post rápido mostrando uma forma básica de configuração do LVM no Linux. É resultado de um laboratório que estive fazendo enquanto estudava para o exame [LFCS](https://training.linuxfoundation.org/certification/lfcs).

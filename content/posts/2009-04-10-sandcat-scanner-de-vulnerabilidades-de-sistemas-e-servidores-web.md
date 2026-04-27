@@ -6,6 +6,10 @@ date: '2009-04-10T17:36:19-04:00'
 tags:
     - segurança
 description: "Autor: Pedro Augusto de O. Pereira / Considere o Sandcat um NMap especializado em varrer servidores web (como IIS ou Apache) e aplicações web (o seu"
+cover:
+  image: "/og/sandcat-scanner-de-vulnerabilidades-de-sistemas-e-servidores-web.png"
+  alt: ""
+  hidden: true
 ---
 
 Autor: Pedro Augusto de O. Pereira / <http://augusto.pedro.googlepages.com/>
@@ -14,7 +18,7 @@ Considere o Sandcat um [NMap](http://www.insecure.org/nmap) especializado em var
 
 Existem várias opções para este tipo de aplicativo, a que mais gosto e uso regularmente é o scanner da [Acunetix](http://www.acunetix.com/), chamado [Web Vulnerability Scanner](http://www.acunetix.com/vulnerability-scanner/). Uma outra opção que tenho usado há alguns dias e gostado bastante é o [Sandcat](http://www.syhunt.com/section.php?id=sandcat), da empresa Syhunt.
 
-[![](http://www.syhunt.com/img/screenshots/current/012.jpg) ](http://www.syhunt.com/img/screenshots/current/012.jpg)
+[![Imagem do post Sandcat - Scanner de vulnerabilidades de sistemas e servidores web](http://www.syhunt.com/img/screenshots/current/012.jpg) ](http://www.syhunt.com/img/screenshots/current/012.jpg)
 
 Ela é gratuita para ser utilizada e bem completa (bem próxima do nível do Web Vulnerability Scanner, da Acunetix). Ele checa por, aproximadamente, 260 vulnerabilidades conhecidas (utilizando o ranking de várias entidades como OWASP, OWASP PHP, CVE, CWE, etc), detecta falhas de XSS (Cross Site Scripting), testas sistemas IDS, consegue explorar sistemas web desenvolvidos utilizando AJAX, descobre e analisa a configuração utilizada no servidor automaticamente para descobrir quais testes são necessários, etc.
 

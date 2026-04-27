@@ -5,6 +5,10 @@ date: '2010-08-17T13:34:19-04:00'
 tags:
     - windows
 description: "Vou compartilhar com vocês um utilitário gratuito da Microsoft, que é uma mão na roda para adminsitradortes de redes. Estou falando do Windows Steady"
+cover:
+  image: "/og/voce-conhece-o-windows-steady-state.png"
+  alt: ""
+  hidden: true
 ---
 
 Vou compartilhar com vocês um utilitário gratuito da Microsoft, que é uma mão na roda para adminsitradortes de <span class="bbli">redes</span>. Estou falando do Windows Steady State, um utilitário para configurar restrições, similares à GPO’s de domínio, em estações clientes. Eu utilizo em vários clientes e recomendo.
@@ -21,7 +25,7 @@ Antes de instalar o produto deve-se desfragmentar o disco rígido para só entã
 
 Já na tela inicial encontramos os três vértices do produto que são as configurações de restrições ao computador, agendamento de atualizações de software e proteção de disco rígido.
 
-![](/wp-content/uploads/2010/08/telainicial1.jpg "telainicial")
+![telainicial](/wp-content/uploads/2010/08/telainicial1.jpg "telainicial")
 
 Através da criação de contas particulares de usuários através do próprio WSS, que é o primeiro passo a ser dado nesta ferramenta, chega-se à configuração de restrições ao usuário. Tais como remoção de opções de menus e também configurações de aplicações para o Windows XP. Há ainda como restringir acesso a websites e restringir o tempo de utilização da máquina.
 
@@ -37,7 +41,7 @@ Considerando que a TI decidiu instalar o WSS em todos os PCs da empresa, ou aind
 
 #### Configurando as restrições do computador
 
-![](/wp-content/uploads/2010/08/Fig11.jpg "Fig1")
+![Fig1](/wp-content/uploads/2010/08/Fig11.jpg "Fig1")
 
 De acordo com a **Figura 1** percebemos as seguintes opções:
 
@@ -82,11 +86,11 @@ Alguns exemplos de uso:
 
 Na **figura 2** encontramos o agendamento de atualizações a ser realizado pelo WSS. Esta característica está diretamente ligada à proteção de HD que veremos logo em seguida. Há ainda a possibilidade de implementação de scripts para a realização das atualizações.
 
-![](/wp-content/uploads/2010/08/Fig2.jpg "Fig2")
+![Fig2](/wp-content/uploads/2010/08/Fig2.jpg "Fig2")
 
 Na **figura 3** chegamos à proteção de HD que pode ser realizada através de três alternativas a partir do momento em que é habilitada.
 
-![](/wp-content/uploads/2010/08/Fig3.jpg "Fig3")
+![Fig3](/wp-content/uploads/2010/08/Fig3.jpg "Fig3")
 
 *2. Remover todas as alterações ao reinício – Remove todas as mudanças feitas pelo usuário no próximo boot.*
 

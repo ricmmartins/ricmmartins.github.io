@@ -5,6 +5,10 @@ date: '2009-11-04T00:45:10-05:00'
 tags:
     - carreira    
 description: "Fico impressionado ao ver o quanto as peassoas choram, reclamam, lamentam, passam o tempo se lamuriando das coisas, dos outros, de tudo enfim. Basta"
+cover:
+  image: "/og/passe-do-plano-do-choro-ao-plano-da-acao.png"
+  alt: ""
+  hidden: true
 ---
 
 Fico impressionado ao ver o quanto as peassoas choram, reclamam, lamentam, passam o tempo se lamuriando das coisas, dos outros, de tudo enfim. Basta encontrar alguém para começarem a reclamar. “Não dá mais”, “Não aguento mais”, “Do jeito que as coisas vão, não sei o que vai ser de mim”, etc…

@@ -6,6 +6,10 @@ tags:
     - carreira
     - microsoft
 description: "Chega um momento na carreira de todos nós que por mais que estejamos satisfeitos com a posição que temos, o cargo que ocupamos e as atividades que"
+cover:
+  image: "/og/perdeu-a-tao-desejada-vaga-e-agora.png"
+  alt: ""
+  hidden: true
 ---
 
 Chega um momento na carreira de todos nós que por mais que estejamos satisfeitos com a posição que temos, o cargo que ocupamos e as atividades que desempenhamos, desejamos algo maior. Penso que não ná nenhum problema nisso, afinal, evoluir é preciso.

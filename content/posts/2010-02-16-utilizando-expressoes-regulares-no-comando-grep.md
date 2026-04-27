@@ -6,6 +6,10 @@ tags:
     - linux
     - regex
 description: "Como faço para usar o comando grep com expressões regulares em sistemas operacionais Linux?"
+cover:
+  image: "/og/utilizando-expressoes-regulares-no-comando-grep.png"
+  alt: ""
+  hidden: true
 ---
 
 Como faço para usar o comando grep com expressões regulares em sistemas operacionais Linux?

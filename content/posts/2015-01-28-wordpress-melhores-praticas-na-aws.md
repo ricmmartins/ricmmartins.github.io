@@ -6,6 +6,10 @@ tags:
     - aws
     - wordpress
 description: "Encontrei hoje um excelente material contendo as melhores práticas para implementações do WordPress na Amazon e estou compartilhando:"
+cover:
+  image: "/og/wordpress-melhores-praticas-na-aws.png"
+  alt: ""
+  hidden: true
 ---
 
 Encontrei hoje um excelente material contendo as melhores práticas para implementações do WordPress na Amazon e estou compartilhando:

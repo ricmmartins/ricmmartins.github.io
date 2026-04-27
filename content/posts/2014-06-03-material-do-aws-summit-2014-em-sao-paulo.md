@@ -7,6 +7,10 @@ tags:
     - aws
     - cloud
 description: "Se você perdeu o AWS Summit, confira neste link todas as apresentações que rolaram por lá."
+cover:
+  image: "/og/material-do-aws-summit-2014-em-sao-paulo.png"
+  alt: ""
+  hidden: true
 ---
 
 Se você perdeu o AWS Summit, confira [neste link](http://www.slideshare.net/AmazonWebServicesLATAM/tag/aws-summit-brasil-2014?mkt_tok=3RkMMJWWfF9wsRohu6XMZKXonjHpfsX56OkvX6axlMI%2F0ER3fOvrPUfGjI4ARcpiPK%2BTFAwTG5toziV8R7jML81rzNQQUhDr "AWS Summit 2014") todas as apresentações que rolaram por lá.

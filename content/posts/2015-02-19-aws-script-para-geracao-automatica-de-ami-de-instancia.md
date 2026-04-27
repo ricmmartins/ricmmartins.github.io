@@ -6,6 +6,10 @@ tags:
     - aws
     - scripts
 description: "Se você administra servidores na nuvem da AWS, certamente este script irá te auxiliar bastante a automatizar a geração da AMI da sua instância. O AMI é"
+cover:
+  image: "/og/aws-script-para-geracao-automatica-de-ami-de-instancia.png"
+  alt: ""
+  hidden: true
 ---
 
 Se você administra servidores na nuvem da AWS, certamente este script irá te auxiliar bastante a automatizar a geração da AMI da sua instância. O AMI é uma imagem da sua instância que você pode utilizar em caso de recuperação de desastres.

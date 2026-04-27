@@ -5,6 +5,10 @@ date: '2013-12-09T11:58:18-05:00'
 tags:
     - utilitários
 description: "Recentemente descobrí uma feature no VirtualBox muito interessante, que confesso que não fazia idéia que existia. Estou falando do recurso de agrupar as"
+cover:
+  image: "/og/organizando-suas-maquinas-virtuais-virtualbox.png"
+  alt: ""
+  hidden: true
 ---
 
 Recentemente descobrí uma feature no VirtualBox muito interessante, que confesso que não fazia idéia que existia. Estou falando do recurso de agrupar as máquinas.
@@ -17,6 +21,6 @@ Basta você clicar com o botão direito na lista de máquinas e escolher a opç�
 
 Depois você pode ainda expandir e visualizar apenas as máquinas de determinado grupo que esteja trabalhando, veja:
 
-[![](/media/Screen-Shot-2013-12-09-at-11.25.39.png)](/media/Screen-Shot-2013-12-09-at-11.25.39.png)  
+[![Captura de tela: Shot 2013](/media/Screen-Shot-2013-12-09-at-11.25.39.png)](/media/Screen-Shot-2013-12-09-at-11.25.39.png)  
 
 Fica registrada aqui então mais essa dica simples e que mudou o meu conceito sobre o Virtuabox, rs,

@@ -5,6 +5,10 @@ date: '2015-03-19T15:58:11-04:00'
 tags:
     - nginx
 description: "Essa é uma dica rápida, mas extremamente útil. Digamos que em um mesmo servidor você tem um nginx configurado com dois sites distintos mas quer evitar que"
+cover:
+  image: "/og/nginx-como-desabilitar-acesso-por-ip.png"
+  alt: ""
+  hidden: true
 ---
 
 Essa é uma dica rápida, mas extremamente útil. Digamos que em um mesmo servidor você tem um nginx configurado com dois sites distintos mas quer evitar que o servidor resposta por acessos via IP. Então abaixo você vai saber como restringir o acesso por nome.

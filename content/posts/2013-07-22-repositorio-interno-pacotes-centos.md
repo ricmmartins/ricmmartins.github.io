@@ -6,6 +6,10 @@ author: rmmartins
 tags:
     - linux
 description: "O objetivo deste post, é mostrar como criar um repositório local do CentOS. Criando um repositório local você tem alguns benefícios interessantes, dentre"
+cover:
+  image: "/og/repositorio-interno-pacotes-centos.png"
+  alt: ""
+  hidden: true
 ---
 
 O objetivo deste post, é mostrar como criar um repositório local do CentOS.

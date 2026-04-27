@@ -9,12 +9,16 @@ tags:
   - azure
   - economia
   - custos
+cover:
+  image: "/og/desvendando-azure-reservations-e-savings-plans.png"
+  alt: ""
+  hidden: true
 ---
 
 ## Introdução:
 No âmbito da computação em nuvem, otimizar os custos é fundamental para empresas que utilizam o Microsoft Azure. O Azure oferece dois mecanismos principais de economia de custos: [Azure Reservations](https://learn.microsoft.com/pt-br/azure/cost-management-billing/reservations/save-compute-costs-reservations) e [Savings Plans](https://learn.microsoft.com/pt-br/azure/cost-management-billing/savings-plan/savings-plan-compute-overview). Ambas as opções possuem vantagens, desvantagens e cenários de uso distintos. Neste guia abrangente, exploraremos esses recursos, penalidades e casos de uso ideais para capacitar você a tomar decisões informadas adaptadas às necessidades do seu negócio.
 
-<img src="/assets/images/cloud-costs.jpeg" style="width: 50%; height: 50%; margin-left: auto; margin-right: auto;">
+<img src="/assets/images/cloud-costs.jpeg" alt="nuvem custos" style="width: 50%; height: 50%; margin-left: auto; margin-right: auto;">
 
 ## Compreendendo as Reservas do Azure (Azure Reservations):
 

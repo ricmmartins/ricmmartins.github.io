@@ -5,6 +5,10 @@ date: '2009-04-10T17:50:53-04:00'
 tags:
     - segurança
 description: "Autor: Pedro Augusto de O. Pereira / Senhas, como já sabemos, são o ponto mais fraco de qualquer sistema de segurança pois geralmente são definidas por"
+cover:
+  image: "/og/quebrando-senhas-do-windows-e-do-linux-com-john-the-ripper.png"
+  alt: ""
+  hidden: true
 ---
 
 Autor: Pedro Augusto de O. Pereira / <http://augusto.pedro.googlepages.com/>

@@ -6,6 +6,10 @@ tags:
     - monitoramento
     - ferramentas
 description: "Encontrei nesta semana uma ferramenta interessante, o PimpMyLog. Encontrei por acaso no Github, procurando uma ferramenta simples para visualizar logs via"
+cover:
+  image: "/og/pimpmylog-uma-ferramenta-web-para-visualizacao-de-logs.png"
+  alt: ""
+  hidden: true
 ---
 
 Encontrei nesta semana uma ferramenta interessante, o [PimpMyLog](http://pimpmylog.com/). Encontrei por acaso no [Github](https://github.com/potsky/PimpMyLog), procurando uma ferramenta simples para visualizar logs via browser. Precisava de algo simples, objetivo e funcional.

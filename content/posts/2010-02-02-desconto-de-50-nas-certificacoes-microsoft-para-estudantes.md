@@ -5,9 +5,13 @@ date: '2010-02-02T20:30:10-05:00'
 tags:
     - certificação
 description: "[](/wp-content/uploads/2010/02/Prometric-Student-Priced-Exams4.jpg) Você sabia? Desde Novembro/2009 a Microsoft está com uma promoção oferecendo 50% de"
+cover:
+  image: "/og/desconto-de-50-nas-certificacoes-microsoft-para-estudantes.png"
+  alt: ""
+  hidden: true
 ---
 
-[![](/wp-content/uploads/2010/02/Prometric-Student-Priced-Exams4.jpg "Prometric Student Priced Exams[4]")](/wp-content/uploads/2010/02/Prometric-Student-Priced-Exams4.jpg)
+[![Prometric Student Priced Exams[4]](/wp-content/uploads/2010/02/Prometric-Student-Priced-Exams4.jpg "Prometric Student Priced Exams[4]")](/wp-content/uploads/2010/02/Prometric-Student-Priced-Exams4.jpg)
 
 Você sabia? Desde Novembro/2009 a Microsoft está com uma promoção oferecendo 50% de desconto para estudantes em suas provas de certificação?
 

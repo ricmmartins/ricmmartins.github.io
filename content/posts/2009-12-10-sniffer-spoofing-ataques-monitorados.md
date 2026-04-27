@@ -6,6 +6,10 @@ tags:
     - networking
     - segurança
 description: "Neste post, irei iniciar uma série de artigos relacionados à segurança de redes. Para iniciar, escolhí este tema."
+cover:
+  image: "/og/sniffer-spoofing-ataques-monitorados.png"
+  alt: ""
+  hidden: true
 ---
 
 Neste post, irei iniciar uma série de artigos relacionados à segurança de redes. Para iniciar, escolhí este tema.

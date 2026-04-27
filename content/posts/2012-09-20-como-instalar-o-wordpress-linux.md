@@ -6,6 +6,10 @@ tags:
     - wordpress
     - linux
 description: "Olá. Depois de algum tempo sem postar novidades por aqui, aqui estamos nós. Vou descrever como realizar a instalação do WordPress no Linux. Neste exemplo"
+cover:
+  image: "/og/como-instalar-o-wordpress-linux.png"
+  alt: ""
+  hidden: true
 ---
 
 Olá. Depois de algum tempo sem postar novidades por aqui, aqui estamos nós. Vou descrever como realizar a instalação do WordPress no Linux. Neste exemplo, estou usando o CentOS 6.3.

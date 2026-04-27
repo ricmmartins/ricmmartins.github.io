@@ -6,11 +6,15 @@ tags:
     - certificação
     - windows
 description: "Há um grande eBook que acaba de ser lançado no site da Microsoft que dá uma boa visão de muitas das tecnologias e conceitos que você precisa para"
+cover:
+  image: "/og/guia-essencial-para-a-implantacao-do-windows-7.png"
+  alt: ""
+  hidden: true
 ---
 
 Há um grande eBook que acaba de ser lançado no site da Microsoft que dá uma boa visão de muitas das tecnologias e conceitos que você precisa para considerar e se basear para quando você começar a trabalhar na implantação do Windows 7, e a melhor coisa é que o eBook é grátis!
 
-[![](/wp-content/uploads/2010/11/eBook_thumb.jpg "eBook_thumb")](http://www.ricardomartins.com.br/wp-content/uploads/2010/11/eBook_thumb.jpg)
+[![eBook_thumb](/wp-content/uploads/2010/11/eBook_thumb.jpg "eBook_thumb")](http://www.ricardomartins.com.br/wp-content/uploads/2010/11/eBook_thumb.jpg)
 
 Ele abrange uma série de temas, incluindo alguns muito comuns que as pessoas costumam ter problemas, e como você pode ver na tabela abaixo, o escopo do livro é surpreendentemente amplo:
 

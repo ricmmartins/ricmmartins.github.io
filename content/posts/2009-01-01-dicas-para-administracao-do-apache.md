@@ -5,6 +5,10 @@ date: '2009-01-01T03:52:56-05:00'
 tags:
     - apache
 description: "Em artigo para o seu blog, Erick Lubow discute mais sobre melhores formas de administrar o Apache, mostrando configurações para um melhor gerenciamento de"
+cover:
+  image: "/og/dicas-para-administracao-do-apache.png"
+  alt: ""
+  hidden: true
 ---
 
 Em artigo para o seu blog, Erick Lubow discute mais sobre melhores formas de administrar o Apache, mostrando configurações para um melhor gerenciamento de logs, dicas de segurança, organização da estrutura de diretórios e como melhorar a performance do servidor…

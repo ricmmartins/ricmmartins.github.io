@@ -5,6 +5,10 @@ date: '2009-04-10T18:04:36-04:00'
 tags:
      - segurança
 description: "Este artigo mostra como realizar uma configuração no windows, de modo a bloquear o acesso à storage devices, que podem ser entendidos como pendrives"
+cover:
+  image: "/og/limitando-o-uso-de-storage-devices-pendrives-disquetes-cd-roms-no-windows.png"
+  alt: ""
+  hidden: true
 ---
 
 Este artigo mostra como realizar uma configuração no windows, de modo a bloquear o acesso à storage devices, que podem ser entendidos como pendrives, disquetes e cd-roms, pelos usuários nas máquinas com Windows Xp. Desta forma, podemos diminuir drasticamente a incidência de vírus, spywares e malwares na sua rede.
@@ -80,23 +84,23 @@ Disabled=”Disabled”
 Feito isso, deve-se ir em START, RUN e digitar o seguinte comando : gpedit.msc  
 Com isso a seguinte tela deverá aparecer:
 
-![](http://adminonline.files.wordpress.com/2007/06/gpoedit.jpg)
+![Editor de GPO - Limitando o uso de Storage Devices (PenDrives, Disquetes, Cd-Rom’s) no Windows](http://adminonline.files.wordpress.com/2007/06/gpoedit.jpg)
 
 Clicando com o botão direito do mouse em Administrative Templates, e posteriormente em Add/Remove Templates, abre-se uma nova janela:
 
-![](http://adminonline.files.wordpress.com/2007/06/gpoedit2.jpg)
+![Gpoedit2 - Limitando o uso de Storage Devices (PenDrives, Disquetes, Cd-Rom’s) no Windows](http://adminonline.files.wordpress.com/2007/06/gpoedit2.jpg)
 
 Clicando em Add… e adicionando o arquivo criado anteriormente, a tela deve mudar para a seguinte:
 
-![](http://adminonline.files.wordpress.com/2007/06/gpoedit3.jpg)
+![Gpoedit3 - Limitando o uso de Storage Devices (PenDrives, Disquetes, Cd-Rom’s) no Windows](http://adminonline.files.wordpress.com/2007/06/gpoedit3.jpg)
 
 Feito isso, clica-se em Close e o menu do Group Policy Editor deve ser igual a este:
 
-![](http://adminonline.files.wordpress.com/2007/06/gpoedit41.jpg)
+![Gpoedit41 - Limitando o uso de Storage Devices (PenDrives, Disquetes, Cd-Rom’s) no Windows](http://adminonline.files.wordpress.com/2007/06/gpoedit41.jpg)
 
 Para que as opções apareçam corretamente deve-se clicar em View e desmarcar a opção que diz Only Show Policies That Can be Fully Managed. Com isso, agora fica muito mais fácil desativar e reativar o uso de pendrives, disquetes até mesmo o cd-rom. Basta entrar em cada uma das opções e fazer o seguinte :
 
-![](http://adminonline.files.wordpress.com/2007/06/gpoedit5.jpg)
+![Gpoedit5 - Limitando o uso de Storage Devices (PenDrives, Disquetes, Cd-Rom’s) no Windows](http://adminonline.files.wordpress.com/2007/06/gpoedit5.jpg)
 
 Vale lembrar que este método, bloqueia acesso apenas a dispositivos de storage e sendo assim, dispositivos USB, como mouses, teclados e etc, funcionam normalente.
 

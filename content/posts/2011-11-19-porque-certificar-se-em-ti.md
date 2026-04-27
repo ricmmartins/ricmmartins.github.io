@@ -6,6 +6,10 @@ tags:
     - carreira
     - certificação
 description: "Se você parou para ler este texto eu suponho que: Deseja obter uma certificação"
+cover:
+  image: "/og/porque-certificar-se-em-ti.png"
+  alt: ""
+  hidden: true
 ---
 
 Se você parou para ler este texto eu suponho que:

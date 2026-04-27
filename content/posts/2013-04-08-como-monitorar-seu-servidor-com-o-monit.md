@@ -6,6 +6,10 @@ tags:
     - linux
     - monitoramento
 description: "Olá pessoal. Este é um post rápido. Como no meu post anterior sobre a instalação do Nginx eu comentei sobre o Monit, achei que seria interessante"
+cover:
+  image: "/og/como-monitorar-seu-servidor-com-o-monit.png"
+  alt: ""
+  hidden: true
 ---
 
 Olá pessoal. Este é um post rápido. Como no meu post anterior sobre a instalação do Nginx eu comentei sobre o Monit, achei que seria interessante compartilhar mais informações sobre o uso do Monit.

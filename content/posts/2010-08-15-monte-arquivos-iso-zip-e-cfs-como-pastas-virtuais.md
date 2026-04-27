@@ -5,6 +5,10 @@ date: '2010-08-15T21:48:58-04:00'
 tags:
     - windows
 description: "Se você é um “Hard User” de Internet, já sabe do que estou falando e está bem acostumado com arquivos ISO."
+cover:
+  image: "/og/monte-arquivos-iso-zip-e-cfs-como-pastas-virtuais.png"
+  alt: ""
+  hidden: true
 ---
 
 Se você é um “Hard User” de Internet, já sabe do que estou falando e está bem acostumado com arquivos ISO.
@@ -15,8 +19,8 @@ Existe uma ferramenta que permite que você monte esses arquivos como pastas vir
 
 Abaixo algumas screenshots.
 
-![](/wp-content/uploads/2010/08/pismo-file-mount-audit-package.jpg "pismo-file-mount-audit-package")
+![pismo-file-mount-audit-package](/wp-content/uploads/2010/08/pismo-file-mount-audit-package.jpg "pismo-file-mount-audit-package")
 
-![](/wp-content/uploads/2010/08/pismo-file-mount-audit-package-mount-option.jpg "pismo-file-mount-audit-package-mount-option")
+![pismo-file-mount-audit-package-mount-option](/wp-content/uploads/2010/08/pismo-file-mount-audit-package-mount-option.jpg "pismo-file-mount-audit-package-mount-option")
 
 Faça o download em <http://www.pismotechnic.com/download/pfmap-050.exe>

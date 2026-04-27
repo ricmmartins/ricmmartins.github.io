@@ -6,6 +6,10 @@ tags:
     - segurança
     - windows
 description: "Essa dica é de um amigo meu (Igor Humberto). Foi publicada em outro site, mas tive a autorização para publicar aqui."
+cover:
+  image: "/og/como-impedir-o-uso-do-seu-sistema-usando-o-syskey.png"
+  alt: ""
+  hidden: true
 ---
 
 Essa dica é de um amigo meu (Igor Humberto). Foi publicada em outro site, mas tive a autorização para publicar aqui.

@@ -9,11 +9,15 @@ tags:
     - azure
     - webapps
     - docker
+cover:
+  image: "/og/como-implementar-o-dspace-em-um-webapp-container-no-azure.png"
+  alt: ""
+  hidden: true
 ---
 
 # O que é o DSpace?
 
-[![](/wp-content/uploads/2018/04/dspace-logo.png)](/wp-content/uploads/2018/04/dspace-logo.png)
+[![Logo do DSpace](/wp-content/uploads/2018/04/dspace-logo.png)](/wp-content/uploads/2018/04/dspace-logo.png)
 
 [DSpace](https://wiki.duraspace.org/display/DSDOC6x/Introduction) é um software opensource tipicamente usado para criar repositórios de acesso público para conteúdo digital acadêmico. Enquanto ele possui alguns recursos que se sobrepõem com recursos de sistemas de gerenciamento de conteúdo, ele <span class="" id="result_box" lang="pt"><span class=""> atende a uma necessidade específica de sistema de arquivos digitais, focado no armazenamento de longo prazo, acesso e preservação de conteúdo digital.</span></span>
 
@@ -135,11 +139,11 @@ Observação: Caso você não possua uma conta no Docker Hub, basta acessar <htt
 
 Faça a criação do serviço do Azure Webapp Container e aponte para a imagem Docker no seu repositório do Docker Hub conforme abaixo:
 
-[![](/wp-content/uploads/2018/05/webapp.png)](/wp-content/uploads/2018/05/webapp.png)
+[![Web App - Como implementar o DSpace em um WebApp Container no Azure](/wp-content/uploads/2018/05/webapp.png)](/wp-content/uploads/2018/05/webapp.png)
 
 E certifique-se de ter as seguintes variáveis configuradas:
 
-[![](/wp-content/uploads/2018/05/variables.png)](/wp-content/uploads/2018/05/variables.png)
+[![Variables - Como implementar o DSpace em um WebApp Container no Azure](/wp-content/uploads/2018/05/variables.png)](/wp-content/uploads/2018/05/variables.png)
 
 # Finalizando
 
@@ -147,18 +151,18 @@ Em alguns minutos, teremos o DSpace rodando no Azure Webapp Container com Azure 
 
 ## JSPUI
 
-[![](/wp-content/uploads/2018/05/running-jspui.png)](/wp-content/uploads/2018/05/running-jspui.png)
+[![Running Jspui](/wp-content/uploads/2018/05/running-jspui.png)](/wp-content/uploads/2018/05/running-jspui.png)
 
 ## XMLUI
 
-## [![](/wp-content/uploads/2018/05/running-xmlui.png)](/wp-content/uploads/2018/05/running-xmlui.png)
+## [![Running Xmlui](/wp-content/uploads/2018/05/running-xmlui.png)](/wp-content/uploads/2018/05/running-xmlui.png)
 
 ## OAI
 
-[![](/wp-content/uploads/2018/05/running-oai.png)](/wp-content/uploads/2018/05/running-oai.png)
+[![Running Oai](/wp-content/uploads/2018/05/running-oai.png)](/wp-content/uploads/2018/05/running-oai.png)
 
 ## REST API
 
-[![](/wp-content/uploads/2018/05/running-rest.png)](/wp-content/uploads/2018/05/running-rest.png)
+[![Running Rest](/wp-content/uploads/2018/05/running-rest.png)](/wp-content/uploads/2018/05/running-rest.png)
 
 Até a próxima!

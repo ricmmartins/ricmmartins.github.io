@@ -6,6 +6,10 @@ tags:
     - ftp
     - linux
 description: "Este artigo, disponibilizado pelo VivaOLinux.com.br, apresenta a instalação e configuração de um servidor FTP com proftpd, serviço essencial para quem"
+cover:
+  image: "/og/instalando-e-configurando-um-servidor-ftp.png"
+  alt: ""
+  hidden: true
 ---
 
 Este artigo, disponibilizado pelo VivaOLinux.com.br, apresenta a instalação e configuração de um servidor FTP com proftpd, serviço essencial para quem trabalha com transferências de arquivos…

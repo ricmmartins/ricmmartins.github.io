@@ -6,6 +6,10 @@ tags:
     - azure
     - monitoramento
 description: "Recentemente foi lançado um plugin do Azure Monitor para o Grafana que eu resolvi testar e escrever este post."
+cover:
+  image: "/og/coletando-informacoes-do-azure-com-grafana.png"
+  alt: ""
+  hidden: true
 ---
 
 Recentemente [foi lançado um plugin do Azure Monitor para o Grafana](https://azure.microsoft.com/en-us/blog/monitor-azure-services-and-applications-using-grafana/) que eu resolvi testar e escrever este post.
@@ -94,11 +98,11 @@ rmartins@grafana-server:~$ sudo systemctl enable grafana-server.service
 
 Usar o endereço IP público da VM criada apontando para o a porta 3000 e utilizar o usuário e senha que vem configurados por padrão. Usuário admin e senha admin.
 
-[![](/wp-content/uploads/2017/11/imagem1.png)](/wp-content/uploads/2017/11/imagem1.png)
+[![Imagem1 - Coletando informações do Azure com Grafana](/wp-content/uploads/2017/11/imagem1.png)](/wp-content/uploads/2017/11/imagem1.png)
 
 Uma vez verificado que o acesso está ok, vamos ao próximo passo que é a instalação do plugin do Azure Monitor
 
-## [![](/wp-content/uploads/2017/11/imagem2.png)](/wp-content/uploads/2017/11/imagem2.png)
+## [![Imagem2 - Coletando informações do Azure com Grafana](/wp-content/uploads/2017/11/imagem2.png)](/wp-content/uploads/2017/11/imagem2.png)
 
 ## Instalando o Azure Monitor Plugin
 
@@ -118,7 +122,7 @@ rmartins@grafana-server:~$ sudo systemctl restart grafana-server
 
 Após isto será possível verificar que o plugin já foi instalado e já aparece como um datasource:
 
-[![](/wp-content/uploads/2017/11/imagem3.png)](/wp-content/uploads/2017/11/imagem3.png)
+[![Imagem3 - Coletando informações do Azure com Grafana](/wp-content/uploads/2017/11/imagem3.png)](/wp-content/uploads/2017/11/imagem3.png)
 
 ### Criando o service principal
 
@@ -126,40 +130,40 @@ O próximo passo é criar um service principal para o plugin de modo que ele pos
 
 Ao registrar a aplicação, no meu caso ficou conforme abaixo:
 
-[![](/wp-content/uploads/2017/11/imagem4.png)](/wp-content/uploads/2017/11/imagem4.png)
+[![Imagem4 - Coletando informações do Azure com Grafana](/wp-content/uploads/2017/11/imagem4.png)](/wp-content/uploads/2017/11/imagem4.png)
 
 Após registrar a aplicação, vamos pegar as informações de Application Id e Authentication Key. Para isto, ainda dentro do App Registration do AAD, vamos procurar pela aplicação criada:
 
-[![](/wp-content/uploads/2017/11/imagem5.png)](/wp-content/uploads/2017/11/imagem5.png)
+[![Imagem5 - Coletando informações do Azure com Grafana](/wp-content/uploads/2017/11/imagem5.png)](/wp-content/uploads/2017/11/imagem5.png)
 
 Após clicar na aplicação, basta copiar o Application ID, neste caso, addd1254-cb9b-4589-a99c-ac382ebd33ba
 
-[![](/wp-content/uploads/2017/11/imagem6.png)](/wp-content/uploads/2017/11/imagem6.png)
+[![Imagem6 - Coletando informações do Azure com Grafana](/wp-content/uploads/2017/11/imagem6.png)](/wp-content/uploads/2017/11/imagem6.png)
 
 Para gerar a Authentication Key, basta ir em Keys dentro de All Settings:
 
-[![](/wp-content/uploads/2017/11/imagem7.png)](/wp-content/uploads/2017/11/imagem7.png)
+[![Imagem7 - Coletando informações do Azure com Grafana](/wp-content/uploads/2017/11/imagem7.png)](/wp-content/uploads/2017/11/imagem7.png)
 
-[![](/wp-content/uploads/2017/11/imagem8.png)](/wp-content/uploads/2017/11/imagem8.png)
+[![Imagem8 - Coletando informações do Azure com Grafana](/wp-content/uploads/2017/11/imagem8.png)](/wp-content/uploads/2017/11/imagem8.png)
 
 Ao clicar em salvar, a key será gerada e exibida:  
-[![](/wp-content/uploads/2017/11/imagem9.png)](/wp-content/uploads/2017/11/imagem9.png)
+[![Imagem9 - Coletando informações do Azure com Grafana](/wp-content/uploads/2017/11/imagem9.png)](/wp-content/uploads/2017/11/imagem9.png)
 
 Neste caso, **3NZ4F2FBwm6h8sfF48dE2Owg3si7xHSWtEAnBwAKqjk=**
 
 Agora precisamos do Directory ID do AAD, que é obtido nas propriedades do AAD:
 
-[![](/wp-content/uploads/2017/11/imagem10.png)](/wp-content/uploads/2017/11/imagem10.png)\* Directory ID omitido por questões de segurança
+[![Imagem10 - Coletando informações do Azure com Grafana](/wp-content/uploads/2017/11/imagem10.png)](/wp-content/uploads/2017/11/imagem10.png)\* Directory ID omitido por questões de segurança
 
 Por fim, vamos associar a role de **Reader** para a nossa aplicação. Para isso vá na sua subscription, em seguida acesse o IAM, escolha a opção para adicionar apontando a role **Reader** e escolha a aplicação criada:
 
-[![](/wp-content/uploads/2017/11/imagem11.png)](/wp-content/uploads/2017/11/imagem11.png)
+[![Imagem11 - Coletando informações do Azure com Grafana](/wp-content/uploads/2017/11/imagem11.png)](/wp-content/uploads/2017/11/imagem11.png)
 
 ## Finalizando a configuração no Grafana
 
 Agora vamos ajustar as configurações no Grafana, adicionando o datasource:
 
-[![](/wp-content/uploads/2017/11/imagem12.png)](/wp-content/uploads/2017/11/imagem12.png)
+[![Imagem12 - Coletando informações do Azure com Grafana](/wp-content/uploads/2017/11/imagem12.png)](/wp-content/uploads/2017/11/imagem12.png)
 
 Em seguida vamos preencher com as informações necessárias:
 
@@ -168,42 +172,42 @@ Em seguida vamos preencher com as informações necessárias:
 – ClientID (Application ID)  
 – Client Secret (Key)
 
-[![](/wp-content/uploads/2017/11/imagem13.png)](/wp-content/uploads/2017/11/imagem13.png)
+[![Imagem13 - Coletando informações do Azure com Grafana](/wp-content/uploads/2017/11/imagem13.png)](/wp-content/uploads/2017/11/imagem13.png)
 
 \* Neste caso não estou usando o Application Insights. Caso esteja, basta adicionar os dados necessários.
 
 Após salvar é feito um teste. Se estiver tudo ok você deve ver algo assim:
 
-### [![](/wp-content/uploads/2017/11/imagem14.png)](/wp-content/uploads/2017/11/imagem14.png)
+### [![Imagem14 - Coletando informações do Azure com Grafana](/wp-content/uploads/2017/11/imagem14.png)](/wp-content/uploads/2017/11/imagem14.png)
 
 ### Criando o primeiro dashboard
 
 Agora vamos ao próximo passo:
 
-[![](/wp-content/uploads/2017/11/imagem15.png)](/wp-content/uploads/2017/11/imagem15.png)
+[![Imagem15 - Coletando informações do Azure com Grafana](/wp-content/uploads/2017/11/imagem15.png)](/wp-content/uploads/2017/11/imagem15.png)
 
 Tipo: Graph
 
-[![](/wp-content/uploads/2017/11/imagem16.png)](/wp-content/uploads/2017/11/imagem16.png)
+[![Imagem16 - Coletando informações do Azure com Grafana](/wp-content/uploads/2017/11/imagem16.png)](/wp-content/uploads/2017/11/imagem16.png)
 
 Clique em Panel Tile:
 
-[![](/wp-content/uploads/2017/11/imagem17.png)](/wp-content/uploads/2017/11/imagem17.png)
+[![Imagem17 - Coletando informações do Azure com Grafana](/wp-content/uploads/2017/11/imagem17.png)](/wp-content/uploads/2017/11/imagem17.png)
 
 E ao clicar em Edit esta teremos as opções abaixo:
 
-[![](/wp-content/uploads/2017/11/imagem18.png)](/wp-content/uploads/2017/11/imagem18.png)
+[![Imagem18 - Coletando informações do Azure com Grafana](/wp-content/uploads/2017/11/imagem18.png)](/wp-content/uploads/2017/11/imagem18.png)
 
 Em Metrics, você verá que o Azure Monitor foi adicionado como DataSource default. Agora basta criar o gráfico para o recurso desejado:
 
-[![](/wp-content/uploads/2017/11/imagem19.png)](/wp-content/uploads/2017/11/imagem19.png)
+[![Imagem19 - Coletando informações do Azure com Grafana](/wp-content/uploads/2017/11/imagem19.png)](/wp-content/uploads/2017/11/imagem19.png)
 
 Neste caso peguei dados de uso de CPU de duas VMs e salvei o dashboard como CPU VMs:
 
-[![](/wp-content/uploads/2017/11/imagem20.png)](/wp-content/uploads/2017/11/imagem20.png)
+[![Imagem20 - Coletando informações do Azure com Grafana](/wp-content/uploads/2017/11/imagem20.png)](/wp-content/uploads/2017/11/imagem20.png)
 
 Visualizando:
 
-[![](/wp-content/uploads/2017/11/imagem21.png)](/wp-content/uploads/2017/11/imagem21.png)
+[![Imagem21 - Coletando informações do Azure com Grafana](/wp-content/uploads/2017/11/imagem21.png)](/wp-content/uploads/2017/11/imagem21.png)
 
 Espero que tenha sido útil!

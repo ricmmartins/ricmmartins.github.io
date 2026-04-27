@@ -5,6 +5,10 @@ date: '2009-04-10T18:10:58-04:00'
 tags:
     - storage
 description: "Autor: Fábio Kaiser Rauber [fabiorauber at hotmail.com] Este tutorial foi desenvolvido para esclarecer um recurso cada vez mais difundido: RAID"
+cover:
+  image: "/og/raid-perguntas-e-respostas.png"
+  alt: ""
+  hidden: true
 ---
 
 Autor: Fábio Kaiser Rauber \[fabiorauber at hotmail.com\]
@@ -17,15 +21,15 @@ RAID significa Redundant Array of Independent Disks. Em bom português, signific
 
 **RAID 0:** Dois ou mais discos rígidos são agrupados. Os dados são gravados distribuindo-se a carga entre os discos que fazem parte da matriz (geralmente em blocos de 32kb ou 64Kb de dados). Este método não é muito seguro, já que se um participante da matriz falhar, todos os dados serão perdidos. No entanto, é o mais rápido, pois a leitura e gravação são distribuídas.
 
-![](http://www.baboo.com.br/absolutenm/articlefiles/3659-RAID0.gif)
+![Raid0 - RAID: perguntas e respostas !](http://www.baboo.com.br/absolutenm/articlefiles/3659-RAID0.gif)
 
 **RAID 1:** Também chamado de espelhamento: um dos discos serve de espelho para o outro. Tudo que é gravado em um dos discos é gravado no outro. Isso faz com que a performance de gravação seja um pouco prejudicada, no entanto, a leitura dos dados é acelerada, já que temos dois discos lendo o mesmo arquivo. É uma forma bem segura, mas também a mais cara, sendo que apenas 50% do espaço disponível é aproveitado.
 
-![](http://www.baboo.com.br/absolutenm/articlefiles/3659-RAID1.gif)
+![Raid1 - RAID: perguntas e respostas !](http://www.baboo.com.br/absolutenm/articlefiles/3659-RAID1.gif)
 
 **RAID 5:** Melhor relação custo x performance x segurança. Para esse tipo de RAID, há necessidade de no mínimo 3 discos. As informações de paridade são gravadas em cada disco de tal forma que se um dos integrantes da matriz falhar, as informações nele contidas podem ser reconstruídas. Sua performance de gravação é menor do que a do RAID 0 e maior que a do RAID 1. A performance de leitura é a melhor entre as aqui citadas, já que as informações estão distribuídas entre três ou mais discos.
 
-![](http://www.baboo.com.br/absolutenm/articlefiles/3659-RAID5.gif)
+![Raid5 - RAID: perguntas e respostas !](http://www.baboo.com.br/absolutenm/articlefiles/3659-RAID5.gif)
 
 Pode-se implementar RAID de duas maneiras distintas sendo cada qual com suas vantagens e desvantagens: RAID por Software ou Hardware.
 
@@ -49,15 +53,15 @@ Não é possível converter discos removíveis para discos dinâmicos. Tampouco 
 
 **Convertendo um disco básico em um disco dinâmico:**
 
-![](http://www.baboo.com.br/absolutenm/articlefiles/3659-Basic_to_dynamic.gif)
+![Basic Dynamic](http://www.baboo.com.br/absolutenm/articlefiles/3659-Basic_to_dynamic.gif)
 
 Selecione o(s) disco(s) a ser(em) convertido(s)…
 
-![](http://www.baboo.com.br/absolutenm/articlefiles/3659-Basic_to_dynamic1.gif)
+![Basic Dynamic1](http://www.baboo.com.br/absolutenm/articlefiles/3659-Basic_to_dynamic1.gif)
 
 E finalmente clique em Convert!
 
-![](http://www.baboo.com.br/absolutenm/articlefiles/3659-Basic_to_dynamic2.gif)
+![Basic Dynamic2](http://www.baboo.com.br/absolutenm/articlefiles/3659-Basic_to_dynamic2.gif)
 
 Depois de ter o seu disco convertido para dinâmico, é importante que você entenda os vários tipos de volumes existentes no Windows 2000:
 
@@ -73,7 +77,7 @@ Depois de ter o seu disco convertido para dinâmico, é importante que você ent
 
 A figura abaixo ilustra uma matriz de RAID por software, mais precisamente um volume Striped: note que não necessariamente todo o espaço de determinado disco rígido deve estar ocupado pelo volume.
 
-![](http://www.baboo.com.br/absolutenm/articlefiles/3659-RAID0Screen.gif)
+![Captura de tela: 3659 Raid0screen](http://www.baboo.com.br/absolutenm/articlefiles/3659-RAID0Screen.gif)
 
 **Perguntas Freqüentes**
 
@@ -93,9 +97,9 @@ Sim. Contanto que todas as unidades de disco rígido integrantes da matriz forem
 
 RAID por hardware é sem dúvida a maneira mais eficiente de implementar matrizes de discos rígidos e qualquer sistema operacional pode reconhecer uma matriz desse tipo, como se fosse um HD simples. A figura abaixo demonstra esse aspecto em uma placa-mãe Soyo K7V Dragon Plus, que contém um chip onboard da Promise modelo FastTrak 100 Lite.
 
-![](http://www.baboo.com.br/absolutenm/articlefiles/3659-DevMngHRaid.gif)
+![Dev Mng Hraid](http://www.baboo.com.br/absolutenm/articlefiles/3659-DevMngHRaid.gif)
 
-![](http://www.baboo.com.br/absolutenm/articlefiles/3659-PromiseChip.gif)
+![Promise Chip](http://www.baboo.com.br/absolutenm/articlefiles/3659-PromiseChip.gif)
 
 Chip Promise FastTrak 100 Lite  
 da Soyo Dragon Plus!
@@ -118,4 +122,4 @@ Você pode ler as unidades em separado e em certas configurações. Apesar desse
 
 Geralmente a Bios da máquina reconhece a controladora RAID como uma SCSI. Assim sendo, tudo o que você deve fazer é selecionar a opção SCSI em uma das opções de boot. Abaixo temos o exemplo da BIOS da Soyo Dragon Plus:
 
-![](http://www.baboo.com.br/absolutenm/articlefiles/3659-RaidBoot.gif)
+![RAID Boot](http://www.baboo.com.br/absolutenm/articlefiles/3659-RaidBoot.gif)

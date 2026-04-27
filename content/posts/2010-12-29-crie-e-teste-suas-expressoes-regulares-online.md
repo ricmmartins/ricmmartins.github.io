@@ -6,9 +6,13 @@ tags:
     - ferramentas
     - regex
 description: "[](/wp-content/uploads/2010/12/regular-expressions.png)As expressões regulares são uma daquelas coisas que são incrivelmente poderosas … se você souber"
+cover:
+  image: "/og/crie-e-teste-suas-expressoes-regulares-online.png"
+  alt: ""
+  hidden: true
 ---
 
-[![](/wp-content/uploads/2010/12/regular-expressions.png "regular-expressions")](/wp-content/uploads/2010/12/regular-expressions.png)As expressões regulares são uma daquelas coisas que são incrivelmente poderosas … se você souber como usá-las.
+[![regular-expressions](/wp-content/uploads/2010/12/regular-expressions.png "regular-expressions")](/wp-content/uploads/2010/12/regular-expressions.png)As expressões regulares são uma daquelas coisas que são incrivelmente poderosas … se você souber como usá-las.
 
 Elas tomam um pouco de tempo até você aprender os meandros de como elas funcionam, mas quando você pega o jeito, quase sempre há alguma variação que pode ser usada em linguagens de programação diferentes.
 

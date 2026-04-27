@@ -6,6 +6,10 @@ tags:
     - linux
     - windows
 description: "Há alguns meses, foi publicado no TechNetBrasil, um artigo com o título acima. Não querendo aqui levantar mais flames sobre o assunto, gostaria de deixar"
+cover:
+  image: "/og/o-windows-e-muito-melhor-que-o-software-livre.png"
+  alt: ""
+  hidden: true
 ---
 
 <div class="snap_preview">Há alguns meses, foi publicado no TechNetBrasil, um artigo com o título acima. Não querendo aqui levantar mais flames sobre o assunto, gostaria de deixar bem clara a minha opinião sobre este tema.

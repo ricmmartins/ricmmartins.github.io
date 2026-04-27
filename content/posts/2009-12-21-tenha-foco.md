@@ -5,6 +5,10 @@ date: '2009-12-21T11:55:54-05:00'
 tags:
     - carreira
 description: "Tenho participado de reuniões que são verdadeiros martírios. Perde-se um tempo incrível em divagações sobre os mais diversos assuntos que nada têm a ver"
+cover:
+  image: "/og/tenha-foco.png"
+  alt: ""
+  hidden: true
 ---
 
 Tenho participado de reuniões que são verdadeiros martírios. Perde-se um tempo incrível em divagações sobre os mais diversos assuntos que nada têm a ver com o objetivo da reunião. Fala-se de tudo, exceto do que realmente interessa. O tempo passa e a conclusão é sempre a mesma: marcar uma nova reunião para discutir os assuntos que não foram discutidos por “falta de tempo”.

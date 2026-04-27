@@ -5,6 +5,10 @@ date: '2009-04-10T17:56:01-04:00'
 tags:
     - utilitários
 description: "Utilitário de configuração de segurança para Windows. Seconfig XP tem as seguintes características: Capaz de fechar as portas 135, 137-139 e 445 na"
+cover:
+  image: "/og/seconfig-xp.png"
+  alt: ""
+  hidden: true
 ---
 
 <div class="snap_preview">Utilitário de configuração de segurança para Windows. Seconfig XP tem as seguintes características: Capaz de fechar as portas 135, 137-139 e 445 na maioria dos sistemas.

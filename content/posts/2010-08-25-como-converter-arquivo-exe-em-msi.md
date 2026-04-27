@@ -6,6 +6,10 @@ tags:
     - ferramentas
     - windows
 description: "Hoje precisei converter um arquivo .exe em .msi para realizar testes de instalação via GPO."
+cover:
+  image: "/og/como-converter-arquivo-exe-em-msi.png"
+  alt: ""
+  hidden: true
 ---
 
 Hoje precisei converter um arquivo .exe em .msi para realizar testes de instalação via GPO.

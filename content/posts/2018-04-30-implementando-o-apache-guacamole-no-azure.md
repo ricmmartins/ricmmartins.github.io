@@ -8,6 +8,10 @@ categories:
 tags:
     - azure
     - linux
+cover:
+  image: "/og/implementando-o-apache-guacamole-no-azure.png"
+  alt: ""
+  hidden: true
 ---
 
 # Introdução
@@ -20,7 +24,7 @@ O Apache Guacamole é um “*remote desktop gateway clientless*” com suporte a
 
 A ilustração abaixo se refere à arquitetura sugerida. Esta arquitetura contempla um balanceador de carga público que recebe os acessos externos e direciona para duas máquinas virtuais na camada web. A camada web se comunica com a camada de dados onde temos um banco de dados MySQL responsável por armazenar as informações de login, acessos e conexões.
 
-[![](/wp-content/uploads/2018/04/arquitetura.png)](/wp-content/uploads/2018/04/arquitetura.png)
+[![Diagrama: Implementando o Apache Guacamole no Azure](/wp-content/uploads/2018/04/arquitetura.png)](/wp-content/uploads/2018/04/arquitetura.png)
 
 O uso do Availability Set garante o SLA de 99.95% para as máquinas virtuais e o uso do Azure Database for MySQL, um banco de dados como serviço gerenciado, escalável e altamente disponível garante o SLA de 99.99%.
 
@@ -84,7 +88,7 @@ user@mydesktop:~$ az mysql server firewall-rule create \
 
 Após setup e testes iniciais, é importante remover esta regra a deixar habilitado apenas a flag que permite comunicação do serviço do MySQL apenas com serviços do Azure:
 
-[![](/wp-content/uploads/2018/04/portal-mysql.png)](/wp-content/uploads/2018/04/portal-mysql.png)
+[![Portal MySQL](/wp-content/uploads/2018/04/portal-mysql.png)](/wp-content/uploads/2018/04/portal-mysql.png)
 
 ## Criação da VNET
 
@@ -489,4 +493,4 @@ user@mydesktop:~$ az network nsg rule delete \
 
 Após completar todos os passos anteriores, já teremos finalizado a setup do Apache Guacamole. Para acessá-lo, basta ir até o endereço <http://loadbalancerguaca.eastus.cloudapp.azure.com/> e informar o usuário e senha padrão da instalação (guacadmin/guacadmin)
 
-[![](/wp-content/uploads/2018/04/screen.png)](/wp-content/uploads/2018/04/screen.png)
+[![Captura de tela: Implementando o Apache Guacamole no Azure](/wp-content/uploads/2018/04/screen.png)](/wp-content/uploads/2018/04/screen.png)

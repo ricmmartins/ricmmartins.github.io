@@ -6,6 +6,10 @@ tags:
     - linux
     - ubuntu
 description: "Hoje vou postar sobre como configurar o Modem BandLuxe C120 no Ubuntu.Eu tenho o Velox 3G há cerca de 3 meses, e até então ainda não tinha conseguido"
+cover:
+  image: "/og/configurando-o-modem-bandluxe-c120-3g-no-ubuntu.png"
+  alt: ""
+  hidden: true
 ---
 
 Hoje vou postar sobre como configurar o Modem BandLuxe C120 no Ubuntu.Eu tenho o Velox 3G há cerca de 3 meses, e até então ainda não tinha conseguido configurar o modem acima no meu Ubuntu.

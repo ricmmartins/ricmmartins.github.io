@@ -5,6 +5,10 @@ date: '2011-10-11T17:18:14-04:00'
 tags:
     - windows
 description: "Neste post vou mostrar como instalar o Windows 8 em um VHD. Usando esse método, você poderá escolher inicializar o computador ecom o seu atual Windows 7"
+cover:
+  image: "/og/criando-um-dual-boot-entre-windows7-e-windows8-usando-vhd.png"
+  alt: ""
+  hidden: true
 ---
 
 Neste post vou mostrar como instalar o Windows 8 em um VHD. Usando esse método, você poderá escolher inicializar o computador ecom o seu atual Windows 7 ou com o novo Windows 8, sem necessidade de reinstalar programas, refazer suas configurações e etc no seu Windows 7.
@@ -27,7 +31,7 @@ Se você ainda não tem, [baixe aqui o Windows 8](http://msdn.microsoft.com/en-u
 
 No computador onde você já tem o Windows 7 instalado, dê o boot no sistema pela media do Windows 8 e inicie a instalação. Antes de clicar em “Install Now”, pressione **Shift + F10** e o prompt de comandos do WinPE aparecerá.
 
-[![](/wp-content/uploads/2011/10/01-WinPECMD1.png "01-WinPECMD")](/wp-content/uploads/2011/10/01-WinPECMD1.png)
+[![01-WinPECMD](/wp-content/uploads/2011/10/01-WinPECMD1.png "01-WinPECMD")](/wp-content/uploads/2011/10/01-WinPECMD1.png)
 
 Nota: Se você deseja dar boot através da USB ao invés de queimar um DVD, você pode usar o [WUDT Tool](http://wudt.codeplex.com/), uma ferramenta sensacional do CodePlex que permite criar um pendrive USB bootável à partir do arquivo ISO.
 
@@ -43,24 +47,24 @@ Agora é a hora de criar o VHD que será a unidade com o seu Windows 8. Execute 
 
 Todos estes commandos irão se parecer com isso:
 
-[![](/wp-content/uploads/2011/10/02-DiskpartVHD.png "02-DiskpartVHD")](/wp-content/uploads/2011/10/02-DiskpartVHD.png)
+[![02-DiskpartVHD](/wp-content/uploads/2011/10/02-DiskpartVHD.png "02-DiskpartVHD")](/wp-content/uploads/2011/10/02-DiskpartVHD.png)
 
 Agora você pode fechar o Prompt de Comandos, voltar ao programa de instalação e clicar em “Install Now”. Quando for questionado onde você deseja instalar o Windows, você irá ver um novo “Disk1” com espaço não alocado. Quando você selecionar este disco, será notificado pelo instalador que o “Windows não pode ser instalado neste disco”, mas o botão “Next” estará habilitado. Se você clicar nele, ele irá realizar a instalação do Windows normalmente.
 
-[![](/wp-content/uploads/2011/10/03-Disk1.png "03-Disk1")](/wp-content/uploads/2011/10/03-Disk1.png)
+[![03-Disk1](/wp-content/uploads/2011/10/03-Disk1.png "03-Disk1")](/wp-content/uploads/2011/10/03-Disk1.png)
 
 Assim que a instalação estiver finalizada e seu computador reiniciar, você verá o “Boot Loader” solicitando para escolher um sistema operacional para inicializar. Então você poderá escolher entre a nova instalação do Windows 8 ou sua instalação já existente do Windows 7. Na primeira vez que esta opção aparecer, você terá 3 segundos para escolher ou ele irá carregar automaticamente o Windows 8 para finalizar a instalação. Nas próximas vezes que reiniciar o computador, você terá 30 segundos para escolher.
 
-[![](/wp-content/uploads/2011/10/04-ChooseOS.png "04-ChooseOS")](/wp-content/uploads/2011/10/04-ChooseOS.png)
+[![04-ChooseOS](/wp-content/uploads/2011/10/04-ChooseOS.png "04-ChooseOS")](/wp-content/uploads/2011/10/04-ChooseOS.png)
 
 Agora você pode conhecer o Windows 8 em seu hardware nativo, sem necessidade de utilizar ferramentas de virtualização. Você também poderá acessar seus arquivos no HD com o Windows 7. Abra o Windows Explorer e você verá que ele aparece com uma letra de unidade diferente (D: neste caso) e você pode ainda navegar pelos seus arquivos, copiar e modificá-los como quiser.
 
-[![](/wp-content/uploads/2011/10/05-Windows8.png "05-Windows8")](/wp-content/uploads/2011/10/05-Windows8.png)
+[![05-Windows8](/wp-content/uploads/2011/10/05-Windows8.png "05-Windows8")](/wp-content/uploads/2011/10/05-Windows8.png)
 
 Observou que o D: está cheio? Isso ocorre porque o VHD que você criou para o Windows 8 está relatando seu tamanho máximo em vez de seu tamanho real. Quando você inicializar o Windows 7 você verá que o VHD tem realmente apenas cerca de 8GB.
 
 Já mexeu bastante no Windows 8 e não consegue descobrir como desligar? Passe o mouse sobre o botão iniciar clique com o cursor do mouse no canto inferior esquerdo da tela e um pequeno menu iniciar aparecerá. Clique em Configurações, em seguida, “Power” e escolha “Shut down”
 
-[![](/wp-content/uploads/2011/10/06-Shutdown.png "06-Shutdown")](/wp-content/uploads/2011/10/06-Shutdown.png)
+[![06-Shutdown](/wp-content/uploads/2011/10/06-Shutdown.png "06-Shutdown")](/wp-content/uploads/2011/10/06-Shutdown.png)
 
 Agora você pode experimentar o melhor dos dois mundos!

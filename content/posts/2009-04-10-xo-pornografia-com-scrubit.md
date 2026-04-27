@@ -5,6 +5,10 @@ date: '2009-04-10T17:27:43-04:00'
 tags:
     - segurança
 description: "Uma solução simples e gratuita para a filtragem de conteúdo ao alcance de escolas, telecentros, pequenas empresas e até usuários domésticos, pois não"
+cover:
+  image: "/og/xo-pornografia-com-scrubit.png"
+  alt: ""
+  hidden: true
 ---
 
 Uma solução simples e gratuita para a filtragem de conteúdo ao alcance de escolas, telecentros, pequenas empresas e até usuários domésticos, pois não exige muita qualificação técnica para implantar, é o [ScrubIt,](http://www.scrubit.com/) parecido com o [OpenDNS](http://www.opendns.com/) mas com espectro mais amplo. Enquanto o OpenDNS visa bloquear sites de phishing o ScribIt também não gosta de sites pornográficos. Não é preciso instalar nada, basta configurar o DNS com os endereços dos servidores do ScrubIt: 67.138.54.100 e 207.225.209.66.

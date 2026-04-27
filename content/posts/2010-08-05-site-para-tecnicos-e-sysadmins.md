@@ -5,6 +5,10 @@ date: '2010-08-05T22:40:05-04:00'
 tags:
     - aleatórios
 description: "Se você é técnico em informática ou administra alguma rede ou sistema, com certeza precisa conhecer o site abaixo… Você vai se identificar com centenas de"
+cover:
+  image: "/og/site-para-tecnicos-e-sysadmins.png"
+  alt: ""
+  hidden: true
 ---
 
 Se você é técnico em informática ou administra alguma rede ou sistema, com certeza precisa conhecer o site abaixo… Você vai se identificar com centenas de situações do dia-a-dia…

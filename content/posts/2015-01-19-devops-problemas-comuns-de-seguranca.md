@@ -6,6 +6,10 @@ tags:
     - devops
     - segurança
 description: "Muito boa essa apresentação mostrando os principais problemas de segurança relacionados à cultura de DevOps."
+cover:
+  image: "/og/devops-problemas-comuns-de-seguranca.png"
+  alt: ""
+  hidden: true
 ---
 
 Muito boa essa apresentação mostrando os principais problemas de segurança relacionados à cultura de DevOps.

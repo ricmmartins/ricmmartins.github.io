@@ -6,9 +6,13 @@ date: '2010-10-30T09:56:06-04:00'
 tags:
     - linux
 description: "[](http://ricardomartins.com.br/2010/10/30/instalacao-do-dokuwiki/dokuwiki-128/)"
+cover:
+  image: "/og/instalacao-do-dokuwiki.png"
+  alt: ""
+  hidden: true
 ---
 
-[![](/wp-content/uploads/2010/10/dokuwiki-128.png "dokuwiki-128")](http://ricardomartins.com.br/2010/10/30/instalacao-do-dokuwiki/dokuwiki-128/)
+[![dokuwiki-128](/wp-content/uploads/2010/10/dokuwiki-128.png "dokuwiki-128")](http://ricardomartins.com.br/2010/10/30/instalacao-do-dokuwiki/dokuwiki-128/)
 
 Recentemente aqui no trabalho tivemos a necessidade de montar um <span class="bbli">sistema</span> para centralizar nossa documentação. Algo no estilo Wiki, onde todos pudessem alterar o conteúdo sempre que fosse necessário, e também que tivesse uma interface simples.
 

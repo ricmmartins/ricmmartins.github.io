@@ -6,6 +6,10 @@ date: '2009-04-21T20:03:52-04:00'
 tags:
     - aleatórios
 description: "Um problema com as chamadas “redes sociais” são as URL’s muito compridas. São difícies de lembrar e você acaba sendo obrigado a mandar te procurarem pelo"
+cover:
+  image: "/og/urls-curtas-usando-seu-htaccess.png"
+  alt: ""
+  hidden: true
 ---
 
 Um problema com as chamadas “redes sociais” são as URL’s muito compridas. São difícies de lembrar e você acaba sendo obrigado a mandar te procurarem pelo nome – vide orkut, ou você envia o link por e-mail, messenger, etc.

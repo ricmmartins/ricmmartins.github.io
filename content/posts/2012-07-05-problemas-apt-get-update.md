@@ -5,6 +5,10 @@ date: '2012-07-05T16:35:43-04:00'
 tags:
     - linux
 description: "Ok, então você acabou de instalar seu Ubuntu e na primeira execução do apt-get update, quando chega em 100% fica parado exibindo:"
+cover:
+  image: "/og/problemas-apt-get-update.png"
+  alt: ""
+  hidden: true
 ---
 
 Ok, então você acabou de instalar seu Ubuntu e na primeira execução do apt-get update, quando chega em 100% fica parado exibindo:

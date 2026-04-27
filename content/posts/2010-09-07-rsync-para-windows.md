@@ -6,6 +6,10 @@ tags:
     - rsync
     - windows
 description: "Eu gostei tanto de mecher no AutoIt, que depois do programinha de Assitência Remota sem convites, criei um outro, para sincronizar os dados do meu"
+cover:
+  image: "/og/rsync-para-windows.png"
+  alt: ""
+  hidden: true
 ---
 
 Eu gostei tanto de mecher no [AutoIt](http://www.autoitscript.com/), que depois do programinha de [Assitência Remota sem convites](http://ricardomartins.com.br/2010/09/07/assistencia-remota-sem-convites/), criei um outro, para sincronizar os dados do meu pendrive com minha máquina. Dei o nome de RSyncWin.

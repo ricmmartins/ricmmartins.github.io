@@ -6,6 +6,10 @@ tags:
     - aws
     - opsworks
 description: "Finalizando a série de artigos sobre o OpsWorks, neste post veremos como utilizar cookbooks customizadas em nosso ambiente."
+cover:
+  image: "/og/opsworks-trabalhando-com-cookbooks-customizadas.png"
+  alt: ""
+  hidden: true
 ---
 
 Finalizando a série de artigos sobre o OpsWorks, neste post veremos como utilizar cookbooks customizadas em nosso ambiente.

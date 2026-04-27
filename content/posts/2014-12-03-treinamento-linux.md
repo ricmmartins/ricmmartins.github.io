@@ -5,6 +5,10 @@ date: '2014-12-03T17:21:31-05:00'
 tags:
     - cursos
 description: "Há algum tempo tenho vontade de iniciar um projeto de treinamento online. Conversando com alguns amigos, resolvi tirar a idéia do papel e estou planejando"
+cover:
+  image: "/og/treinamento-linux.png"
+  alt: ""
+  hidden: true
 ---
 
 ## Já pensou em fazer um treinamento de Linux à distância com instâncias da Amazon?

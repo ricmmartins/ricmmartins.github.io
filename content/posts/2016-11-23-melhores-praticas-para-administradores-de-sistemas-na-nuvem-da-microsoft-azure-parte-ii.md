@@ -5,6 +5,10 @@ date: '2016-11-23T15:47:45-05:00'
 tags:
     - azure
 description: "Nesta segunda parte vamos abordar os resource groups, tags, templates arm e controles"
+cover:
+  image: "/og/melhores-praticas-para-administradores-de-sistemas-na-nuvem-da-microsoft-azure-parte-ii.png"
+  alt: ""
+  hidden: true
 ---
 
 ## Criando e organizando os recursos
@@ -24,7 +28,7 @@ De forma geral, abaixo estão dispostas as principais características dos resor
 - Resource groups podem conter recursos de regiões distintas;
 - Resource groups podem conter tipos de recursos distintos.
 
-![](/wp-content/uploads/2016/11/rg.png)
+![Imagem do post Melhores práticas para administradores de sistemas na nuvem da Microsoft (Azure) &#8211; Parte II](/wp-content/uploads/2016/11/rg.png)
 
 Visão geral sobre o Azure Resource Manager: <https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview>
 
@@ -72,7 +76,7 @@ Conforme já vimos, uma das funcionalidades trazidas com o novo portal v2 (ARM) 
 
 O controle de acesso basado em papéis faz a gestão de usuários dentro do Azure baseada na função que cada usuário/grupo precisa ter em determinado recurso/grupo de recursos permitindo acesso mais seguro e níveis de permissionamento mais granulares.
 
-![](/wp-content/uploads/2016/11/rbac.png)
+![Rbac - Melhores práticas para administradores de sistemas na nuvem da Microsoft (Azure) &#8211; Parte II](/wp-content/uploads/2016/11/rbac.png)
 
 Lista de papéis/funções padrões: <https://docs.microsoft.com/pt-br/azure/active-directory/role-based-access-built-in-roles>
 

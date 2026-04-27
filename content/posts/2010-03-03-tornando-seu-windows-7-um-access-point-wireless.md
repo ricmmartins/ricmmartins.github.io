@@ -6,6 +6,10 @@ tags:
     - networking
     - windows
 description: "A Microsoft adicionou algums funcionalidades ao Windows 7 para permitir que uma placa de rede wireless possa ser colocada em modo promíscuo e tornar-se um"
+cover:
+  image: "/og/tornando-seu-windows-7-um-access-point-wireless.png"
+  alt: ""
+  hidden: true
 ---
 
 A Microsoft adicionou algums funcionalidades ao Windows 7 para permitir que uma placa de rede wireless possa ser colocada em modo promíscuo e tornar-se um verdadeiro AP Wireless
@@ -23,11 +27,11 @@ Baixe a ferramenta em <http://www.connectify.me/>
 
 Uma vez instalado, defina a placa de rede sem fio que você estará usando, o SSID e a senha:
 
-![](/wp-content/uploads/2010/03/Connectify-201002.jpg "Connectify 201002")
+![Connectify 201002](/wp-content/uploads/2010/03/Connectify-201002.jpg "Connectify 201002")
 
 Clique em “Start Hotspot” e já estará pronto para funcionar. O melhor deste software é que ele é gratuito… pode conferir no site deles.
 
-![](/wp-content/uploads/2010/03/Connectify-Free-201002.jpg "Connectify Free 201002")
+![Connectify Free 201002](/wp-content/uploads/2010/03/Connectify-Free-201002.jpg "Connectify Free 201002")
 
 **Segundo método**
 

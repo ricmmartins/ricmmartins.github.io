@@ -5,6 +5,10 @@ date: '2010-09-21T20:27:45-04:00'
 tags:
     - carreira
 description: "Na área deTI, é comum encontrar profissionais com grande conhecimento e experiência no entanto sem um diploma. Infelizmente, isto acaba criando uma"
+cover:
+  image: "/og/sem-tempo-pra-frequentar-faculdade-conheca-o-cederj.png"
+  alt: ""
+  hidden: true
 ---
 
 Na área de<span class="bbli">TI</span>, é comum encontrar profissionais com grande conhecimento e experiência no entanto sem um diploma. Infelizmente, isto acaba criando uma barreira para oportunidades em grandes empresas.
@@ -21,4 +25,4 @@ As inscrições para o vestibular estão abertas. Não se assuste. Embora seja u
 
 Tá esperando o quê?! Divulgue! Conte pra todo mundo!!! Clique na imagem abaixo e você poderá ter maiores informações sobre o que é o CEDERJ.
 
-[![](/wp-content/uploads/2010/09/img08.jpg "Vestibular Cederj")](http://vestibular.cederj.edu.br/)
+[![Vestibular Cederj](/wp-content/uploads/2010/09/img08.jpg "Vestibular Cederj")](http://vestibular.cederj.edu.br/)

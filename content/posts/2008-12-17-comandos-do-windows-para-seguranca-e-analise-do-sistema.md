@@ -6,6 +6,10 @@ tags:
     - windows
     - segurança
 description: "Hoje vou compartilhar com vocês alguns comandos que permitem que analistas de suporte possam manter um diagnóstico bem mais amplo do sistema. Os comandos"
+cover:
+  image: "/og/comandos-do-windows-para-seguranca-e-analise-do-sistema.png"
+  alt: ""
+  hidden: true
 ---
 
 Hoje vou compartilhar com vocês alguns comandos que permitem que analistas de suporte possam manter um diagnóstico bem mais amplo do sistema. Os comandos devem ser executados em modo de console. (Menu iniciar &gt; Executar &gt; escreva”cmd” ou “command” &gt; enter ou ok).
