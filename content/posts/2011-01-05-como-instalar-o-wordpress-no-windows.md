@@ -6,10 +6,6 @@ tags:
     - php
     - wordpress
 description: "Aproveitando o post de ontem sobre como instalar o PHP no Windows, resolvi testar e fazer um post com o passo-a-passo para instalar o WordPress no Windows."
-cover:
-  image: "/og/como-instalar-o-wordpress-no-windows.png"
-  alt: ""
-  hidden: true
 ---
 
 Aproveitando o post de ontem sobre como instalar o PHP no Windows, resolvi testar e fazer um post com o passo-a-passo para instalar o WordPress no Windows.

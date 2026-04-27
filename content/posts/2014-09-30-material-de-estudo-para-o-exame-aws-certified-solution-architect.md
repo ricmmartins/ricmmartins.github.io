@@ -8,10 +8,6 @@ tags:
     - cloud
     - estudo
 description: "Excelente compilação de videos de eventos como AWS Re-Invent e Webinars. Ótima oportunidade para aprender mais sobre AWS gratuitamente."
-cover:
-  image: "/og/material-de-estudo-para-o-exame-aws-certified-solution-architect.png"
-  alt: ""
-  hidden: true
 ---
 
 Excelente compilação de videos de eventos como AWS Re-Invent e Webinars. Ótima oportunidade para aprender mais sobre AWS gratuitamente.

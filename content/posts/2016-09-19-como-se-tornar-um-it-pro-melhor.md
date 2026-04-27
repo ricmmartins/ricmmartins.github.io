@@ -6,10 +6,6 @@ tags:
     - azure
     - carreira    
 description: "Nos dias de hoje o profissional de TI passa por grandes mudanças. São novos paradigmas, novas tendências e etc. O administrador de sistemas hoje precisa"
-cover:
-  image: "/og/como-se-tornar-um-it-pro-melhor.png"
-  alt: ""
-  hidden: true
 ---
 
 Nos dias de hoje o profissional de TI passa por grandes mudanças. São novos paradigmas, novas tendências e etc. O administrador de sistemas hoje precisa lidar com novas formas de trabalho, culturas, metodologias e ferramentas para continuar em linha com o que o mercado exige dele.

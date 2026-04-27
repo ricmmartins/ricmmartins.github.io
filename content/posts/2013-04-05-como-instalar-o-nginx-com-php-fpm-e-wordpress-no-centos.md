@@ -7,10 +7,6 @@ tags:
     - nginx
     - wordpress
 description: "Neste tutorial, vou mostrar como realizar a instalação do WordPress rodando sob o Nginx e PHP-FPM em um CentOS 6.3"
-cover:
-  image: "/og/como-instalar-o-nginx-com-php-fpm-e-wordpress-no-centos.png"
-  alt: ""
-  hidden: true
 ---
 
 Neste tutorial, vou mostrar como realizar a instalação do WordPress rodando sob o Nginx e PHP-FPM em um CentOS 6.3

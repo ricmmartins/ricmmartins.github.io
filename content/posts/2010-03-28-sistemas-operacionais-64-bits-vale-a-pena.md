@@ -5,10 +5,6 @@ date: '2010-03-28T20:10:21-04:00'
 tags:
     - linux
 description: "Por Alexandre Otto Strube Hoje o texto será um pouco menos técnico, mas igualmente prático."
-cover:
-  image: "/og/sistemas-operacionais-64-bits-vale-a-pena.png"
-  alt: ""
-  hidden: true
 ---
 
 Por Alexandre Otto Strube

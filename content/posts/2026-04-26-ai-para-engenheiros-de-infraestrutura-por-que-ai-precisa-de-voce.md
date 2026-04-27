@@ -16,10 +16,6 @@ tags:
   - mlops
 series:
   - "AI para Engenheiros de Infraestrutura"
-cover:
-  image: "/og/ai-para-engenheiros-de-infraestrutura-por-que-ai-precisa-de-voce.png"
-  alt: ""
-  hidden: true
 ---
 
 Esse é o primeiro post de uma série onde vou traduzir o mundo de AI para a linguagem que engenheiros de infraestrutura já falam. Se você é o tipo de profissional que configura VMs, monta pipelines de CI/CD e acorda de madrugada quando o Nagios dispara, esse conteúdo é pra você.

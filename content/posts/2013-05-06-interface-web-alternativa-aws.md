@@ -6,10 +6,6 @@ tags:
     - aws
     - cloud
 description: "Atualmente a Netflix é um dos maiores heavy users dos serviços AWS no mundo. E eles possuem todo um conjunto de ferramentas desenvolvidas por eles mesmos"
-cover:
-  image: "/og/interface-web-alternativa-aws.png"
-  alt: ""
-  hidden: true
 ---
 
 Atualmente a Netflix é um dos maiores heavy users dos serviços AWS no mundo. E eles possuem todo um conjunto de ferramentas desenvolvidas por eles mesmos para otimizar o trabalho que desenvolvem e a utlização dos serviços da Amazon. Diversas das ferramentas deles estão disponiblizadas no formato open source em <https://github.com/Netflix>

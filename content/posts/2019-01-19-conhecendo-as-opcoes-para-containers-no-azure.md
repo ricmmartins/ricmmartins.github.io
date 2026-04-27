@@ -9,10 +9,6 @@ tags:
     - azure
     - docker
     - kubernetes
-cover:
-  image: "/og/conhecendo-as-opcoes-para-containers-no-azure.png"
-  alt: ""
-  hidden: true
 ---
 
 O Azure é uma excelente plataforma de computação em nuvem com muitos recursos e funcionalidades interessantes, sendo as opções para containers realmente incríveis. Porém uma coisa que percebo em muitos clientes hoje são dúvidas e desconhecimento sobre detalhes destas opções. Pensando nisso estou escrevendo esse artigo para esclarecer um pouco sobre este assunto.

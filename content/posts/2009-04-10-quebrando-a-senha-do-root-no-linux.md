@@ -6,10 +6,6 @@ tags:
     - linux
     - segurança
 description: "Esta é uma dica rápida, para quem precisa quebrar a senha do usuário root em qualquer distribuição linux, utilizando um live-cd."
-cover:
-  image: "/og/quebrando-a-senha-do-root-no-linux.png"
-  alt: ""
-  hidden: true
 ---
 
 Esta é uma dica rápida, para quem precisa quebrar a senha do usuário root em qualquer distribuição linux, utilizando um live-cd.

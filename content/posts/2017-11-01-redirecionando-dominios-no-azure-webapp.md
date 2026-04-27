@@ -6,10 +6,6 @@ tags:
     - azure
     - webapps
 description: "Dica rápida para você que trabalha com Azure WebApps e já precisou trabalhar com redirecionamentos. O Azure WebApp pode ser configurado em um service plan"
-cover:
-  image: "/og/redirecionando-dominios-no-azure-webapp.png"
-  alt: ""
-  hidden: true
 ---
 
 Dica rápida para você que trabalha com Azure WebApps e já precisou trabalhar com redirecionamentos. O Azure WebApp pode ser configurado em um service plan Windows ou Linux.

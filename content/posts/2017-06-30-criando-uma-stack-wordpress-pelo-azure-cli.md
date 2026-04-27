@@ -9,10 +9,6 @@ tags:
     - linux
     - wordpress
 description: "Criei um repositório no GitHub para usar em demonstrações sobre DevOps no Azure e a facilidade em usar templates para automatizar a criação de ambientes."
-cover:
-  image: "/og/criando-uma-stack-wordpress-pelo-azure-cli.png"
-  alt: ""
-  hidden: true
 ---
 
 Criei um repositório no GitHub para usar em demonstrações sobre DevOps no Azure e a facilidade em usar templates para automatizar a criação de ambientes.

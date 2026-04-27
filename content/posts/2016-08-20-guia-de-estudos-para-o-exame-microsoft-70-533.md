@@ -6,10 +6,6 @@ tags:
     - azure
     - certificação
 description: "Preparei um guia passo-a-passo para quem está estudando para o exame Microsoft 70-533 (Implementing Microsoft Azure Infrastructure Solutions). Se você"
-cover:
-  image: "/og/guia-de-estudos-para-o-exame-microsoft-70-533.png"
-  alt: ""
-  hidden: true
 ---
 
 Preparei um guia passo-a-passo para quem está estudando para o exame Microsoft 70-533 (Implementing Microsoft Azure Infrastructure Solutions). Se você deseja obter esta certificação, este material pode ser muito útil em seus estudos! Confira!

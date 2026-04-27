@@ -6,10 +6,6 @@ tags:
     - linux
     - ubuntu
 description: "Apenas compartilhando um vídeo que eu fiz mostrando como criar uma VM Linux (Ubuntu) pelo Azure CLI. No vídeo é explicado passo a passo do processo, no"
-cover:
-  image: "/og/criando-uma-vm-linux-ubuntu-pelo-azure-cli.png"
-  alt: ""
-  hidden: true
 ---
 
 Apenas compartilhando um vídeo que eu fiz mostrando como criar uma VM Linux (Ubuntu) pelo Azure CLI. No vídeo é explicado passo a passo do processo, no entanto vou colocar abaixo os comando executados para caso você queira testar, possa copiar e colar os comandos e ganhar tempo:

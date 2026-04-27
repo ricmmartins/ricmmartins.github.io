@@ -8,10 +8,6 @@ categories:
 tags:
     - azure
     - linux
-cover:
-  image: "/og/implementando-o-apache-guacamole-no-azure.png"
-  alt: ""
-  hidden: true
 ---
 
 # Introdução

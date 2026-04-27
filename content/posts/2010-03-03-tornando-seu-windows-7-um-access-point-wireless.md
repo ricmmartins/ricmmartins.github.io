@@ -6,10 +6,6 @@ tags:
     - networking
     - windows
 description: "A Microsoft adicionou algums funcionalidades ao Windows 7 para permitir que uma placa de rede wireless possa ser colocada em modo promíscuo e tornar-se um"
-cover:
-  image: "/og/tornando-seu-windows-7-um-access-point-wireless.png"
-  alt: ""
-  hidden: true
 ---
 
 A Microsoft adicionou algums funcionalidades ao Windows 7 para permitir que uma placa de rede wireless possa ser colocada em modo promíscuo e tornar-se um verdadeiro AP Wireless

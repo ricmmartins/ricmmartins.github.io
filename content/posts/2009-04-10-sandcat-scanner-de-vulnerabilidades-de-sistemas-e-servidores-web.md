@@ -6,10 +6,6 @@ date: '2009-04-10T17:36:19-04:00'
 tags:
     - segurança
 description: "Autor: Pedro Augusto de O. Pereira / Considere o Sandcat um NMap especializado em varrer servidores web (como IIS ou Apache) e aplicações web (o seu"
-cover:
-  image: "/og/sandcat-scanner-de-vulnerabilidades-de-sistemas-e-servidores-web.png"
-  alt: ""
-  hidden: true
 ---
 
 Autor: Pedro Augusto de O. Pereira / <http://augusto.pedro.googlepages.com/>

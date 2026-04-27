@@ -6,10 +6,6 @@ tags:
     - azure
     - monitoramento
 description: "Recentemente foi lançado um plugin do Azure Monitor para o Grafana que eu resolvi testar e escrever este post."
-cover:
-  image: "/og/coletando-informacoes-do-azure-com-grafana.png"
-  alt: ""
-  hidden: true
 ---
 
 Recentemente [foi lançado um plugin do Azure Monitor para o Grafana](https://azure.microsoft.com/en-us/blog/monitor-azure-services-and-applications-using-grafana/) que eu resolvi testar e escrever este post.

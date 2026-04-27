@@ -7,10 +7,6 @@ tags:
     - cloud
     - aws
 description: "[](/wp-content/uploads/2015/02/Introtoec2vid_2.jpg) Estou finalizando os preparativos para a realização do meu primeiro webinar onde vou fazer uma"
-cover:
-  image: "/og/webinar-sobre-computacao-em-nuvem-e-aws.png"
-  alt: ""
-  hidden: true
 ---
 
 [![treinamento-cloud](/wp-content/uploads/2015/02/Introtoec2vid_2-300x168.jpg)](/wp-content/uploads/2015/02/Introtoec2vid_2.jpg)

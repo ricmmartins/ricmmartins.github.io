@@ -5,10 +5,6 @@ date: '2010-09-21T22:40:12-04:00'
 tags:
     - aleatórios
 description: "Como alguns já sabem, eu sou fã da Dell e tenho um notebook Inspiron 1525 há cerca de 2 anos."
-cover:
-  image: "/og/comprar-no-ebay-sim-porque-nao.png"
-  alt: ""
-  hidden: true
 ---
 
 Como alguns já sabem, eu sou fã da <span class="bbli">Dell</span> e tenho um <span class="bbli">notebook</span> Inspiron 1525 há cerca de 2 anos.

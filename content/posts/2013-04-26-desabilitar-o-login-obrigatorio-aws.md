@@ -7,10 +7,6 @@ tags:
     - cloud
     - linux
 description: "Se você assim como eu não suporta ter que logar com esse usuário ec2-user na Amazon, aqui vai a dica de como logar direto como root:"
-cover:
-  image: "/og/desabilitar-o-login-obrigatorio-aws.png"
-  alt: ""
-  hidden: true
 ---
 
 Se você assim como eu não suporta ter que logar com esse usuário ec2-user na Amazon, aqui vai a dica de como logar direto como root:  

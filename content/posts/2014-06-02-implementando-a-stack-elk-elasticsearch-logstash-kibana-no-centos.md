@@ -6,10 +6,6 @@ tags:
     - elasticsearch
     - linux
 description: "A stack ELK nada mais é que o conjunto formado pelas ferramentas ElasticSearch, Logstash e o Kibana. O uso destas três ferramentas em conjunto, provê uma"
-cover:
-  image: "/og/implementando-a-stack-elk-elasticsearch-logstash-kibana-no-centos.png"
-  alt: ""
-  hidden: true
 ---
 
 ### O que é a stack ELK?

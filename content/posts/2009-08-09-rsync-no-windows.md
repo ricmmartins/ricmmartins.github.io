@@ -7,10 +7,6 @@ tags:
     - utilitários
     - windows
 description: "Descobrí uma ferramenta interessante para cópia de arquivos em rede, então lá vai a dica:"
-cover:
-  image: "/og/rsync-no-windows.png"
-  alt: ""
-  hidden: true
 ---
 
 Descobrí uma ferramenta interessante para cópia de arquivos em rede, então lá vai a dica:

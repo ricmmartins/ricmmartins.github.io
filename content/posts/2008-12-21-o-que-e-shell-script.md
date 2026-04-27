@@ -7,10 +7,6 @@ tags:
     - scripts
     - shell
 description: "Devido a perguntas como “O que é Shell Script?” e “Como programar em Shell Script?”, Jefferson Virgilio resolveu escrever esta introdução, afim de"
-cover:
-  image: "/og/o-que-e-shell-script.png"
-  alt: ""
-  hidden: true
 ---
 
 Devido a perguntas como “O que é Shell Script?” e “Como programar em Shell Script?”, Jefferson Virgilio resolveu escrever esta introdução, afim de esclerecer algumas dúvidas de usuários iniciantes. Disponibilizado pelo VivaOLinux.com.br…

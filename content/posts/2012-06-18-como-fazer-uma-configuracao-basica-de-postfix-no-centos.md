@@ -5,10 +5,6 @@ date: '2012-06-18T16:46:08-04:00'
 tags:
     - linux
 description: "Ok, então você administra uma rede, e instalou um serviço de monitoração para acompanhar a atividade e desempenho da sua rede, tipo o Nagios ou Zabbix"
-cover:
-  image: "/og/como-fazer-uma-configuracao-basica-de-postfix-no-centos.png"
-  alt: ""
-  hidden: true
 ---
 
 Ok, então você administra uma rede, e instalou um serviço de monitoração para acompanhar a atividade e desempenho da sua rede, tipo o Nagios ou Zabbix. Agora você gostaria de receber e-mails com os alertas sobre o que está ocorrendo na rede. Siga os passos abaixo:

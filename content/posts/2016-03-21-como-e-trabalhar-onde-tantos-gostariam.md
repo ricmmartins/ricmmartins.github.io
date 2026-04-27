@@ -6,10 +6,6 @@ tags:
     - carreira
     - microsoft
 description: "Hoje eu completo 3 meses na empresa onde estou trabalhando. Tem sido uma experiência incrível e muito além do que eu imaginava que seria em todos os"
-cover:
-  image: "/og/como-e-trabalhar-onde-tantos-gostariam.png"
-  alt: ""
-  hidden: true
 ---
 
 Hoje eu completo 3 meses na empresa onde estou trabalhando. Tem sido uma experiência incrível e muito além do que eu imaginava que seria em todos os aspectos, seja em relação ao ambiente, as pessoas, o trabalho, a cultura, os desafios, etc.

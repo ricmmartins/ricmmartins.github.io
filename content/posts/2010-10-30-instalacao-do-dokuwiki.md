@@ -6,10 +6,6 @@ date: '2010-10-30T09:56:06-04:00'
 tags:
     - linux
 description: "[](http://ricardomartins.com.br/2010/10/30/instalacao-do-dokuwiki/dokuwiki-128/)"
-cover:
-  image: "/og/instalacao-do-dokuwiki.png"
-  alt: ""
-  hidden: true
 ---
 
 [![dokuwiki-128](/wp-content/uploads/2010/10/dokuwiki-128.png "dokuwiki-128")](http://ricardomartins.com.br/2010/10/30/instalacao-do-dokuwiki/dokuwiki-128/)

@@ -5,10 +5,6 @@ date: '2015-07-11T02:14:41-04:00'
 tags:
     - carreira
 description: "[](/wp-content/uploads/2015/07/Personal-development-plan-template.jpg) Este texto é uma conversa franca, um desabafo fruto de reflexões pessoais. Conversa"
-cover:
-  image: "/og/o-problema-esta-em-voce-ou-no-mercado.png"
-  alt: ""
-  hidden: true
 ---
 
 [![Personal-development-plan-template](/wp-content/uploads/2015/07/Personal-development-plan-template-300x200.jpg)](/wp-content/uploads/2015/07/Personal-development-plan-template.jpg)

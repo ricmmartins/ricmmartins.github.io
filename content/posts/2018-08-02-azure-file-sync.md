@@ -8,10 +8,6 @@ categories:
 tags:
     - azure
     - storage
-cover:
-  image: "/og/azure-file-sync.png"
-  alt: ""
-  hidden: true
 ---
 
 O post de hoje é bem rápido, apenas para compartilhar algumas coisas sobre o Azure File Sync. Caso você ainda não conheça vale a pena dar uma olhada. Neste primeiro vídeo, um breve overview sobre ele:

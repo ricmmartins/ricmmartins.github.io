@@ -9,10 +9,6 @@ tags:
     - azure
     - elasticsearch
     - monitoramento
-cover:
-  image: "/og/implementando-a-stack-elk-no-azure-via-cli.png"
-  alt: ""
-  hidden: true
 ---
 
 O objetivo deste artigo é descrever de forma detalhada como implementar a Stack ELK (Elasticsearch/Logstash/Kibana) no Azure.

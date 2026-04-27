@@ -5,10 +5,6 @@ date: '2009-02-15T00:20:11-05:00'
 tags:
     - wget
 description: "Essa dica tem origem em um problema que tive no meu trabalho ao precisar baixar o conteúdo de um site."
-cover:
-  image: "/og/usando-o-wget-atraves-de-proxy-no-windows.png"
-  alt: ""
-  hidden: true
 ---
 
 Essa dica tem origem em um problema que tive no meu trabalho ao precisar baixar o conteúdo de um site.

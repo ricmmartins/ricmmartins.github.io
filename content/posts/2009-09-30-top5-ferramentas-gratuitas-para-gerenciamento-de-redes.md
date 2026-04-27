@@ -6,10 +6,6 @@ tags:
     - utilitários
     - networking
 description: "Neste post estarei indicando 5 ferramentas gratuitas da SolarWinds que são essenciais para qualquer administrador de redes e sistemas. São elas:"
-cover:
-  image: "/og/top5-ferramentas-gratuitas-para-gerenciamento-de-redes.png"
-  alt: ""
-  hidden: true
 ---
 
 Neste post estarei indicando 5 ferramentas gratuitas da SolarWinds que são essenciais para qualquer administrador de redes e sistemas. São elas:

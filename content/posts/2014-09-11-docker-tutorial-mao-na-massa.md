@@ -6,10 +6,6 @@ tags:
     - docker
     - nginx
 description: "[](/media/docker1.png) Houve centenas de notícias sobre Docker nos últimos meses. É fato que estamos prestes a ver uma grande mudança na maneira de pensar"
-cover:
-  image: "/og/docker-tutorial-mao-na-massa.png"
-  alt: ""
-  hidden: true
 ---
 
 [![docker](/media/docker1.png)](/media/docker1.png)

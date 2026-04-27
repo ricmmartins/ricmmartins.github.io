@@ -9,10 +9,6 @@ tags:
     - azure
     - webapps
     - docker
-cover:
-  image: "/og/como-implementar-o-dspace-em-um-webapp-container-no-azure.png"
-  alt: ""
-  hidden: true
 ---
 
 # O que é o DSpace?

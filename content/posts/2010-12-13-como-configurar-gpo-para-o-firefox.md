@@ -5,10 +5,6 @@ date: '2010-12-13T14:42:59-05:00'
 tags:
     - windows
 description: "Esses dias recebí um pedido inusitado: O cliente queria uma configuração de GPO no seu servidor, que impedisse os usuários de usar o recurso de salvar"
-cover:
-  image: "/og/como-configurar-gpo-para-o-firefox.png"
-  alt: ""
-  hidden: true
 ---
 
 Esses dias recebí um pedido inusitado: O cliente queria uma configuração de GPO no seu servidor, que impedisse os usuários de usar o recurso de salvar senha em formulários.

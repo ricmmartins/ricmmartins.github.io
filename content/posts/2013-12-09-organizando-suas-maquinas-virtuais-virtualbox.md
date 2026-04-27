@@ -5,10 +5,6 @@ date: '2013-12-09T11:58:18-05:00'
 tags:
     - utilitários
 description: "Recentemente descobrí uma feature no VirtualBox muito interessante, que confesso que não fazia idéia que existia. Estou falando do recurso de agrupar as"
-cover:
-  image: "/og/organizando-suas-maquinas-virtuais-virtualbox.png"
-  alt: ""
-  hidden: true
 ---
 
 Recentemente descobrí uma feature no VirtualBox muito interessante, que confesso que não fazia idéia que existia. Estou falando do recurso de agrupar as máquinas.

@@ -6,10 +6,6 @@ tags:
     - aws
     - cloud
 description: "Pessoal, no último dia 13/10, eu apresentei um Webcast para o portal Mundo TI Brasil, onde falei sobre computação em nuvem e os primcipais serviços da"
-cover:
-  image: "/og/cloud-computing-aws-da-teoria-a-pratica.png"
-  alt: ""
-  hidden: true
 ---
 
 Pessoal, no último dia 13/10, eu apresentei um Webcast para o portal [Mundo TI Brasil](http://www.mundotibrasil.com.br), onde falei sobre computação em nuvem e os primcipais serviços da AWS. Abaixo o link para o vídeo do webcast e os slides apresentados:

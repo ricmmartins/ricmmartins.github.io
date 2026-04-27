@@ -6,10 +6,6 @@ tags:
     - estudo
     - linux
 description: "O Foca GNU/Linux é um guia que traz desde explicações básicas sobre computadores e o sistema GNU/Linux até a administração e segurança do sistema. Os"
-cover:
-  image: "/og/guia-foca-linux.png"
-  alt: ""
-  hidden: true
 ---
 
 O Foca GNU/Linux é um guia que traz desde explicações básicas sobre computadores e o sistema GNU/Linux até a administração e segurança do sistema. Os assuntos do guia são explicados em linguagem clara e organizados de forma linear e didática, evitando termos técnicos nos níveis iniciais, até que o usuário se habitue com sua utilização de forma gradual. Isto faz o guia indispensável para o usuário GNU/Linux iniciante ou os mais curiosos. Todas as seções do guia Foca GNU/Linux tem exemplos para melhor compreensão do assunto explicado e links dinâmicos que te levam facilmente a assuntos relacionados (na versão HTML).

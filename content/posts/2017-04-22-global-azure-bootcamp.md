@@ -7,10 +7,6 @@ tags:
     - palestras
     - devops
 description: "Anualmente ocorre o Global Azure Bootcamp e neste ano eu vou participar na edição que acontece no Rio de Janeiro falando sobre Infraestrutura como código"
-cover:
-  image: "/og/global-azure-bootcamp.png"
-  alt: ""
-  hidden: true
 ---
 
 Anualmente ocorre o [Global Azure Bootcamp](https://global.azurebootcamp.net/) e neste ano eu vou participar na edição que acontece no Rio de Janeiro falando sobre Infraestrutura como código e DevOps no Azure.

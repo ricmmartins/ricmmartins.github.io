@@ -5,10 +5,6 @@ date: '2011-04-01T20:44:58-04:00'
 tags:
     - windows
 description: "Todos nós, administradores de sistema, temos problemas com arquivos de log lotando o disco rígido. Mas agora você vai poder determinar que os arquivos com"
-cover:
-  image: "/og/exluir-arquivos-com-mais-de-x-dias-de-idade.png"
-  alt: ""
-  hidden: true
 ---
 
 Todos nós, administradores de sistema, temos problemas com arquivos de log lotando o disco rígido. Mas agora você vai poder determinar que os arquivos com mais de X dias sejam deletados do seu sistema de forma simples.

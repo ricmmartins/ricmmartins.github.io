@@ -5,10 +5,6 @@ date: '2011-01-26T13:04:44-05:00'
 tags:
     - segurança  
 description: "Outro bizu interessante que encontrei no MenteBinária. Trata-se de um pequeno utilitário criado em VBScript para proteger seu pendrive contra vírus, worms"
-cover:
-  image: "/og/proteja-seu-pendrive.png"
-  alt: ""
-  hidden: true
 ---
 
 Outro bizu interessante que encontrei no [MenteBinária](http://www.mentebinaria.com.br/). Trata-se de um pequeno utilitário criado em VBScript para proteger seu pendrive contra vírus, worms e outras pragas.

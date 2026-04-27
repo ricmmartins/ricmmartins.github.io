@@ -5,10 +5,6 @@ date: '2015-11-18T21:20:30-05:00'
 tags:
     - aws
 description: "A idéia deste artigo é compartilhar com vocês um pouco das práticas que eu adoto nos ambientes que administro na nuvem da AWS. Se você gostar e concordar"
-cover:
-  image: "/og/melhores-praticas-para-administradores-de-sistemas-na-nuvem-da-aws.png"
-  alt: ""
-  hidden: true
 ---
 
 A idéia deste artigo é compartilhar com vocês um pouco das práticas que eu adoto nos ambientes que administro na nuvem da AWS. Se você gostar e concordar com os pontos levantados aqui, compartilhe este artigo e ajude a divulgar estas informações para outras pessoas. Se você tiver mais sugestões, elas são bem vindas!

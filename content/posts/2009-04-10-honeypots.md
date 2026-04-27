@@ -5,10 +5,6 @@ date: '2009-04-10T17:45:49-04:00'
 tags:
     - segurança
 description: "Autor: Pedro Augusto de O. Pereira / Introdução aos honeypots"
-cover:
-  image: "/og/honeypots.png"
-  alt: ""
-  hidden: true
 ---
 
 Autor: Pedro Augusto de O. Pereira / <http://augusto.pedro.googlepages.com/>

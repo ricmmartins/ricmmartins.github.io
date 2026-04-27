@@ -6,10 +6,6 @@ tags:
     - linux
     - ssh
 description: "Como sysadmin e novo usuário da plataforma Mac, fiquei perdido em não ter mais aplicativos como Putty ou XShell com minhas conexões e configurações SSH"
-cover:
-  image: "/og/gerenciando-suas-conexoes-ssh-macos.png"
-  alt: ""
-  hidden: true
 ---
 
 Como sysadmin e novo usuário da plataforma Mac, fiquei perdido em não ter mais aplicativos como Putty ou XShell com minhas conexões e configurações SSH salvas em uma lista facilitando a conexão sempre que necessário.

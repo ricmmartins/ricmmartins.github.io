@@ -6,10 +6,6 @@ tags:
     - windows
     - networking
 description: "Depois de um bom tempo sem postar nada por aqui, tenho uma dica interessante para compartilhar."
-cover:
-  image: "/og/como-configurar-o-windows-como-master-browser-para-a-rede.png"
-  alt: ""
-  hidden: true
 ---
 
 Depois de um bom tempo sem postar nada por aqui, tenho uma dica interessante para compartilhar.

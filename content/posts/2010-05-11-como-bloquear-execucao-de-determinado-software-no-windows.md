@@ -5,10 +5,6 @@ date: '2010-05-11T21:16:10-04:00'
 tags:
     - windows
 description: "Sabemos que em um ambiente em domínio, existem GPO’s que permitem criar “whitelists” ou “blacklists” permitindo ou não a execução de determinados"
-cover:
-  image: "/og/como-bloquear-execucao-de-determinado-software-no-windows.png"
-  alt: ""
-  hidden: true
 ---
 
 Sabemos que em um ambiente em domínio, existem GPO’s que permitem criar “whitelists” ou “blacklists” permitindo ou não a execução de determinados softwares.

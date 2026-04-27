@@ -5,10 +5,6 @@ date: '2009-04-10T17:15:18-04:00'
 tags:
     - aleatórios
 description: "Aprenda a tirar proveito das funcionalidades do Google Search que talvez você não conhecia."
-cover:
-  image: "/og/aproveite-mais-o-google-search.png"
-  alt: ""
-  hidden: true
 ---
 
 Aprenda a tirar proveito das funcionalidades do Google Search que talvez você não conhecia.

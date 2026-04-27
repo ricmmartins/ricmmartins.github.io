@@ -5,10 +5,6 @@ date: '2009-04-10T18:10:58-04:00'
 tags:
     - storage
 description: "Autor: Fábio Kaiser Rauber [fabiorauber at hotmail.com] Este tutorial foi desenvolvido para esclarecer um recurso cada vez mais difundido: RAID"
-cover:
-  image: "/og/raid-perguntas-e-respostas.png"
-  alt: ""
-  hidden: true
 ---
 
 Autor: Fábio Kaiser Rauber \[fabiorauber at hotmail.com\]

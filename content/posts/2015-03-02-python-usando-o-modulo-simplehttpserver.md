@@ -7,10 +7,6 @@ tags:
     - linux
     - python
 description: "O SimpleHTTPServer é um módulo do python que representa uma alternativa simples e rápida para servir arquivos à partir de um diretório no seu sistema via"
-cover:
-  image: "/og/python-usando-o-modulo-simplehttpserver.png"
-  alt: ""
-  hidden: true
 ---
 
 O SimpleHTTPServer é um módulo do python que representa uma alternativa simples e rápida para servir arquivos à partir de um diretório no seu sistema via HTTP sem que seja necessário instalar o Nginx, Apache ou algum outro servidor web.

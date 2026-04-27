@@ -6,10 +6,6 @@ tags:
     - cursos
     - cloud
 description: "Se você se interessa pelo assunto, não pode perder esta excelente oportunidade de aprimorar seus conhecimentos."
-cover:
-  image: "/og/coursera-curso-de-especializacao-em-cloud-computing.png"
-  alt: ""
-  hidden: true
 ---
 
 Se você se interessa pelo assunto, não pode perder esta excelente oportunidade de aprimorar seus conhecimentos.

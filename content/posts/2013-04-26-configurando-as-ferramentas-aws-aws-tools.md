@@ -7,10 +7,6 @@ tags:
     - cloud
     - linux
 description: "Os serviços em Cloud da Amazon, dentre diversas outras funcionalidades, fornecem uma API que pode ser usada para realizar todo tipo de tarefa em sua"
-cover:
-  image: "/og/configurando-as-ferramentas-aws-aws-tools.png"
-  alt: ""
-  hidden: true
 ---
 
 Os serviços em Cloud da Amazon, dentre diversas outras funcionalidades, fornecem uma API que pode ser usada para realizar todo tipo de tarefa em sua conta. Embora praticamente tudo possa ser feito pela Console Web, pode ser interessante utilizar a API em outros lugares, principalmente em suas próprias ferramentas ou scripts. Pensando nisso, a Amazon disponibiliza algumas ferramentas para utilizar estas API’s. São ferramentas escritas em Java, chamadas de AWS Tools.

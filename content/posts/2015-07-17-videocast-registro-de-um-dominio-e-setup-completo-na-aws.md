@@ -9,10 +9,6 @@ tags:
     - wordpress
     - mysql
 description: "Neste videocast fiz um laboratório prático de AWS. É demonstrado o registro de um domínio no registro.br, configuração deste domínio no route53 e em"
-cover:
-  image: "/og/videocast-registro-de-um-dominio-e-setup-completo-na-aws.png"
-  alt: ""
-  hidden: true
 ---
 
 Neste videocast fiz um laboratório prático de AWS. É demonstrado o registro de um domínio no registro.br, configuração deste domínio no route53 e em seguida a criação de uma instância EC2 com o Apache, PHP e WordPress instalado. Em paralelo é criado um RDS com MySQL, para ser usado em conjunto com a instância EC2, criando nosso stack LAMP (Linux, Apache, MySQL e PHP).

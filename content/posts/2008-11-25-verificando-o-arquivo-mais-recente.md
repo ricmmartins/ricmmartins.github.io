@@ -6,10 +6,6 @@ tags:
     - linux
     - shell
 description: "Hoje estava eu aqui testando uns shell scripts, e descobri uma forma de verificar qual o arquivo de log mais recente criado em um diretório."
-cover:
-  image: "/og/verificando-o-arquivo-mais-recente.png"
-  alt: ""
-  hidden: true
 ---
 
 <div class="entry">Hoje estava eu aqui testando uns shell scripts, e descobri uma forma de verificar qual o arquivo de log mais recente criado em um diretório.

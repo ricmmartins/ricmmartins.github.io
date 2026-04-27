@@ -5,10 +5,6 @@ date: '2012-12-10T11:14:32-05:00'
 tags:
     - windows
 description: "A dica de hoje é rápida: O que fazer com os logs de aplicativos que vivem lotando seu disco, mas que por outro lado você precisa tê-los armazenados por"
-cover:
-  image: "/og/rotacionando-seus-logs-windows.png"
-  alt: ""
-  hidden: true
 ---
 
 A dica de hoje é rápida: O que fazer com os logs de aplicativos que vivem lotando seu disco, mas que por outro lado você precisa tê-los armazenados por algum tempo?

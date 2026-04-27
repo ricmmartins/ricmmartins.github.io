@@ -6,10 +6,6 @@ tags:
     - azure
     - carreira
 description: "O Microsoft IT Pro Cloud Essentials e o IT Pro Career Center são as mais novas iniciativa da Microsoft para sua capacitação profissional em Cloud"
-cover:
-  image: "/og/conhece-o-microsoft-it-pro-cloud-essentials-ou-no-career-center.png"
-  alt: ""
-  hidden: true
 ---
 
 O Microsoft IT Pro Cloud Essentials e o IT Pro Career Center são as mais novas iniciativa da Microsoft para sua capacitação profissional em Cloud disponibilizadas gratuitamente para você.

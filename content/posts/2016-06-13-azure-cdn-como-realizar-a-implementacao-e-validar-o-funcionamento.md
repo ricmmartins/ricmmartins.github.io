@@ -6,10 +6,6 @@ tags:
     - azure
     - nginx
 description: "O objetivo deste artigo é demonstrar passo-a-passo a criação de um ambiente web hospedando um website utilizando a CDN do Azure."
-cover:
-  image: "/og/azure-cdn-como-realizar-a-implementacao-e-validar-o-funcionamento.png"
-  alt: ""
-  hidden: true
 ---
 
 O objetivo deste artigo é demonstrar passo-a-passo a criação de um ambiente web hospedando um website utilizando a CDN do Azure.

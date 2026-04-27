@@ -6,10 +6,6 @@ tags:
     - devops
     - jenkins
 description: "A idéia deste post é criar um “mini-howto” da instalação do Jenkins. Eu não vou entrar em muitos detalhes sobre o que é o Jenkins. Se você quiser saber um"
-cover:
-  image: "/og/como-instalar-o-jenkins.png"
-  alt: ""
-  hidden: true
 ---
 
 A idéia deste post é criar um “mini-howto” da instalação do Jenkins.

@@ -5,10 +5,6 @@ date: '2009-04-10T18:04:36-04:00'
 tags:
      - segurança
 description: "Este artigo mostra como realizar uma configuração no windows, de modo a bloquear o acesso à storage devices, que podem ser entendidos como pendrives"
-cover:
-  image: "/og/limitando-o-uso-de-storage-devices-pendrives-disquetes-cd-roms-no-windows.png"
-  alt: ""
-  hidden: true
 ---
 
 Este artigo mostra como realizar uma configuração no windows, de modo a bloquear o acesso à storage devices, que podem ser entendidos como pendrives, disquetes e cd-roms, pelos usuários nas máquinas com Windows Xp. Desta forma, podemos diminuir drasticamente a incidência de vírus, spywares e malwares na sua rede.

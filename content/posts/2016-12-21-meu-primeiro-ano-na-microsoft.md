@@ -6,10 +6,6 @@ tags:
     - carreira
     - microsoft
 description: "Hoje eu completo meu primeiro ano trabalhando na Microsoft e por isto assim como eu fiz quando fui reprovado na primeira vez que participei no processo"
-cover:
-  image: "/og/meu-primeiro-ano-na-microsoft.png"
-  alt: ""
-  hidden: true
 ---
 
 ![Imagem do post Meu primeiro ano na Microsoft](/wp-content/uploads/2016/12/13246354_10206280130913371_918757031935210288_o.jpg)

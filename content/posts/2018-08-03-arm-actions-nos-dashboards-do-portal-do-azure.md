@@ -8,10 +8,6 @@ categories:
 tags:
     - azure
     - monitoramento
-cover:
-  image: "/og/arm-actions-nos-dashboards-do-portal-do-azure.png"
-  alt: ""
-  hidden: true
 ---
 
 Provavelmente você já sabe que o Portal do Azure é [totalmente customizável](https://docs.microsoft.com/en-us/azure/azure-portal/azure-portal-dashboards.), permitindo que você explore ao máximo as opções criando dashboards para atender as suas necessidades de visualização, organização e monitoramento.

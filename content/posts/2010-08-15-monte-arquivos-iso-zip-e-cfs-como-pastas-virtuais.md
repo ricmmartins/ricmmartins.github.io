@@ -5,10 +5,6 @@ date: '2010-08-15T21:48:58-04:00'
 tags:
     - windows
 description: "Se você é um “Hard User” de Internet, já sabe do que estou falando e está bem acostumado com arquivos ISO."
-cover:
-  image: "/og/monte-arquivos-iso-zip-e-cfs-como-pastas-virtuais.png"
-  alt: ""
-  hidden: true
 ---
 
 Se você é um “Hard User” de Internet, já sabe do que estou falando e está bem acostumado com arquivos ISO.

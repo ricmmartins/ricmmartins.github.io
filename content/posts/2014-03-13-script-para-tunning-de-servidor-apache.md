@@ -6,10 +6,6 @@ tags:
     - apache
     - scripts
 description: "Script em perl que faz uma verificação na configuração do servidor apache e faz recomendações para otimização."
-cover:
-  image: "/og/script-para-tunning-de-servidor-apache.png"
-  alt: ""
-  hidden: true
 ---
 
 Script em perl que faz uma verificação na configuração do servidor apache e faz recomendações para otimização.

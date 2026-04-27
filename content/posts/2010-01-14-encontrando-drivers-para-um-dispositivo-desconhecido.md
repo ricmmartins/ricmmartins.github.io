@@ -5,10 +5,6 @@ date: '2010-01-14T22:07:36-05:00'
 tags:
     - windows
 description: "A pior coisa depois de um format é a busca por drivers para reinstalação. Geralmente perdemos os cd’s com os drivers, ou nos deparamos com computadores"
-cover:
-  image: "/og/encontrando-drivers-para-um-dispositivo-desconhecido.png"
-  alt: ""
-  hidden: true
 ---
 
 A pior coisa depois de um format é a busca por drivers para reinstalação. Geralmente perdemos os cd’s com os drivers, ou nos deparamos com computadores xingue-lingue que nem cd de drivers possui. Realmente isso é desanimador…

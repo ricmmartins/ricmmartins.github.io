@@ -6,10 +6,6 @@ tags:
     - networking
     - utilitários
 description: "Se você precisa de um mapa da sua rede, o lanmap pode ser a solução. Para instalar ele basta digitar na linha de comando:"
-cover:
-  image: "/og/mapa-automatico-da-rede-lanmap-e-a-solucao.png"
-  alt: ""
-  hidden: true
 ---
 
 Se você precisa de um mapa da sua rede, o lanmap pode ser a solução. Para instalar ele basta digitar na linha de comando:

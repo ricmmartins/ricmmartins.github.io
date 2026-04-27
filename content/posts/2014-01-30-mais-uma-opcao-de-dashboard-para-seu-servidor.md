@@ -7,10 +7,6 @@ tags:
     - linux
     - windows
 description: "Depois de publicar este post, tive o comentário do leitor Rafael Bernardes comentando sobre um outro dashboard para servidores, o Phpsysinfo. Entrei no"
-cover:
-  image: "/og/mais-uma-opcao-de-dashboard-para-seu-servidor.png"
-  alt: ""
-  hidden: true
 ---
 
 Depois de publicar [este post](https://ricardomartins.com.br/dashboard-lindao-para-seu-servidor-linux/), tive o comentário do leitor [Rafael Bernardes](http://barrasbin.wordpress.com/ "BarraSbin") comentando sobre um outro dashboard para servidores, o [Phpsysinfo](http://rk4an.github.io/phpsysinfo/ "Phpsysinfo"). Entrei no site para conhecer e gostei bastante. 

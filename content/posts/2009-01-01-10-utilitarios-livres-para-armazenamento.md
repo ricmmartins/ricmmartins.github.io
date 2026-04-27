@@ -5,10 +5,6 @@ date: '2009-01-01T03:50:56-05:00'
 tags:
     - storage
 description: "Em artigo disponibilizado pelo ComputerWorld.com, Deni Connor apresenta 10 utilitários de armazenamento para gerenciar uma Storage-Area Network (SAN)"
-cover:
-  image: "/og/10-utilitarios-livres-para-armazenamento.png"
-  alt: ""
-  hidden: true
 ---
 
 Em artigo disponibilizado pelo ComputerWorld.com, Deni Connor apresenta 10 utilitários de armazenamento para gerenciar uma Storage-Area Network (SAN), monitorar e avaliar a privacidade de sua rede e mais…

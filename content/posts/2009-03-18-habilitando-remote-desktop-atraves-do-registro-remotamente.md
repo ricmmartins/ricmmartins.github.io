@@ -6,10 +6,6 @@ tags:
     - windows
     - rdp
 description: "O Título parece estranho, mas logo vão entender melhor… Há alguns dias eu precisei acessar uma máquina remotamente, porém para seguir as tradições de"
-cover:
-  image: "/og/habilitando-remote-desktop-atraves-do-registro-remotamente.png"
-  alt: ""
-  hidden: true
 ---
 
 O Título parece estranho, mas logo vão entender melhor…

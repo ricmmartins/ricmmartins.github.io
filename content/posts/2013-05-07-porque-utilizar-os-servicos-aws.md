@@ -6,10 +6,6 @@ tags:
     - aws
     - cloud
 description: "Recentemente estive conversando com um amigo sobre como motivar clientes para migrar para AWS. Como é um assunto interessante e muita gente pode ter"
-cover:
-  image: "/og/porque-utilizar-os-servicos-aws.png"
-  alt: ""
-  hidden: true
 ---
 
 Recentemente estive conversando com um amigo sobre como motivar clientes para migrar para AWS. Como é um assunto interessante e muita gente pode ter interesse, montei este post, descrevendo algumas das principais vantagens.

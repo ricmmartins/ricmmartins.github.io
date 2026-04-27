@@ -7,10 +7,6 @@ tags:
     - certificação
     - microsoft
 description: "Muita gente ainda se confunde quando o assunto é as novas certificações da Microsoft. Fiz um resumo abaixo de como elas funcionam e espero que seja útil."
-cover:
-  image: "/og/entenda-as-novas-certificacoes-microsoft.png"
-  alt: ""
-  hidden: true
 ---
 
 Muita gente ainda se confunde quando o assunto é as novas <span class="bbli">certificações</span> da <span class="bbli">Microsoft</span>. Fiz um resumo abaixo de como elas funcionam e espero que seja útil.

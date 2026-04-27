@@ -5,10 +5,6 @@ date: '2008-12-17T22:07:43-05:00'
 tags:
     - aleatórios
 description: "Eu sempre fui apaixonado por máquinas Dell. As máquinas têm excelente performance, estabilidade, estrutura, e praticidade para técnicos que assim como eu"
-cover:
-  image: "/og/relato-sobre-o-suporte-dell.png"
-  alt: ""
-  hidden: true
 ---
 
 Eu sempre fui apaixonado por máquinas Dell. As máquinas têm excelente performance, estabilidade, estrutura, e praticidade para técnicos que assim como eu precisam mecher no hardware destas máquinas, onde geralmente você não precisa de uma única ferramenta para abrir. A estrutura interna é totalmente modular e muito bem estruturada para melhorar a ventilação interna e facilitar a manutenção.

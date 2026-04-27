@@ -5,10 +5,6 @@ date: '2009-04-10T17:51:57-04:00'
 tags:
     - segurança
 description: "Autor: Pedro Augusto de O. Pereira / Senhas são o ponto mais fraco em qualquer sistema de segurança. Isso acontece porque geralmente as senhas são"
-cover:
-  image: "/og/ataques-brute-force-utilizando-o-hydra.png"
-  alt: ""
-  hidden: true
 ---
 
 Autor: Pedro Augusto de O. Pereira / <http://augusto.pedro.googlepages.com/>

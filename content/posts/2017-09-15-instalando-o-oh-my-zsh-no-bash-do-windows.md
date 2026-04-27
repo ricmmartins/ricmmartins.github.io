@@ -5,10 +5,6 @@ date: '2017-09-15T14:51:54-04:00'
 tags:
     - windows
 description: "Há algum tempo atrás eu descobri o Oh My Zsh e desde então me tornei usuário. Porém há aproximadamente um ano e meio mudei de emprego e passei a utilizar"
-cover:
-  image: "/og/instalando-o-oh-my-zsh-no-bash-do-windows.png"
-  alt: ""
-  hidden: true
 ---
 
 Há algum tempo atrás eu descobri o [Oh My Zsh ](http://ohmyz.sh)e desde então me tornei usuário. Porém há aproximadamente um ano e meio mudei de emprego e passei a utilizar WIndows no desktop.

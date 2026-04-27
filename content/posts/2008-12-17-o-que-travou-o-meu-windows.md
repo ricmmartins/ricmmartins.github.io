@@ -5,10 +5,6 @@ date: '2008-12-17T21:13:14-05:00'
 tags:
     - utilitários
 description: "Vocês sabiam que a maioria esmagadora das “travadas” (crash) do seu windows são por causa de drives defeituosos? E como saber qual deles foi o culpado?"
-cover:
-  image: "/og/o-que-travou-o-meu-windows.png"
-  alt: ""
-  hidden: true
 ---
 
 Vocês sabiam que a maioria esmagadora das “travadas” (crash) do seu windows são por causa de drives defeituosos? E como saber qual deles foi o culpado? Simples, com o [WhoCrashed](http://www.resplendence.com/whocrashed).

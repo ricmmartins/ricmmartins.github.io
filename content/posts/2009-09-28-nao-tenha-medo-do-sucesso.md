@@ -5,10 +5,6 @@ date: '2009-09-28T02:35:14-04:00'
 tags:
     - carreira
 description: "Pode parecer um absurdo, mas tem gente que parece ter medo do sucesso. São pessoas que têm tudo para vencer, serem notadas e prósperas, mas que ficam"
-cover:
-  image: "/og/nao-tenha-medo-do-sucesso.png"
-  alt: ""
-  hidden: true
 ---
 
 ![sucesso](/wp-content/uploads/2009/09/sucesso.jpg "sucesso")

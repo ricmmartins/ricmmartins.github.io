@@ -5,10 +5,6 @@ date: '2016-11-23T15:47:45-05:00'
 tags:
     - azure
 description: "Nesta segunda parte vamos abordar os resource groups, tags, templates arm e controles"
-cover:
-  image: "/og/melhores-praticas-para-administradores-de-sistemas-na-nuvem-da-microsoft-azure-parte-ii.png"
-  alt: ""
-  hidden: true
 ---
 
 ## Criando e organizando os recursos

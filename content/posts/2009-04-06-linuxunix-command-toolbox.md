@@ -6,10 +6,6 @@ tags:
     - comandos
     - linux
 description: "Este documento é uma coleção de comandos Unix / Linux / BSD. São úteis para profissionais de TI ou para usuários avançados."
-cover:
-  image: "/og/linuxunix-command-toolbox.png"
-  alt: ""
-  hidden: true
 ---
 
 Este documento é uma coleção de comandos Unix / Linux / BSD. São úteis para profissionais de TI ou para usuários avançados.

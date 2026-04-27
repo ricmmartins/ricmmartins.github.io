@@ -5,10 +5,6 @@ date: '2017-10-24T20:48:44-04:00'
 tags:
     - azure
 description: "Pessoal, consolidei abaixo minhas últimas publicações com assuntos relacionados à Azure e estou compartilhando com vocês:"
-cover:
-  image: "/og/lista-de-publicacoes-sobre-azure.png"
-  alt: ""
-  hidden: true
 ---
 
 Pessoal, consolidei abaixo minhas últimas publicações com assuntos relacionados à Azure e estou compartilhando com vocês:

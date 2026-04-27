@@ -9,10 +9,6 @@ tags:
     - packer
     - ansible
 description: "O movimento DevOps vem ganhando muita força nos últimos anos e ao mesmo tempo centenas de ferramentas relacionadas são lançadas dia após dia. Por outro"
-cover:
-  image: "/og/conhecendo-o-terraform-packer-e-ansible.png"
-  alt: ""
-  hidden: true
 ---
 
 ![Iac - Conhecendo o Terraform, Packer e Ansible](/wp-content/uploads/2017/03/iac.png)

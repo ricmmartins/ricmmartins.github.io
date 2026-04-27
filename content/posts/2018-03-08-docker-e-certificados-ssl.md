@@ -10,10 +10,6 @@ tags:
     - linux
     - nginx
     - ssl
-cover:
-  image: "/og/docker-e-certificados-ssl.png"
-  alt: ""
-  hidden: true
 ---
 
 Este é um post rápido apenas para compartilhar uma forma de habilitar o uso de SSL para uma aplicação que esteja rodando em um container Docker.

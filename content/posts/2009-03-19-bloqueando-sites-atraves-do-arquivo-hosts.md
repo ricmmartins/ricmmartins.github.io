@@ -5,10 +5,6 @@ date: '2009-03-19T00:29:53-04:00'
 tags:
     - segurança
 description: "Esse post é uma atualização do post “Bloqueando sites na unha – Parte 1″ Há um programa muito bom pra gerenciar o HOST do windows (inclusive o próprio"
-cover:
-  image: "/og/bloqueando-sites-atraves-do-arquivo-hosts.png"
-  alt: ""
-  hidden: true
 ---
 
 Esse post é uma atualização do post “[Bloqueando sites na unha](http://ricardomartins.com.br/2009/02/20/bloqueando-sites-na-unha/) – Parte 1″

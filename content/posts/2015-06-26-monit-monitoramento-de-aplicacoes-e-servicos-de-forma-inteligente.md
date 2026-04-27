@@ -8,10 +8,6 @@ tags:
     - monitoramento
     - nginx       
 description: "No post de hoje vou comentar um pouco sobre o Monit. Uma ferramenta extremamente útil e poderosa para monitoramento de aplicações e serviços."
-cover:
-  image: "/og/monit-monitoramento-de-aplicacoes-e-servicos-de-forma-inteligente.png"
-  alt: ""
-  hidden: true
 ---
 
 No post de hoje vou comentar um pouco sobre o [Monit](https://mmonit.com/monit/). Uma ferramenta extremamente útil e poderosa para monitoramento de aplicações e serviços.

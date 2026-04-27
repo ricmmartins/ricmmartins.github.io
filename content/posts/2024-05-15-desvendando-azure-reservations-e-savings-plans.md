@@ -9,10 +9,6 @@ tags:
   - azure
   - economia
   - custos
-cover:
-  image: "/og/desvendando-azure-reservations-e-savings-plans.png"
-  alt: ""
-  hidden: true
 ---
 
 ## Introdução:

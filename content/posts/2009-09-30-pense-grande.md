@@ -5,10 +5,6 @@ date: '2009-09-30T01:02:12-04:00'
 tags:
     - carreira
 description: "Em todas as biografias de grandes personalidades e conversas com pessoas de sucesso encontramos um traço comum: elas sempre se recusaram a pensar pequeno"
-cover:
-  image: "/og/pense-grande.png"
-  alt: ""
-  hidden: true
 ---
 
 Em todas as biografias de grandes personalidades e conversas com pessoas de sucesso encontramos um traço comum: elas sempre se recusaram a pensar pequeno. Recusam-se a olhar para si mesmo como fracassadas. Sempre têm uma visão positiva dos acontecimentos. Conseguem encontrar nas crises as oportunidades. Elas acreditam nos outros e nas possibilidades, por menores que aparentemente sejam. Elas têm bom humor e sabem rir de sí próprias e dos erros que cometem.

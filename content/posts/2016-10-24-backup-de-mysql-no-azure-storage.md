@@ -8,10 +8,6 @@ tags:
     - mysql
     - backup
 description: "Post rápido mostrando como fazer o backup dos databases de um servidor MySQL em um blob storage no Azure."
-cover:
-  image: "/og/backup-de-mysql-no-azure-storage.png"
-  alt: ""
-  hidden: true
 ---
 
 Post rápido mostrando como fazer o backup dos databases de um servidor MySQL em um blob storage no Azure.

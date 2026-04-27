@@ -6,10 +6,6 @@ tags:
     - docker
     - linux
 description: "O post de hoje é pra mostrar como criar suas imagens do docker, publicá-las no Docker Hub (Registry) e depois usar/disponibilizar onde precisar."
-cover:
-  image: "/og/docker-criando-suas-proprias-imagens.png"
-  alt: ""
-  hidden: true
 ---
 
 O post de hoje é pra mostrar como criar suas imagens do docker, publicá-las no Docker Hub (Registry) e depois usar/disponibilizar onde precisar.

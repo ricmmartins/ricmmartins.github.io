@@ -7,10 +7,6 @@ tags:
     - scripts
     - segurança
 description: "Se você precisa melhorar a segurança do seu servidor, este pequeno script shell pode te ajudar bastante."
-cover:
-  image: "/og/bash-script-para-hardening-de-servidores-linux.png"
-  alt: ""
-  hidden: true
 ---
 
 Se você precisa melhorar a segurança do seu servidor, este pequeno script shell pode te ajudar bastante.
