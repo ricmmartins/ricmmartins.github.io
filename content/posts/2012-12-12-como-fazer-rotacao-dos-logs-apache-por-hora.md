@@ -5,6 +5,7 @@ date: '2012-12-12T11:27:12-05:00'
 tags:
     - apache
     - linux
+description: "Então você tem um servidor com Apache instalado gerando centenas de MB para lotar seu disco, certo? Vamos lá…"
 ---
 
 Então você tem um servidor com Apache instalado gerando centenas de MB para lotar seu disco, certo? Vamos lá…

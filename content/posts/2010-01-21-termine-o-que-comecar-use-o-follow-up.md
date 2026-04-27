@@ -4,6 +4,7 @@ title: 'Termine o que começar: use o follow-up'
 date: '2010-01-21T23:30:56-05:00'
 tags:
     - carreira
+description: "Por Luiz Marins, no livro: Socorro! Preciso de motivação Follow-up significa “acompanhar”, “seguir”. Dar segmento às coisas é uma verdadeira arte que"
 ---
 
 Por Luiz Marins, no livro: Socorro! Preciso de motivação

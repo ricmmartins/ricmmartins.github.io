@@ -5,6 +5,7 @@ date: '2016-05-28T21:05:25-04:00'
 tags:
     - azure
     - certificação
+description: "Quer saber por onde começar a estudar sobre a plataforma e os serviços de computação em nuvem da Microsoft? Quais as certificações disponíveis, qual"
 ---
 
 Quer saber por onde começar a estudar sobre a plataforma e os serviços de computação em nuvem da Microsoft? Quais as certificações disponíveis, qual caminho à seguir, onde encontrar material de estudo gratuito e como se manter atualizado?

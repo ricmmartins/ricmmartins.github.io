@@ -5,6 +5,7 @@ date: '2010-06-23T03:32:18-04:00'
 tags:
     - estudo
     - microsoft
+description: "Abaixo alguns e-books disponibilizados gratuitamente pela Microsoft Press Free ebook: Deploying Windows 7, Essential Guidance"
 ---
 
 Pessoal,  

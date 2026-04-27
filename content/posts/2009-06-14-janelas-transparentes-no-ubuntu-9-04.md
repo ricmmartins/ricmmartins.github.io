@@ -5,6 +5,7 @@ date: '2009-06-14T06:31:25-04:00'
 tags:
     - linux
     - ubuntu
+description: "Hoje tive que trabalhar de madrugada… Fazer o quê né ?! Como neste horário as coisas por aqui são bem tranquilas, eu resolví trazer o meu note para fazer"
 ---
 
 Hoje tive que trabalhar de madrugada… Fazer o quê né ?!

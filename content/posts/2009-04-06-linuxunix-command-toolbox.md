@@ -5,6 +5,7 @@ date: '2009-04-06T22:53:00-04:00'
 tags:
     - comandos
     - linux
+description: "Este documento é uma coleção de comandos Unix / Linux / BSD. São úteis para profissionais de TI ou para usuários avançados."
 ---
 
 Este documento é uma coleção de comandos Unix / Linux / BSD. São úteis para profissionais de TI ou para usuários avançados.

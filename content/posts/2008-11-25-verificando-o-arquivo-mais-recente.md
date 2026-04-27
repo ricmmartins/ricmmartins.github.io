@@ -5,6 +5,7 @@ date: '2008-11-25T19:49:24-05:00'
 tags:
     - linux
     - shell
+description: "Hoje estava eu aqui testando uns shell scripts, e descobri uma forma de verificar qual o arquivo de log mais recente criado em um diretório."
 ---
 
 <div class="entry">Hoje estava eu aqui testando uns shell scripts, e descobri uma forma de verificar qual o arquivo de log mais recente criado em um diretório.

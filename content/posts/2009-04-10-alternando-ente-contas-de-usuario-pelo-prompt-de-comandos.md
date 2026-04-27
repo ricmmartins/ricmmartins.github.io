@@ -5,6 +5,7 @@ date: '2009-04-10T17:33:10-04:00'
 tags:
     - comandos
     - windows
+description: "Você pode alternar ente usuários pelo Prompt de Comandos do Windows sem precisar realizar o logoff, caso precise acessar pastas e arquivos de outros"
 ---
 
 ![runas.jpg](http://adminonline.files.wordpress.com/2007/08/runas.jpg)

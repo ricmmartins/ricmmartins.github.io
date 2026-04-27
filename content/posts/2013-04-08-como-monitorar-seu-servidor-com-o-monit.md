@@ -5,6 +5,7 @@ date: '2013-04-08T11:17:01-04:00'
 tags:
     - linux
     - monitoramento
+description: "Olá pessoal. Este é um post rápido. Como no meu post anterior sobre a instalação do Nginx eu comentei sobre o Monit, achei que seria interessante"
 ---
 
 Olá pessoal. Este é um post rápido. Como no meu post anterior sobre a instalação do Nginx eu comentei sobre o Monit, achei que seria interessante compartilhar mais informações sobre o uso do Monit.

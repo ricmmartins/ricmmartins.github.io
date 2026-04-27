@@ -5,6 +5,7 @@ date: '2011-01-04T21:27:03-05:00'
 tags:
     - php
     - windows
+description: "Hoje estive visitando o blog do Igor Humberto e encontrei uma dica bastante interessante: Como instalar o PHP no Windows."
 ---
 
 Olá pessoas!

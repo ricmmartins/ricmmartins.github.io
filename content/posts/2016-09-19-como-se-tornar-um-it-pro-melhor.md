@@ -5,6 +5,7 @@ date: '2016-09-19T16:45:50-04:00'
 tags:
     - azure
     - carreira    
+description: "Nos dias de hoje o profissional de TI passa por grandes mudanças. São novos paradigmas, novas tendências e etc. O administrador de sistemas hoje precisa"
 ---
 
 Nos dias de hoje o profissional de TI passa por grandes mudanças. São novos paradigmas, novas tendências e etc. O administrador de sistemas hoje precisa lidar com novas formas de trabalho, culturas, metodologias e ferramentas para continuar em linha com o que o mercado exige dele.

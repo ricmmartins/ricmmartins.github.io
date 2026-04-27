@@ -4,6 +4,7 @@ title: 'Pendrive Bootável com Ghost'
 date: '2010-05-16T17:11:01-04:00'
 tags:
     - aleatórios
+description: "A idéia deste artigo é mostrar como criar um pendrive bootável que contenha uma imagem do seu equipamento que permita a realização do auto-restore. Ou"
 ---
 
 A idéia deste artigo é mostrar como criar um <span class="bbli">pendrive</span> bootável que contenha uma imagem do seu equipamento que permita a realização do auto-restore. Ou seja, basta plugar o pendrive, dar o boot e em 10 minutos seu sistema estará da mesma forma de quando você criou a imagem, automaticamente.

@@ -4,6 +4,7 @@ title: 'Criando um Dual Boot entre Windows 7 e Windows 8 usando VHD'
 date: '2011-10-11T17:18:14-04:00'
 tags:
     - windows
+description: "Neste post vou mostrar como instalar o Windows 8 em um VHD. Usando esse método, você poderá escolher inicializar o computador ecom o seu atual Windows 7"
 ---
 
 Neste post vou mostrar como instalar o Windows 8 em um VHD. Usando esse método, você poderá escolher inicializar o computador ecom o seu atual Windows 7 ou com o novo Windows 8, sem necessidade de reinstalar programas, refazer suas configurações e etc no seu Windows 7.

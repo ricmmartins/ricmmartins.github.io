@@ -6,6 +6,7 @@ tags:
     - carreira
     - certificação
     - microsoft
+description: "Muita gente ainda se confunde quando o assunto é as novas certificações da Microsoft. Fiz um resumo abaixo de como elas funcionam e espero que seja útil."
 ---
 
 Muita gente ainda se confunde quando o assunto é as novas <span class="bbli">certificações</span> da <span class="bbli">Microsoft</span>. Fiz um resumo abaixo de como elas funcionam e espero que seja útil.

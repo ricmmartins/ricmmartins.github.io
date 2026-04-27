@@ -4,6 +4,7 @@ title: 'Melhores práticas para administradores de sistemas na nuvem da Microsof
 date: '2016-11-23T15:47:45-05:00'
 tags:
     - azure
+description: "Nesta segunda parte vamos abordar os resource groups, tags, templates arm e controles"
 ---
 
 ## Criando e organizando os recursos

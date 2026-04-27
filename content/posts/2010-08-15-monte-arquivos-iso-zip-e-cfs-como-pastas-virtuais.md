@@ -4,6 +4,7 @@ title: 'Monte arquivos ISO, ZIP e CFS como pastas virtuais'
 date: '2010-08-15T21:48:58-04:00'
 tags:
     - windows
+description: "Se você é um “Hard User” de Internet, já sabe do que estou falando e está bem acostumado com arquivos ISO."
 ---
 
 Se você é um “Hard User” de Internet, já sabe do que estou falando e está bem acostumado com arquivos ISO.

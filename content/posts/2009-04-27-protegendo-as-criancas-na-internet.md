@@ -4,6 +4,7 @@ title: 'Protegendo as crianças na Internet'
 date: '2009-04-27T18:02:47-04:00'
 tags:
     - segurança
+description: "Aqui no blog eu já fiz alguns posts que podem te ajudar a bloquear sites na internet e trazer de certa forma alguma segurança para o seu ambiente, seja"
 ---
 
 Aqui no blog eu já fiz alguns posts que podem te ajudar a bloquear sites na internet e trazer de certa forma alguma segurança para o seu ambiente, seja ele doméstico ou empresarial.

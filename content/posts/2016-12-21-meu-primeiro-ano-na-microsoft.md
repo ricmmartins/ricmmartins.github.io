@@ -5,6 +5,7 @@ date: '2016-12-21T15:44:55-05:00'
 tags:
     - carreira
     - microsoft
+description: "Hoje eu completo meu primeiro ano trabalhando na Microsoft e por isto assim como eu fiz quando fui reprovado na primeira vez que participei no processo"
 ---
 
 ![](/wp-content/uploads/2016/12/13246354_10206280130913371_918757031935210288_o.jpg)

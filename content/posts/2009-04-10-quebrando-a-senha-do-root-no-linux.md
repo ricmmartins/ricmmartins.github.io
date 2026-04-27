@@ -5,6 +5,7 @@ date: '2009-04-10T17:58:15-04:00'
 tags:
     - linux
     - segurança
+description: "Esta é uma dica rápida, para quem precisa quebrar a senha do usuário root em qualquer distribuição linux, utilizando um live-cd."
 ---
 
 Esta é uma dica rápida, para quem precisa quebrar a senha do usuário root em qualquer distribuição linux, utilizando um live-cd.

@@ -5,6 +5,7 @@ date: '2009-03-19T00:57:54-04:00'
 tags:
     - segurança
     - networking
+description: "[](/wp-content/uploads/2009/03/18-03-2009-214642.jpg) Um Firewall é uma ‘passagem’ (“gateway”) que restringe e controla o fluxo do tráfego de dados entre"
 ---
 
 [![Firewall](/wp-content/uploads/2009/03/18-03-2009-214642.jpg "Firewall")](/wp-content/uploads/2009/03/18-03-2009-214642.jpg)

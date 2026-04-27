@@ -4,6 +4,7 @@ title: 'Liberar instalação de fontes pelos usuários no Windows 7'
 date: '2011-04-12T20:31:12-04:00'
 tags:
     - windows
+description: "Aqui no trabalho, dentre outras atividades, trabalhamos dando suporte e criando soluções para profissionais de criação. Sabe este povo criativo que usa"
 ---
 
 Aqui no trabalho, dentre outras atividades, trabalhamos dando suporte e criando soluções para profissionais de criação. Sabe este povo criativo que usa Photoshop, 3DMax, After Effects? É uma tarefa divertida e ótima para tornar uma pessoa cartesiana em algo muito mais prático! Não que eu seja cartesiano.

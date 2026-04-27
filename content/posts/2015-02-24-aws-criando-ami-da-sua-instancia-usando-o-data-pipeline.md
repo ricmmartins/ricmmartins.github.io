@@ -5,6 +5,7 @@ date: '2015-02-24T21:38:37-05:00'
 tags:
     - aws
     - cloud
+description: "Depois do post demonstrando como criar uma AMI da sua instância utilizando um script shell de dentro de um bastion host (), neste post vou mostrar como"
 ---
 
 Depois do post demonstrando como criar uma AMI da sua instância utilizando um script shell de dentro de um bastion host (<http://www.ricardomartins.com.br/aws-script-para-geracao-automatica-de-ami-de-instancia/>), neste post vou mostrar como utilizar o DataPipeline para fazer a mesma tarefa. O [Data Pipeline](http://aws.amazon.com/datapipeline/) é um serviço web que ajuda na automação de atividades de movimentação, integração e processamento de dados entre os recursos de computação e storage.

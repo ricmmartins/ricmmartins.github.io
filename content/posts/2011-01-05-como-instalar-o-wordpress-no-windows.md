@@ -5,6 +5,7 @@ date: '2011-01-05T11:38:28-05:00'
 tags:
     - php
     - wordpress
+description: "Aproveitando o post de ontem sobre como instalar o PHP no Windows, resolvi testar e fazer um post com o passo-a-passo para instalar o WordPress no Windows."
 ---
 
 Aproveitando o post de ontem sobre como instalar o PHP no Windows, resolvi testar e fazer um post com o passo-a-passo para instalar o WordPress no Windows.

@@ -4,6 +4,7 @@ title: 'Você conhece o Windows Steady State?'
 date: '2010-08-17T13:34:19-04:00'
 tags:
     - windows
+description: "Vou compartilhar com vocês um utilitário gratuito da Microsoft, que é uma mão na roda para adminsitradortes de redes. Estou falando do Windows Steady"
 ---
 
 Vou compartilhar com vocês um utilitário gratuito da Microsoft, que é uma mão na roda para adminsitradortes de <span class="bbli">redes</span>. Estou falando do Windows Steady State, um utilitário para configurar restrições, similares à GPO’s de domínio, em estações clientes. Eu utilizo em vários clientes e recomendo.

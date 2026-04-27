@@ -4,6 +4,7 @@ title: 'Usando o Wget através de Proxy no Windows'
 date: '2009-02-15T00:20:11-05:00'
 tags:
     - wget
+description: "Essa dica tem origem em um problema que tive no meu trabalho ao precisar baixar o conteúdo de um site."
 ---
 
 Essa dica tem origem em um problema que tive no meu trabalho ao precisar baixar o conteúdo de um site.

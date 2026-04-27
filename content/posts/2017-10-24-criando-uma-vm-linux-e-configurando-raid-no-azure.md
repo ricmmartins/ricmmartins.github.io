@@ -6,6 +6,7 @@ tags:
     - azure
     - linux
     - storage
+description: "Neste post vou mostrar como criar uma VM Linux no Azure, associar três discos nesta VM e em seguida configurar um Raid 0 usando estes discos pelo CLI."
 ---
 
 Neste post vou mostrar como criar uma VM Linux no Azure, associar três discos nesta VM e em seguida configurar um Raid 0 usando estes discos pelo CLI.

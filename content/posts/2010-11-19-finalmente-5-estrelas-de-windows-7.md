@@ -7,6 +7,7 @@ tags:
     - estudo
     - microsoft
     - windows
+description: "Finalmente, após completar quase 1 ano finalmente foi publicado o novo “5 estrelas” (não é mais esse nome) de Windows 7 – preparatório para o exame"
 ---
 
 Finalmente, após completar quase 1 ano finalmente foi publicado o novo “5 estrelas” (não é mais esse nome) de Windows 7 – preparatório para o exame 70-680. Este é o primeiro conteúdo que vai fazer parte do projeto Learning Hub e que todos os novos conteúdos de capacitação seguirão o formato.

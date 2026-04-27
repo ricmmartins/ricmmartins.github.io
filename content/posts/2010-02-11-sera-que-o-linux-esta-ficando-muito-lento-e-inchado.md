@@ -4,6 +4,7 @@ title: 'Será que o Linux está ficando muito lento e inchado?'
 date: '2010-02-11T23:03:22-05:00'
 tags:
     - linux
+description: "Linux performance: is Linux becoming just too slow and bloated? Autor original: Mitch Meyran"
 ---
 
 ***Linux performance: is Linux becoming just too slow and bloated?**  

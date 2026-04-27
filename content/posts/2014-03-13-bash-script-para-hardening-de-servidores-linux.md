@@ -6,6 +6,7 @@ tags:
     - linux
     - scripts
     - segurança
+description: "Se você precisa melhorar a segurança do seu servidor, este pequeno script shell pode te ajudar bastante."
 ---
 
 Se você precisa melhorar a segurança do seu servidor, este pequeno script shell pode te ajudar bastante.

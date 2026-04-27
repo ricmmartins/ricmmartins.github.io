@@ -4,6 +4,7 @@ title: 'Como acessar o Mysql remotamente via GUI (Graphical User Interface)'
 date: '2012-06-21T12:13:23-04:00'
 tags:
     - mysql
+description: "Como configurar e usar o acesso remoto ao Mysql? Neste post vamos ver como fazer a configuração do Mysql permitindo o acesso remoto e utilizar o HeidiSQL"
 ---
 
 Como configurar e usar o acesso remoto ao Mysql? Neste post vamos ver como fazer a configuração do Mysql permitindo o acesso remoto e utilizar o HeidiSQL para acessar o MySQL via interface gráfica (GUI).

@@ -5,6 +5,7 @@ date: '2009-04-10T17:49:44-04:00'
 tags:
     - linux
     - segurança
+description: "Este texto é uma tradução. O texto original está disponível no site http://www.builderau.com.au/program/linux/soa/10_things_you_should_do_to…?feed=rss"
 ---
 
 Este texto é uma tradução. O texto original está disponível no site [http://www.builderau.com.au/program/linux/soa/10\_things\_you\_should\_do\_to…?feed=rss](http://www.builderau.com.au/program/linux/soa/10-things-you-should-do-to-a-new-Linux-PC-before-exposing-it-to-the-Internet/0,339028299,339274586,00.htm "http://www.builderau.com.au/program/linux/soa/10_things_you_should_do_to_a_new_Linux_PC_before_exposing_it_to_the_Internet/0,339028299,339274586,00.htm")  

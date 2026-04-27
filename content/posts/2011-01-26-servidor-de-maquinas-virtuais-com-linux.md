@@ -4,6 +4,7 @@ title: 'Servidor de máquinas virtuais com Linux'
 date: '2011-01-26T12:56:25-05:00'
 tags:
     - linux
+description: "Essa dica é do Fernando Mercês do MenteBinária, um site bem interessante que encontrei na lista de pessoas que estão ajudando a promover o Hack’n Rio"
 ---
 
 Essa dica é do Fernando Mercês do [MenteBinária](http://www.mentebinaria.com.br/), um site bem interessante que encontrei na lista de pessoas que estão ajudando a promover o [Hack’n Rio](http://hacknrio.org/)

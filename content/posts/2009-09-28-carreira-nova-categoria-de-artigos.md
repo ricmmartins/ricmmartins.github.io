@@ -4,6 +4,7 @@ title: 'Carreira - nova categoria de artigos.'
 date: '2009-09-28T02:58:50-04:00'
 tags:
     - carreira
+description: "Olá leitores! É com prazer que gostaria de informá-los que pasarei a escrever também sobre carreira profissional."
 ---
 
 Olá leitores! É com prazer que gostaria de informá-los que pasarei a escrever também sobre carreira profissional.

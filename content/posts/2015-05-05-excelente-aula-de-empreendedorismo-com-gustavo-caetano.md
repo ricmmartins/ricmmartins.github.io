@@ -4,6 +4,7 @@ title: 'Excelente aula de empreendedorismo com Gustavo Caetano'
 date: '2015-05-05T12:39:07-04:00'
 tags:
     - aleatórios
+description: "Em mais um vídeo do Foras de Série, uma excelente aula de empreendedorismo com Gustavo Caetano da Samba Tech. Assita aqui:"
 ---
 
 Em mais um vídeo do [Foras de Série](http://www.forasdeserie.com/), uma excelente aula de empreendedorismo com Gustavo Caetano da [Samba Tech](http://sambatech.com). Assita aqui:

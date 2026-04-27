@@ -4,6 +4,7 @@ title: 'Materiais Online do Amazon AWS Roadshow Rio de Janeiro'
 date: '2013-08-26T11:50:39-04:00'
 tags:
     - aws
+description: "Se assim como eu, você também perdeu o Amazon AWS Roadshow do Rio de Janeiro, confira abaixo um pouco do que rolou por lá."
 ---
 
 Se assim como eu, você também perdeu o Amazon AWS Roadshow do Rio de Janeiro, confira abaixo um pouco do que rolou por lá.

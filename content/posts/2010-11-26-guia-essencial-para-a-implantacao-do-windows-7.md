@@ -5,6 +5,7 @@ date: '2010-11-26T08:41:44-05:00'
 tags:
     - certificação
     - windows
+description: "Há um grande eBook que acaba de ser lançado no site da Microsoft que dá uma boa visão de muitas das tecnologias e conceitos que você precisa para"
 ---
 
 Há um grande eBook que acaba de ser lançado no site da Microsoft que dá uma boa visão de muitas das tecnologias e conceitos que você precisa para considerar e se basear para quando você começar a trabalhar na implantação do Windows 7, e a melhor coisa é que o eBook é grátis!

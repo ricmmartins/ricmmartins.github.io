@@ -4,6 +4,7 @@ title: 'Download de artigos sobre Linux, Unix, Bash, Perl, e muito mais'
 date: '2010-02-16T19:08:08-05:00'
 tags:
     - linux
+description: "Você é fã do Linux? Gosta de BSD’s, Unixes, progamação em perl, bash, etc? Então não perca tempo! O site Cyberciti está disponibilizando cerca de 1500"
 ---
 
 Você é fã do Linux? Gosta de BSD’s, Unixes, progamação em perl, bash, etc? Então não perca tempo! O site Cyberciti está disponibilizando cerca de 1500 tutoriais em PDF sobre os mais diversos temas. Os arquivos são compilados e escritos por Vivek Gite.

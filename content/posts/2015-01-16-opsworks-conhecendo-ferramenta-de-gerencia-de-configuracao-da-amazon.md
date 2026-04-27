@@ -7,6 +7,7 @@ tags:
     - cloud
     - devops
     - opsworks
+description: "[](/wp-content/uploads/2015/01/AWS_OpsWorks-512x320-1.png) Olá pessoal, este artigo sobre o OpsWorks está muito relacionado com o tema gerência de"
 ---
 
 [![AWS_OpsWorks-512x320](/wp-content/uploads/2015/01/AWS_OpsWorks-512x320-1.png)](/wp-content/uploads/2015/01/AWS_OpsWorks-512x320-1.png)

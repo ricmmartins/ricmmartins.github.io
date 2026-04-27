@@ -5,6 +5,7 @@ date: '2008-11-25T19:48:13-05:00'
 tags:
     - linux
     - shell
+description: "Essa é uma dica rápida para matar todos os processos de um usuário de uma vez só."
 ---
 
 <div class="entry">Essa é uma dica rápida para matar todos os processos de um usuário de uma vez só.

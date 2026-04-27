@@ -4,6 +4,7 @@ title: 'Escreva seus objetivos e metas'
 date: '2009-10-01T01:29:03-04:00'
 tags:
     - carreira
+description: "Sem dúvida alguma, nos dias de hoje, em que os apelos e as opções são muito variados, é preciso que todos tenhamos objetivos e metas claros e definidos"
 ---
 
 Sem dúvida alguma, nos dias de hoje, em que os apelos e as opções são muito variados, é preciso que todos tenhamos objetivos e metas claros e definidos para tudo o que fazemos.Sem esse foco, ficaremos à mercê do dia-a-dia, dos acontecimentos do cotidiano e não conseguiremos o que realmente desejamos. Esses objetivos e essas metas devem ser, sempre que possível, mensuráveis, funcionais e observáveis, isto é, devem ser possíveis de serem avaliados dentro de um determinado prazo, após sabermos seus resultados. Assim, as metas devem ser quantificadas, enquanto os objetivos podem ser comportamentais e observáveis.

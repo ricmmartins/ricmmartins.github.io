@@ -4,6 +4,7 @@ title: 'SlideShows AWS Summit São Paulo'
 date: '2013-08-08T17:14:19-04:00'
 tags:
     - aws
+description: "Se assim como eu, você não pode ir ao AWS Summit em São Paulo, não perca esta chance de ficar por dentro do que rolou por lá:"
 ---
 
 Se assim como eu, você não pode ir ao AWS Summit em São Paulo, não perca esta chance de ficar por dentro do que rolou por lá:

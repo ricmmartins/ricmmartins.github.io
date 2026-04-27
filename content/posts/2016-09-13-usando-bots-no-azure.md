@@ -4,6 +4,7 @@ title: 'Usando Bots no Azure'
 date: '2016-09-13T23:23:39-04:00'
 tags:
     - azure
+description: "Já pensou você poder conversar via Skype com um bot e executar operações no Azure através de uma conversa usando linguagem natural? Agora você pode! Por"
 ---
 
 Já pensou você poder conversar via Skype com um bot e executar operações no Azure através de uma conversa usando linguagem natural? Agora você pode! Por enquanto estão disponíveis as funções de iniciar, parar, listar VMs e executar runbooks do Automation, mas muita coisa ainda vem por aí.

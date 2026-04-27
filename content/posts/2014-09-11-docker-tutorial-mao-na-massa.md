@@ -5,6 +5,7 @@ date: '2014-09-11T13:21:33-04:00'
 tags:
     - docker
     - nginx
+description: "[](/media/docker1.png) Houve centenas de notícias sobre Docker nos últimos meses. É fato que estamos prestes a ver uma grande mudança na maneira de pensar"
 ---
 
 [![docker](/media/docker1.png)](/media/docker1.png)

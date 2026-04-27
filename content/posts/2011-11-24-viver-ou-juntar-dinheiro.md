@@ -4,6 +4,7 @@ title: 'Viver ou juntar dinheiro?'
 date: '2011-11-24T16:57:14-05:00'
 tags:
     - 'carreira'
+description: "{: .notice--info}* Texto enviado a Max Gehringer na Rádio CBN. >Recebi uma mensagem muito interessante de um ouvinte da CBN e peço licença para lê-la na"
 ---
 
 {: .notice--info}* Texto enviado a Max Gehringer na Rádio CBN.

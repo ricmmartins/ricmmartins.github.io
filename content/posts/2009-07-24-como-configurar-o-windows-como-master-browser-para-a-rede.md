@@ -5,6 +5,7 @@ date: '2009-07-24T18:00:16-04:00'
 tags:
     - windows
     - networking
+description: "Depois de um bom tempo sem postar nada por aqui, tenho uma dica interessante para compartilhar."
 ---
 
 Depois de um bom tempo sem postar nada por aqui, tenho uma dica interessante para compartilhar.

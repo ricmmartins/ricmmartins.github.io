@@ -4,6 +4,7 @@ title: 'Quebrando senhas do Windows e do Linux com John The Ripper'
 date: '2009-04-10T17:50:53-04:00'
 tags:
     - segurança
+description: "Autor: Pedro Augusto de O. Pereira / Senhas, como já sabemos, são o ponto mais fraco de qualquer sistema de segurança pois geralmente são definidas por"
 ---
 
 Autor: Pedro Augusto de O. Pereira / <http://augusto.pedro.googlepages.com/>

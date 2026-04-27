@@ -5,6 +5,7 @@ date: '2014-06-10T15:58:54-04:00'
 tags:
     - elasticsearch
     - monitoramento
+description: "O Elastic Search é uma poderosa ferramenta com muitas informações interessantes de serem analisadas e monitoradas. No entanto pela ampla variedade de"
 ---
 
 O Elastic Search é uma poderosa ferramenta com muitas informações interessantes de serem analisadas e monitoradas. No entanto pela ampla variedade de informações disponíveis nele, pode ser complexo obter as informações.

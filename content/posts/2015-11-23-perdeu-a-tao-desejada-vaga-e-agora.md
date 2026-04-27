@@ -5,6 +5,7 @@ date: '2015-11-23T20:14:30-05:00'
 tags:
     - carreira
     - microsoft
+description: "Chega um momento na carreira de todos nós que por mais que estejamos satisfeitos com a posição que temos, o cargo que ocupamos e as atividades que"
 ---
 
 Chega um momento na carreira de todos nós que por mais que estejamos satisfeitos com a posição que temos, o cargo que ocupamos e as atividades que desempenhamos, desejamos algo maior. Penso que não ná nenhum problema nisso, afinal, evoluir é preciso.

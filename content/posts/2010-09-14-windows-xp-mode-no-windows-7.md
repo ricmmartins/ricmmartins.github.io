@@ -5,6 +5,7 @@ date: '2010-09-14T23:07:56-04:00'
 tags:
     - utilitários
     - windows
+description: "Muito se lê e ouve falar na internetsobre o Windows XP Mode, mas a verdade é que até hoje ainda não tinha encontrado nenhuma informação clara à respeito"
 ---
 
 Muito se lê e ouve falar na <span class="bbli">internet</span>sobre o <span class="bbli">Windows XP</span> Mode, mas a verdade é que até hoje ainda não tinha encontrado nenhuma informação clara à respeito. Muita gente fala um monte de coisa sem dizer nada.

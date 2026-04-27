@@ -5,6 +5,7 @@ date: '2015-03-12T17:27:58-04:00'
 tags:
     - aws
     - opsworks
+description: "[](/wp-content/uploads/2015/01/AWS_OpsWorks-512x320-1.png) Continuando o post anterior sobre o OpsWorks, vou mostrar neste post como criar uma instância"
 ---
 
 [![AWS_OpsWorks-512x320](/wp-content/uploads/2015/01/AWS_OpsWorks-512x320-1.png)](/wp-content/uploads/2015/01/AWS_OpsWorks-512x320-1.png)

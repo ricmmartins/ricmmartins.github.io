@@ -5,6 +5,7 @@ date: '2017-05-24T15:49:35-04:00'
 tags:
     - redhat
     - estudo
+description: "A RedHat publicou recentemente uma lista de “cheat sheets” para desenvolvedores bastante interessante. Estão disponíveis comandos básicos e avançados do"
 ---
 
 A RedHat publicou recentemente uma lista de “cheat sheets” para desenvolvedores bastante interessante. Estão disponíveis comandos básicos e avançados do Linux, Wildfly, Containers, MongoDB, Kubernetes, Eclipse, etc.

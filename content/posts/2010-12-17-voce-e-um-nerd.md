@@ -4,6 +4,7 @@ title: 'Você é um nerd?'
 date: '2010-12-17T22:39:36-05:00'
 tags:
     - aleatórios
+description: "Hoje estive lendo o blog do Anahuac e encontrei um “nerdômetro”. Resolví fazer o teste. Veja abaixo o meu resultado:"
 ---
 
 Hoje estive lendo o blog do [Anahuac](http://anahuac.biz/) e encontrei um “nerdômetro”. Resolví fazer o teste. Veja abaixo o meu resultado:

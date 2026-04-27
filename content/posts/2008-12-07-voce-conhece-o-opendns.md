@@ -5,6 +5,7 @@ date: '2008-12-07T19:20:55-05:00'
 tags:
     - dns
     - segurança
+description: "O OpenDNS é um serviço de dns gratuito, aberto e seguro. Eu utilizo na minha casa para melhorar a velocidade da conexão, mas estes dias eu fui até o site"
 ---
 
 O OpenDNS é um serviço de dns gratuito, aberto e seguro. Eu utilizo na minha casa para melhorar a velocidade da conexão, mas estes dias eu fui até o site deles para dar uma pesquisada melhor sobre o serviço e descobri que diferente dos servidores DNS oferecidos pelos provedores em geral (onde normalmente são apenas o serviço básico de consulta de endereços e nada mais), o OpenDNS vai muito além disto, pois oferece recursos adicionais que protegem a conexão.

@@ -5,6 +5,7 @@ date: '2009-03-18T23:54:18-04:00'
 tags:
     - windows
     - rdp
+description: "O Título parece estranho, mas logo vão entender melhor… Há alguns dias eu precisei acessar uma máquina remotamente, porém para seguir as tradições de"
 ---
 
 O Título parece estranho, mas logo vão entender melhor…

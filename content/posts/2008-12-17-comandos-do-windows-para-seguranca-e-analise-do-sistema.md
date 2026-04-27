@@ -5,6 +5,7 @@ date: '2008-12-17T21:06:29-05:00'
 tags:
     - windows
     - segurança
+description: "Hoje vou compartilhar com vocês alguns comandos que permitem que analistas de suporte possam manter um diagnóstico bem mais amplo do sistema. Os comandos"
 ---
 
 Hoje vou compartilhar com vocês alguns comandos que permitem que analistas de suporte possam manter um diagnóstico bem mais amplo do sistema. Os comandos devem ser executados em modo de console. (Menu iniciar &gt; Executar &gt; escreva”cmd” ou “command” &gt; enter ou ok).

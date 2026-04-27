@@ -6,6 +6,7 @@ date: '2014-01-28T11:46:24-05:00'
 tags:
     - linux
     - monitoramento
+description: "Depois de algum tempo sem colocar nada por aqui, hoje vou mostrar como instalar um dashboard com as principais informações sobre o seu servidor em uma"
 ---
 
 Depois de algum tempo sem colocar nada por aqui, hoje vou mostrar como instalar um dashboard com as principais informações sobre o seu servidor em uma interface web bastante agradável. Tudo isso de forma bem rápida e fácil.

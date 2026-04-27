@@ -4,6 +4,7 @@ title: 'Como configurar um storage em alta disponibilidade com GlusterFS'
 date: '2014-05-13T23:17:14-04:00'
 tags:
     - storage
+description: "Recentemente eu mostrei como configurar balanceamento de carga com o HAProxy. Caso você não tenha visto, pode acessá-lo aqui."
 ---
 
 ## Aprenda a implementar esta excelente ferramenta.

@@ -4,6 +4,7 @@ title: 'Backup inteligente com RSync'
 date: '2013-01-23T16:39:36-05:00'
 tags:
     - backup
+description: "Existem milhares de scripts de backup por aí. Neste exemplo, eu vou mostrar como utilizar o rsync, para fazer backup do seu diretório /home em ou outro"
 ---
 
 Existem milhares de scripts de backup por aí. Neste exemplo, eu vou mostrar como utilizar o rsync, para fazer backup do seu diretório /home em ou outro disco montado em /mnt/backup.

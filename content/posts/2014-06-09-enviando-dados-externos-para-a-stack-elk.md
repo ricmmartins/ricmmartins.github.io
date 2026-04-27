@@ -5,6 +5,7 @@ date: '2014-06-09T16:59:49-04:00'
 tags:
     - elasticsearch
     - monitoramento
+description: "No post anterior sobre como implementar a Stack ELK (ElasticSearch, Logstash e Kibana) fiz um setup default com todos os serviços no mesmo servidor"
 ---
 
 No post anterior sobre [como implementar a Stack ELK](/implementando-a-stack-elk-elasticsearch-logstash-kibana-no-centos/) (ElasticSearch, Logstash e Kibana) fiz um setup default com todos os serviços no mesmo servidor. Aproveitando para fazer o marketing, o post foi rapidamente citado no blog oficial do ElasticSearch [nesta url.](http://www.elasticsearch.org/blog/2014-06-04-this-week-in-elasticsearch/) o/

@@ -4,6 +4,7 @@ title: 'Instalando os adicionais para convidado (Guest Additions) na VM CentOS 6
 date: '2012-06-04T14:35:42-04:00'
 tags:
     - utilitários  
+description: "Neste artigo demostro como instalar o Guest Additions no CentoS 6.2. Pode ser bastante útil se você tentou instalar e encontrou a mensagem de erro abaixo:"
 ---
 
 Neste artigo demostro como instalar o Guest Additions no CentoS 6.2. Pode ser bastante útil se você tentou instalar e encontrou a mensagem de erro abaixo:

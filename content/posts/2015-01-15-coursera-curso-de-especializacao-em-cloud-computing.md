@@ -5,6 +5,7 @@ date: '2015-01-15T15:26:53-05:00'
 tags:
     - cursos
     - cloud
+description: "Se você se interessa pelo assunto, não pode perder esta excelente oportunidade de aprimorar seus conhecimentos."
 ---
 
 Se você se interessa pelo assunto, não pode perder esta excelente oportunidade de aprimorar seus conhecimentos.

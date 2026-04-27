@@ -5,6 +5,7 @@ date: '2009-04-10T18:00:39-04:00'
 tags:
     - linux
     - windows
+description: "Há alguns meses, foi publicado no TechNetBrasil, um artigo com o título acima. Não querendo aqui levantar mais flames sobre o assunto, gostaria de deixar"
 ---
 
 <div class="snap_preview">Há alguns meses, foi publicado no TechNetBrasil, um artigo com o título acima. Não querendo aqui levantar mais flames sobre o assunto, gostaria de deixar bem clara a minha opinião sobre este tema.

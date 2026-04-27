@@ -5,6 +5,7 @@ date: '2015-01-28T18:08:15-05:00'
 tags:
     - aws
     - wordpress
+description: "Encontrei hoje um excelente material contendo as melhores práticas para implementações do WordPress na Amazon e estou compartilhando:"
 ---
 
 Encontrei hoje um excelente material contendo as melhores práticas para implementações do WordPress na Amazon e estou compartilhando:

@@ -6,6 +6,7 @@ tags:
     - aws
     - cloud
     - palestras
+description: "Minha palestra sobre Cloud Computing apresentada no I no dia 15 de Agosto de 2014"
 ---
 
 Minha palestra sobre Cloud Computing apresentada no I no dia 15 de Agosto de 2014

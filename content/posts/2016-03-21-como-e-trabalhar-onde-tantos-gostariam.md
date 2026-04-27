@@ -5,6 +5,7 @@ date: '2016-03-21T21:30:59-04:00'
 tags:
     - carreira
     - microsoft
+description: "Hoje eu completo 3 meses na empresa onde estou trabalhando. Tem sido uma experiência incrível e muito além do que eu imaginava que seria em todos os"
 ---
 
 Hoje eu completo 3 meses na empresa onde estou trabalhando. Tem sido uma experiência incrível e muito além do que eu imaginava que seria em todos os aspectos, seja em relação ao ambiente, as pessoas, o trabalho, a cultura, os desafios, etc.

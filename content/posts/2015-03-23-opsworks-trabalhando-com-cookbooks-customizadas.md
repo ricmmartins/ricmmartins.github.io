@@ -5,6 +5,7 @@ date: '2015-03-23T16:51:10-04:00'
 tags:
     - aws
     - opsworks
+description: "Finalizando a série de artigos sobre o OpsWorks, neste post veremos como utilizar cookbooks customizadas em nosso ambiente."
 ---
 
 Finalizando a série de artigos sobre o OpsWorks, neste post veremos como utilizar cookbooks customizadas em nosso ambiente.

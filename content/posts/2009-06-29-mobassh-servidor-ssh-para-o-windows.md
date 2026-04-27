@@ -6,6 +6,7 @@ tags:
     - utilitários
     - ssh
     - windows
+description: "[](/wp-content/uploads/2009/06/mobasshserver-thumb.png) MobaSSH é um servidor SSH para Windows. Ele permite que você execute comandos e transfira arquivos"
 ---
 
 [![mobasshserver-thumb](/wp-content/uploads/2009/06/mobasshserver-thumb.png "mobasshserver-thumb")](/wp-content/uploads/2009/06/mobasshserver-thumb.png)

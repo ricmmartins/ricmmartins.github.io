@@ -4,6 +4,7 @@ title: 'Dicas de comandos do VI'
 date: '2008-11-25T19:51:29-05:00'
 tags:
     - comandos
+description: "Para quem não conhece, o VI é um poderoso editor de textos do sistema Unix. Muito útil na manipulação de arquivos de log e criação de scripts. Neste post"
 ---
 
 <div class="entry">Para quem não conhece, o VI é um poderoso editor de textos do sistema Unix. Muito útil na manipulação de arquivos de log e criação de scripts. Neste post, estarei passando algumas dicas de utilização do VI que pra mim foi muito útil conhecer, então estou repassando…

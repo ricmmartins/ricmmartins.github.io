@@ -6,6 +6,7 @@ tags:
     - certificação
     - redhat
     - estudo
+description: "Neste primeiro post da série de estudos, eu vou apenas indicar alguns links com referências adicionais para auxiliar no nosso plano de estudos. Acesse"
 ---
 
 Neste primeiro post da série de estudos, eu vou apenas indicar alguns links com referências adicionais para auxiliar no nosso plano de estudos. Acesse, tome nota das informações e vá se preparando para o que vem por aí.

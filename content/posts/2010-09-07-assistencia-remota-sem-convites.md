@@ -5,6 +5,7 @@ date: '2010-09-07T18:19:10-04:00'
 tags:
     - ferramentas
     - windows
+description: "Esses dias precisei elaborar uma solução de compartilhamento de desktop entre usuários que fosse de utilização simples. Inicialmente pensei em procurar na"
 ---
 
 Esses dias precisei elaborar uma <span class="bbli">solução</span> de compartilhamento de <span class="bbli">desktop</span> entre usuários que fosse de utilização simples. Inicialmente pensei em procurar na Internet algum<span class="bbli">programa</span> específico, porém me lembrei da Assitência Remota, um recurso nativo do Windows, que muitos desconhecem/confundem com a Área de Trabalho Remota.

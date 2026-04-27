@@ -5,6 +5,7 @@ date: '2009-04-10T17:21:59-04:00'
 tags:
     - segurança
     - windows
+description: "Essa dica é de um amigo meu (Igor Humberto). Foi publicada em outro site, mas tive a autorização para publicar aqui."
 ---
 
 Essa dica é de um amigo meu (Igor Humberto). Foi publicada em outro site, mas tive a autorização para publicar aqui.

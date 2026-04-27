@@ -4,6 +4,7 @@ title: 'Utilizando Windows 7 e rede sem fios como GPS'
 date: '2010-03-03T19:30:50-05:00'
 tags:
     - windows
+description: "Aproveitando o assunto anterior sobre redes, wireless e o Windows 7, encontrei no site do Plínio Torres um artigo muito interessante e vou transcrevê-lo"
 ---
 
 Aproveitando o assunto anterior sobre redes, wireless e o Windows 7, encontrei no site do Plínio Torres um artigo muito interessante e vou transcrevê-lo aqui. Trata de uma forma de usar o Windows 7 como se fosse um GPS através de redes sem fio.

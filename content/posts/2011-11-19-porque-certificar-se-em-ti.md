@@ -5,6 +5,7 @@ date: '2011-11-19T12:01:11-05:00'
 tags:
     - carreira
     - certificação
+description: "Se você parou para ler este texto eu suponho que: Deseja obter uma certificação"
 ---
 
 Se você parou para ler este texto eu suponho que:
