@@ -4,6 +4,8 @@ description: "Projetos open-source, publicações oficiais, guias, ferramentas e
 layout: "single"
 url: "/projetos/"
 summary: "Projetos, publicações e contribuições open-source"
+date: 2024-01-01
+lastmod: 2026-04-27
 ShowToc: true
 ShowBreadCrumbs: false
 ---

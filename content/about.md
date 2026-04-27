@@ -1,9 +1,11 @@
 ---
 title: "Sobre"
-description: "Conheça Ricardo Martins — Principal Cloud Solution Architect na Microsoft, com 20+ anos de experiência em Cloud, Azure, Kubernetes e DevOps."
+description: "Conheça Ricardo Martins — Principal Solutions Engineer na Microsoft, com 20+ anos de experiência em infraestrutura, Cloud, Azure e AI."
 layout: "single"
 url: "/sobre/"
 summary: "Sobre Ricardo Martins"
+date: 2008-01-01
+lastmod: 2026-04-27
 ShowToc: false
 ShowBreadCrumbs: false
 ---
