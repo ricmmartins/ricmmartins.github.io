@@ -4,7 +4,9 @@ paginate: 10
 theme: PaperMod
 locale: pt-BR
 defaultContentLanguage: pt
+languageCode: pt-BR
 
+enableGitInfo: true
 enableRobotsTXT: true
 buildDrafts: false
 buildFuture: false
@@ -46,6 +48,9 @@ params:
   DateFormat: "2 de January de 2006"
   defaultTheme: auto
   disableThemeToggle: false
+
+  social:
+    twitter: "ricmmartins"
 
   schema:
     publisherType: "Person"
@@ -117,7 +122,7 @@ params:
       title: "Blog em Inglês"
       url: "https://rmmartins.com"
     - name: rss
-      url: "/feed.xml"
+      url: "/index.xml"
 
   analytics:
     google:

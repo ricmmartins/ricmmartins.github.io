@@ -1,0 +1,39 @@
+.related-posts {
+  margin-top: 2rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.related-posts h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.8rem;
+}
+
+.related-posts ul {
+  list-style: none;
+  padding: 0;
+}
+
+.related-posts li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.4rem 0;
+}
+
+.related-posts a {
+  color: var(--primary);
+  text-decoration: none;
+  flex: 1;
+}
+
+.related-posts a:hover {
+  text-decoration: underline;
+}
+
+.related-posts time {
+  color: var(--secondary);
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
