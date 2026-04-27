@@ -4,6 +4,8 @@ title: 'Aproveite mais o Google Search'
 date: '2009-04-10T17:15:18-04:00'
 tags:
     - aleatórios
+categories:
+    - Geral
 description: "Aprenda a tirar proveito das funcionalidades do Google Search que talvez você não conhecia."
 ---
 

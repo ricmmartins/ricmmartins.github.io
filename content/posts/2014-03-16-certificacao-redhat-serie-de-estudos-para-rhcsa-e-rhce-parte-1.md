@@ -6,6 +6,8 @@ tags:
     - certificação
     - redhat
     - estudo
+categories:
+    - Carreira
 description: "Neste primeiro post da série de estudos, eu vou apenas indicar alguns links com referências adicionais para auxiliar no nosso plano de estudos. Acesse"
 ---
 

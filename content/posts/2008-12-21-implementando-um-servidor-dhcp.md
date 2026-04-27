@@ -6,6 +6,8 @@ tags:
     - dhcp
     - linux
     - networking
+categories:
+    - Networking
 description: "Em uma rede de grande porte onde existem muitas estações que necessitam do serviço de TCP/IP, para facilitar o trabalho do administrador de redes, usa-se"
 ---
 

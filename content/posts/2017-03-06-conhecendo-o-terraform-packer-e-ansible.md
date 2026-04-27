@@ -8,6 +8,8 @@ tags:
     - terraform
     - packer
     - ansible
+categories:
+    - Azure
 description: "O movimento DevOps vem ganhando muita força nos últimos anos e ao mesmo tempo centenas de ferramentas relacionadas são lançadas dia após dia. Por outro"
 ---
 

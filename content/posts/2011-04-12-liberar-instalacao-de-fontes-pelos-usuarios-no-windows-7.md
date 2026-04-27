@@ -4,6 +4,8 @@ title: 'Liberar instalação de fontes pelos usuários no Windows 7'
 date: '2011-04-12T20:31:12-04:00'
 tags:
     - windows
+categories:
+    - Windows
 description: "Aqui no trabalho, dentre outras atividades, trabalhamos dando suporte e criando soluções para profissionais de criação. Sabe este povo criativo que usa"
 ---
 

@@ -4,6 +4,8 @@ title: 'Kretcheu Vídeo Blog - mini-aulas, entrevistas e tutoriais'
 date: '2009-12-29T08:58:33-05:00'
 tags:
     - estudo
+categories:
+    - Carreira
 description: "Olá! Dica rápida encontrada no Dicas-L: O kretcheu Vídeo Blog, faz um trabalho de compartilhamento do conhecimento, através de mini-aulas, entrevistas e"
 ---
 

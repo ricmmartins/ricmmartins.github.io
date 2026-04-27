@@ -5,6 +5,8 @@ date: '2010-09-07T18:19:10-04:00'
 tags:
     - ferramentas
     - windows
+categories:
+    - Windows
 description: "Esses dias precisei elaborar uma solução de compartilhamento de desktop entre usuários que fosse de utilização simples. Inicialmente pensei em procurar na"
 ---
 

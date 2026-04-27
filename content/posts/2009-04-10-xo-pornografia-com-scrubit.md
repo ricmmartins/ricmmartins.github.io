@@ -4,6 +4,8 @@ title: 'Xô pornografia, com ScrubIt'
 date: '2009-04-10T17:27:43-04:00'
 tags:
     - segurança
+categories:
+    - Geral
 description: "Uma solução simples e gratuita para a filtragem de conteúdo ao alcance de escolas, telecentros, pequenas empresas e até usuários domésticos, pois não"
 ---
 

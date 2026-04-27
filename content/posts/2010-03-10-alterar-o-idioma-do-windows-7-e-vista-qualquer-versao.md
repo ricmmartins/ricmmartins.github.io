@@ -4,6 +4,8 @@ title: 'Alterar o idioma do Windows 7 e Vista (Qualquer versão)'
 date: '2010-03-10T23:44:39-05:00'
 tags:
     - windows
+categories:
+    - Windows
 description: "[](/wp-content/uploads/2010/03/windows7leak1.jpg) Se você está querendo saber como fazer para alterar o idioma do seu Windows 7 ou Vista, veio ao lugar"
 ---
 

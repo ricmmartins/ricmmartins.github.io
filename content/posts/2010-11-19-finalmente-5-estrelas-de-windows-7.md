@@ -7,6 +7,8 @@ tags:
     - estudo
     - microsoft
     - windows
+categories:
+    - Carreira
 description: "Finalmente, após completar quase 1 ano finalmente foi publicado o novo “5 estrelas” (não é mais esse nome) de Windows 7 – preparatório para o exame"
 ---
 

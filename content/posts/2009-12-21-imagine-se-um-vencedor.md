@@ -4,6 +4,8 @@ title: 'Imagine-se um vencedor'
 date: '2009-12-21T01:02:25-05:00'
 tags:
     - carreira
+categories:
+    - Carreira
 description: "A nossa educação é muito errada. Desde pequenos, os pais acreditam que, para educar uma criança, devem mostrar-lhe cosntantemente seus erros e, com isso"
 ---
 

@@ -4,6 +4,8 @@ title: 'VMLite: Alternativa para o Windows XP Mode do Windows 7'
 date: '2010-08-18T22:06:58-04:00'
 tags:
     - windows
+categories:
+    - Windows
 description: "O Windows 7 tem muitas características novas, das quais um recurso muito interessante é o Windows XP Mode, que permite rodar o Windows XP em seu Windows"
 ---
 

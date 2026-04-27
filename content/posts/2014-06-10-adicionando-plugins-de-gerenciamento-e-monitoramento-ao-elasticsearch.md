@@ -5,6 +5,8 @@ date: '2014-06-10T15:58:54-04:00'
 tags:
     - elasticsearch
     - monitoramento
+categories:
+    - Geral
 description: "O Elastic Search é uma poderosa ferramenta com muitas informações interessantes de serem analisadas e monitoradas. No entanto pela ampla variedade de"
 ---
 
@@ -21,7 +23,7 @@ Dentre as que serão apenas citadas, são as listadas abaixo. Acesse o site de c
 
 *Agora vamos ver as que achei mais interessantes…*
 
-### [Marvel](http://www.elasticsearch.org/overview/marvel/)
+## [Marvel](http://www.elasticsearch.org/overview/marvel/)
 
 O Marvel é um plugin do ElasticSearch para monitorar e gerenciar o elasticsearch, seja ele em uma instalação de um único node, ou um cluster.
 
@@ -62,7 +64,7 @@ Note que o nome do node na imagem acima mudou de Stick para Trump. Isto é apena
 
 [![marvel8](/media/marvel8.png)](/media/marvel8.png)
 
-### [Head](http://mobz.github.io/elasticsearch-head/)
+## [Head](http://mobz.github.io/elasticsearch-head/)
 
 O plugin Head, foi o primeiro plugin criado para gerenciar e monitorar o elasticsearch.
 

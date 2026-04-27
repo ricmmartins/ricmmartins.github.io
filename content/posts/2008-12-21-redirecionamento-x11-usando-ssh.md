@@ -6,6 +6,8 @@ tags:
     - ssh
     - x11
     - linux
+categories:
+    - Linux
 description: "Esse artigo, disponibilizado pela Linux-Tip, demonstra como utilizar o SSH para redirecionar suas conexões X11 de forma mais segura. Além disso, o autor"
 ---
 

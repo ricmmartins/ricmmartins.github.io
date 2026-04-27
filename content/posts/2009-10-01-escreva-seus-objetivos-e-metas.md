@@ -4,6 +4,8 @@ title: 'Escreva seus objetivos e metas'
 date: '2009-10-01T01:29:03-04:00'
 tags:
     - carreira
+categories:
+    - Carreira
 description: "Sem dúvida alguma, nos dias de hoje, em que os apelos e as opções são muito variados, é preciso que todos tenhamos objetivos e metas claros e definidos"
 ---
 

@@ -4,6 +4,8 @@ title: 'Você conhece o Windows Steady State?'
 date: '2010-08-17T13:34:19-04:00'
 tags:
     - windows
+categories:
+    - Windows
 description: "Vou compartilhar com vocês um utilitário gratuito da Microsoft, que é uma mão na roda para adminsitradortes de redes. Estou falando do Windows Steady"
 ---
 

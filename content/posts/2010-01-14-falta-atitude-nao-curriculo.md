@@ -4,6 +4,8 @@ title: 'Falta Atitude, Não Currículo'
 date: '2010-01-14T21:27:43-05:00'
 tags:
     - carreira
+categories:
+    - Carreira
 description: "Se o título chamou a sua atenção, você não pode deixar de ler essa entrevista do Business Opportunitites Weblog Brasil com o especialista na área de"
 ---
 

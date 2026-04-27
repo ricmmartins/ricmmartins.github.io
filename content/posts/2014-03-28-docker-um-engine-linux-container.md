@@ -5,6 +5,8 @@ date: '2014-03-28T13:09:20-04:00'
 tags:
     - docker
     - linux
+categories:
+    - Containers
 description: "No cenário de constantes mudanças em ambientes web sempre surgem novas técnicas e ferramentas surpreendentes. Manter-se atualizado com todas as novidades"
 ---
 

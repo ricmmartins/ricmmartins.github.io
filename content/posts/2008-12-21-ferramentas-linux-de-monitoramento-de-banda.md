@@ -6,6 +6,8 @@ tags:
     - utilitários
     - linux
     - networking
+categories:
+    - Networking
 description: "Largura de banda, na computação, refere-se à taxa de dados suportada pela conexão de rede ou interface. Mais comumente expressados em bits por segundo"
 ---
 

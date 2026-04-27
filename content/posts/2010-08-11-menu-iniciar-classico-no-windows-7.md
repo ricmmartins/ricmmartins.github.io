@@ -4,6 +4,8 @@ title: 'Menu Iniciar Clássico no Windows 7'
 date: '2010-08-11T23:40:01-04:00'
 tags:
     - windows
+categories:
+    - Windows
 description: "Eu sempre critiquei o novo menu iniciar do Windows 7. Cheguei a procurar algumas maneiras de deixá-lo no modo clássico no entanto ainda não havia"
 ---
 

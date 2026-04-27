@@ -5,6 +5,8 @@ date: '2010-10-30T18:49:15-04:00'
 tags:
     - segurança
     - windows
+categories:
+    - Windows
 description: "[](/wp-content/uploads/2010/10/iconsafety.png)Hoje tive a curiosidade de instalar o “Windows Live Proteção Para a Família” e achei uma ferramenta"
 ---
 

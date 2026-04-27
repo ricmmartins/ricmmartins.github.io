@@ -6,6 +6,8 @@ tags:
     - backup
     - utilitários
     - windows
+categories:
+    - Windows
 description: "Descobrí uma ferramenta interessante para cópia de arquivos em rede, então lá vai a dica:"
 ---
 

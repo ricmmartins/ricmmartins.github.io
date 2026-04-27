@@ -4,6 +4,8 @@ title: 'Lista de publicações sobre Azure'
 date: '2017-10-24T20:48:44-04:00'
 tags:
     - azure
+categories:
+    - Azure
 description: "Pessoal, consolidei abaixo minhas últimas publicações com assuntos relacionados à Azure e estou compartilhando com vocês:"
 ---
 

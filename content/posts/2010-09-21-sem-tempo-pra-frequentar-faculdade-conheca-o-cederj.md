@@ -4,6 +4,8 @@ title: 'Sem tempo pra frequentar faculdade? Conheça o CEDERJ'
 date: '2010-09-21T20:27:45-04:00'
 tags:
     - carreira
+categories:
+    - Carreira
 description: "Na área deTI, é comum encontrar profissionais com grande conhecimento e experiência no entanto sem um diploma. Infelizmente, isto acaba criando uma"
 ---
 

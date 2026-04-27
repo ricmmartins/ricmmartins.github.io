@@ -6,6 +6,8 @@ tags:
     - monitoramento
     - linux
     - windows
+categories:
+    - Windows
 description: "Depois de publicar este post, tive o comentário do leitor Rafael Bernardes comentando sobre um outro dashboard para servidores, o Phpsysinfo. Entrei no"
 ---
 

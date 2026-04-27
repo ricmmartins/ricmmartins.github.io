@@ -5,6 +5,8 @@ tags:
     - azure
     - linux
     - ubuntu
+categories:
+    - Azure
 description: "Apenas compartilhando um vídeo que eu fiz mostrando como criar uma VM Linux (Ubuntu) pelo Azure CLI. No vídeo é explicado passo a passo do processo, no"
 ---
 

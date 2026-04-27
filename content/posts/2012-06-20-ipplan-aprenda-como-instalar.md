@@ -6,6 +6,8 @@ tags:
     - ferramentas
     - linux
     - networking
+categories:
+    - Networking
 description: "Esta dica vai te ensinar como instalar e configurar o IPPlan, uma ferramenta Web para gerenciar o endereçamento IP da sua rede. Você não vai mais precisar"
 ---
 

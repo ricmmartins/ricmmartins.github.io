@@ -4,6 +4,8 @@ title: 'Top10 LifeHacker'
 date: '2009-04-10T18:01:26-04:00'
 tags:
     - aleatórios
+categories:
+    - Geral
 description: "Lista com as dicas semanais Top 10 dos últimos três meses publicadas em Lifehacker.com. Se você perdeu alguma, vale a pena conferir:"
 ---
 

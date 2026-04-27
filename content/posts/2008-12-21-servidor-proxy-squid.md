@@ -6,6 +6,8 @@ tags:
     - linux
     - proxy
     - squid
+categories:
+    - Linux
 description: "Um servidor proxy é uma peça importante em uma rede interna que tenha contato com outra pública, pois implementa uma série de facilidades e controles. Ao"
 ---    
 

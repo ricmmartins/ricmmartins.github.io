@@ -4,6 +4,8 @@ title: 'Como bloquear execução de determinado software no Windows'
 date: '2010-05-11T21:16:10-04:00'
 tags:
     - windows
+categories:
+    - Windows
 description: "Sabemos que em um ambiente em domínio, existem GPO’s que permitem criar “whitelists” ou “blacklists” permitindo ou não a execução de determinados"
 ---
 

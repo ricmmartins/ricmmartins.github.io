@@ -4,6 +4,8 @@ title: 'O problema está em você ou no mercado?'
 date: '2015-07-11T02:14:41-04:00'
 tags:
     - carreira
+categories:
+    - Carreira
 description: "[](/wp-content/uploads/2015/07/Personal-development-plan-template.jpg) Este texto é uma conversa franca, um desabafo fruto de reflexões pessoais. Conversa"
 ---
 

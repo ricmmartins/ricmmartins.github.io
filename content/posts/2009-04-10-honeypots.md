@@ -4,6 +4,8 @@ title: Honeypots
 date: '2009-04-10T17:45:49-04:00'
 tags:
     - segurança
+categories:
+    - Geral
 description: "Autor: Pedro Augusto de O. Pereira / Introdução aos honeypots"
 ---
 

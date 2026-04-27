@@ -3,6 +3,8 @@ slug: "saiba-mais-sobre-o-azure-container-instance"
 title: 'Saiba mais sobre o Azure Container Instance'
 tags:
     - azure
+categories:
+    - Azure
 description: "Nesta semana foi lançado o Azure Container Instance, que é uma excelente opção para rodar containers no Azure de forma simples e rápida, sem ter que se"
 ---
 

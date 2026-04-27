@@ -5,6 +5,8 @@ date: '2015-01-15T15:26:53-05:00'
 tags:
     - cursos
     - cloud
+categories:
+    - Cloud
 description: "Se você se interessa pelo assunto, não pode perder esta excelente oportunidade de aprimorar seus conhecimentos."
 ---
 

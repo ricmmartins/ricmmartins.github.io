@@ -5,6 +5,8 @@ date: '2015-08-12T14:53:20-04:00'
 tags:
     - devops
     - jenkins
+categories:
+    - DevOps
 description: "A idéia deste post é criar um “mini-howto” da instalação do Jenkins. Eu não vou entrar em muitos detalhes sobre o que é o Jenkins. Se você quiser saber um"
 ---
 

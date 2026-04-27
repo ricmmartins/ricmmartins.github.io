@@ -4,6 +4,8 @@ title: 'Fuja da escravidão'
 date: '2015-05-06T11:53:33-04:00'
 tags:
     - carreira
+categories:
+    - Carreira
 description: "Vinícius Teles é um grande desenvolvedor de software que dispensa comentários. Existe uma apresentação dele que envolve temas sobre empreendedorismo"
 ---
 

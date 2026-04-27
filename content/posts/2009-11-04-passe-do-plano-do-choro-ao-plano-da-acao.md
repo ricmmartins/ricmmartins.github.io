@@ -4,6 +4,8 @@ title: 'Passe do plano do choro ao plano da ação'
 date: '2009-11-04T00:45:10-05:00'
 tags:
     - carreira    
+categories:
+    - Carreira
 description: "Fico impressionado ao ver o quanto as peassoas choram, reclamam, lamentam, passam o tempo se lamuriando das coisas, dos outros, de tudo enfim. Basta"
 ---
 

@@ -4,6 +4,8 @@ title: 'Aprenda Perl em 21 dias'
 date: '2008-11-25T19:50:00-05:00'
 tags:
     - estudo
+categories:
+    - Carreira
 description: "No endereço , existe um tutorial que certamente pode te ajudar bastante. É claro que se você não conhece muito sobre programação, você não vai aprender"
 ---
 

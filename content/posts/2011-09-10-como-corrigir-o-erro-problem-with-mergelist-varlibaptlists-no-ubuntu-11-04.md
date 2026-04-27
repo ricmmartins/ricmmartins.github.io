@@ -4,6 +4,8 @@ title: 'Como corrigir o erro “Problem with MergeList /var/lib/apt/lists” no 
 date: '2011-09-10T08:22:15-04:00'
 tags:
     - ubuntu
+categories:
+    - Linux
 description: "Se você estiver usando o gerenciador de pacotes ou tentando instalar algum problema pelo terminal, pode aparecer a seguinte mensagem de erro:"
 ---
 

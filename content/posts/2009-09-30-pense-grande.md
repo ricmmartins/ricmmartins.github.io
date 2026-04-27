@@ -4,6 +4,8 @@ title: 'Pense grande!'
 date: '2009-09-30T01:02:12-04:00'
 tags:
     - carreira
+categories:
+    - Carreira
 description: "Em todas as biografias de grandes personalidades e conversas com pessoas de sucesso encontramos um traço comum: elas sempre se recusaram a pensar pequeno"
 ---
 

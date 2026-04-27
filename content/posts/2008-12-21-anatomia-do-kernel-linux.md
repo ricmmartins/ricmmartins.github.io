@@ -4,6 +4,8 @@ title: 'Anatomia do Kernel Linux'
 date: '2008-12-21T22:28:01-05:00'
 tags:
     - linux
+categories:
+    - Linux
 description: "O Kernel Linux é o centro de um grande e complexo sistema operacional. Ao mesmo tempo em que ele é enorme, é extremamente bem organizado no que diz"
 ---
 

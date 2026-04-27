@@ -4,6 +4,8 @@ title: 'CoreOS: O que é e como funciona?'
 date: '2015-05-05T19:05:52-04:00'
 tags:
     - linux
+categories:
+    - Linux
 description: "Em tempos de computação em nuvem, micro serviços e containers, o CoreOS é uma distribuição Linux que vem ganhando força. Neste post vou compartilhar um"
 ---
 

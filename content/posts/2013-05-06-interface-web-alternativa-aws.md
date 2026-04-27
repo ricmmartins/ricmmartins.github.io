@@ -5,6 +5,8 @@ date: '2013-05-06T14:34:26-04:00'
 tags:
     - aws
     - cloud
+categories:
+    - AWS
 description: "Atualmente a Netflix é um dos maiores heavy users dos serviços AWS no mundo. E eles possuem todo um conjunto de ferramentas desenvolvidas por eles mesmos"
 ---
 

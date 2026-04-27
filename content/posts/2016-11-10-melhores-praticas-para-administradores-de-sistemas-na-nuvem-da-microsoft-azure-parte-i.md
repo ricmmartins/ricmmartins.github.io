@@ -4,6 +4,8 @@ title: 'Melhores práticas para administradores de sistemas na nuvem da Microsof
 date: '2016-11-10T00:35:22-05:00'
 tags:
     - azure
+categories:
+    - Azure
 description: "Nesta série de artigos gostaria de compartilhar algumas boas práticas para quem administra ambientes no Azure, abordando temas como organização dos"
 ---
 

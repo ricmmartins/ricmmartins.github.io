@@ -6,6 +6,8 @@ tags:
     - palestras
     - aws
     - cloud
+categories:
+    - AWS
 description: "Se você perdeu o AWS Summit, confira neste link todas as apresentações que rolaram por lá."
 ---
 

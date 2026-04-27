@@ -5,6 +5,8 @@ date: '2015-03-23T16:51:10-04:00'
 tags:
     - aws
     - opsworks
+categories:
+    - AWS
 description: "Finalizando a série de artigos sobre o OpsWorks, neste post veremos como utilizar cookbooks customizadas em nosso ambiente."
 ---
 

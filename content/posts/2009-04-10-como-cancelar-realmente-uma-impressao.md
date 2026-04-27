@@ -4,6 +4,8 @@ title: 'Como cancelar realmente uma impressão'
 date: '2009-04-10T17:54:26-04:00'
 tags:
     - windows
+categories:
+    - Windows
 description: "Acontece muito, sabe quando quer cancelar um documento e ele fica horas para desaparecer da fila de impressão? Depois de reiniciar ele continua lá, quando"
 ---
 

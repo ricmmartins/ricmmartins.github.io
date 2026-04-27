@@ -4,6 +4,8 @@ id: 2847
 title: 'Conheça o Microsoft Diagnostics and Recovery Toolset – DaRT 7.0 (Beta)'
 tags:
     - windows
+categories:
+    - Windows
 description: "Você já se deparou com algum problema onde foi preciso fazer a reinstalação do Windows para recuperar a máquina? Tela azul, arquivos corrompidos, volume"
 ---
 

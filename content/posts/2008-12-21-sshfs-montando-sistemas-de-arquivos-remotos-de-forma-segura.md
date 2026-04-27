@@ -6,6 +6,8 @@ tags:
     - linux
     - networking
     - sshfs
+categories:
+    - Networking
 description: "Esse tutorial, disponibilizado pelo CyberCiti, descreve a instalação do FUSE e a utilização do sshfs para a montagem remota de sistemas de arquivos de"
 ---
 

@@ -4,6 +4,8 @@ title: 'Balanceamento de carga com HAProxy'
 date: '2014-04-02T13:34:43-04:00'
 tags:
     - linux
+categories:
+    - Linux
 description: "Configurar o balanceamento de carga entre vários servidores web pode parecer um desafio, porém na verdade não é. O HAProxy é uma ferramenta poderosa"
 ---
 
@@ -19,9 +21,9 @@ Neste artigo, tenho um cenário simples usando três servidores:
 
 Todos os servidores estão com CentOS 5.8 e rodando dentro do Vagrant.
 
-### Configuração do Node1-LB:
+## Configuração do Node1-LB:
 
-#### Instalação do repositório EPEL
+### Instalação do repositório EPEL
 
 ```bash
 # wget http://dl.fedoraproject.org/pub/epel/5/x86\_64/epel-release-5-4.noarch.rpm  
@@ -29,7 +31,7 @@ Todos os servidores estão com CentOS 5.8 e rodando dentro do Vagrant.
 # rpm -Uvh remi-release-5*.rpm epel-release-5*.rpm
 ```
 
-#### Instalação e Configuração do HAProxy
+### Instalação e Configuração do HAProxy
 
 No caso vamos usar o algoritmo de balanceamento por RoundRobin. Existem outras opções de uso que você pode definir de acordo com sua necessidade. [Neste link](http://wiki.joyent.com/wiki/display/jpc2/Load+Balancing+with+HAproxy), tem uma boa explicação sobre eles.
 
@@ -76,15 +78,15 @@ server node2 192.168.10.20:80 cookie app1inst1 check inter 2000 rise 2 fall 5
 server node3 192.168.10.30:80 cookie app1inst2 check inter 2000 rise 2 fall 5
 ```
 
-#### Start no serviço e garantia de inicialização no boot
+### Start no serviço e garantia de inicialização no boot
 
 ```bash]# /etc/init.d/haproxy start  
 # /sbin/chkconfig haproxy on
 ```
 
-### Configuração do servidor Web – Node2 (192.168.10.20):
+## Configuração do servidor Web – Node2 (192.168.10.20):
 
-#### Instalação do repositório EPEL
+### Instalação do repositório EPEL
 
 ```bash
 # wget http://dl.fedoraproject.org/pub/epel/5/x86\_64/epel-release-5-4.noarch.rpm  
@@ -92,7 +94,7 @@ server node3 192.168.10.30:80 cookie app1inst2 check inter 2000 rise 2 fall 5
 # rpm -Uvh remi-release-5\*.rpm epel-release-5\*.rpm
 ```
 
-#### Instalação e configuração básica do Apache
+### Instalação e configuração básica do Apache
 
 ```bash
 # yum install httpd  
@@ -100,16 +102,16 @@ server node3 192.168.10.30:80 cookie app1inst2 check inter 2000 rise 2 fall 5
 # echo Node2 > /var/www/html/index.html
 ```
 
-#### Start no serviço e garantia de inicialização no boot
+### Start no serviço e garantia de inicialização no boot
 
 ```bash
 # /etc/init.d/httpd start  
 # /sbin/chkconfig httpd on
 ```
 
-### Configuração do servidor Web – Node3 (192.168.10.30):
+## Configuração do servidor Web – Node3 (192.168.10.30):
 
-#### Instalação do repositório EPEL
+### Instalação do repositório EPEL
 
 ```bash
 # wget http://dl.fedoraproject.org/pub/epel/5/x86\_64/epel-release-5-4.noarch.rpm  
@@ -117,7 +119,7 @@ server node3 192.168.10.30:80 cookie app1inst2 check inter 2000 rise 2 fall 5
 # rpm -Uvh remi-release-5*.rpm epel-release-5*.rpm
 ```
 
-#### Instalação e configuração básica do Apache
+### Instalação e configuração básica do Apache
 
 ```bash
 # yum install httpd  
@@ -125,20 +127,20 @@ server node3 192.168.10.30:80 cookie app1inst2 check inter 2000 rise 2 fall 5
 # echo Node3 > /var/www/html/index.html
 ```
 
-#### Start no serviço e garantia de inicialização no boot
+### Start no serviço e garantia de inicialização no boot
 
 ```bash
 # /etc/init.d/httpd start  
 # /sbin/chkconfig httpd on
 ```
 
-### Vídeo Demo 
+## Vídeo Demo 
 
 Assista ao vídeo com a validação do uso:
 
 <iframe allow="autoplay; encrypted-media" allowfullscreen="" frameborder="0" height="281" loading="lazy" src="https://www.youtube.com/embed/jXbZ_C00Jvc?feature=oembed" width="500"></iframe>
 
-### Plus: WebStats
+## Plus: WebStats
 
 Se você quiser disponibilizar uma interface Web para visualização das estatísticas do HAProxy similar à esta: <http://demo.1wt.eu/>, basta adicionar as linhas abaixo no arquivo **/etc/haproxy/haproxy.cfg** e reiniciar o serviço.
 

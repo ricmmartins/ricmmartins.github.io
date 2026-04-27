@@ -4,6 +4,8 @@ title: 'Entendendo a Internet via rede elétrica'
 date: '2009-01-01T03:40:58-05:00'
 tags:
     - aleatórios
+categories:
+    - Geral
 description: "Discutido há vários anos, o BPL – Broadband over Power Lines, ou PLC – Power Line Communications é nada mais que a injeção de sinais de alta frequência na"
 ---
 

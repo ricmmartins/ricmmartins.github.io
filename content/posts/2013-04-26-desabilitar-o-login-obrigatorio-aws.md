@@ -6,6 +6,8 @@ tags:
     - aws
     - cloud
     - linux
+categories:
+    - AWS
 description: "Se você assim como eu não suporta ter que logar com esse usuário ec2-user na Amazon, aqui vai a dica de como logar direto como root:"
 ---
 

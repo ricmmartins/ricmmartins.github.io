@@ -5,6 +5,8 @@ date: '2010-09-14T23:07:56-04:00'
 tags:
     - utilitários
     - windows
+categories:
+    - Windows
 description: "Muito se lê e ouve falar na internetsobre o Windows XP Mode, mas a verdade é que até hoje ainda não tinha encontrado nenhuma informação clara à respeito"
 ---
 

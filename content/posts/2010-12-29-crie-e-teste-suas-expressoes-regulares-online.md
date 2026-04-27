@@ -5,6 +5,8 @@ date: '2010-12-29T12:31:21-05:00'
 tags:
     - ferramentas
     - regex
+categories:
+    - Geral
 description: "[](/wp-content/uploads/2010/12/regular-expressions.png)As expressões regulares são uma daquelas coisas que são incrivelmente poderosas … se você souber"
 ---
 

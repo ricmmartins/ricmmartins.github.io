@@ -4,6 +4,8 @@ title: 'Entendendo os Níveis de RAID (Redundant Array of Inexpensive Disks)'
 date: '2009-04-10T18:12:17-04:00'
 tags:
     - storage
+categories:
+    - Geral
 description: "Autor: Danilo Montagna Esse artigo demonstra como solucionar os problemas de quebra de disco em um servidor, Dependendo dos serviços que estão sendo"
 ---
 

@@ -4,6 +4,8 @@ title: 'Aprenda sempre'
 date: '2009-10-05T09:39:00-04:00'
 tags:
     - carreira
+categories:
+    - Carreira
 description: "Uma das características mais interessantes da juventude é a curiosidade, o desejo de aprender, de saber, de questionar, de cismar. Quando a pessoa"
 ---
 

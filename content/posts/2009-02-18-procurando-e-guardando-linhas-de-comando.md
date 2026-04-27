@@ -5,6 +5,8 @@ date: '2009-02-18T21:59:08-05:00'
 tags:
     - comandos
     - linux
+categories:
+    - Linux
 description: "Se você lida com linhas de comando no Linux, e não é necessariamente um ninja no assunto, vai gostar de conhecer o Command-line-fu."
 ---
 

@@ -5,6 +5,8 @@ date: '2016-03-21T21:30:59-04:00'
 tags:
     - carreira
     - microsoft
+categories:
+    - Carreira
 description: "Hoje eu completo 3 meses na empresa onde estou trabalhando. Tem sido uma experiência incrível e muito além do que eu imaginava que seria em todos os"
 ---
 

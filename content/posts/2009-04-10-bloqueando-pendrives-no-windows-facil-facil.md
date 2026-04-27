@@ -4,6 +4,8 @@ title: 'Bloqueando pendrives no Windows fácil, fácil'
 date: '2009-04-10T18:08:38-04:00'
 tags:
     - windows
+categories:
+    - Windows
 description: "Esta dica é bem simples, e mostra como bloquear pendrives no seu windows. 1. Acesse a chave abaixo no registro:"
 ---
 

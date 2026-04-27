@@ -5,6 +5,8 @@ date: '2015-11-23T20:14:30-05:00'
 tags:
     - carreira
     - microsoft
+categories:
+    - Carreira
 description: "Chega um momento na carreira de todos nós que por mais que estejamos satisfeitos com a posição que temos, o cargo que ocupamos e as atividades que"
 ---
 

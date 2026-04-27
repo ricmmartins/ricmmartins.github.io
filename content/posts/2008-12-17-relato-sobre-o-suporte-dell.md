@@ -4,6 +4,8 @@ title: 'Relato sobre o Suporte Dell'
 date: '2008-12-17T22:07:43-05:00'
 tags:
     - aleatórios
+categories:
+    - Geral
 description: "Eu sempre fui apaixonado por máquinas Dell. As máquinas têm excelente performance, estabilidade, estrutura, e praticidade para técnicos que assim como eu"
 ---
 

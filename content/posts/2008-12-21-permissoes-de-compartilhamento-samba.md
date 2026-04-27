@@ -5,6 +5,8 @@ date: '2008-12-21T22:18:19-05:00'
 tags:
     - linux
     - samba
+categories:
+    - Linux
 description: "O software Samba é uma implementação open source de protocolos de rede para compartilhar arquivos entre cumputadores UNIX/Linux e Windows. Este artigo"
 ---
 

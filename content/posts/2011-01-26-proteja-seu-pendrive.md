@@ -4,6 +4,8 @@ title: 'Proteja seu pendrive'
 date: '2011-01-26T13:04:44-05:00'
 tags:
     - segurança  
+categories:
+    - Geral
 description: "Outro bizu interessante que encontrei no MenteBinária. Trata-se de um pequeno utilitário criado em VBScript para proteger seu pendrive contra vírus, worms"
 ---
 

@@ -5,6 +5,8 @@ date: '2013-07-22T15:20:37-04:00'
 author: rmmartins
 tags:
     - linux
+categories:
+    - Linux
 description: "O objetivo deste post, é mostrar como criar um repositório local do CentOS. Criando um repositório local você tem alguns benefícios interessantes, dentre"
 ---
 
@@ -63,7 +65,7 @@ Criando o repositório:
 [root@ricardo ~]# createrepo /var/www/html/centos/6.4/os/x86_64
 ```
 
-### Script de rsync das atualizações
+## Script de rsync das atualizações
 
 Agora iremos criar um script que será responsável por baixar as atualizações e utilizar um servidor smtp interno para enviar um e-mail informando o momento em que o download das atualizações foi concluído.  
 
@@ -119,7 +121,7 @@ Agendando a execução do script:
 00 00 \* \* \* /root/sync_repo.sh
 ```
 
-###  Configurando o Exim para o envio de e-mails
+##  Configurando o Exim para o envio de e-mails
 
 Primeiro instalamos o Exim e em seguida removemos o Sendmail (caso esteja instalado).  
 
@@ -141,7 +143,7 @@ Inicializando o Exim e garantido sua inicialização no boot
 # chkconfig exim on
 ```
 
-### Configurando os servidores que serão clientes do nosso repositório local
+## Configurando os servidores que serão clientes do nosso repositório local
 
 Faça antes um backup do arquivo original:  
 ```bash
@@ -192,7 +194,7 @@ gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
 ```
 
-### Testando
+## Testando
 
 Vá em uma máquina cliente, e faça uma atualização:  
 

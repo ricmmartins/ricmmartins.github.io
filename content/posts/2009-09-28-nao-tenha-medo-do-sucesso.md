@@ -4,6 +4,8 @@ title: 'Não tenha medo do sucesso'
 date: '2009-09-28T02:35:14-04:00'
 tags:
     - carreira
+categories:
+    - Carreira
 description: "Pode parecer um absurdo, mas tem gente que parece ter medo do sucesso. São pessoas que têm tudo para vencer, serem notadas e prósperas, mas que ficam"
 ---
 

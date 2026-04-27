@@ -5,6 +5,8 @@ date: '2010-03-03T19:25:22-05:00'
 tags:
     - networking
     - windows
+categories:
+    - Networking
 description: "A Microsoft adicionou algums funcionalidades ao Windows 7 para permitir que uma placa de rede wireless possa ser colocada em modo promíscuo e tornar-se um"
 ---
 

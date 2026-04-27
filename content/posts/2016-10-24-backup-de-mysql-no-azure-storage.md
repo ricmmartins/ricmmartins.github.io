@@ -7,6 +7,8 @@ tags:
     - storage
     - mysql
     - backup
+categories:
+    - Azure
 description: "Post rápido mostrando como fazer o backup dos databases de um servidor MySQL em um blob storage no Azure."
 ---
 

@@ -8,6 +8,8 @@ tags:
     - nginx
     - linux
     - wordpress
+categories:
+    - Azure
 description: "Criei um repositório no GitHub para usar em demonstrações sobre DevOps no Azure e a facilidade em usar templates para automatizar a criação de ambientes."
 ---
 

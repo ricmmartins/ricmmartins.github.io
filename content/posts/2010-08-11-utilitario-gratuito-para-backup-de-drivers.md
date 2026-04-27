@@ -5,6 +5,8 @@ date: '2010-08-11T23:29:17-04:00'
 tags:
     - windows
     - backup
+categories:
+    - Windows
 description: "Se você já teve que reinstalar uma máquina que você não tinha o cd com os drivers, sabe a dor de cabeça que é para sair procurando drivers pela internet."
 ---
 

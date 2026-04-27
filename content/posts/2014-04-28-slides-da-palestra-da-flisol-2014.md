@@ -5,6 +5,8 @@ date: '2014-04-28T14:17:13-04:00'
 tags:
     - palestras
     - cloud
+categories:
+    - Cloud
 description: "Para quem não pode ir, estou disponibilizando no SlideShare a miha palestra sobre CloudComputing no Flisol 2014."
 ---
 

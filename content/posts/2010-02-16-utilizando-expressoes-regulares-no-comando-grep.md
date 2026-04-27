@@ -5,6 +5,8 @@ date: '2010-02-16T19:48:03-05:00'
 tags:
     - linux
     - regex
+categories:
+    - Linux
 description: "Como faço para usar o comando grep com expressões regulares em sistemas operacionais Linux?"
 ---
 

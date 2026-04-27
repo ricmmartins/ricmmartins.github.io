@@ -5,6 +5,8 @@ date: '2015-04-01T16:11:54-04:00'
 tags:
     - monitoramento
     - ferramentas
+categories:
+    - Geral
 description: "Encontrei nesta semana uma ferramenta interessante, o PimpMyLog. Encontrei por acaso no Github, procurando uma ferramenta simples para visualizar logs via"
 ---
 

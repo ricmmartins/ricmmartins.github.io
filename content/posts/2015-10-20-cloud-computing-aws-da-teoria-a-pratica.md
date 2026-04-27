@@ -5,6 +5,8 @@ date: '2015-10-20T13:14:49-04:00'
 tags:
     - aws
     - cloud
+categories:
+    - AWS
 description: "Pessoal, no último dia 13/10, eu apresentei um Webcast para o portal Mundo TI Brasil, onde falei sobre computação em nuvem e os primcipais serviços da"
 ---
 

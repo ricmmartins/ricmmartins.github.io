@@ -6,6 +6,8 @@ tags:
     - azure
     - devops
     - palestras
+categories:
+    - Azure
 description: "Slides da minha palestra no Global Azure Bootcamp que ocorreu no dia 22 de Abril no Rio de Janeiro disponíveis neste link."
 ---
 

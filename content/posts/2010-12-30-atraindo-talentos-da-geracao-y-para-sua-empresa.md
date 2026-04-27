@@ -4,6 +4,8 @@ title: 'Atraindo talentos da Geração Y para sua empresa'
 date: '2010-12-30T12:01:57-05:00'
 tags:
     - carreira
+categories:
+    - Carreira
 description: "Hoje eu visitei o site de um xará… Seu nome? Ricardo Martins. Isso mesmo! Ele é desenvolvedor e trabalha com desenvolvimento web e seo. O cara parece ser"
 ---
 

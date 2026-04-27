@@ -5,6 +5,8 @@ date: '2010-11-26T08:41:44-05:00'
 tags:
     - certificação
     - windows
+categories:
+    - Carreira
 description: "Há um grande eBook que acaba de ser lançado no site da Microsoft que dá uma boa visão de muitas das tecnologias e conceitos que você precisa para"
 ---
 

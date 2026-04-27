@@ -6,6 +6,8 @@ tags:
     - ubuntu
     - linux
     - networking
+categories:
+    - Networking
 description: "Então, você é um pão duro demais para comprar um roteador caro e quer fazer as coisas sozinho. Então você encontrou o tutorial correto! Ele irá"
 ---
 

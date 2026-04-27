@@ -5,6 +5,8 @@ date: '2011-01-10T13:04:32-05:00'
 tags:
     - certificação
     - citrix
+categories:
+    - Carreira
 description: "Está disponível no link www.citrix.com/ccsp o treinamento CCSP 2011 gratuito. Basta acessar o link, fazer o cadastro e assistir as aulas."
 ---
 

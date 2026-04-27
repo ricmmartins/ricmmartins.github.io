@@ -4,6 +4,8 @@ title: 'Conhecendo o Chef e automatizando seu trabalho'
 date: '2014-03-24T14:59:38-04:00'
 tags:
     - chef
+categories:
+    - DevOps
 description: "Hoje em dia muito tem se falado sobre automatização de infraestrutura. Isto está bastante relacionado com o conceito de DevOps, que bem resumidamente"
 ---
 

@@ -5,6 +5,8 @@ date: '2013-05-07T09:55:23-04:00'
 tags:
     - aws
     - cloud
+categories:
+    - AWS
 description: "Recentemente estive conversando com um amigo sobre como motivar clientes para migrar para AWS. Como é um assunto interessante e muita gente pode ter"
 ---
 

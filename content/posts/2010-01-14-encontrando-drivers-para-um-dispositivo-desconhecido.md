@@ -4,6 +4,8 @@ title: 'Encontrando drivers para um dispositivo desconhecido'
 date: '2010-01-14T22:07:36-05:00'
 tags:
     - windows
+categories:
+    - Windows
 description: "A pior coisa depois de um format é a busca por drivers para reinstalação. Geralmente perdemos os cd’s com os drivers, ou nos deparamos com computadores"
 ---
 

@@ -5,6 +5,8 @@ date: '2010-08-20T23:52:19-04:00'
 tags:
     - scripts
     - windows
+categories:
+    - Windows
 description: "Recentemente, fiz um post aqui citando um programa para fazer o bloqueio/desbloqueio de pendrives. Este post você pode conferir aqui:"
 ---
 

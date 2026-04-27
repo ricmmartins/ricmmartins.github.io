@@ -5,6 +5,8 @@ date: '2009-04-10T17:18:19-04:00'
 tags:
     - estudo
     - linux
+categories:
+    - Carreira
 description: "O Foca GNU/Linux é um guia que traz desde explicações básicas sobre computadores e o sistema GNU/Linux até a administração e segurança do sistema. Os"
 ---
 

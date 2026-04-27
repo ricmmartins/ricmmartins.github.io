@@ -4,6 +4,8 @@ title: 'Bloqueando sites  na unha - Parte 1'
 date: '2009-02-20T17:32:22-05:00'
 tags:
     - segurança
+categories:
+    - Geral
 description: "Essa dica é para você que tem um filho pequeno em casa, empregados espertinhos na sua pequena rede do trabalho, e precisa bloquear alguns sites de maneira"
 ---
 

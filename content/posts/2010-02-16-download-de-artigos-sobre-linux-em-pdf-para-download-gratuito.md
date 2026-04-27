@@ -4,6 +4,8 @@ title: 'Download de artigos sobre Linux, Unix, Bash, Perl, e muito mais'
 date: '2010-02-16T19:08:08-05:00'
 tags:
     - linux
+categories:
+    - Linux
 description: "Você é fã do Linux? Gosta de BSD’s, Unixes, progamação em perl, bash, etc? Então não perca tempo! O site Cyberciti está disponibilizando cerca de 1500"
 ---
 

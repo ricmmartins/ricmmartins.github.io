@@ -4,6 +4,8 @@ title: 'Instalando programas no Linux'
 date: '2009-04-10T17:41:07-04:00'
 tags:
     - linux
+categories:
+    - Linux
 description: "Autor: Pedro Augusto de O. Pereira / A instalação de aplicativos no GNU/Linux é um dos pontos que mais causam confusão nos iniciantes por ser um pouco"
 ---
 

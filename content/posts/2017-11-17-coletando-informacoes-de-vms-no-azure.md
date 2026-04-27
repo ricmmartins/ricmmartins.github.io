@@ -4,6 +4,8 @@ title: 'Coletando informações de VMs no Azure'
 date: '2017-11-17T12:01:03-05:00'
 tags:
     - azure
+categories:
+    - Azure
 description: "Recentemente precisei acessar um ambiente para coletar informações sobre VMs e estou compartilhando aqui os comandos usados (pode ser útil no futuro)."
 ---
 

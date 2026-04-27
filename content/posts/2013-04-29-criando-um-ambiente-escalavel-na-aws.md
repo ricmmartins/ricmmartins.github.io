@@ -5,6 +5,8 @@ date: '2013-04-29T12:46:50-04:00'
 tags:
     - aws
     - cloud
+categories:
+    - AWS
 description: "Nesse post vou abordar como escalar seu site na estrutura de cloud computing da AWS."
 ---
 

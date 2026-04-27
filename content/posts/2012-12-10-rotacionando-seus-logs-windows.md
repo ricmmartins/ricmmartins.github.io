@@ -4,6 +4,8 @@ title: 'Rotacionando seus logs no Windows'
 date: '2012-12-10T11:14:32-05:00'
 tags:
     - windows
+categories:
+    - Windows
 description: "A dica de hoje é rápida: O que fazer com os logs de aplicativos que vivem lotando seu disco, mas que por outro lado você precisa tê-los armazenados por"
 ---
 

@@ -6,6 +6,8 @@ tags:
     - linux
     - scripts
     - shell
+categories:
+    - Linux
 description: "Devido a perguntas como “O que é Shell Script?” e “Como programar em Shell Script?”, Jefferson Virgilio resolveu escrever esta introdução, afim de"
 ---
 

@@ -5,6 +5,8 @@ date: '2015-01-19T11:16:27-05:00'
 tags:
     - devops
     - segurança
+categories:
+    - DevOps
 description: "Muito boa essa apresentação mostrando os principais problemas de segurança relacionados à cultura de DevOps."
 ---
 

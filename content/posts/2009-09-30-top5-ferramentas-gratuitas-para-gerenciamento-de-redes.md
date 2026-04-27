@@ -5,6 +5,8 @@ date: '2009-09-30T00:34:10-04:00'
 tags:
     - utilitários
     - networking
+categories:
+    - Networking
 description: "Neste post estarei indicando 5 ferramentas gratuitas da SolarWinds que são essenciais para qualquer administrador de redes e sistemas. São elas:"
 ---
 

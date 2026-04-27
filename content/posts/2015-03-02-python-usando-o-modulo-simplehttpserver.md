@@ -6,6 +6,8 @@ date: '2015-03-02T18:45:44-05:00'
 tags:
     - linux
     - python
+categories:
+    - Linux
 description: "O SimpleHTTPServer é um módulo do python que representa uma alternativa simples e rápida para servir arquivos à partir de um diretório no seu sistema via"
 ---
 
@@ -15,7 +17,7 @@ A principal vantagem ao utilizá-lo, é não precisar instalar nada no sistema p
 
 Neste post vou mostrar um script em bash que você pode usar para disponibilizar acesso à arquivos contidos em quaisquer diretórios via HTTP.
 
-### Primeiro passo: Criar o arquivo http-server
+## Primeiro passo: Criar o arquivo http-server
 
 Neste exemplo vou colocar o script para usar a porta 8081 e listar o conteúdo do /var/log via HTTP:
 
@@ -72,13 +74,13 @@ echo “Use $0 start|stop|status”
 esac
 ```
 
-### Em seguida vamos dar permissões de execução:
+## Em seguida vamos dar permissões de execução:
 
 ```bash
 # chmod a+x /tmp/http-server  
 ```
 
-### E finalmente vamos executar e verificar o status:
+## E finalmente vamos executar e verificar o status:
 
 ```bash
 # /tmp/http-server start  
@@ -93,7 +95,7 @@ Por padrão o módulo SimpleHTTPServer não exibe uma página web por exemplo. E
 
 O script http-server também configura para que os logs do SimpleHTTPServer sejam escritos em um arquivo de log em /tmp/nohup.log. Caso queria ver os logs de acesso, basta olha este arquivo.
 
-### Habilitando o http-server no boot.
+## Habilitando o http-server no boot.
 
 No CentOS, basta criar a seguinte linha no /etc/rc.local antes da linha que contém “exit 0″:
 

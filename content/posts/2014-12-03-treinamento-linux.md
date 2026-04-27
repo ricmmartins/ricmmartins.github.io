@@ -4,6 +4,8 @@ title: 'Linux: Treinamento à distância com instâncias da Amazon'
 date: '2014-12-03T17:21:31-05:00'
 tags:
     - cursos
+categories:
+    - Geral
 description: "Há algum tempo tenho vontade de iniciar um projeto de treinamento online. Conversando com alguns amigos, resolvi tirar a idéia do papel e estou planejando"
 ---
 

@@ -4,6 +4,8 @@ title: 'Bloqueando sites através do arquivo HOSTS - Parte 3'
 date: '2009-03-27T00:33:12-04:00'
 tags:
     - segurança
+categories:
+    - Geral
 description: "Este post é uma continuação do post  – Parte 2 Continuando a série, estou hoje com a terceira parte."
 ---
 

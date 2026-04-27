@@ -6,6 +6,8 @@ tags:
     - ubuntu
     - linux
     - cursos
+categories:
+    - Linux
 description: "Isso mesmo, agora não tem mais desculpa para não usar o Ubuntu. O time de desenvolvimento do Ubuntu libera um curso dividido em 10 lições, completamente"
 ---
 

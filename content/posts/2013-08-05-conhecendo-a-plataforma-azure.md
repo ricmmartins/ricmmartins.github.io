@@ -5,6 +5,8 @@ date: '2013-08-05T20:18:39-04:00'
 tags:
     - azure
     - cloud
+categories:
+    - Azure
 description: "Há algum tempo estou trabalhando com a Cloud da Amazon, mas até então ainda não tinha tido a oportunidade de testar a Cloud da Microsoft, a Azure. Há dois"
 ---
 

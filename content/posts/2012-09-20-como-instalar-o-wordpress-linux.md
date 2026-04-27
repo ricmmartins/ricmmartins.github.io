@@ -5,6 +5,8 @@ date: '2012-09-20T16:25:56-04:00'
 tags:
     - wordpress
     - linux
+categories:
+    - Linux
 description: "Olá. Depois de algum tempo sem postar novidades por aqui, aqui estamos nós. Vou descrever como realizar a instalação do WordPress no Linux. Neste exemplo"
 ---
 

@@ -4,6 +4,8 @@ title: 'O que diferencia um bom currículo em TI?'
 date: '2011-03-16T22:56:48-04:00'
 tags:
     - carreira
+categories:
+    - Carreira
 description: "Empresas de recrutamento e outros especialistas em carreira costumam ter na ponta da língua uma lista de conselhos de como preparar um bom currículo"
 ---
 

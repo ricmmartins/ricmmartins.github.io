@@ -6,6 +6,8 @@ tags:
     - certificação
     - redhat
     - estudo
+categories:
+    - Carreira
 description: "O tema “Certificação” levanta uma série de opiniões distintas e controversas sobre o assunto. Não vou entrar neste mérito uma vez que o objetivo deste"
 ---
 

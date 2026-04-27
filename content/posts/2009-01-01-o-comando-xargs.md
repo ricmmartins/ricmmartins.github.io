@@ -4,6 +4,8 @@ title: 'O comando xargs'
 date: '2009-01-01T03:44:57-05:00'
 tags:
     - linux
+categories:
+    - Linux
 description: "Existe um comando, cuja função primordial é construir listas de parâmetros e passá-la para a execução de outros programas ou instruções. Este comando é o"
 ---
 

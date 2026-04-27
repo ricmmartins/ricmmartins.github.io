@@ -4,6 +4,8 @@ title: 'Dedicação é a capacidade de se entregar à realização de um objetiv
 date: '2009-10-11T22:39:51-04:00'
 tags:
     - carreira
+categories:
+    - Carreira
 description: "Texto interessante, que gostaria de compartilhar com vocês: “Dedicação é a capacidade de se entregar à realização de um objetivo."
 ---
 

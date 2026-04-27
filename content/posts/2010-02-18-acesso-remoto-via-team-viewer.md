@@ -4,6 +4,8 @@ title: 'Acesso remoto via Team Viewer'
 date: '2010-02-18T21:13:14-05:00'
 tags:
     - windows
+categories:
+    - Windows
 description: "Recentemente descobrí oTeamViewer. Aos poucos fui descobrindo como ele funciona e hoje é o que eu uso para acesso remoto. Uma poderosa ferramenta, que"
 ---
 

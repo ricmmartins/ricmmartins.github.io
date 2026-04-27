@@ -4,6 +4,8 @@ title: 'Limitando o uso de Storage Devices (PenDrives, Disquetes, Cd-Rom’s) no
 date: '2009-04-10T18:04:36-04:00'
 tags:
      - segurança
+categories:
+    - Geral
 description: "Este artigo mostra como realizar uma configuração no windows, de modo a bloquear o acesso à storage devices, que podem ser entendidos como pendrives"
 ---
 

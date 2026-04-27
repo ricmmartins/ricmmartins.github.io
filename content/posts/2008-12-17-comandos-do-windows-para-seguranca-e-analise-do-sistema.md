@@ -5,6 +5,8 @@ date: '2008-12-17T21:06:29-05:00'
 tags:
     - windows
     - segurança
+categories:
+    - Windows
 description: "Hoje vou compartilhar com vocês alguns comandos que permitem que analistas de suporte possam manter um diagnóstico bem mais amplo do sistema. Os comandos"
 ---
 

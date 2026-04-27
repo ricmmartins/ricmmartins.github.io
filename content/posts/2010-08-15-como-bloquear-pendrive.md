@@ -4,6 +4,8 @@ title: 'Como bloquear pendrive'
 date: '2010-08-15T21:18:38-04:00'
 tags:
     - windows
+categories:
+    - Windows
 description: "Há algum tempo atrás eu mostrei aqui no blog um método para bloquear pendrives e discos USB. Na época cheguei a colocar no título do post a descrição"
 ---
 

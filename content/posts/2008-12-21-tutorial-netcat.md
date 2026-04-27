@@ -5,6 +5,8 @@ date: '2008-12-21T22:13:31-05:00'
 tags:
     - linux
     - utilitários
+categories:
+    - Linux
 description: "Netcat é uma ferramenta usada para ler e escrever dados em conexões de rede usando o protocolo TCP/IP. Dada sua grande versatilidade, o Netcat é"
 ---
 

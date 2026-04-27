@@ -4,6 +4,8 @@ title: 'Nginx: Como desabilitar acesso por IP'
 date: '2015-03-19T15:58:11-04:00'
 tags:
     - nginx
+categories:
+    - Geral
 description: "Essa é uma dica rápida, mas extremamente útil. Digamos que em um mesmo servidor você tem um nginx configurado com dois sites distintos mas quer evitar que"
 ---
 

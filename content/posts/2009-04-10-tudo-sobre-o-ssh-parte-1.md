@@ -5,6 +5,8 @@ date: '2009-04-10T17:39:51-04:00'
 tags:
     - networking
     - ssh
+categories:
+    - Networking
 description: "Autor: Pedro Augusto de O. Pereira / Administrar máquinas remotamente é uma coisa extremamente comum não só nos últimos anos, mas desde que a Internet foi"
 ---
 

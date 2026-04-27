@@ -4,6 +4,8 @@ title: '10 utilitários livres para armazenamento'
 date: '2009-01-01T03:50:56-05:00'
 tags:
     - storage
+categories:
+    - Geral
 description: "Em artigo disponibilizado pelo ComputerWorld.com, Deni Connor apresenta 10 utilitários de armazenamento para gerenciar uma Storage-Area Network (SAN)"
 ---
 

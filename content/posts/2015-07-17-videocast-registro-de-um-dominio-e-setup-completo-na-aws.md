@@ -8,6 +8,8 @@ tags:
     - cloud
     - wordpress
     - mysql
+categories:
+    - AWS
 description: "Neste videocast fiz um laboratório prático de AWS. É demonstrado o registro de um domínio no registro.br, configuração deste domínio no route53 e em"
 ---
 

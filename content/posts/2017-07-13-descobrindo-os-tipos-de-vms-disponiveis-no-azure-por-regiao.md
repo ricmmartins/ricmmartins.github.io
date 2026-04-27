@@ -4,6 +4,8 @@ title: 'Descobrindo os tipos de VMs disponíveis no Azure por região'
 date: '2017-07-13T13:47:04-04:00'
 tags:
     - azure
+categories:
+    - Azure
 description: "Este é um post rápido com o propósito de mostrar uma forma rápida de listar os tipos de VMs disponíveis em determinada região do Azure. O único"
 ---
 

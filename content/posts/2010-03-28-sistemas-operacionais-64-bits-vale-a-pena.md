@@ -4,6 +4,8 @@ title: 'Sistemas operacionais 64 bits: Vale a pena?'
 date: '2010-03-28T20:10:21-04:00'
 tags:
     - linux
+categories:
+    - Linux
 description: "Por Alexandre Otto Strube Hoje o texto será um pouco menos técnico, mas igualmente prático."
 ---
 

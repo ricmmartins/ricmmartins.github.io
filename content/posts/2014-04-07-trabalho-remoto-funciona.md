@@ -4,6 +4,8 @@ title: 'Trabalho remoto funciona?'
 date: '2014-04-07T10:36:12-04:00'
 tags:
     - carreira
+categories:
+    - Carreira
 description: "Interessante artigo aborando diversos tópicos no que diz respeito ao trabalho remoto."
 ---
 

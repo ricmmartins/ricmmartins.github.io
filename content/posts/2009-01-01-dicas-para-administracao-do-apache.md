@@ -4,6 +4,8 @@ title: 'Dicas para administração do Apache'
 date: '2009-01-01T03:52:56-05:00'
 tags:
     - apache
+categories:
+    - Geral
 description: "Em artigo para o seu blog, Erick Lubow discute mais sobre melhores formas de administrar o Apache, mostrando configurações para um melhor gerenciamento de"
 ---
 

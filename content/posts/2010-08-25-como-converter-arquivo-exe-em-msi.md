@@ -5,6 +5,8 @@ date: '2010-08-25T23:10:04-04:00'
 tags:
     - ferramentas
     - windows
+categories:
+    - Windows
 description: "Hoje precisei converter um arquivo .exe em .msi para realizar testes de instalação via GPO."
 ---
 

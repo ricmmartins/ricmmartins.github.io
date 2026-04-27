@@ -5,6 +5,8 @@ date: '2010-09-07T18:34:32-04:00'
 tags:
     - rsync
     - windows
+categories:
+    - Windows
 description: "Eu gostei tanto de mecher no AutoIt, que depois do programinha de Assitência Remota sem convites, criei um outro, para sincronizar os dados do meu"
 ---
 

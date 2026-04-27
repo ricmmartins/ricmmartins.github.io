@@ -6,6 +6,8 @@ tags:
     - aws
     - cloud
     - linux
+categories:
+    - AWS
 description: "Os serviços em Cloud da Amazon, dentre diversas outras funcionalidades, fornecem uma API que pode ser usada para realizar todo tipo de tarefa em sua"
 ---
 

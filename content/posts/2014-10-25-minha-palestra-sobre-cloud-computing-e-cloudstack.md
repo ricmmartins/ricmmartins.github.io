@@ -5,6 +5,8 @@ date: '2014-10-25T21:55:37-04:00'
 tags:
     - cloud
     - palestras
+categories:
+    - Cloud
 description: "Cloud computing & Cloudstack: Como ter sua nuvem sem tempestades from Ricardo Martins ☁"
 ---
 

@@ -4,6 +4,8 @@ title: 'Bloqueando sites através do arquivo HOSTS - Parte 2'
 date: '2009-03-19T00:29:53-04:00'
 tags:
     - segurança
+categories:
+    - Geral
 description: "Esse post é uma atualização do post “Bloqueando sites na unha – Parte 1″ Há um programa muito bom pra gerenciar o HOST do windows (inclusive o próprio"
 ---
 

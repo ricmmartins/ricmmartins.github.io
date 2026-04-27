@@ -4,6 +4,8 @@ title: 'Instalando o Oh My Zsh no Bash do Windows'
 date: '2017-09-15T14:51:54-04:00'
 tags:
     - windows
+categories:
+    - Windows
 description: "Há algum tempo atrás eu descobri o Oh My Zsh e desde então me tornei usuário. Porém há aproximadamente um ano e meio mudei de emprego e passei a utilizar"
 ---
 

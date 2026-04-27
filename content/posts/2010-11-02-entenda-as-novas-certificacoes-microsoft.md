@@ -6,6 +6,8 @@ tags:
     - carreira
     - certificação
     - microsoft
+categories:
+    - Carreira
 description: "Muita gente ainda se confunde quando o assunto é as novas certificações da Microsoft. Fiz um resumo abaixo de como elas funcionam e espero que seja útil."
 ---
 

@@ -5,6 +5,8 @@ title: 'Sandcat - Scanner de vulnerabilidades de sistemas e servidores web'
 date: '2009-04-10T17:36:19-04:00'
 tags:
     - segurança
+categories:
+    - Geral
 description: "Autor: Pedro Augusto de O. Pereira / Considere o Sandcat um NMap especializado em varrer servidores web (como IIS ou Apache) e aplicações web (o seu"
 ---
 

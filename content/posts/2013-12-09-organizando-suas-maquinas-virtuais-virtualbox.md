@@ -4,6 +4,8 @@ title: 'Organizando suas máquinas virtuais no VirtualBox'
 date: '2013-12-09T11:58:18-05:00'
 tags:
     - utilitários
+categories:
+    - Geral
 description: "Recentemente descobrí uma feature no VirtualBox muito interessante, que confesso que não fazia idéia que existia. Estou falando do recurso de agrupar as"
 ---
 

@@ -5,6 +5,8 @@ date: '2009-12-10T11:56:33-05:00'
 tags:
     - networking
     - segurança
+categories:
+    - Networking
 description: "Neste post, irei iniciar uma série de artigos relacionados à segurança de redes. Para iniciar, escolhí este tema."
 ---
 

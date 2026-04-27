@@ -5,6 +5,8 @@ date: '2009-04-10T17:42:43-04:00'
 tags:
     - networking
     - linux
+categories:
+    - Networking
 description: "Autor: Pedro Augusto de O. Pereira / O FreeS/WAN é uma das várias implementações do IPSec (Internet Protocol Security) e IKE (Internet Key Exchange) para"
 ---
 

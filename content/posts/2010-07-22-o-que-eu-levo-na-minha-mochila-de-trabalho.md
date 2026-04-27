@@ -4,6 +4,8 @@ title: 'O que eu levo na minha mochila de trabalho'
 date: '2010-07-22T23:01:03-04:00'
 tags:
     - aleatórios
+categories:
+    - Geral
 description: "Seguindo a iniciativa do Efetividade.Net, estou participando da promoção: “O que você carrega na sua mochila ou bolsa de trabalho?”"
 ---
 

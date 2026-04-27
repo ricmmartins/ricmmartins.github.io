@@ -4,6 +4,8 @@ title: 'Sistema automatizado de detecção de intrusão em Python'
 date: '2014-03-10T22:19:01-04:00'
 tags:
     - ferramentas
+categories:
+    - Geral
 description: "Semanalmente eu costumo visitar o site do SANS Institute. O SANS Institute é um renomado centro de segurança norte-americano. Lá eles divulgam diversos"
 ---
 

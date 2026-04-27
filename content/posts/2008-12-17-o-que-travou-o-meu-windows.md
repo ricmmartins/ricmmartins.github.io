@@ -4,6 +4,8 @@ title: 'O que travou o meu Windows !?'
 date: '2008-12-17T21:13:14-05:00'
 tags:
     - utilitários
+categories:
+    - Geral
 description: "Vocês sabiam que a maioria esmagadora das “travadas” (crash) do seu windows são por causa de drives defeituosos? E como saber qual deles foi o culpado?"
 ---
 

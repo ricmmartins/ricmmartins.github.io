@@ -4,6 +4,8 @@ title: 'Vou ser papai!'
 date: '2010-06-16T00:28:32-04:00'
 tags:
     - aleatórios
+categories:
+    - Geral
 description: "Bom este post é só para informar o motivo de este blog estar um pouco desatualizado ultimamente. Eu vou ser papai, então estou na correria e sem muito"
 ---
 

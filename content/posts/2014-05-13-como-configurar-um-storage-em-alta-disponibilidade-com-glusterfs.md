@@ -4,6 +4,8 @@ title: 'Como configurar um storage em alta disponibilidade com GlusterFS'
 date: '2014-05-13T23:17:14-04:00'
 tags:
     - storage
+categories:
+    - Geral
 description: "Recentemente eu mostrei como configurar balanceamento de carga com o HAProxy. Caso você não tenha visto, pode acessá-lo aqui."
 ---
 
@@ -36,7 +38,7 @@ client.ricardomartins.com.br (192.168.1.130)
 /dev/sda – 8GB (Sistema Operacional)  
 /dev/sdb – 1GB (Storage)
 
-### Configuração do Storage
+## Configuração do Storage
 
 Criar partição:  
 
@@ -75,13 +77,13 @@ Montar:
 # mount -a && mount
 ```
 
-### Habilitar EPEL e o repositório do GlusterFS
+## Habilitar EPEL e o repositório do GlusterFS
 
 ```bash
 # wget -P /etc/yum.repos.d http://download.gluster.org/pub/gluster/glusterfs/LATEST/EPEL.repo/glusterfs-epel.repo
 ```
 
-### Instalação do GlusterFS
+## Instalação do GlusterFS
 
 ```bash
 # yum install glusterfs-server
@@ -119,7 +121,7 @@ ou
 # /etc/init.d/iptables stop
 ```
 
-### Configurar o Trusted Pool
+## Configurar o Trusted Pool
 
 Rodar o seguinte comando no Server1:  
 
@@ -135,7 +137,7 @@ Rodar o seguinte comando no Server2:
 
 > Nota: Uma vez que o pool já estiver conectado, apenas servidores “Trusted” podem adicionar novos servidores no Pool.
 
-### Configurar o Volume do GlusterFS
+## Configurar o Volume do GlusterFS
 
 Criar em ambos os servidores:  
 
@@ -161,7 +163,7 @@ Agora vamos confirmar o estado do volume criado:
 
 Caso o volume não for iniciado, as mensagens de erro estarão em /var/log/glusterfs em ambos os servidores.
 
-### Testando nos clientes
+## Testando nos clientes
 
 Agora no Client, vamos testar. Instale o cliente do glusterfs:  
 
@@ -215,7 +217,7 @@ Outros testes que você DEVE fazer para validar que realmente funciona:
 
 Se estiver tudo conforme acima, seu Raid via rede está totalmente funcional agora!
 
-### Restringindo acesso ao volume
+## Restringindo acesso ao volume
 
 Agora que nós verificamos que nosso storage pool está disponível e replicando os dados entre as máquinas do cluster, nos podemos querer proteger nosso pool. Atualmente, qualquer computador cliente pode se conectar ao nosso storage sem nenhuma restrição. Nós podemos alterar isso definindo uma opção no nosso volume.
 
@@ -225,7 +227,7 @@ Em um dos servidores, digite:
 # gluster volume set volume1 auth.allow ip.do.cliente1,ip.do.cliente2
 ```
 
-### Alguns comandos importantes do glusterfs
+## Alguns comandos importantes do glusterfs
 
 Obtendo informações sobre ós volumes:  
 
@@ -263,7 +265,7 @@ Para entrar no console de administração do GlusterFS
 
 Um prompt de comandos será aberto. Digite “help” para ver todas as opções disponíveis para você. Para sair, digite “exit”.
 
-### Plus: Conceitos de Storage
+## Plus: Conceitos de Storage
 
 - Brick: Brick é basicamente qualquer diretório criado para ser compartilhado entre o trusted storage pool;
 - Trusted Storage Pool: É a coleção destes arquivos e diretórios compartilhados, que são baseados no protocolo desenvolvido;

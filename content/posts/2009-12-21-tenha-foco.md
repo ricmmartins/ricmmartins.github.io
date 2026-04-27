@@ -4,6 +4,8 @@ title: 'Tenha foco!'
 date: '2009-12-21T11:55:54-05:00'
 tags:
     - carreira
+categories:
+    - Carreira
 description: "Tenho participado de reuniões que são verdadeiros martírios. Perde-se um tempo incrível em divagações sobre os mais diversos assuntos que nada têm a ver"
 ---
 

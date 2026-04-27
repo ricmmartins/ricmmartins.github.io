@@ -4,6 +4,8 @@ title: 'Desconto de 50% nas Certificações Microsoft para Estudantes'
 date: '2010-02-02T20:30:10-05:00'
 tags:
     - certificação
+categories:
+    - Carreira
 description: "[](/wp-content/uploads/2010/02/Prometric-Student-Priced-Exams4.jpg) Você sabia? Desde Novembro/2009 a Microsoft está com uma promoção oferecendo 50% de"
 ---
 

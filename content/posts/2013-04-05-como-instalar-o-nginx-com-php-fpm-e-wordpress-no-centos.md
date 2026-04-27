@@ -6,6 +6,8 @@ tags:
     - linux
     - nginx
     - wordpress
+categories:
+    - Linux
 description: "Neste tutorial, vou mostrar como realizar a instalação do WordPress rodando sob o Nginx e PHP-FPM em um CentOS 6.3"
 ---
 

@@ -4,6 +4,8 @@ title: 'Entendendo o IPV6'
 date: '2009-01-01T03:06:33-05:00'
 tags:
     - networking
+categories:
+    - Networking
 description: "A massiva popularização da web trouxe um problema grave, que é a escassez de endereços disponíveis. Chegamos então ao IPV6, que promete colocar ordem na"
 ---
 

@@ -4,6 +4,8 @@ title: 'Download do disco de restauração do Windows 7'
 date: '2010-08-18T21:48:24-04:00'
 tags:
     - windows
+categories:
+    - Windows
 description: "A maioria dos usuários estão impressionados com o mais recente sistema operacional Microsoft Windows 7 graças ao marketing agressivo da Microsoft."
 ---
 

@@ -6,6 +6,8 @@ date: '2014-09-16T11:41:11-04:00'
 tags:
     - aws
     - cloud
+categories:
+    - AWS
 description: "Slides do evento AWSomeday no Rio de Janeiro AWSome Day - Rio de Janeiro - Brasil from Amazon Web Services LATAM"
 ---
 

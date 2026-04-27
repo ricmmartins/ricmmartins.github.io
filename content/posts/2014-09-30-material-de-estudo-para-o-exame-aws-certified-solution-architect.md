@@ -7,6 +7,8 @@ tags:
     - aws
     - cloud
     - estudo
+categories:
+    - AWS
 description: "Excelente compilação de videos de eventos como AWS Re-Invent e Webinars. Ótima oportunidade para aprender mais sobre AWS gratuitamente."
 ---
 

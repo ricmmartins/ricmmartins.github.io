@@ -4,6 +4,8 @@ title: 'Selo Olha que blog maneiro'
 date: '2009-02-25T20:16:38-05:00'
 tags:
     - aleatórios
+categories:
+    - Geral
 description: "Acabei de ser indicado pelo site GotchaIT ao selo “Olha que blog maneiro”. Este selo significa que este é um blog maneiro (que maravilha) e que a partir"
 ---
 

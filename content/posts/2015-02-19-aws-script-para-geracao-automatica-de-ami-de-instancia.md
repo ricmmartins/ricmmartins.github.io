@@ -5,6 +5,8 @@ date: '2015-02-19T18:47:41-05:00'
 tags:
     - aws
     - scripts
+categories:
+    - AWS
 description: "Se você administra servidores na nuvem da AWS, certamente este script irá te auxiliar bastante a automatizar a geração da AMI da sua instância. O AMI é"
 ---
 

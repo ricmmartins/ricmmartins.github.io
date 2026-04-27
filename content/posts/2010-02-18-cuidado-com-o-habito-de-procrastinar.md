@@ -4,6 +4,8 @@ title: 'Cuidado com o hábito de procrastinar'
 date: '2010-02-18T00:05:01-05:00'
 tags:
     - carreira
+categories:
+    - Carreira
 description: "Quantas vezes já ocorreu de você deixa alguma coisa pra depois e aoportunidade passar? Quantas idéias você teve, não implementou e, quando se deu conta"
 ---
 

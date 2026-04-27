@@ -5,6 +5,8 @@ date: '2009-04-10T17:49:44-04:00'
 tags:
     - linux
     - segurança
+categories:
+    - Linux
 description: "Este texto é uma tradução. O texto original está disponível no site http://www.builderau.com.au/program/linux/soa/10_things_you_should_do_to…?feed=rss"
 ---
 

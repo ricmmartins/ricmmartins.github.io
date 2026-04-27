@@ -4,6 +4,8 @@ title: 'Usando Bots no Azure'
 date: '2016-09-13T23:23:39-04:00'
 tags:
     - azure
+categories:
+    - Azure
 description: "Já pensou você poder conversar via Skype com um bot e executar operações no Azure através de uma conversa usando linguagem natural? Agora você pode! Por"
 ---
 

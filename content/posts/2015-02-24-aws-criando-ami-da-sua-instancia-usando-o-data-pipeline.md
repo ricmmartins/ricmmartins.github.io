@@ -5,6 +5,8 @@ date: '2015-02-24T21:38:37-05:00'
 tags:
     - aws
     - cloud
+categories:
+    - AWS
 description: "Depois do post demonstrando como criar uma AMI da sua instância utilizando um script shell de dentro de um bastion host (), neste post vou mostrar como"
 ---
 

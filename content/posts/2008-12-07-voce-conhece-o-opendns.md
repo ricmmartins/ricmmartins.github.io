@@ -5,6 +5,8 @@ date: '2008-12-07T19:20:55-05:00'
 tags:
     - dns
     - segurança
+categories:
+    - Networking
 description: "O OpenDNS é um serviço de dns gratuito, aberto e seguro. Eu utilizo na minha casa para melhorar a velocidade da conexão, mas estes dias eu fui até o site"
 ---
 

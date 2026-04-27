@@ -5,6 +5,8 @@ date: '2008-12-16T01:12:33-05:00'
 tags:
     - linux
     - ubuntu
+categories:
+    - Linux
 description: "Hoje vou postar sobre como configurar o Modem BandLuxe C120 no Ubuntu.Eu tenho o Velox 3G há cerca de 3 meses, e até então ainda não tinha conseguido"
 ---
 

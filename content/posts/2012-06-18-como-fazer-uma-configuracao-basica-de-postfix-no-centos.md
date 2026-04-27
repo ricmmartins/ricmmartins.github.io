@@ -4,6 +4,8 @@ title: 'Como fazer uma configuração básica de Postfix no CentOS'
 date: '2012-06-18T16:46:08-04:00'
 tags:
     - linux
+categories:
+    - Linux
 description: "Ok, então você administra uma rede, e instalou um serviço de monitoração para acompanhar a atividade e desempenho da sua rede, tipo o Nagios ou Zabbix"
 ---
 

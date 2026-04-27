@@ -5,6 +5,8 @@ date: '2017-11-22T02:14:33-05:00'
 tags:
     - azure
     - monitoramento
+categories:
+    - Azure
 description: "Recentemente foi lançado um plugin do Azure Monitor para o Grafana que eu resolvi testar e escrever este post."
 ---
 

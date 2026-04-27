@@ -6,6 +6,8 @@ tags:
     - linux
     - nginx
     - wordpress
+categories:
+    - Linux
 description: "Olá pessoal, o Varnish é um excelente acelerador HTTP para sites dinâmicos com alto volume de conteúdo . Em contraste com outros aceleradores HTTP, muitos"
 ---
 

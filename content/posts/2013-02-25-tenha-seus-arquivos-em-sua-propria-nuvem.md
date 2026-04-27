@@ -4,6 +4,8 @@ title: 'Tenha seus arquivos em sua própria nuvem'
 date: '2013-02-25T15:30:58-05:00'
 tags:
     - utilitários
+categories:
+    - Geral
 description: "Depois de resolver meu problema com o Dropbox de só conseguir sincronizar arquivos que estivessem dentro da própria pasta do Dropbox, comecei a pensar se"
 ---
 

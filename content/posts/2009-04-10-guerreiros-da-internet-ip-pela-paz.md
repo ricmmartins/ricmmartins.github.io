@@ -4,6 +4,8 @@ title: 'Guerreiros da Internet - IP pela Paz'
 date: '2009-04-10T17:55:21-04:00'
 tags:
     - networking
+categories:
+    - Networking
 description: "Produzido por Tomas Stephanson e Monte Reid – ERICSSON Medialab Site oficial: Warriors of The Net"
 ---
 
