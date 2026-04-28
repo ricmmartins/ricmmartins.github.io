@@ -1,5 +1,7 @@
 ---
 slug: "linuxunix-command-toolbox"
+aliases:
+  - "/posts/linuxunix-command-toolbox/"
 title: 'Linux/Unix Command Toolbox'
 date: '2009-04-06T22:53:00-04:00'
 tags:

@@ -1,5 +1,7 @@
 ---
 slug: "participacao-no-flisol-2014"
+aliases:
+  - "/posts/participacao-no-flisol-2014/"
 title: 'Participação no FliSol 2014'
 date: '2014-04-24T12:16:59-04:00'
 tags:

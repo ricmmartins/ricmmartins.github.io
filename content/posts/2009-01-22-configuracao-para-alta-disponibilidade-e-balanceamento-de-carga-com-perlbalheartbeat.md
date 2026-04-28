@@ -1,5 +1,7 @@
 ---
 slug: "configuracao-para-alta-disponibilidade-e-balanceamento-de-carga-com-perlbalheartbeat"
+aliases:
+  - "/posts/configuracao-para-alta-disponibilidade-e-balanceamento-de-carga-com-perlbalheartbeat/"
 title: 'Configuração para alta disponibilidade e balanceamento de carga com Perlbal/Heartbeat'
 date: '2009-01-22T15:27:48-05:00'
 tags:

@@ -1,5 +1,7 @@
 ---
 slug: "conhecendo-as-opcoes-para-containers-no-azure"
+aliases:
+  - "/posts/conhecendo-as-opcoes-para-containers-no-azure/"
 title: "Conhecendo as opções para containers do Azure"
 description: "Conheça as opções PaaS para containers no Azure: ACI, Web App for Containers e AKS. Comparativo completo com cenários de uso."
 date: '2019-01-19T01:32:22-05:00'

@@ -1,5 +1,7 @@
 ---
 slug: "fuja-da-escravidao"
+aliases:
+  - "/posts/fuja-da-escravidao/"
 title: 'Fuja da escravidão'
 date: '2015-05-06T11:53:33-04:00'
 tags:

@@ -1,5 +1,7 @@
 ---
 slug: "entenda-as-novas-certificacoes-microsoft"
+aliases:
+  - "/posts/entenda-as-novas-certificacoes-microsoft/"
 title: 'Entenda as novas certificações Microsoft'
 date: '2010-11-02T04:22:52-04:00'
 tags:

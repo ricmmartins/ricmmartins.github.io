@@ -1,5 +1,7 @@
 ---
 slug: "opsworks-trabalhando-com-cookbooks-customizadas"
+aliases:
+  - "/posts/opsworks-trabalhando-com-cookbooks-customizadas/"
 title: 'OpsWorks: Trabalhando com cookbooks customizadas - Parte III/III'
 date: '2015-03-23T16:51:10-04:00'
 tags:

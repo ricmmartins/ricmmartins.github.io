@@ -1,5 +1,7 @@
 ---
 slug: "coletando-informacoes-do-azure-com-grafana"
+aliases:
+  - "/posts/coletando-informacoes-do-azure-com-grafana/"
 title: 'Coletando informações do Azure com Grafana'
 date: '2017-11-22T02:14:33-05:00'
 tags:

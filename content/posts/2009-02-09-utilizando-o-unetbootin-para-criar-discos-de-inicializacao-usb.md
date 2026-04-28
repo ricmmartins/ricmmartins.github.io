@@ -1,5 +1,7 @@
 ---
 slug: "utilizando-o-unetbootin-para-criar-discos-de-inicializacao-usb"
+aliases:
+  - "/posts/utilizando-o-unetbootin-para-criar-discos-de-inicializacao-usb/"
 title: 'Utilizando o UNetbootin para criar discos de inicialização USB'
 date: '2009-02-09T20:42:14-05:00'
 tags:

@@ -1,5 +1,7 @@
 ---
 slug: "finalmente-5-estrelas-de-windows-7"
+aliases:
+  - "/posts/finalmente-5-estrelas-de-windows-7/"
 title: 'Finalmente, 5 Estrelas de Windows 7'
 date: '2010-11-19T14:55:00-05:00'
 tags:

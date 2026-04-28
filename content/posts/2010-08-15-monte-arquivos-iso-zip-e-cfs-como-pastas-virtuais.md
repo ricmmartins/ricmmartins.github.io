@@ -1,5 +1,7 @@
 ---
 slug: "monte-arquivos-iso-zip-e-cfs-como-pastas-virtuais"
+aliases:
+  - "/posts/monte-arquivos-iso-zip-e-cfs-como-pastas-virtuais/"
 title: 'Monte arquivos ISO, ZIP e CFS como pastas virtuais'
 date: '2010-08-15T21:48:58-04:00'
 tags:

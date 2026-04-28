@@ -1,5 +1,7 @@
 ---
 slug: "usando-bots-no-azure"
+aliases:
+  - "/posts/usando-bots-no-azure/"
 title: 'Usando Bots no Azure'
 date: '2016-09-13T23:23:39-04:00'
 tags:

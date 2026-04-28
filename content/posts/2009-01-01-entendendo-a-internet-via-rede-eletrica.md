@@ -1,5 +1,7 @@
 ---
 slug: "entendendo-a-internet-via-rede-eletrica"
+aliases:
+  - "/posts/entendendo-a-internet-via-rede-eletrica/"
 title: 'Entendendo a Internet via rede elétrica'
 date: '2009-01-01T03:40:58-05:00'
 tags:

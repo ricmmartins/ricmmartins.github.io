@@ -1,5 +1,7 @@
 ---
 slug: "sandcat-scanner-de-vulnerabilidades-de-sistemas-e-servidores-web"
+aliases:
+  - "/posts/sandcat-scanner-de-vulnerabilidades-de-sistemas-e-servidores-web/"
 id: 821
 title: 'Sandcat - Scanner de vulnerabilidades de sistemas e servidores web'
 date: '2009-04-10T17:36:19-04:00'

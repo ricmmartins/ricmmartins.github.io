@@ -1,5 +1,7 @@
 ---
 slug: "tenha-seus-arquivos-em-sua-propria-nuvem"
+aliases:
+  - "/posts/tenha-seus-arquivos-em-sua-propria-nuvem/"
 title: 'Tenha seus arquivos em sua própria nuvem'
 date: '2013-02-25T15:30:58-05:00'
 tags:

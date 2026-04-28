@@ -1,5 +1,7 @@
 ---
 slug: "technical-cheat-sheets"
+aliases:
+  - "/posts/technical-cheat-sheets/"
 title: 'Technical Cheat Sheets'
 date: '2017-05-24T15:49:35-04:00'
 tags:

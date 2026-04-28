@@ -1,5 +1,7 @@
 ---
 slug: "tenha-foco"
+aliases:
+  - "/posts/tenha-foco/"
 title: 'Tenha foco!'
 date: '2009-12-21T11:55:54-05:00'
 tags:

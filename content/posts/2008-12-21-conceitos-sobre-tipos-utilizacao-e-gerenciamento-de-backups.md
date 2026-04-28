@@ -1,5 +1,7 @@
 ---
 slug: "conceitos-sobre-tipos-utilizacao-e-gerenciamento-de-backups"
+aliases:
+  - "/posts/conceitos-sobre-tipos-utilizacao-e-gerenciamento-de-backups/"
 title: 'Conceitos sobre tipos, utilização e gerenciamento de backups'
 date: '2008-12-21T22:19:08-05:00'
 tags:

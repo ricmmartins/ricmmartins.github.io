@@ -1,5 +1,7 @@
 ---
 slug: "pense-grande"
+aliases:
+  - "/posts/pense-grande/"
 title: 'Pense grande!'
 date: '2009-09-30T01:02:12-04:00'
 tags:

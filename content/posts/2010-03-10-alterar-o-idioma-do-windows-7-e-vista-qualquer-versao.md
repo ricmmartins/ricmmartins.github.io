@@ -1,5 +1,7 @@
 ---
 slug: "alterar-o-idioma-do-windows-7-e-vista-qualquer-versao"
+aliases:
+  - "/posts/alterar-o-idioma-do-windows-7-e-vista-qualquer-versao/"
 title: 'Alterar o idioma do Windows 7 e Vista (Qualquer versão)'
 date: '2010-03-10T23:44:39-05:00'
 tags:

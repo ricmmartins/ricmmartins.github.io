@@ -1,5 +1,7 @@
 ---
 slug: "utilizando-expressoes-regulares-no-comando-grep"
+aliases:
+  - "/posts/utilizando-expressoes-regulares-no-comando-grep/"
 title: 'Utilizando expressões regulares no comando grep'
 date: '2010-02-16T19:48:03-05:00'
 tags:

@@ -1,5 +1,7 @@
 ---
 slug: "dicas-e-truques-bash"
+aliases:
+  - "/posts/dicas-e-truques-bash/"
 title: 'Dicas e truques Bash'
 date: '2009-01-01T04:09:20-05:00'
 tags:

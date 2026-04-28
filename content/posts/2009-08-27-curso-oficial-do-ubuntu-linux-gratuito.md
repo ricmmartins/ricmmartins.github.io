@@ -1,5 +1,7 @@
 ---
 slug: "curso-oficial-do-ubuntu-linux-gratuito"
+aliases:
+  - "/posts/curso-oficial-do-ubuntu-linux-gratuito/"
 title: 'Curso Oficial do Ubuntu Linux Gratuito'
 date: '2009-08-27T10:58:53-04:00'
 tags:

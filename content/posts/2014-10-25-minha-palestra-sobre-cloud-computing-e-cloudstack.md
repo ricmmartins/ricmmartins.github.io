@@ -1,5 +1,7 @@
 ---
 slug: "minha-palestra-sobre-cloud-computing-e-cloudstack"
+aliases:
+  - "/posts/minha-palestra-sobre-cloud-computing-e-cloudstack/"
 title: 'Minha palestra sobre CloudComputing e CloudStack'
 date: '2014-10-25T21:55:37-04:00'
 tags:

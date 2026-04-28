@@ -1,5 +1,7 @@
 ---
 slug: "aproveite-mais-o-google-search"
+aliases:
+  - "/posts/aproveite-mais-o-google-search/"
 title: 'Aproveite mais o Google Search'
 date: '2009-04-10T17:15:18-04:00'
 tags:

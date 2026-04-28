@@ -1,5 +1,7 @@
 ---
 slug: "sshfs-montando-sistemas-de-arquivos-remotos-de-forma-segura"
+aliases:
+  - "/posts/sshfs-montando-sistemas-de-arquivos-remotos-de-forma-segura/"
 title: 'sshfs: Montando sistemas de arquivos remotos de forma segura'
 date: '2008-12-21T22:16:01-05:00'
 tags:

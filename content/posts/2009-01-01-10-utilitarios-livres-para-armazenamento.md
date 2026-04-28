@@ -1,5 +1,7 @@
 ---
 slug: "10-utilitarios-livres-para-armazenamento"
+aliases:
+  - "/posts/10-utilitarios-livres-para-armazenamento/"
 title: '10 utilitários livres para armazenamento'
 date: '2009-01-01T03:50:56-05:00'
 tags:

@@ -1,5 +1,7 @@
 ---
 slug: "capacitacao-azure"
+aliases:
+  - "/posts/capacitacao-azure/"
 title: 'Capacitação técnica no Microsoft Azure'
 date: '2016-05-28T21:05:25-04:00'
 tags:

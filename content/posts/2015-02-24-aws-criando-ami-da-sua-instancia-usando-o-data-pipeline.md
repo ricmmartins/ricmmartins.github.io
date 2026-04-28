@@ -1,5 +1,7 @@
 ---
 slug: "aws-criando-ami-da-sua-instancia-usando-o-data-pipeline"
+aliases:
+  - "/posts/aws-criando-ami-da-sua-instancia-usando-o-data-pipeline/"
 title: 'AWS: Criando AMI da sua instância usando o Data Pipeline'
 date: '2015-02-24T21:38:37-05:00'
 tags:

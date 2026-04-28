@@ -1,5 +1,7 @@
 ---
 slug: "conhecendo-o-terraform-packer-e-ansible"
+aliases:
+  - "/posts/conhecendo-o-terraform-packer-e-ansible/"
 title: 'Conhecendo o Terraform, Packer e Ansible'
 date: '2017-03-06T10:34:27-05:00'
 tags:

@@ -1,5 +1,7 @@
 ---
 slug: "top10-lifehacker"
+aliases:
+  - "/posts/top10-lifehacker/"
 title: 'Top10 LifeHacker'
 date: '2009-04-10T18:01:26-04:00'
 tags:

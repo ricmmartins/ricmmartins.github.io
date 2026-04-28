@@ -1,5 +1,7 @@
 ---
 slug: "alternando-ente-contas-de-usuario-pelo-prompt-de-comandos"
+aliases:
+  - "/posts/alternando-ente-contas-de-usuario-pelo-prompt-de-comandos/"
 title: 'Alternando ente contas de usuário pelo Prompt de Comandos.'
 date: '2009-04-10T17:33:10-04:00'
 tags:

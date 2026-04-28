@@ -1,5 +1,7 @@
 ---
 slug: "como-impedir-o-uso-do-seu-sistema-usando-o-syskey"
+aliases:
+  - "/posts/como-impedir-o-uso-do-seu-sistema-usando-o-syskey/"
 title: 'Como impedir o uso do seu sistema usando o SYSKEY'
 date: '2009-04-10T17:21:59-04:00'
 tags:

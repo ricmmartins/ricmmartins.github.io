@@ -1,5 +1,7 @@
 ---
 slug: "limitando-o-uso-de-storage-devices-pendrives-disquetes-cd-roms-no-windows"
+aliases:
+  - "/posts/limitando-o-uso-de-storage-devices-pendrives-disquetes-cd-roms-no-windows/"
 title: 'Limitando o uso de Storage Devices (PenDrives, Disquetes, Cd-Rom’s) no Windows'
 date: '2009-04-10T18:04:36-04:00'
 tags:

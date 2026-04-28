@@ -1,5 +1,7 @@
 ---
 slug: "como-corrigir-o-erro-problem-with-mergelist-varlibaptlists-no-ubuntu-11-04"
+aliases:
+  - "/posts/como-corrigir-o-erro-problem-with-mergelist-varlibaptlists-no-ubuntu-11-04/"
 title: 'Como corrigir o erro “Problem with MergeList /var/lib/apt/lists” no Ubuntu 11.04'
 date: '2011-09-10T08:22:15-04:00'
 tags:

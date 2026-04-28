@@ -1,5 +1,7 @@
 ---
 slug: "crie-e-teste-suas-expressoes-regulares-online"
+aliases:
+  - "/posts/crie-e-teste-suas-expressoes-regulares-online/"
 title: 'Crie e teste suas expressões regulares online!'
 date: '2010-12-29T12:31:21-05:00'
 tags:

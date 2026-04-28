@@ -1,5 +1,7 @@
 ---
 slug: "menu-iniciar-classico-no-windows-7"
+aliases:
+  - "/posts/menu-iniciar-classico-no-windows-7/"
 title: 'Menu Iniciar Clássico no Windows 7'
 date: '2010-08-11T23:40:01-04:00'
 tags:

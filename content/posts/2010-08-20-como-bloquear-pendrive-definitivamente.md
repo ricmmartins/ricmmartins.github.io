@@ -1,5 +1,7 @@
 ---
 slug: "como-bloquear-pendrive-definitivamente"
+aliases:
+  - "/posts/como-bloquear-pendrive-definitivamente/"
 title: 'Como bloquear pendrive definitivamente'
 date: '2010-08-20T23:52:19-04:00'
 tags:

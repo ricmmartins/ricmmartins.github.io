@@ -1,5 +1,7 @@
 ---
 slug: "download-de-artigos-sobre-linux-em-pdf-para-download-gratuito"
+aliases:
+  - "/posts/download-de-artigos-sobre-linux-em-pdf-para-download-gratuito/"
 title: 'Download de artigos sobre Linux, Unix, Bash, Perl, e muito mais'
 date: '2010-02-16T19:08:08-05:00'
 tags:

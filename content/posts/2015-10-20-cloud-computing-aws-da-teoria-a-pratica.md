@@ -1,5 +1,7 @@
 ---
 slug: "cloud-computing-aws-da-teoria-a-pratica"
+aliases:
+  - "/posts/cloud-computing-aws-da-teoria-a-pratica/"
 title: 'Cloud Computing &#038; AWS: Da teoria à prática'
 date: '2015-10-20T13:14:49-04:00'
 tags:

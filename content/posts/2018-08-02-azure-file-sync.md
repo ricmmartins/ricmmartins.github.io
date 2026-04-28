@@ -1,5 +1,7 @@
 ---
 slug: "azure-file-sync"
+aliases:
+  - "/posts/azure-file-sync/"
 title: 'Azure File Sync'
 description: "Overview e tutorial em vídeo do Azure File Sync: como configurar a sincronização de arquivos entre servidores on-premises e Azure."
 date: '2018-08-02T11:21:59-04:00'

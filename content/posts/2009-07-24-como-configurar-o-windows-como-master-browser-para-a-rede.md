@@ -1,5 +1,7 @@
 ---
 slug: "como-configurar-o-windows-como-master-browser-para-a-rede"
+aliases:
+  - "/posts/como-configurar-o-windows-como-master-browser-para-a-rede/"
 title: 'Como configurar o Windows como Master Browser para a Rede.'
 date: '2009-07-24T18:00:16-04:00'
 tags:

@@ -1,5 +1,7 @@
 ---
 slug: "azure-cdn-como-realizar-a-implementacao-e-validar-o-funcionamento"
+aliases:
+  - "/posts/azure-cdn-como-realizar-a-implementacao-e-validar-o-funcionamento/"
 title: 'Azure CDN: Como realizar a implementação e validar o funcionamento'
 date: '2016-06-13T20:27:47-04:00'
 tags:

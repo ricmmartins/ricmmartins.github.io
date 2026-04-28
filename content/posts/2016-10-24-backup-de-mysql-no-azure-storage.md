@@ -1,5 +1,7 @@
 ---
 slug: "backup-de-mysql-no-azure-storage"
+aliases:
+  - "/posts/backup-de-mysql-no-azure-storage/"
 title: 'Backup de MySQL no Azure Storage'
 date: '2016-10-24T14:22:23-04:00'
 tags:

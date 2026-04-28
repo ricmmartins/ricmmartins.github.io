@@ -1,5 +1,7 @@
 ---
 slug: "criando-uma-vm-linux-ubuntu-pelo-azure-cli"
+aliases:
+  - "/posts/criando-uma-vm-linux-ubuntu-pelo-azure-cli/"
 title: 'Criando uma VM Linux (Ubuntu) pelo Azure CLI'
 tags:
     - azure

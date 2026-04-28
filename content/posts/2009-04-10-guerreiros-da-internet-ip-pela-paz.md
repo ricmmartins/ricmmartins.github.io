@@ -1,5 +1,7 @@
 ---
 slug: "guerreiros-da-internet-ip-pela-paz"
+aliases:
+  - "/posts/guerreiros-da-internet-ip-pela-paz/"
 title: 'Guerreiros da Internet - IP pela Paz'
 date: '2009-04-10T17:55:21-04:00'
 tags:

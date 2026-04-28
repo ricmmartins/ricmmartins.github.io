@@ -1,5 +1,7 @@
 ---
 slug: "rsync-no-windows"
+aliases:
+  - "/posts/rsync-no-windows/"
 title: 'Rsync no Windows'
 date: '2009-08-09T23:33:54-04:00'
 tags:

@@ -1,5 +1,7 @@
 ---
 slug: "devops-problemas-comuns-de-seguranca"
+aliases:
+  - "/posts/devops-problemas-comuns-de-seguranca/"
 title: 'DevOps: Problemas comuns de segurança'
 date: '2015-01-19T11:16:27-05:00'
 tags:

@@ -1,5 +1,7 @@
 ---
 slug: "monit-monitoramento-de-aplicacoes-e-servicos-de-forma-inteligente"
+aliases:
+  - "/posts/monit-monitoramento-de-aplicacoes-e-servicos-de-forma-inteligente/"
 
 title: 'Monit: Monitoramento de aplicações e serviços de forma inteligente'
 date: '2015-06-26T17:04:55-04:00'

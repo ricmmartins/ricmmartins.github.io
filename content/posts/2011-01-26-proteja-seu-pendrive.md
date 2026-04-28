@@ -1,5 +1,7 @@
 ---
 slug: "proteja-seu-pendrive"
+aliases:
+  - "/posts/proteja-seu-pendrive/"
 title: 'Proteja seu pendrive'
 date: '2011-01-26T13:04:44-05:00'
 tags:

@@ -1,5 +1,7 @@
 ---
 slug: "acesso-remoto-via-team-viewer"
+aliases:
+  - "/posts/acesso-remoto-via-team-viewer/"
 title: 'Acesso remoto via Team Viewer'
 date: '2010-02-18T21:13:14-05:00'
 tags:

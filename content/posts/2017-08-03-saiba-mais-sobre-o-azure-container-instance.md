@@ -1,5 +1,7 @@
 ---
 slug: "saiba-mais-sobre-o-azure-container-instance"
+aliases:
+  - "/posts/saiba-mais-sobre-o-azure-container-instance/"
 title: 'Saiba mais sobre o Azure Container Instance'
 tags:
     - azure

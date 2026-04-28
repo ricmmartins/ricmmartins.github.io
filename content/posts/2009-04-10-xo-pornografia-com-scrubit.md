@@ -1,5 +1,7 @@
 ---
 slug: "xo-pornografia-com-scrubit"
+aliases:
+  - "/posts/xo-pornografia-com-scrubit/"
 title: 'Xô pornografia, com ScrubIt'
 date: '2009-04-10T17:27:43-04:00'
 tags:

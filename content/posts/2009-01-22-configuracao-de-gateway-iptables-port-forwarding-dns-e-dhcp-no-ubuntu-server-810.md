@@ -1,5 +1,7 @@
 ---
 slug: "configuracao-de-gateway-iptables-port-forwarding-dns-e-dhcp-no-ubuntu-server-810"
+aliases:
+  - "/posts/configuracao-de-gateway-iptables-port-forwarding-dns-e-dhcp-no-ubuntu-server-810/"
 title: 'Configuração de Gateway, Iptables, Port Forwarding, DNS e DHCP no Ubuntu Server 8.10'
 date: '2009-01-22T19:44:41-05:00'
 tags:

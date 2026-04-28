@@ -1,5 +1,7 @@
 ---
 slug: "viver-ou-juntar-dinheiro"
+aliases:
+  - "/posts/viver-ou-juntar-dinheiro/"
 title: 'Viver ou juntar dinheiro?'
 date: '2011-11-24T16:57:14-05:00'
 tags:

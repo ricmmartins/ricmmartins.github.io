@@ -1,5 +1,7 @@
 ---
 slug: "acessando-o-mysql-remotamente-via-gui"
+aliases:
+  - "/posts/acessando-o-mysql-remotamente-via-gui/"
 title: 'Como acessar o Mysql remotamente via GUI (Graphical User Interface)'
 date: '2012-06-21T12:13:23-04:00'
 tags:

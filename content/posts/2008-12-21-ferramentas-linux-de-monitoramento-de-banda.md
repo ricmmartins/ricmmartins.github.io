@@ -1,5 +1,7 @@
 ---
 slug: "ferramentas-linux-de-monitoramento-de-banda"
+aliases:
+  - "/posts/ferramentas-linux-de-monitoramento-de-banda/"
 title: 'Ferramentas Linux de monitoramento de banda'
 date: '2008-12-21T22:13:00-05:00'
 tags:

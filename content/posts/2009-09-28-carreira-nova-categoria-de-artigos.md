@@ -1,5 +1,7 @@
 ---
 slug: "carreira-nova-categoria-de-artigos"
+aliases:
+  - "/posts/carreira-nova-categoria-de-artigos/"
 title: 'Carreira - nova categoria de artigos.'
 date: '2009-09-28T02:58:50-04:00'
 tags:

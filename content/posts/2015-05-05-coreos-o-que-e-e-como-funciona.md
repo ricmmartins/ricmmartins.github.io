@@ -1,5 +1,7 @@
 ---
 slug: "coreos-o-que-e-e-como-funciona"
+aliases:
+  - "/posts/coreos-o-que-e-e-como-funciona/"
 title: 'CoreOS: O que é e como funciona?'
 date: '2015-05-05T19:05:52-04:00'
 tags:

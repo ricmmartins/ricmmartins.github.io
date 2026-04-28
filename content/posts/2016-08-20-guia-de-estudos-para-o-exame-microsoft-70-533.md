@@ -1,5 +1,7 @@
 ---
 slug: "guia-de-estudos-para-o-exame-microsoft-70-533"
+aliases:
+  - "/posts/guia-de-estudos-para-o-exame-microsoft-70-533/"
 title: 'Guia de estudos para o exame Microsoft 70-533'
 date: '2016-08-20T16:32:30-04:00'
 tags:

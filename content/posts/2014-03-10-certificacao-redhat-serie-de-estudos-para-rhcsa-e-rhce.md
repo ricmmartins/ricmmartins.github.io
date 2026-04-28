@@ -1,5 +1,7 @@
 ---
 slug: "certificacao-redhat-serie-de-estudos-para-rhcsa-e-rhce"
+aliases:
+  - "/posts/certificacao-redhat-serie-de-estudos-para-rhcsa-e-rhce/"
 title: 'Certificação RedHat: Série de Estudos para RHCSA e RHCE'
 date: '2014-03-10T20:45:25-04:00'
 tags:

@@ -1,5 +1,7 @@
 ---
 slug: "voce-e-um-nerd"
+aliases:
+  - "/posts/voce-e-um-nerd/"
 title: 'Você é um nerd?'
 date: '2010-12-17T22:39:36-05:00'
 tags:

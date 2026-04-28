@@ -1,5 +1,7 @@
 ---
 slug: "exluir-arquivos-com-mais-de-x-dias-de-idade"
+aliases:
+  - "/posts/exluir-arquivos-com-mais-de-x-dias-de-idade/"
 title: 'Exluir arquivos com mais de X dias de idade'
 date: '2011-04-01T20:44:58-04:00'
 tags:

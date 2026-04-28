@@ -1,5 +1,7 @@
 ---
 slug: "o-comando-xargs"
+aliases:
+  - "/posts/o-comando-xargs/"
 title: 'O comando xargs'
 date: '2009-01-01T03:44:57-05:00'
 tags:

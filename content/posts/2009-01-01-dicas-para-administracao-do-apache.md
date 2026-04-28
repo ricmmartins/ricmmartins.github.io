@@ -1,5 +1,7 @@
 ---
 slug: "dicas-para-administracao-do-apache"
+aliases:
+  - "/posts/dicas-para-administracao-do-apache/"
 title: 'Dicas para administração do Apache'
 date: '2009-01-01T03:52:56-05:00'
 tags:

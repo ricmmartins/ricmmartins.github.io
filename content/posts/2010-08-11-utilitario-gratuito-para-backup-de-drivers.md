@@ -1,5 +1,7 @@
 ---
 slug: "utilitario-gratuito-para-backup-de-drivers"
+aliases:
+  - "/posts/utilitario-gratuito-para-backup-de-drivers/"
 title: 'Utilitário gratuito para backup de drivers'
 date: '2010-08-11T23:29:17-04:00'
 tags:

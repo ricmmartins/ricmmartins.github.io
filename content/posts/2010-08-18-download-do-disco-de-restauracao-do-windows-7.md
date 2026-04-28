@@ -1,5 +1,7 @@
 ---
 slug: "download-do-disco-de-restauracao-do-windows-7"
+aliases:
+  - "/posts/download-do-disco-de-restauracao-do-windows-7/"
 title: 'Download do disco de restauração do Windows 7'
 date: '2010-08-18T21:48:24-04:00'
 tags:

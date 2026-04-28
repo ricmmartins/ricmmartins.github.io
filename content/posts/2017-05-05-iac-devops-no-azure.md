@@ -1,5 +1,7 @@
 ---
 slug: "iac-devops-no-azure"
+aliases:
+  - "/posts/iac-devops-no-azure/"
 title: 'IaC &amp; DevOps no Azure'
 date: '2017-05-05T21:49:43-04:00'
 tags:

@@ -1,5 +1,7 @@
 ---
 slug: "implementando-o-apache-guacamole-no-azure"
+aliases:
+  - "/posts/implementando-o-apache-guacamole-no-azure/"
 title: 'Implementando o Apache Guacamole no Azure'
 description: "Implemente o Apache Guacamole no Azure com alta disponibilidade: load balancer, múltiplas VMs e MySQL. Guia detalhado de arquitetura."
 date: '2018-04-30T20:44:48-04:00'

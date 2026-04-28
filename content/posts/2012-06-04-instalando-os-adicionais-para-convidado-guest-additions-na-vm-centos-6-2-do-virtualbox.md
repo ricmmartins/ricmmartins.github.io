@@ -1,5 +1,7 @@
 ---
 slug: "instalando-os-adicionais-para-convidado-guest-additions-na-vm-centos-6-2-do-virtualbox"
+aliases:
+  - "/posts/instalando-os-adicionais-para-convidado-guest-additions-na-vm-centos-6-2-do-virtualbox/"
 title: 'Instalando os adicionais para convidado (Guest Additions) na VM CentOS 6.2 do Virtualbox'
 date: '2012-06-04T14:35:42-04:00'
 tags:

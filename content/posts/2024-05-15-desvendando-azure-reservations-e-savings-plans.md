@@ -1,5 +1,7 @@
 ---
 slug: "desvendando-azure-reservations-e-savings-plans"
+aliases:
+  - "/posts/desvendando-azure-reservations-e-savings-plans/"
 title: "Desvendando Azure Reservations e o Azure Savings Plans"
 description: "Compare Azure Reservations vs Savings Plans: vantagens, penalidades e quando usar cada um. Guia completo para otimizar custos no Azure."
 date: 2024-05-15T10:00:00-00:00

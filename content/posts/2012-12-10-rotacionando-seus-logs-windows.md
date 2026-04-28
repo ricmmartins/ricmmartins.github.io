@@ -1,5 +1,7 @@
 ---
 slug: "rotacionando-seus-logs-windows"
+aliases:
+  - "/posts/rotacionando-seus-logs-windows/"
 title: 'Rotacionando seus logs no Windows'
 date: '2012-12-10T11:14:32-05:00'
 tags:

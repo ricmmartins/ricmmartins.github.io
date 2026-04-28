@@ -1,5 +1,7 @@
 ---
 slug: "docker-um-engine-linux-container"
+aliases:
+  - "/posts/docker-um-engine-linux-container/"
 title: 'Docker: Um linux container engine - Parte I/III'
 date: '2014-03-28T13:09:20-04:00'
 tags:

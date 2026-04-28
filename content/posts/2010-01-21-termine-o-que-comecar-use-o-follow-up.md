@@ -1,5 +1,7 @@
 ---
 slug: "termine-o-que-comecar-use-o-follow-up"
+aliases:
+  - "/posts/termine-o-que-comecar-use-o-follow-up/"
 title: 'Termine o que começar: use o follow-up'
 date: '2010-01-21T23:30:56-05:00'
 tags:

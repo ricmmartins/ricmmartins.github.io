@@ -1,5 +1,7 @@
 ---
 slug: "tornando-seu-windows-7-um-access-point-wireless"
+aliases:
+  - "/posts/tornando-seu-windows-7-um-access-point-wireless/"
 title: 'Tornando seu Windows 7 um access point wireless'
 date: '2010-03-03T19:25:22-05:00'
 tags:

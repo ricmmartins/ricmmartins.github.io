@@ -1,5 +1,7 @@
 ---
 slug: "conhece-o-microsoft-it-pro-cloud-essentials-ou-no-career-center"
+aliases:
+  - "/posts/conhece-o-microsoft-it-pro-cloud-essentials-ou-no-career-center/"
 title: 'Conhece o Microsoft IT Pro Cloud Essentials ou no Career Center?'
 date: '2016-09-29T22:08:04-04:00'
 tags:

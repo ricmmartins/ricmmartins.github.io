@@ -1,5 +1,7 @@
 ---
 slug: "configuracao-de-servidores-dns"
+aliases:
+  - "/posts/configuracao-de-servidores-dns/"
 title: 'Configuração de servidores DNS'
 date: '2009-01-01T03:41:48-05:00'
 tags:

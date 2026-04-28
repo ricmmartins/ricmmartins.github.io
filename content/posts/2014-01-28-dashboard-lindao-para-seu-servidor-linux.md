@@ -1,5 +1,7 @@
 ---
 slug: "dashboard-lindao-para-seu-servidor-linux"
+aliases:
+  - "/posts/dashboard-lindao-para-seu-servidor-linux/"
 
 title: 'Instalando um dashboard lindão para seu servidor linux'
 date: '2014-01-28T11:46:24-05:00'

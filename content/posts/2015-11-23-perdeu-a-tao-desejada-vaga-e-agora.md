@@ -1,5 +1,7 @@
 ---
 slug: "perdeu-a-tao-desejada-vaga-e-agora"
+aliases:
+  - "/posts/perdeu-a-tao-desejada-vaga-e-agora/"
 title: 'Perdeu a tão desejada vaga, e agora?'
 date: '2015-11-23T20:14:30-05:00'
 tags:

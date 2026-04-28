@@ -1,5 +1,7 @@
 ---
 slug: "quebrando-senhas-do-windows-e-do-linux-com-john-the-ripper"
+aliases:
+  - "/posts/quebrando-senhas-do-windows-e-do-linux-com-john-the-ripper/"
 title: 'Quebrando senhas do Windows e do Linux com John The Ripper'
 date: '2009-04-10T17:50:53-04:00'
 tags:

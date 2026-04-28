@@ -1,5 +1,7 @@
 ---
 slug: "como-converter-arquivo-exe-em-msi"
+aliases:
+  - "/posts/como-converter-arquivo-exe-em-msi/"
 title: 'Como converter arquivo .exe em .msi'
 date: '2010-08-25T23:10:04-04:00'
 tags:

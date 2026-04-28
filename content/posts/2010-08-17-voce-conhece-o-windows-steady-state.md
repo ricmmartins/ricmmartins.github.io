@@ -1,5 +1,7 @@
 ---
 slug: "voce-conhece-o-windows-steady-state"
+aliases:
+  - "/posts/voce-conhece-o-windows-steady-state/"
 title: 'Você conhece o Windows Steady State?'
 date: '2010-08-17T13:34:19-04:00'
 tags:

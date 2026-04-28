@@ -1,5 +1,7 @@
 ---
 slug: "docker-tutorial-mao-na-massa"
+aliases:
+  - "/posts/docker-tutorial-mao-na-massa/"
 title: 'Docker: Tutorial mão na massa -  Parte II/III'
 date: '2014-09-11T13:21:33-04:00'
 tags:

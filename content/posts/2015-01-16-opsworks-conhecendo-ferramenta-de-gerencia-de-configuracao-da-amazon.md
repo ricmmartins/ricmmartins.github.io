@@ -1,5 +1,7 @@
 ---
 slug: "opsworks-conhecendo-ferramenta-de-gerencia-de-configuracao-da-amazon"
+aliases:
+  - "/posts/opsworks-conhecendo-ferramenta-de-gerencia-de-configuracao-da-amazon/"
 title: 'OpsWorks: Conhecendo a ferramenta de gerência de configuração da Amazon - Parte I/III'
 date: '2015-01-16T13:38:49-05:00'
 tags:

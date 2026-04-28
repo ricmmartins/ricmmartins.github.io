@@ -1,5 +1,7 @@
 ---
 slug: "mais-uma-opcao-de-dashboard-para-seu-servidor"
+aliases:
+  - "/posts/mais-uma-opcao-de-dashboard-para-seu-servidor/"
 title: 'Mais uma opção de dashboard para seu servidor Linux'
 date: '2014-01-30T19:03:35-05:00'
 tags:

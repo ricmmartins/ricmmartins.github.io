@@ -1,5 +1,7 @@
 ---
 slug: "atalhos-da-linha-de-comando-set-o-emacs"
+aliases:
+  - "/posts/atalhos-da-linha-de-comando-set-o-emacs/"
 title: 'Atalhos da linha de comando (set -o emacs)'
 date: '2008-11-25T19:45:31-05:00'
 tags:

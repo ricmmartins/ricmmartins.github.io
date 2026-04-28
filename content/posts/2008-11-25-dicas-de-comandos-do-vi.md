@@ -1,5 +1,7 @@
 ---
 slug: "dicas-de-comandos-do-vi"
+aliases:
+  - "/posts/dicas-de-comandos-do-vi/"
 title: 'Dicas de comandos do VI'
 date: '2008-11-25T19:51:29-05:00'
 tags:

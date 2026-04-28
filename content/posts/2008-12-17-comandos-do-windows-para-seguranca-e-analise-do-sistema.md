@@ -1,5 +1,7 @@
 ---
 slug: "comandos-do-windows-para-seguranca-e-analise-do-sistema"
+aliases:
+  - "/posts/comandos-do-windows-para-seguranca-e-analise-do-sistema/"
 title: 'Comandos do Windows para segurança e análise do sistema'
 date: '2008-12-17T21:06:29-05:00'
 tags:

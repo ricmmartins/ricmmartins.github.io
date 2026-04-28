@@ -1,5 +1,7 @@
 ---
 slug: "como-fazer-uma-configuracao-basica-de-postfix-no-centos"
+aliases:
+  - "/posts/como-fazer-uma-configuracao-basica-de-postfix-no-centos/"
 title: 'Como fazer uma configuração básica de Postfix no CentOS'
 date: '2012-06-18T16:46:08-04:00'
 tags:

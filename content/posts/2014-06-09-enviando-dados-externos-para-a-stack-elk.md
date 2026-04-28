@@ -1,5 +1,7 @@
 ---
 slug: "enviando-dados-externos-para-a-stack-elk"
+aliases:
+  - "/posts/enviando-dados-externos-para-a-stack-elk/"
 title: 'Enviando dados externos para a stack ELK'
 date: '2014-06-09T16:59:49-04:00'
 tags:

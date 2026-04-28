@@ -1,5 +1,7 @@
 ---
 slug: "desconto-de-50-nas-certificacoes-microsoft-para-estudantes"
+aliases:
+  - "/posts/desconto-de-50-nas-certificacoes-microsoft-para-estudantes/"
 title: 'Desconto de 50% nas Certificações Microsoft para Estudantes'
 date: '2010-02-02T20:30:10-05:00'
 tags:

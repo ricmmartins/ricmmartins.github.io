@@ -1,5 +1,7 @@
 ---
 slug: "proteja-seus-filhos-tambem-na-internet"
+aliases:
+  - "/posts/proteja-seus-filhos-tambem-na-internet/"
 title: 'Proteja seus filhos também na internet'
 date: '2010-10-30T18:49:15-04:00'
 tags:

@@ -1,5 +1,7 @@
 ---
 slug: "utilizando-windows-7-e-rede-sem-fios-como-gps"
+aliases:
+  - "/posts/utilizando-windows-7-e-rede-sem-fios-como-gps/"
 title: 'Utilizando Windows 7 e rede sem fios como GPS'
 date: '2010-03-03T19:30:50-05:00'
 tags:

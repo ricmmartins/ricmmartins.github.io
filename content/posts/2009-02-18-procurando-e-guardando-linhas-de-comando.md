@@ -1,5 +1,7 @@
 ---
 slug: "procurando-e-guardando-linhas-de-comando"
+aliases:
+  - "/posts/procurando-e-guardando-linhas-de-comando/"
 title: 'Procurando e guardando linhas de comando'
 date: '2009-02-18T21:59:08-05:00'
 tags:

@@ -1,5 +1,7 @@
 ---
 slug: "criando-um-ambiente-escalavel-na-aws"
+aliases:
+  - "/posts/criando-um-ambiente-escalavel-na-aws/"
 title: 'Criando um ambiente escalável na AWS'
 date: '2013-04-29T12:46:50-04:00'
 tags:

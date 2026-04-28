@@ -1,5 +1,7 @@
 ---
 slug: "mapa-automatico-da-rede-lanmap-e-a-solucao"
+aliases:
+  - "/posts/mapa-automatico-da-rede-lanmap-e-a-solucao/"
 title: 'Mapa automático da rede? Lanmap é a solução.'
 date: '2009-03-19T00:40:31-04:00'
 tags:

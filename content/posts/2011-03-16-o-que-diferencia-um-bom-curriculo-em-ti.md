@@ -1,5 +1,7 @@
 ---
 slug: "o-que-diferencia-um-bom-curriculo-em-ti"
+aliases:
+  - "/posts/o-que-diferencia-um-bom-curriculo-em-ti/"
 title: 'O que diferencia um bom currículo em TI?'
 date: '2011-03-16T22:56:48-04:00'
 tags:

@@ -1,5 +1,7 @@
 ---
 slug: "cuidado-com-o-habito-de-procrastinar"
+aliases:
+  - "/posts/cuidado-com-o-habito-de-procrastinar/"
 title: 'Cuidado com o hábito de procrastinar'
 date: '2010-02-18T00:05:01-05:00'
 tags:

@@ -1,5 +1,7 @@
 ---
 slug: "palestra-sobre-cloud-computing"
+aliases:
+  - "/posts/palestra-sobre-cloud-computing/"
 title: 'Cloud Computing: Palestra apresentada no Senac/RJ'
 date: '2014-09-02T00:46:47-04:00'
 tags:

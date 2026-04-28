@@ -1,5 +1,7 @@
 ---
 slug: "material-de-estudo-para-o-exame-aws-certified-solution-architect"
+aliases:
+  - "/posts/material-de-estudo-para-o-exame-aws-certified-solution-architect/"
 id: 5180
 title: 'Material de estudo para o exame AWS Certified Solution Architect'
 date: '2014-09-30T12:13:47-04:00'

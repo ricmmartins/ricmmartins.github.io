@@ -1,5 +1,7 @@
 ---
 slug: "coletando-informacoes-de-vms-no-azure"
+aliases:
+  - "/posts/coletando-informacoes-de-vms-no-azure/"
 title: 'Coletando informações de VMs no Azure'
 date: '2017-11-17T12:01:03-05:00'
 tags:

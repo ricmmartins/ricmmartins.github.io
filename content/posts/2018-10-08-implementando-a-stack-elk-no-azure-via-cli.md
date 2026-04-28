@@ -1,5 +1,7 @@
 ---
 slug: "implementando-a-stack-elk-no-azure-via-cli"
+aliases:
+  - "/posts/implementando-a-stack-elk-no-azure-via-cli/"
 title: 'Implementando a Stack ELK no Azure via CLI'
 description: "Tutorial passo a passo para implementar Elasticsearch, Logstash e Kibana no Azure usando az-cli. Inclui arquitetura e scripts."
 date: '2018-10-08T23:58:15-04:00'

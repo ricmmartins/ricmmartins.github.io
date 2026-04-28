@@ -1,5 +1,7 @@
 ---
 slug: "o-problema-esta-em-voce-ou-no-mercado"
+aliases:
+  - "/posts/o-problema-esta-em-voce-ou-no-mercado/"
 title: 'O problema está em você ou no mercado?'
 date: '2015-07-11T02:14:41-04:00'
 tags:

@@ -1,5 +1,7 @@
 ---
 slug: "excelente-aula-de-empreendedorismo-com-gustavo-caetano"
+aliases:
+  - "/posts/excelente-aula-de-empreendedorismo-com-gustavo-caetano/"
 title: 'Excelente aula de empreendedorismo com Gustavo Caetano'
 date: '2015-05-05T12:39:07-04:00'
 tags:

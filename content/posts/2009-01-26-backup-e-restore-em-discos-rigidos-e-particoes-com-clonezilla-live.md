@@ -1,5 +1,7 @@
 ---
 slug: "backup-e-restore-em-discos-rigidos-e-particoes-com-clonezilla-live"
+aliases:
+  - "/posts/backup-e-restore-em-discos-rigidos-e-particoes-com-clonezilla-live/"
 title: 'Backup e restore em discos rígidos e partições com CloneZilla Live'
 date: '2009-01-26T16:04:20-05:00'
 tags:

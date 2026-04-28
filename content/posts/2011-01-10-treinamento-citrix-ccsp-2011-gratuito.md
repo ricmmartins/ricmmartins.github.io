@@ -1,5 +1,7 @@
 ---
 slug: "treinamento-citrix-ccsp-2011-gratuito"
+aliases:
+  - "/posts/treinamento-citrix-ccsp-2011-gratuito/"
 title: 'Treinamento Citrix CCSP 2011 gratuito'
 date: '2011-01-10T13:04:32-05:00'
 tags:

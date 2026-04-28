@@ -1,5 +1,7 @@
 ---
 slug: "instalando-o-oh-my-zsh-no-bash-do-windows"
+aliases:
+  - "/posts/instalando-o-oh-my-zsh-no-bash-do-windows/"
 title: 'Instalando o Oh My Zsh no Bash do Windows'
 date: '2017-09-15T14:51:54-04:00'
 tags:

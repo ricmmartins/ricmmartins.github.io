@@ -1,5 +1,7 @@
 ---
 slug: "videocast-registro-de-um-dominio-e-setup-completo-na-aws"
+aliases:
+  - "/posts/videocast-registro-de-um-dominio-e-setup-completo-na-aws/"
 title: 'Videocast: Registro de um domínio e setup completo na AWS'
 date: '2015-07-17T16:19:31-04:00'
 tags:

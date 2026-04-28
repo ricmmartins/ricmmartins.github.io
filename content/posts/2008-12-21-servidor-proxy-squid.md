@@ -1,5 +1,7 @@
 ---
 slug: "servidor-proxy-squid"
+aliases:
+  - "/posts/servidor-proxy-squid/"
 title: 'Servidor proxy (Squid)'
 date: '2008-12-21T22:21:59-05:00'
 tags:

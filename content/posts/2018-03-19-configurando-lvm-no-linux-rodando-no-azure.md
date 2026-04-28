@@ -1,5 +1,7 @@
 ---
 slug: "configurando-lvm-no-linux-rodando-no-azure"
+aliases:
+  - "/posts/configurando-lvm-no-linux-rodando-no-azure/"
 title: 'Configurando LVM no Linux rodando no Azure'
 description: "Configuração básica de LVM no Linux rodando no Azure: criação de discos, volumes físicos e lógicos. Com vídeo tutorial."
 date: '2018-03-19T21:40:34-04:00'

@@ -1,5 +1,7 @@
 ---
 slug: "repositorio-interno-pacotes-centos"
+aliases:
+  - "/posts/repositorio-interno-pacotes-centos/"
 title: 'Como criar um repositório interno do CentOS'
 date: '2013-07-22T15:20:37-04:00'
 author: rmmartins

@@ -1,5 +1,7 @@
 ---
 slug: "imagine-se-um-vencedor"
+aliases:
+  - "/posts/imagine-se-um-vencedor/"
 title: 'Imagine-se um vencedor'
 date: '2009-12-21T01:02:25-05:00'
 tags:

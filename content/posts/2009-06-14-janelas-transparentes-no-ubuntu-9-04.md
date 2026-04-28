@@ -1,5 +1,7 @@
 ---
 slug: "janelas-transparentes-no-ubuntu-9-04"
+aliases:
+  - "/posts/janelas-transparentes-no-ubuntu-9-04/"
 title: 'Janelas transparentes no Ubuntu 9.04'
 date: '2009-06-14T06:31:25-04:00'
 tags:

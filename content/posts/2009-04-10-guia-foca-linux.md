@@ -1,5 +1,7 @@
 ---
 slug: "guia-foca-linux"
+aliases:
+  - "/posts/guia-foca-linux/"
 title: 'Guia Foca Linux'
 date: '2009-04-10T17:18:19-04:00'
 tags:

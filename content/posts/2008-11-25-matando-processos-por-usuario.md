@@ -1,5 +1,7 @@
 ---
 slug: "matando-processos-por-usuario"
+aliases:
+  - "/posts/matando-processos-por-usuario/"
 title: 'Matando processos por usuário'
 date: '2008-11-25T19:48:13-05:00'
 tags:

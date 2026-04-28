@@ -1,5 +1,7 @@
 ---
 slug: "mobassh-servidor-ssh-para-o-windows"
+aliases:
+  - "/posts/mobassh-servidor-ssh-para-o-windows/"
 iitle: 'MobaSSH - Servidor SSH para o Windows'
 date: '2009-06-29T13:01:14-04:00'
 tags:

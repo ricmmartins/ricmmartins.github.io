@@ -1,5 +1,7 @@
 ---
 slug: "porque-utilizar-os-servicos-aws"
+aliases:
+  - "/posts/porque-utilizar-os-servicos-aws/"
 title: 'Porque utilizar os serviços AWS?'
 date: '2013-05-07T09:55:23-04:00'
 tags:

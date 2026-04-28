@@ -1,5 +1,7 @@
 ---
 slug: "como-bloquear-execucao-de-determinado-software-no-windows"
+aliases:
+  - "/posts/como-bloquear-execucao-de-determinado-software-no-windows/"
 title: 'Como bloquear execução de determinado software no Windows'
 date: '2010-05-11T21:16:10-04:00'
 tags:

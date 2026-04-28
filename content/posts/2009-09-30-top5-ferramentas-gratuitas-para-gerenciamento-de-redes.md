@@ -1,5 +1,7 @@
 ---
 slug: "top5-ferramentas-gratuitas-para-gerenciamento-de-redes"
+aliases:
+  - "/posts/top5-ferramentas-gratuitas-para-gerenciamento-de-redes/"
 title: 'Top5: Ferramentas gratuitas para gerenciamento de redes'
 date: '2009-09-30T00:34:10-04:00'
 tags:

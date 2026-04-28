@@ -1,5 +1,7 @@
 ---
 slug: "lista-de-publicacoes-sobre-azure"
+aliases:
+  - "/posts/lista-de-publicacoes-sobre-azure/"
 title: 'Lista de publicações sobre Azure'
 date: '2017-10-24T20:48:44-04:00'
 tags:

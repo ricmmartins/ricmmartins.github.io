@@ -1,5 +1,7 @@
 ---
 slug: "configurando-o-modem-bandluxe-c120-3g-no-ubuntu"
+aliases:
+  - "/posts/configurando-o-modem-bandluxe-c120-3g-no-ubuntu/"
 title: 'Configurando o Modem BandLuxe C120 (3G) no Ubuntu'
 date: '2008-12-16T01:12:33-05:00'
 tags:

@@ -1,5 +1,7 @@
 ---
 slug: "script-para-tunning-de-servidor-apache"
+aliases:
+  - "/posts/script-para-tunning-de-servidor-apache/"
 title: 'Script para tunning de servidor Apache'
 date: '2014-03-13T14:42:36-04:00'
 tags:

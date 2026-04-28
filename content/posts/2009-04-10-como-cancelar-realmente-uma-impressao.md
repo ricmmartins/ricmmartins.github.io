@@ -1,5 +1,7 @@
 ---
 slug: "como-cancelar-realmente-uma-impressao"
+aliases:
+  - "/posts/como-cancelar-realmente-uma-impressao/"
 title: 'Como cancelar realmente uma impressão'
 date: '2009-04-10T17:54:26-04:00'
 tags:

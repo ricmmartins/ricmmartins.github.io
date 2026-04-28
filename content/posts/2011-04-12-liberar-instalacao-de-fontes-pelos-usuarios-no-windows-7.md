@@ -1,5 +1,7 @@
 ---
 slug: "liberar-instalacao-de-fontes-pelos-usuarios-no-windows-7"
+aliases:
+  - "/posts/liberar-instalacao-de-fontes-pelos-usuarios-no-windows-7/"
 title: 'Liberar instalação de fontes pelos usuários no Windows 7'
 date: '2011-04-12T20:31:12-04:00'
 tags:

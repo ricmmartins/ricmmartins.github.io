@@ -1,5 +1,7 @@
 ---
 slug: "raid-perguntas-e-respostas"
+aliases:
+  - "/posts/raid-perguntas-e-respostas/"
 title: 'RAID: perguntas e respostas !'
 date: '2009-04-10T18:10:58-04:00'
 tags:

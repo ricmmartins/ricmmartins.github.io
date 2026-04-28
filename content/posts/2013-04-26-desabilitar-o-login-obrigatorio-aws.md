@@ -1,5 +1,7 @@
 ---
 slug: "desabilitar-o-login-obrigatorio-aws"
+aliases:
+  - "/posts/desabilitar-o-login-obrigatorio-aws/"
 title: 'Como desabilitar o login obrigatório do usuário ec2-user na sua instância Linux da AWS'
 date: '2013-04-26T15:09:07-04:00'
 tags:

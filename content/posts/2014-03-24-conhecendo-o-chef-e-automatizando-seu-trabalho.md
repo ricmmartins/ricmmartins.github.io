@@ -1,5 +1,7 @@
 ---
 slug: "conhecendo-o-chef-e-automatizando-seu-trabalho"
+aliases:
+  - "/posts/conhecendo-o-chef-e-automatizando-seu-trabalho/"
 title: 'Conhecendo o Chef e automatizando seu trabalho'
 date: '2014-03-24T14:59:38-04:00'
 tags:

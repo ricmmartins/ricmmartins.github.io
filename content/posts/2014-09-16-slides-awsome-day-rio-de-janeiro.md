@@ -1,5 +1,7 @@
 ---
 slug: "slides-awsome-day-rio-de-janeiro"
+aliases:
+  - "/posts/slides-awsome-day-rio-de-janeiro/"
 
 title: 'AWS: Slides do evento AWSomeday no Rio de Janeiro'
 date: '2014-09-16T11:41:11-04:00'

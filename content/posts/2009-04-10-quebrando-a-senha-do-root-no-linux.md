@@ -1,5 +1,7 @@
 ---
 slug: "quebrando-a-senha-do-root-no-linux"
+aliases:
+  - "/posts/quebrando-a-senha-do-root-no-linux/"
 title: 'Quebrando a senha do root no linux'
 date: '2009-04-10T17:58:15-04:00'
 tags:

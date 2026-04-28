@@ -1,5 +1,7 @@
 ---
 slug: "como-instalar-o-wordpress-linux"
+aliases:
+  - "/posts/como-instalar-o-wordpress-linux/"
 title: 'Como instalar o WordPress no Linux'
 date: '2012-09-20T16:25:56-04:00'
 tags:

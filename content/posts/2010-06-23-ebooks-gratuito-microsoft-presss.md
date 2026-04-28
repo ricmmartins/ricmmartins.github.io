@@ -1,5 +1,7 @@
 ---
 slug: "ebooks-gratuito-microsoft-presss"
+aliases:
+  - "/posts/ebooks-gratuito-microsoft-presss/"
 title: 'Ebooks Gratuito Microsoft Presss'
 date: '2010-06-23T03:32:18-04:00'
 tags:

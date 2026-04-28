@@ -1,5 +1,7 @@
 ---
 slug: "instalando-a-ferramenta-lrzsz"
+aliases:
+  - "/posts/instalando-a-ferramenta-lrzsz/"
 title: 'Instalando a ferramenta lrzsz do protocolo ZModem'
 date: '2013-08-09T18:21:07-04:00'
 tags:

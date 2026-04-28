@@ -1,5 +1,7 @@
 ---
 slug: "rsync-para-windows"
+aliases:
+  - "/posts/rsync-para-windows/"
 title: 'RSync para Windows'
 date: '2010-09-07T18:34:32-04:00'
 tags:

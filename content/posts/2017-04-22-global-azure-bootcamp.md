@@ -1,5 +1,7 @@
 ---
 slug: "global-azure-bootcamp"
+aliases:
+  - "/posts/global-azure-bootcamp/"
 title: 'Global Azure Bootcamp'
 date: '2017-04-22T01:16:58-04:00'
 tags:

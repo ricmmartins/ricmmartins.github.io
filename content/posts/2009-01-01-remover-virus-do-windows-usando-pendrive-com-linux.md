@@ -1,5 +1,7 @@
 ---
 slug: "remover-virus-do-windows-usando-pendrive-com-linux"
+aliases:
+  - "/posts/remover-virus-do-windows-usando-pendrive-com-linux/"
 title: 'Remover vírus do Windows usando pendrive com Linux'
 date: '2009-01-01T03:47:35-05:00'
 tags:

@@ -1,5 +1,7 @@
 ---
 slug: "problemas-apt-get-update"
+aliases:
+  - "/posts/problemas-apt-get-update/"
 title: 'Problemas no apt-get update'
 date: '2012-07-05T16:35:43-04:00'
 tags:

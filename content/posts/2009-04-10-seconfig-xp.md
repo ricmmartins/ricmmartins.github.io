@@ -1,5 +1,7 @@
 ---
 slug: "seconfig-xp"
+aliases:
+  - "/posts/seconfig-xp/"
 title: 'Seconfig XP'
 date: '2009-04-10T17:56:01-04:00'
 tags:

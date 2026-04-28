@@ -1,5 +1,7 @@
 ---
 slug: "permissoes-de-compartilhamento-samba"
+aliases:
+  - "/posts/permissoes-de-compartilhamento-samba/"
 title: 'Permissões de compartilhamento Samba'
 date: '2008-12-21T22:18:19-05:00'
 tags:

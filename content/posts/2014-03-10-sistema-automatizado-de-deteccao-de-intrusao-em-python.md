@@ -1,5 +1,7 @@
 ---
 slug: "sistema-automatizado-de-deteccao-de-intrusao-em-python"
+aliases:
+  - "/posts/sistema-automatizado-de-deteccao-de-intrusao-em-python/"
 title: 'Sistema automatizado de detecção de intrusão em Python'
 date: '2014-03-10T22:19:01-04:00'
 tags:

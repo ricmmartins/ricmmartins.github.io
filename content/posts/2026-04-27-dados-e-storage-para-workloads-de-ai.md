@@ -1,5 +1,7 @@
 ---
 slug: "dados-e-storage-para-workloads-de-ai"
+aliases:
+  - "/posts/dados-e-storage-para-workloads-de-ai/"
 title: "Dados e storage para workloads de AI: o gargalo que ninguém vê"
 description: "GPU cara parada esperando disco lento é o problema #1 em infra de AI. Aprenda a diagnosticar data starvation, escolher o storage certo e montar um pipeline que mantém as GPUs alimentadas."
 date: 2026-04-27T10:00:00-04:00

@@ -1,5 +1,7 @@
 ---
 slug: "comprar-no-ebay-sim-porque-nao"
+aliases:
+  - "/posts/comprar-no-ebay-sim-porque-nao/"
 title: 'Comprar no Ebay? Sim, porque não?'
 date: '2010-09-21T22:40:12-04:00'
 tags:

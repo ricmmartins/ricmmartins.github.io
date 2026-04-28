@@ -1,5 +1,7 @@
 ---
 slug: "melhores-praticas-para-administradores-de-sistemas-na-nuvem-da-aws"
+aliases:
+  - "/posts/melhores-praticas-para-administradores-de-sistemas-na-nuvem-da-aws/"
 title: 'Melhores práticas para administradores de sistemas na nuvem da AWS'
 date: '2015-11-18T21:20:30-05:00'
 tags:

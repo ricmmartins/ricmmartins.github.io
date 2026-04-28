@@ -1,5 +1,7 @@
 ---
 slug: "nginx-configurando-como-load-balancer"
+aliases:
+  - "/posts/nginx-configurando-como-load-balancer/"
 title: 'Nginx: Configurando como load balancer'
 date: '2015-02-20T20:47:20-05:00'
 tags:

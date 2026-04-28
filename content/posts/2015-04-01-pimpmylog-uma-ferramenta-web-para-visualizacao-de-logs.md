@@ -1,5 +1,7 @@
 ---
 slug: "pimpmylog-uma-ferramenta-web-para-visualizacao-de-logs"
+aliases:
+  - "/posts/pimpmylog-uma-ferramenta-web-para-visualizacao-de-logs/"
 title: 'PimpMyLog: Uma ferramenta web para visualização de logs'
 date: '2015-04-01T16:11:54-04:00'
 tags:

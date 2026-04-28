@@ -1,5 +1,7 @@
 ---
 slug: "vmlite-alternativa-para-o-windows-xp-mode-do-windows-7"
+aliases:
+  - "/posts/vmlite-alternativa-para-o-windows-xp-mode-do-windows-7/"
 title: 'VMLite: Alternativa para o Windows XP Mode do Windows 7'
 date: '2010-08-18T22:06:58-04:00'
 tags:

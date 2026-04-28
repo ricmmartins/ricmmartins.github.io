@@ -1,5 +1,7 @@
 ---
 slug: "atraindo-talentos-da-geracao-y-para-sua-empresa"
+aliases:
+  - "/posts/atraindo-talentos-da-geracao-y-para-sua-empresa/"
 title: 'Atraindo talentos da Geração Y para sua empresa'
 date: '2010-12-30T12:01:57-05:00'
 tags:

@@ -1,5 +1,7 @@
 ---
 slug: "conheca-o-microsoft-diagnostics-and-recovery-toolset-dart-7-0-beta"
+aliases:
+  - "/posts/conheca-o-microsoft-diagnostics-and-recovery-toolset-dart-7-0-beta/"
 id: 2847
 title: 'Conheça o Microsoft Diagnostics and Recovery Toolset – DaRT 7.0 (Beta)'
 tags:

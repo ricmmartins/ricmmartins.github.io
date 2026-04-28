@@ -1,5 +1,7 @@
 ---
 slug: "aprenda-sempre"
+aliases:
+  - "/posts/aprenda-sempre/"
 title: 'Aprenda sempre'
 date: '2009-10-05T09:39:00-04:00'
 tags:

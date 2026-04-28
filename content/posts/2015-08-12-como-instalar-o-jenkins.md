@@ -1,5 +1,7 @@
 ---
 slug: "como-instalar-o-jenkins"
+aliases:
+  - "/posts/como-instalar-o-jenkins/"
 title: 'Como instalar o Jenkins'
 date: '2015-08-12T14:53:20-04:00'
 tags:

@@ -1,5 +1,7 @@
 ---
 slug: "como-e-trabalhar-onde-tantos-gostariam"
+aliases:
+  - "/posts/como-e-trabalhar-onde-tantos-gostariam/"
 title: 'Como é trabalhar onde tantos gostariam?'
 date: '2016-03-21T21:30:59-04:00'
 tags:

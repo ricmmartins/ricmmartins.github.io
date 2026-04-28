@@ -1,5 +1,7 @@
 ---
 slug: "docker-criando-suas-proprias-imagens"
+aliases:
+  - "/posts/docker-criando-suas-proprias-imagens/"
 title: 'Docker: Criando suas próprias imagens - Parte III/III'
 date: '2015-04-08T20:02:43-04:00'
 tags:

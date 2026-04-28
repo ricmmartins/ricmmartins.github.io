@@ -1,5 +1,7 @@
 ---
 slug: "criando-uma-stack-wordpress-pelo-azure-cli"
+aliases:
+  - "/posts/criando-uma-stack-wordpress-pelo-azure-cli/"
 title: 'Criando uma stack WordPress pelo Azure CLI'
 date: '2017-06-30T16:30:33-04:00'
 tags:

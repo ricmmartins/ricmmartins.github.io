@@ -1,5 +1,7 @@
 ---
 slug: "python-usando-o-modulo-simplehttpserver"
+aliases:
+  - "/posts/python-usando-o-modulo-simplehttpserver/"
 id: 5364
 title: 'Python: Usando o módulo SimpleHTTPServer'
 date: '2015-03-02T18:45:44-05:00'

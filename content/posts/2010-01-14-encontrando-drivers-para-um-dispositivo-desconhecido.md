@@ -1,5 +1,7 @@
 ---
 slug: "encontrando-drivers-para-um-dispositivo-desconhecido"
+aliases:
+  - "/posts/encontrando-drivers-para-um-dispositivo-desconhecido/"
 title: 'Encontrando drivers para um dispositivo desconhecido'
 date: '2010-01-14T22:07:36-05:00'
 tags:

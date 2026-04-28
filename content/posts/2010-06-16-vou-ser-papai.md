@@ -1,5 +1,7 @@
 ---
 slug: "vou-ser-papai"
+aliases:
+  - "/posts/vou-ser-papai/"
 title: 'Vou ser papai!'
 date: '2010-06-16T00:28:32-04:00'
 tags:

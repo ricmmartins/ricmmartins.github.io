@@ -1,5 +1,7 @@
 ---
 slug: "sem-tempo-pra-frequentar-faculdade-conheca-o-cederj"
+aliases:
+  - "/posts/sem-tempo-pra-frequentar-faculdade-conheca-o-cederj/"
 title: 'Sem tempo pra frequentar faculdade? Conheça o CEDERJ'
 date: '2010-09-21T20:27:45-04:00'
 tags:

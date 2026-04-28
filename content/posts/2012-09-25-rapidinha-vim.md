@@ -1,5 +1,7 @@
 ---
 slug: "rapidinha-vim"
+aliases:
+  - "/posts/rapidinha-vim/"
 title: 'Rapidinha do VIM'
 date: '2012-09-25T15:44:19-04:00'
 tags:

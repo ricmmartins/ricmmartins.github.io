@@ -1,5 +1,7 @@
 ---
 slug: "opsworks-tutorial-pratico-de-implementacao-e-uso"
+aliases:
+  - "/posts/opsworks-tutorial-pratico-de-implementacao-e-uso/"
 title: 'OpsWorks: Tutorial prático de implementação e uso - Parte II/III'
 date: '2015-03-12T17:27:58-04:00'
 tags:

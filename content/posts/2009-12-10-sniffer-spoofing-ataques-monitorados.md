@@ -1,5 +1,7 @@
 ---
 slug: "sniffer-spoofing-ataques-monitorados"
+aliases:
+  - "/posts/sniffer-spoofing-ataques-monitorados/"
 title: 'Sniffer Spoofing: Ataques Monitorados'
 date: '2009-12-10T11:56:33-05:00'
 tags:

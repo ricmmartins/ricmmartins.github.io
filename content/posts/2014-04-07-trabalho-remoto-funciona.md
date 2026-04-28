@@ -1,5 +1,7 @@
 ---
 slug: "trabalho-remoto-funciona"
+aliases:
+  - "/posts/trabalho-remoto-funciona/"
 title: 'Trabalho remoto funciona?'
 date: '2014-04-07T10:36:12-04:00'
 tags:

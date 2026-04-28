@@ -1,5 +1,7 @@
 ---
 slug: "como-instalar-o-nginx-com-php-fpm-e-wordpress-no-centos"
+aliases:
+  - "/posts/como-instalar-o-nginx-com-php-fpm-e-wordpress-no-centos/"
 title: 'Como instalar o Nginx com PHP-FPM e WordPress no CentOS'
 date: '2013-04-05T13:00:57-04:00'
 tags:

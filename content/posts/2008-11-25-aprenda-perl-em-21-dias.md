@@ -1,5 +1,7 @@
 ---
 slug: "aprenda-perl-em-21-dias"
+aliases:
+  - "/posts/aprenda-perl-em-21-dias/"
 title: 'Aprenda Perl em 21 dias'
 date: '2008-11-25T19:50:00-05:00'
 tags:

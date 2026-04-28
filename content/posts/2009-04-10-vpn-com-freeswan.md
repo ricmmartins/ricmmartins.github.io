@@ -1,5 +1,7 @@
 ---
 slug: "vpn-com-freeswan"
+aliases:
+  - "/posts/vpn-com-freeswan/"
 title: 'VPN com FreeS/WAN'
 date: '2009-04-10T17:42:43-04:00'
 tags:

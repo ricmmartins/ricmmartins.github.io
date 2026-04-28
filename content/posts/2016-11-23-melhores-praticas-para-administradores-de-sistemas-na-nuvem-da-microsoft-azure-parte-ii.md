@@ -1,5 +1,7 @@
 ---
 slug: "melhores-praticas-para-administradores-de-sistemas-na-nuvem-da-microsoft-azure-parte-ii"
+aliases:
+  - "/posts/melhores-praticas-para-administradores-de-sistemas-na-nuvem-da-microsoft-azure-parte-ii/"
 title: 'Melhores práticas para administradores de sistemas na nuvem da Microsoft (Azure) &#8211; Parte II'
 date: '2016-11-23T15:47:45-05:00'
 tags:

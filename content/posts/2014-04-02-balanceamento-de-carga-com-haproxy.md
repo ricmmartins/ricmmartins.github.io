@@ -1,5 +1,7 @@
 ---
 slug: "balanceamento-de-carga-com-haproxy"
+aliases:
+  - "/posts/balanceamento-de-carga-com-haproxy/"
 title: 'Balanceamento de carga com HAProxy'
 date: '2014-04-02T13:34:43-04:00'
 tags:

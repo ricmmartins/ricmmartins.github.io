@@ -1,5 +1,7 @@
 ---
 slug: "nginx-conhecendo-um-pouco-melhor-este-poderoso-servidor-web"
+aliases:
+  - "/posts/nginx-conhecendo-um-pouco-melhor-este-poderoso-servidor-web/"
 title: 'Nginx: Conhecendo um pouco melhor este poderoso servidor web'
 date: '2015-06-15T12:06:46-04:00'
 tags:

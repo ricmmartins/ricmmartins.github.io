@@ -1,5 +1,7 @@
 ---
 slug: "dedicacao-e-a-capacidade-de-se-entregar-a-realizacao-de-um-objetivo"
+aliases:
+  - "/posts/dedicacao-e-a-capacidade-de-se-entregar-a-realizacao-de-um-objetivo/"
 title: 'Dedicação é a capacidade de se entregar à realização de um objetivo'
 date: '2009-10-11T22:39:51-04:00'
 tags:

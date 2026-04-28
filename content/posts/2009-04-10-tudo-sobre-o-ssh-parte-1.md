@@ -1,5 +1,7 @@
 ---
 slug: "tudo-sobre-o-ssh-parte-1"
+aliases:
+  - "/posts/tudo-sobre-o-ssh-parte-1/"
 title: 'Tudo sobre o SSH'
 date: '2009-04-10T17:39:51-04:00'
 tags:

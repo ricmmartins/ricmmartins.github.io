@@ -1,5 +1,7 @@
 ---
 slug: "conhecendo-a-plataforma-azure"
+aliases:
+  - "/posts/conhecendo-a-plataforma-azure/"
 title: 'Conhecendo a Plataforma Azure'
 date: '2013-08-05T20:18:39-04:00'
 tags:

@@ -1,5 +1,7 @@
 ---
 slug: "webinar-sobre-computacao-em-nuvem-e-aws"
+aliases:
+  - "/posts/webinar-sobre-computacao-em-nuvem-e-aws/"
 title: 'Webinar sobre Computação em Nuvem e AWS'
 date: '2015-07-06T21:13:52-04:00'
 tags:

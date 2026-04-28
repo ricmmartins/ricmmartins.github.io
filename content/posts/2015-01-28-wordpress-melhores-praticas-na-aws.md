@@ -1,5 +1,7 @@
 ---
 slug: "wordpress-melhores-praticas-na-aws"
+aliases:
+  - "/posts/wordpress-melhores-praticas-na-aws/"
 title: 'WordPress: Melhores práticas de implementação na AWS'
 date: '2015-01-28T18:08:15-05:00'
 tags:

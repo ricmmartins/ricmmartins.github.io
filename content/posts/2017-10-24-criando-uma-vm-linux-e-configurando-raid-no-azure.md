@@ -1,5 +1,7 @@
 ---
 slug: "criando-uma-vm-linux-e-configurando-raid-no-azure"
+aliases:
+  - "/posts/criando-uma-vm-linux-e-configurando-raid-no-azure/"
 title: 'Criando uma VM Linux e configurando Raid no Azure'
 date: '2017-10-24T22:19:22-04:00'
 tags:

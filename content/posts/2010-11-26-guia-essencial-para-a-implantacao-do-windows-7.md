@@ -1,5 +1,7 @@
 ---
 slug: "guia-essencial-para-a-implantacao-do-windows-7"
+aliases:
+  - "/posts/guia-essencial-para-a-implantacao-do-windows-7/"
 title: 'Guia Essencial para a implantação do Windows 7'
 date: '2010-11-26T08:41:44-05:00'
 tags:

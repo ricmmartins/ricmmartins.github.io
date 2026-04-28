@@ -1,5 +1,7 @@
 ---
 slug: "redirecionando-dominios-no-azure-webapp"
+aliases:
+  - "/posts/redirecionando-dominios-no-azure-webapp/"
 title: 'Redirecionando domínios no Azure WebApp'
 date: '2017-11-01T16:07:26-04:00'
 tags:

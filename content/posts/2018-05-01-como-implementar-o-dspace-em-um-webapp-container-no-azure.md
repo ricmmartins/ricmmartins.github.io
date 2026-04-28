@@ -1,5 +1,7 @@
 ---
 slug: "como-implementar-o-dspace-em-um-webapp-container-no-azure"
+aliases:
+  - "/posts/como-implementar-o-dspace-em-um-webapp-container-no-azure/"
 title: 'Como implementar o DSpace em um WebApp Container no Azure'
 description: "Como implementar o DSpace em um Web App Container no Azure usando Docker. Tutorial completo com Tomcat e Ubuntu."
 date: '2018-05-01T08:03:41-04:00'

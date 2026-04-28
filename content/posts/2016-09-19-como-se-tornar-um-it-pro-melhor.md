@@ -1,5 +1,7 @@
 ---
 slug: "como-se-tornar-um-it-pro-melhor"
+aliases:
+  - "/posts/como-se-tornar-um-it-pro-melhor/"
 title: 'Como se tornar um IT Pro melhor'
 date: '2016-09-19T16:45:50-04:00'
 tags:

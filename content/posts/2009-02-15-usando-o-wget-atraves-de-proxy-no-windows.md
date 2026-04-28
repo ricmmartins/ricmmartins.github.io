@@ -1,5 +1,7 @@
 ---
 slug: "usando-o-wget-atraves-de-proxy-no-windows"
+aliases:
+  - "/posts/usando-o-wget-atraves-de-proxy-no-windows/"
 title: 'Usando o Wget através de Proxy no Windows'
 date: '2009-02-15T00:20:11-05:00'
 tags:

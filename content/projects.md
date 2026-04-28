@@ -3,6 +3,8 @@ title: "Projetos"
 description: "Projetos open-source, publicações oficiais, guias, ferramentas e contribuições de Ricardo Martins sobre Azure, AI, infraestrutura, Kubernetes e DevOps."
 layout: "single"
 url: "/projetos/"
+aliases:
+  - /projects/
 summary: "Projetos, publicações e contribuições open-source"
 date: 2024-01-01
 lastmod: 2026-04-27

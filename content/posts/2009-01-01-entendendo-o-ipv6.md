@@ -1,5 +1,7 @@
 ---
 slug: "entendendo-o-ipv6"
+aliases:
+  - "/posts/entendendo-o-ipv6/"
 title: 'Entendendo o IPV6'
 date: '2009-01-01T03:06:33-05:00'
 tags:

@@ -1,5 +1,7 @@
 ---
 slug: "falta-atitude-nao-curriculo"
+aliases:
+  - "/posts/falta-atitude-nao-curriculo/"
 title: 'Falta Atitude, Não Currículo'
 date: '2010-01-14T21:27:43-05:00'
 tags:

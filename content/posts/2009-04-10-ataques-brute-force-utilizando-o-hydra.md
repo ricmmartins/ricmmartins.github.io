@@ -1,5 +1,7 @@
 ---
 slug: "ataques-brute-force-utilizando-o-hydra"
+aliases:
+  - "/posts/ataques-brute-force-utilizando-o-hydra/"
 title: 'Ataques brute force utilizando o Hydra'
 date: '2009-04-10T17:51:57-04:00'
 tags:

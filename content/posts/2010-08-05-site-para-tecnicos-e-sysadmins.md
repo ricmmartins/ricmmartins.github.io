@@ -1,5 +1,7 @@
 ---
 slug: "site-para-tecnicos-e-sysadmins"
+aliases:
+  - "/posts/site-para-tecnicos-e-sysadmins/"
 title: 'Site para técnicos e sysadmins'
 date: '2010-08-05T22:40:05-04:00'
 tags:

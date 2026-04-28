@@ -1,5 +1,7 @@
 ---
 slug: "nao-tenha-medo-do-sucesso"
+aliases:
+  - "/posts/nao-tenha-medo-do-sucesso/"
 title: 'Não tenha medo do sucesso'
 date: '2009-09-28T02:35:14-04:00'
 tags:

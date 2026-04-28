@@ -1,5 +1,7 @@
 ---
 slug: "convertando-espacos-para-underscore"
+aliases:
+  - "/posts/convertando-espacos-para-underscore/"
 title: 'Convertando espaços para underscore'
 date: '2009-03-19T00:46:55-04:00'
 tags:

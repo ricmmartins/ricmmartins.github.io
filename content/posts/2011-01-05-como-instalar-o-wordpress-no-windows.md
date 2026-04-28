@@ -1,5 +1,7 @@
 ---
 slug: "como-instalar-o-wordpress-no-windows"
+aliases:
+  - "/posts/como-instalar-o-wordpress-no-windows/"
 title: 'Como instalar o WordPress no Windows'
 date: '2011-01-05T11:38:28-05:00'
 tags:

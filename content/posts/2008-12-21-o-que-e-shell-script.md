@@ -1,5 +1,7 @@
 ---
 slug: "o-que-e-shell-script"
+aliases:
+  - "/posts/o-que-e-shell-script/"
 title: 'O que é Shell Script'
 date: '2008-12-21T22:14:21-05:00'
 tags:

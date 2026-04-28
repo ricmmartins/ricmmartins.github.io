@@ -1,5 +1,7 @@
 ---
 slug: "instalacao-do-dokuwiki"
+aliases:
+  - "/posts/instalacao-do-dokuwiki/"
 id: 2213
 title: 'Instalação do DokuWiki'
 date: '2010-10-30T09:56:06-04:00'

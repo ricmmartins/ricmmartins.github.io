@@ -1,5 +1,7 @@
 ---
 slug: "windows-xp-mode-no-windows-7"
+aliases:
+  - "/posts/windows-xp-mode-no-windows-7/"
 title: 'Windows XP Mode no Windows 7'
 date: '2010-09-14T23:07:56-04:00'
 tags:

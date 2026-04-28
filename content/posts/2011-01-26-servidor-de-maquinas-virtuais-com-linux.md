@@ -1,5 +1,7 @@
 ---
 slug: "servidor-de-maquinas-virtuais-com-linux"
+aliases:
+  - "/posts/servidor-de-maquinas-virtuais-com-linux/"
 title: 'Servidor de máquinas virtuais com Linux'
 date: '2011-01-26T12:56:25-05:00'
 tags:

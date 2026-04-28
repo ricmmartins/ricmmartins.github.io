@@ -1,5 +1,7 @@
 ---
 slug: "o-windows-e-muito-melhor-que-o-software-livre"
+aliases:
+  - "/posts/o-windows-e-muito-melhor-que-o-software-livre/"
 title: '“O Windows é muito melhor que o Software Livre” ?!?!'
 date: '2009-04-10T18:00:39-04:00'
 tags:

@@ -1,5 +1,7 @@
 ---
 slug: "docker-e-certificados-ssl"
+aliases:
+  - "/posts/docker-e-certificados-ssl/"
 title: 'Docker e certificados SSL'
 description: "Como habilitar SSL para aplicações Docker de forma rápida: proxy reverso Nginx com certificado. Dica prática e direta."
 date: '2018-03-08T15:52:01-05:00'

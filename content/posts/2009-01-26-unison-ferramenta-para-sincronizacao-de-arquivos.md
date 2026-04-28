@@ -1,5 +1,7 @@
 ---
 slug: "unison-ferramenta-para-sincronizacao-de-arquivos"
+aliases:
+  - "/posts/unison-ferramenta-para-sincronizacao-de-arquivos/"
 title: 'Unison: Ferramenta para sincronização de arquivos'
 date: '2009-01-26T16:03:05-05:00'
 tags:

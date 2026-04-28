@@ -1,5 +1,7 @@
 ---
 slug: "escreva-seus-objetivos-e-metas"
+aliases:
+  - "/posts/escreva-seus-objetivos-e-metas/"
 title: 'Escreva seus objetivos e metas'
 date: '2009-10-01T01:29:03-04:00'
 tags:

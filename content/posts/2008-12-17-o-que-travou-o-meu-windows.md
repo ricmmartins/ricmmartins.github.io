@@ -1,5 +1,7 @@
 ---
 slug: "o-que-travou-o-meu-windows"
+aliases:
+  - "/posts/o-que-travou-o-meu-windows/"
 title: 'O que travou o meu Windows !?'
 date: '2008-12-17T21:13:14-05:00'
 tags:

@@ -1,5 +1,7 @@
 ---
 slug: "sera-que-o-linux-esta-ficando-muito-lento-e-inchado"
+aliases:
+  - "/posts/sera-que-o-linux-esta-ficando-muito-lento-e-inchado/"
 title: 'Será que o Linux está ficando muito lento e inchado?'
 date: '2010-02-11T23:03:22-05:00'
 tags:

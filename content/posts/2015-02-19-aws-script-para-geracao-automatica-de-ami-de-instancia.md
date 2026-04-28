@@ -1,5 +1,7 @@
 ---
 slug: "aws-script-para-geracao-automatica-de-ami-de-instancia"
+aliases:
+  - "/posts/aws-script-para-geracao-automatica-de-ami-de-instancia/"
 title: 'AWS: Script para geração automática de AMI de instância'
 date: '2015-02-19T18:47:41-05:00'
 tags:

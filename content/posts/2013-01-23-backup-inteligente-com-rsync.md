@@ -1,5 +1,7 @@
 ---
 slug: "backup-inteligente-com-rsync"
+aliases:
+  - "/posts/backup-inteligente-com-rsync/"
 title: 'Backup inteligente com RSync'
 date: '2013-01-23T16:39:36-05:00'
 tags:

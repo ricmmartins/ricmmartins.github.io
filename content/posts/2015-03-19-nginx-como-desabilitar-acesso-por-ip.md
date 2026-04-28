@@ -1,5 +1,7 @@
 ---
 slug: "nginx-como-desabilitar-acesso-por-ip"
+aliases:
+  - "/posts/nginx-como-desabilitar-acesso-por-ip/"
 title: 'Nginx: Como desabilitar acesso por IP'
 date: '2015-03-19T15:58:11-04:00'
 tags:

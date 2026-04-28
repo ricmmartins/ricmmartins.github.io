@@ -1,5 +1,7 @@
 ---
 slug: "gerenciando-suas-conexoes-ssh-macos"
+aliases:
+  - "/posts/gerenciando-suas-conexoes-ssh-macos/"
 title: 'Gerenciando suas conexões SSH no MacOS'
 date: '2013-12-03T14:10:27-05:00'
 tags:

@@ -1,5 +1,7 @@
 ---
 slug: "interface-web-alternativa-aws"
+aliases:
+  - "/posts/interface-web-alternativa-aws/"
 title: 'Configurando uma interface web alternativa para a AWS'
 date: '2013-05-06T14:34:26-04:00'
 tags:

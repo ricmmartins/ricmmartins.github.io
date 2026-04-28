@@ -1,5 +1,7 @@
 ---
 slug: "arm-actions-nos-dashboards-do-portal-do-azure"
+aliases:
+  - "/posts/arm-actions-nos-dashboards-do-portal-do-azure/"
 title: 'ARM Actions nos dashboards do portal do Azure'
 description: "Aprenda a usar ARM Data e ARM Actions para customizar dashboards no Portal do Azure com visualizações e ações automatizadas."
 date: '2018-08-03T17:33:14-04:00'

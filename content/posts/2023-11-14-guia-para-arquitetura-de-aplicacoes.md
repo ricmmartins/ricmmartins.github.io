@@ -1,5 +1,7 @@
 ---
 slug: "guia-para-arquitetura-de-aplicacoes"
+aliases:
+  - "/posts/guia-para-arquitetura-de-aplicacoes/"
 title: "Guia para arquitetura de aplicações"
 description: "Guia essencial de arquitetura cloud-native: estilos (microserviços, N-tier, event-driven), padrões de design e boas práticas do Azure Well-Architected."
 date: '2023-11-14T08:20:00-05:00'

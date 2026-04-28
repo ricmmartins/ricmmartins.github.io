@@ -1,5 +1,7 @@
 ---
 slug: "10-coisas-que-voce-deve-fazer-antes-de-conectar-seu-linux-a-internet"
+aliases:
+  - "/posts/10-coisas-que-voce-deve-fazer-antes-de-conectar-seu-linux-a-internet/"
 title: '10 coisas que você deve fazer antes de conectar seu Linux à Internet'
 date: '2009-04-10T17:49:44-04:00'
 tags:

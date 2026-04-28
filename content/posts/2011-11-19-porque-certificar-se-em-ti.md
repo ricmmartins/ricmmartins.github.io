@@ -1,5 +1,7 @@
 ---
 slug: "porque-certificar-se-em-ti"
+aliases:
+  - "/posts/porque-certificar-se-em-ti/"
 title: 'Porque certificar-se em TI?'
 date: '2011-11-19T12:01:11-05:00'
 tags:

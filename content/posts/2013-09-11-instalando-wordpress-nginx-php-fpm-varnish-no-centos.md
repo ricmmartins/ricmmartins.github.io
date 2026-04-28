@@ -1,5 +1,7 @@
 ---
 slug: "instalando-wordpress-nginx-php-fpm-varnish-no-centos"
+aliases:
+  - "/posts/instalando-wordpress-nginx-php-fpm-varnish-no-centos/"
 title: 'Instalando o WordPress sobre Nginx, PHP-FPM e Varnish no Centos'
 date: '2013-09-11T18:11:23-04:00'
 tags:

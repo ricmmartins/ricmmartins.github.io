@@ -1,5 +1,7 @@
 ---
 slug: "habilitando-remote-desktop-atraves-do-registro-remotamente"
+aliases:
+  - "/posts/habilitando-remote-desktop-atraves-do-registro-remotamente/"
 title: 'Habilitando Remote Desktop através do Registro remotamente'
 date: '2009-03-18T23:54:18-04:00'
 tags:

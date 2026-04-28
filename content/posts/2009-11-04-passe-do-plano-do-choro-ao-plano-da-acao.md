@@ -1,5 +1,7 @@
 ---
 slug: "passe-do-plano-do-choro-ao-plano-da-acao"
+aliases:
+  - "/posts/passe-do-plano-do-choro-ao-plano-da-acao/"
 title: 'Passe do plano do choro ao plano da ação'
 date: '2009-11-04T00:45:10-05:00'
 tags:

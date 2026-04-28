@@ -1,5 +1,7 @@
 ---
 slug: "sistemas-operacionais-64-bits-vale-a-pena"
+aliases:
+  - "/posts/sistemas-operacionais-64-bits-vale-a-pena/"
 title: 'Sistemas operacionais 64 bits: Vale a pena?'
 date: '2010-03-28T20:10:21-04:00'
 tags:

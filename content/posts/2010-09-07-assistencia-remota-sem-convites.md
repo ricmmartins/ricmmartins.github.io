@@ -1,5 +1,7 @@
 ---
 slug: "assistencia-remota-sem-convites"
+aliases:
+  - "/posts/assistencia-remota-sem-convites/"
 title: 'Assistência Remota sem convites'
 date: '2010-09-07T18:19:10-04:00'
 tags:

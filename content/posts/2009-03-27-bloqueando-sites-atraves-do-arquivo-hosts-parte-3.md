@@ -1,5 +1,7 @@
 ---
 slug: "bloqueando-sites-atraves-do-arquivo-hosts-parte-3"
+aliases:
+  - "/posts/bloqueando-sites-atraves-do-arquivo-hosts-parte-3/"
 title: 'Bloqueando sites através do arquivo HOSTS - Parte 3'
 date: '2009-03-27T00:33:12-04:00'
 tags:

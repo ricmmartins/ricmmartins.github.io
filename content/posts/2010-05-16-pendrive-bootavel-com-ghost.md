@@ -1,5 +1,7 @@
 ---
 slug: "pendrive-bootavel-com-ghost"
+aliases:
+  - "/posts/pendrive-bootavel-com-ghost/"
 title: 'Pendrive Bootável com Ghost'
 date: '2010-05-16T17:11:01-04:00'
 tags:

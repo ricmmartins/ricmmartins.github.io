@@ -1,5 +1,7 @@
 ---
 slug: "instalando-programas-no-linux"
+aliases:
+  - "/posts/instalando-programas-no-linux/"
 title: 'Instalando programas no Linux'
 date: '2009-04-10T17:41:07-04:00'
 tags:

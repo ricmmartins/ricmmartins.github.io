@@ -1,5 +1,7 @@
 ---
 slug: "descobrindo-os-tipos-de-vms-disponiveis-no-azure-por-regiao"
+aliases:
+  - "/posts/descobrindo-os-tipos-de-vms-disponiveis-no-azure-por-regiao/"
 title: 'Descobrindo os tipos de VMs disponíveis no Azure por região'
 date: '2017-07-13T13:47:04-04:00'
 tags:

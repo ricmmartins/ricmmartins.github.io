@@ -1,5 +1,7 @@
 ---
 slug: "coursera-curso-de-especializacao-em-cloud-computing"
+aliases:
+  - "/posts/coursera-curso-de-especializacao-em-cloud-computing/"
 title: 'Coursera: Curso de especialização em Cloud Computing'
 date: '2015-01-15T15:26:53-05:00'
 tags:

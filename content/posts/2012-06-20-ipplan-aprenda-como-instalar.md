@@ -1,5 +1,7 @@
 ---
 slug: "ipplan-aprenda-como-instalar"
+aliases:
+  - "/posts/ipplan-aprenda-como-instalar/"
 title: 'IPPlan: Aprenda como instalar e configurar'
 date: '2012-06-20T14:05:32-04:00'
 tags:

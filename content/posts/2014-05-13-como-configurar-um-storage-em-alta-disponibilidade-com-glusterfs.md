@@ -1,5 +1,7 @@
 ---
 slug: "como-configurar-um-storage-em-alta-disponibilidade-com-glusterfs"
+aliases:
+  - "/posts/como-configurar-um-storage-em-alta-disponibilidade-com-glusterfs/"
 title: 'Como configurar um storage em alta disponibilidade com GlusterFS'
 date: '2014-05-13T23:17:14-04:00'
 tags:

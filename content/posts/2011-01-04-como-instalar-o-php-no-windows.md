@@ -1,5 +1,7 @@
 ---
 slug: "como-instalar-o-php-no-windows"
+aliases:
+  - "/posts/como-instalar-o-php-no-windows/"
 title: 'Como instalar o PHP no Windows'
 date: '2011-01-04T21:27:03-05:00'
 tags:

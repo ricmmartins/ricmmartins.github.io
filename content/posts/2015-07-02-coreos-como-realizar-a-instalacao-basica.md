@@ -1,5 +1,7 @@
 ---
 slug: "coreos-como-realizar-a-instalacao-basica"
+aliases:
+  - "/posts/coreos-como-realizar-a-instalacao-basica/"
 title: 'CoreOS: Como realizar a instalação básica em cluster'
 date: '2015-07-02T15:30:56-04:00'
 tags:

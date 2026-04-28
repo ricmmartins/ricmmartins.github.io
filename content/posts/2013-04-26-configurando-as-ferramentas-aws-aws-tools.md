@@ -1,5 +1,7 @@
 ---
 slug: "configurando-as-ferramentas-aws-aws-tools"
+aliases:
+  - "/posts/configurando-as-ferramentas-aws-aws-tools/"
 title: 'Configurando as ferramentas AWS (AWS Tools)'
 date: '2013-04-26T14:45:27-04:00'
 tags:

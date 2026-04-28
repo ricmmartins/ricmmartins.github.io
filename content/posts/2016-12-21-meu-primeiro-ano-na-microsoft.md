@@ -1,5 +1,7 @@
 ---
 slug: "meu-primeiro-ano-na-microsoft"
+aliases:
+  - "/posts/meu-primeiro-ano-na-microsoft/"
 title: 'Meu primeiro ano na Microsoft'
 date: '2016-12-21T15:44:55-05:00'
 tags:

@@ -1,5 +1,7 @@
 ---
 slug: "redirecionamento-x11-usando-ssh"
+aliases:
+  - "/posts/redirecionamento-x11-usando-ssh/"
 title: 'Redirecionamento X11 usando SSH'
 date: '2008-12-21T22:25:57-05:00'
 tags:

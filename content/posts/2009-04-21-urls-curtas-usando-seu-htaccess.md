@@ -1,5 +1,7 @@
 ---
 slug: "urls-curtas-usando-seu-htaccess"
+aliases:
+  - "/posts/urls-curtas-usando-seu-htaccess/"
 title: 'Urls curtas usando seu .htaccess'
 date: '2009-04-21T20:03:52-04:00'
 

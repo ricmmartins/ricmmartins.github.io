@@ -1,5 +1,7 @@
 ---
 slug: "implementando-um-servidor-dhcp"
+aliases:
+  - "/posts/implementando-um-servidor-dhcp/"
 title: 'Implementando um servidor DHCP'
 date: '2008-12-21T22:12:02-05:00'
 tags:

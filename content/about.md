@@ -3,6 +3,8 @@ title: "Sobre"
 description: "Conheça Ricardo Martins — Principal Solutions Engineer na Microsoft, com 20+ anos de experiência em infraestrutura, Cloud, Azure e AI."
 layout: "single"
 url: "/sobre/"
+aliases:
+  - /about/
 summary: "Sobre Ricardo Martins"
 date: 2008-01-01
 lastmod: 2026-04-27

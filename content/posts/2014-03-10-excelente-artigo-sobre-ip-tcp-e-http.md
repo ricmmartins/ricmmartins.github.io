@@ -1,5 +1,7 @@
 ---
 slug: "excelente-artigo-sobre-ip-tcp-e-http"
+aliases:
+  - "/posts/excelente-artigo-sobre-ip-tcp-e-http/"
 title: 'Excelente artigo sobre IP, TCP e HTTP'
 date: '2014-03-10T22:07:06-04:00'
 tags:

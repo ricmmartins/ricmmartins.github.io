@@ -1,5 +1,7 @@
 ---
 slug: "implementando-a-stack-elk-elasticsearch-logstash-kibana-no-centos"
+aliases:
+  - "/posts/implementando-a-stack-elk-elasticsearch-logstash-kibana-no-centos/"
 title: 'Implementando a stack ELK (ElasticSearch, Logstash e Kibana) no CentOS'
 date: '2014-06-02T17:47:12-04:00'
 tags:

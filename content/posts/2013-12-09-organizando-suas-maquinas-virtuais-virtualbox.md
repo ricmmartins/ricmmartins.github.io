@@ -1,5 +1,7 @@
 ---
 slug: "organizando-suas-maquinas-virtuais-virtualbox"
+aliases:
+  - "/posts/organizando-suas-maquinas-virtuais-virtualbox/"
 title: 'Organizando suas máquinas virtuais no VirtualBox'
 date: '2013-12-09T11:58:18-05:00'
 tags:

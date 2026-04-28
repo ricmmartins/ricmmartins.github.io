@@ -1,5 +1,7 @@
 ---
 slug: "material-do-aws-summit-2014-em-sao-paulo"
+aliases:
+  - "/posts/material-do-aws-summit-2014-em-sao-paulo/"
 title: 'Material do AWS Summit 2014 em São Paulo'
 date: '2014-06-03T10:46:21-04:00'
 tags:

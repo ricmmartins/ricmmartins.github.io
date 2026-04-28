@@ -1,5 +1,7 @@
 ---
 slug: "como-fazer-rotacao-dos-logs-apache-por-hora"
+aliases:
+  - "/posts/como-fazer-rotacao-dos-logs-apache-por-hora/"
 title: 'Como fazer rotação dos logs do Apache por hora?'
 date: '2012-12-12T11:27:12-05:00'
 tags:

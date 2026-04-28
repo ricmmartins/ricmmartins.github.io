@@ -1,5 +1,7 @@
 ---
 slug: "entendendo-os-niveis-de-raid-redundant-array-of-inexpensive-disks"
+aliases:
+  - "/posts/entendendo-os-niveis-de-raid-redundant-array-of-inexpensive-disks/"
 title: 'Entendendo os Níveis de RAID (Redundant Array of Inexpensive Disks)'
 date: '2009-04-10T18:12:17-04:00'
 tags:

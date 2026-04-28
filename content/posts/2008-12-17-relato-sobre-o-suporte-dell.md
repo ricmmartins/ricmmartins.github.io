@@ -1,5 +1,7 @@
 ---
 slug: "relato-sobre-o-suporte-dell"
+aliases:
+  - "/posts/relato-sobre-o-suporte-dell/"
 title: 'Relato sobre o Suporte Dell'
 date: '2008-12-17T22:07:43-05:00'
 tags:

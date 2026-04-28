@@ -1,5 +1,7 @@
 ---
 slug: "slides-da-palestra-da-flisol-2014"
+aliases:
+  - "/posts/slides-da-palestra-da-flisol-2014/"
 title: 'Slides da Palestra da Flisol 2014'
 date: '2014-04-28T14:17:13-04:00'
 tags:
