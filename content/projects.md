@@ -23,13 +23,15 @@ O log completo e sempre atualizado está no [Activity Log](https://github.com/ri
 | Projeto | Descrição | Link |
 |---------|-----------|------|
 | AI for Infra | Handbook prático de AI para engenheiros de infraestrutura. 220+ páginas, 15 capítulos, 10 cenários de troubleshooting | [ai4infra.com](https://ai4infra.com) |
+| From Server to Cluster | Ebook de Kubernetes para profissionais Linux. 15 capítulos mapeando conceitos Linux → K8s com labs práticos | [fromservertocluster.com](https://fromservertocluster.com) |
+| K8s Hackathon | Hackathon hands-on de Kubernetes. 20 desafios cobrindo 100% dos domínios CKA + CKAD + CKS | [k8shackathon.com](https://k8shackathon.com) |
+| Linux Hackathon | O 1º hackathon de Linux by Microsoft, parte do programa oficial "What The Hack" | [linuxhackathon.com](https://linuxhackathon.com) |
 | PTU Calculator | Estimador de PTU para Azure OpenAI. Compara PAYGO, PTU e modelos híbridos de pricing | [ptucalc.com](https://ptucalc.com) |
 | Azure Governance Made Simple | Ebook com 30 capítulos sobre identidade, policy, IaC, custo, observabilidade e governança em escala | [book.azgovernance.com](https://book.azgovernance.com) |
 | Startup-Scale Landing Zone | Landing Zone opinada para startups no Azure. Deploy em menos de 1 hora (Bicep + Terraform) | [startupscalelanding.zone](https://startupscalelanding.zone) |
 | AKS Newsletter | Curadoria mensal de novidades do Azure Kubernetes Service | [aksnewsletter.com](https://aksnewsletter.com) |
 | Azure Digital Natives Guide | Checklist completo para startups e equipes digital-native no Azure | [azdnguide.com](https://azdnguide.com) |
 | Azure Feed | Agregador diário de atualizações dos blogs do Azure | [azurefeed.news](https://azurefeed.news) |
-| Linux Hackathon | O 1º hackathon de Linux by Microsoft, parte do programa oficial "What The Hack" | [linuxhackathon.com](https://linuxhackathon.com) |
 
 ---
 
