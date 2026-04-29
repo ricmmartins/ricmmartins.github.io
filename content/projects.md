@@ -28,6 +28,7 @@ O log completo e sempre atualizado está no [Activity Log](https://github.com/ri
 | Linux Hackathon | O 1º hackathon de Linux by Microsoft, parte do programa oficial "What The Hack" | [linuxhackathon.com](https://linuxhackathon.com) |
 | PTU Calculator | Estimador de PTU para Azure OpenAI. Compara PAYGO, PTU e modelos híbridos de pricing | [ptucalc.com](https://ptucalc.com) |
 | Azure Governance Made Simple | Ebook com 30 capítulos sobre identidade, policy, IaC, custo, observabilidade e governança em escala | [book.azgovernance.com](https://book.azgovernance.com) |
+| Azure Governance Checklist | Checklist interativo de governança Azure — identidade, rede, segurança, custo, operações | [azgovernance.com](https://azgovernance.com) |
 | Startup-Scale Landing Zone | Landing Zone opinada para startups no Azure. Deploy em menos de 1 hora (Bicep + Terraform) | [startupscalelanding.zone](https://startupscalelanding.zone) |
 | AKS Newsletter | Curadoria mensal de novidades do Azure Kubernetes Service | [aksnewsletter.com](https://aksnewsletter.com) |
 | Azure Digital Natives Guide | Checklist completo para startups e equipes digital-native no Azure | [azdnguide.com](https://azdnguide.com) |
