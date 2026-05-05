@@ -13,6 +13,9 @@ Thumbs.db
 *.swp
 *.swo
 
+# Copilot instructions (keep local only)
+.github/copilot-instructions.md
+
 # Temp
 *.log
 
