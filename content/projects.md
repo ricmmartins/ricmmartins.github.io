@@ -22,6 +22,7 @@ O log completo e sempre atualizado está no [Activity Log](https://github.com/ri
 
 | Projeto | Descrição | Link |
 |---------|-----------|------|
+| AKS Learning | Do zero à produção no Azure Kubernetes Service. Networking, segurança, observabilidade, escalabilidade, GitOps, workloads AI/ML e boas práticas | [aks-learning.github.io](https://aks-learning.github.io/) |
 | Decodifica.Tech | Resumo diário das principais notícias de tecnologia sintetizadas de 290+ fontes internacionais em PT-BR. Cloud, IA, DevOps, segurança e engenharia de software — com podcast diário no Spotify | [decodifica.tech](https://decodifica.tech) |
 | AI for Infra | Handbook prático de AI para engenheiros de infraestrutura. 220+ páginas, 15 capítulos, 10 cenários de troubleshooting | [ai4infra.com](https://ai4infra.com) |
 | From Server to Cluster | Ebook de Kubernetes para profissionais Linux. 15 capítulos mapeando conceitos Linux → K8s com labs práticos | [fromservertocluster.com](https://fromservertocluster.com) |
