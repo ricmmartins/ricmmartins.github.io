@@ -1,5 +1,6 @@
 ---
 slug: "cost-engineering-para-ai-quando-gpu-idle-custa-mais-que-seu-carro"
+translationKey: "2026/06/11/cost-engineering-for-ai-when-idle-gpus-cost-more-than-your-car"
 aliases:
   - "/posts/cost-engineering-para-ai-quando-gpu-idle-custa-mais-que-seu-carro/"
 title: "Cost engineering para AI: quando GPU idle custa mais que seu carro"

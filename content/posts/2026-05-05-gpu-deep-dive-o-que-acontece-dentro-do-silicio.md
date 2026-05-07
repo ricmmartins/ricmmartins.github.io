@@ -1,5 +1,6 @@
 ---
 slug: "gpu-deep-dive-o-que-acontece-dentro-do-silicio"
+translationKey: "2026/05/22/gpu-deep-dive-what-happens-inside-the-silicon"
 aliases:
   - "/posts/gpu-deep-dive-o-que-acontece-dentro-do-silicio/"
 title: "GPU deep dive: o que acontece dentro do silício"

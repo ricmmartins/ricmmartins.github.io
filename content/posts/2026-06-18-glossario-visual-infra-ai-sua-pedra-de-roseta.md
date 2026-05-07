@@ -1,5 +1,6 @@
 ---
 slug: "glossario-visual-infra-ai-sua-pedra-de-roseta"
+translationKey: "2026/07/05/visual-glossary-infra-ai-your-rosetta-stone"
 aliases:
   - "/posts/glossario-visual-infra-ai-sua-pedra-de-roseta/"
 title: "Glossário visual infra ↔ AI: sua Pedra de Roseta"

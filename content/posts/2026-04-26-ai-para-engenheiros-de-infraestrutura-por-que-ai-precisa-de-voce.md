@@ -1,5 +1,6 @@
 ---
 slug: "ai-para-engenheiros-de-infraestrutura-por-que-ai-precisa-de-voce"
+translationKey: "2026/05/10/ai-for-infrastructure-engineers-why-ai-needs-you"
 aliases:
   - "/posts/ai-para-engenheiros-de-infraestrutura-por-que-ai-precisa-de-voce/"
 title: "AI para engenheiros de infraestrutura: por que AI precisa de você"

@@ -3,6 +3,10 @@
 <link rel="alternate" hreflang="pt-BR" href="https://ricardomartins.com.br/" />
 <link rel="alternate" hreflang="en" href="https://rmmartins.com/" />
 <link rel="alternate" hreflang="x-default" href="https://rmmartins.com/" />
+{{- else if .Params.translationKey }}
+<link rel="alternate" hreflang="pt-BR" href="{{ .Permalink }}" />
+<link rel="alternate" hreflang="en" href="https://rmmartins.com/{{ .Params.translationKey }}/" />
+<link rel="alternate" hreflang="x-default" href="https://rmmartins.com/{{ .Params.translationKey }}/" />
 {{- end }}
 
 {{- /* Preconnect for Google Analytics */ -}}

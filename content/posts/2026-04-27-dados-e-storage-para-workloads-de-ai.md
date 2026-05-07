@@ -1,5 +1,6 @@
 ---
 slug: "dados-e-storage-para-workloads-de-ai"
+translationKey: "2026/05/14/data-and-storage-for-ai-workloads"
 aliases:
   - "/posts/dados-e-storage-para-workloads-de-ai/"
 title: "Dados e storage para workloads de AI: o gargalo que ninguém vê"

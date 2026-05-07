@@ -1,5 +1,6 @@
 ---
 slug: "monitoramento-e-observabilidade-para-ai"
+translationKey: "2026/06/03/monitoring-and-observability-for-ai"
 aliases:
   - "/posts/monitoramento-e-observabilidade-para-ai/"
 title: "Monitoramento e observabilidade para AI: quando o dashboard verde mente"

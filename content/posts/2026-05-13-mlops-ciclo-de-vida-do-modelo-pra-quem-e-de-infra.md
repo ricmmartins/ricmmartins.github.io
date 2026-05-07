@@ -1,5 +1,6 @@
 ---
 slug: "mlops-ciclo-de-vida-do-modelo-pra-quem-e-de-infra"
+translationKey: "2026/05/30/mlops-model-lifecycle-for-infra-engineers"
 aliases:
   - "/posts/mlops-ciclo-de-vida-do-modelo-pra-quem-e-de-infra/"
 title: "MLOps: ciclo de vida do modelo pra quem é de infra"

@@ -1,5 +1,6 @@
 ---
 slug: "troubleshooting-playbook-os-incidentes-que-vao-te-acordar-as-2am"
+translationKey: "2026/06/23/troubleshooting-playbook-incidents-that-will-wake-you-at-2am"
 aliases:
   - "/posts/troubleshooting-playbook-os-incidentes-que-vao-te-acordar-as-2am/"
 title: "Troubleshooting playbook: os incidentes que vão te acordar às 2AM"

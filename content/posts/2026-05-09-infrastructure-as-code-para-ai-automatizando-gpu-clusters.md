@@ -1,5 +1,6 @@
 ---
 slug: "infrastructure-as-code-para-ai-automatizando-gpu-clusters"
+translationKey: "2026/05/26/infrastructure-as-code-for-ai-automating-gpu-clusters"
 aliases:
   - "/posts/infrastructure-as-code-para-ai-automatizando-gpu-clusters/"
 title: "Infrastructure as Code para AI: automatizando GPU clusters"

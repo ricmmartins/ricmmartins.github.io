@@ -1,5 +1,6 @@
 ---
 slug: "seguranca-para-ai-ameacas-que-seu-firewall-nao-pega"
+translationKey: "2026/06/07/security-for-ai-threats-your-firewall-wont-catch"
 aliases:
   - "/posts/seguranca-para-ai-ameacas-que-seu-firewall-nao-pega/"
 title: "Segurança para AI: ameaças que seu firewall não pega"

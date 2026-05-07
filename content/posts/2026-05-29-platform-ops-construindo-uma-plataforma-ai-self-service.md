@@ -1,5 +1,6 @@
 ---
 slug: "platform-ops-construindo-uma-plataforma-ai-self-service"
+translationKey: "2026/06/15/platform-ops-building-a-self-service-ai-platform"
 aliases:
   - "/posts/platform-ops-construindo-uma-plataforma-ai-self-service/"
 title: "Platform ops: construindo uma plataforma AI self-service"

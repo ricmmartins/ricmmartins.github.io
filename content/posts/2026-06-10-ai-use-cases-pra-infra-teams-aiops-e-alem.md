@@ -1,5 +1,6 @@
 ---
 slug: "ai-use-cases-pra-infra-teams-aiops-e-alem"
+translationKey: "2026/06/27/ai-use-cases-for-infra-teams-aiops-and-beyond"
 aliases:
   - "/posts/ai-use-cases-pra-infra-teams-aiops-e-alem/"
 title: "AI use cases pra infra teams: AIOps e além"

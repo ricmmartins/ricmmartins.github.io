@@ -1,5 +1,6 @@
 ---
 slug: "framework-de-adocao-ai-do-entusiasmo-a-governanca"
+translationKey: "2026/07/01/ai-adoption-framework-from-enthusiasm-to-governance"
 aliases:
   - "/posts/framework-de-adocao-ai-do-entusiasmo-a-governanca/"
 title: "Framework de adoção AI: do entusiasmo à governança"

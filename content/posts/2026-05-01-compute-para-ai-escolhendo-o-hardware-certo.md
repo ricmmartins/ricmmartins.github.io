@@ -1,5 +1,6 @@
 ---
 slug: "compute-para-ai-escolhendo-o-hardware-certo"
+translationKey: "2026/05/18/compute-for-ai-choosing-the-right-hardware"
 aliases:
   - "/posts/compute-para-ai-escolhendo-o-hardware-certo/"
 title: "Compute para AI: escolhendo o hardware certo (e conectando ele direito)"

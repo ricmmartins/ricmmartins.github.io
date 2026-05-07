@@ -1,5 +1,6 @@
 ---
 slug: "azure-openai-em-producao-tokens-throughput-e-alta-disponibilidade"
+translationKey: "2026/06/19/azure-openai-in-production-tokens-throughput-and-high-availability"
 aliases:
   - "/posts/azure-openai-em-producao-tokens-throughput-e-alta-disponibilidade/"
 title: "Azure OpenAI em produção: tokens, throughput e alta disponibilidade"
