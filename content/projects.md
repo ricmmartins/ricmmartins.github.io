@@ -139,7 +139,7 @@ Artigos publicados no blog oficial [Startups at Microsoft](https://techcommunity
 | Guia | Idioma | Link |
 |------|--------|------|
 | AKS Learning Path | EN | [aks-learning.github.io](https://aks-learning.github.io/learningpath/) |
-| Azure Fundamentals Study Guide | EN | [azure-fundamentals.com](https://azure-fundamentals.com/) |
+| Azure Fundamentals Study Guide | EN | [github.com/ricmmartins/study-guide-az900](https://github.com/ricmmartins/study-guide-az900) |
 | Guia de Estudo AZ-900 | PT-BR | [github.com/ricmmartins/guia-estudo-az900](https://github.com/ricmmartins/guia-estudo-az900) |
 | Guia de Estudo AZ-900 | PT-BR | [aka.ms/guia-az900](https://aka.ms/guia-az900) |
 | AWS Cloud Practitioner Study Guide | EN | [github.com/ricmmartins/study-guide-aws-ccp](https://github.com/ricmmartins/study-guide-aws-ccp) |
