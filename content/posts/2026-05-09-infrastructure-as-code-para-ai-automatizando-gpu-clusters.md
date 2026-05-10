@@ -4,7 +4,7 @@ translationKey: "2026/05/26/infrastructure-as-code-for-ai-automating-gpu-cluster
 aliases:
   - "/posts/infrastructure-as-code-para-ai-automatizando-gpu-clusters/"
 title: "Infrastructure as Code para AI: automatizando GPU clusters"
-description: "Um typo no SKU de VM custou $4.000 em três dias. IaC não é nice-to-have pra infra de AI. É sobrevivência. Terraform, Bicep e CI/CD pra clusters GPU."
+description: "Um typo no SKU de VM pode custar $4.000 em três dias. IaC não é nice-to-have pra infra de AI. É sobrevivência. Terraform, Bicep e CI/CD pra clusters GPU."
 date: 2026-05-09T10:00:00-04:00
 categories:
   - AI
@@ -26,13 +26,13 @@ Quinto post da série. No [anterior](/gpu-deep-dive-o-que-acontece-dentro-do-sil
 
 ## O typo de $4.000
 
-Comecei a semana com uma vitória. Provisionei um cluster GPU manualmente em East US 2 pra um experimento de ML: AKS com node pool `Standard_NC6s_v3`, accelerated networking, drivers NVIDIA, taints corretos. Levou quase um dia, mas funcionou.
+Imagina o cenário: você provisiona um cluster GPU manualmente em East US 2 pra um experimento de ML. AKS com node pool `Standard_NC6s_v3`, accelerated networking, drivers NVIDIA, taints corretos. Leva quase um dia, mas funciona.
 
-Três semanas depois, o mesmo time precisa do setup idêntico em West US 3. Sem problema, pensei. Abri o portal, referenciando um Slack thread pro SKU, uma wiki pra config de rede, e minha memória pro resto.
+Três semanas depois, o mesmo time precisa do setup idêntico em West US 3. Sem problema. Abre o portal, referenciando um Slack thread pro SKU, uma wiki pra config de rede, e memória pro resto.
 
-Alguém digitou errado o SKU. Ao invés de `Standard_NC6s_v3` (VM GPU a ~$3.80/hr), o node pool ficou rodando `Standard_D16s_v5`, uma VM CPU sem GPU nenhuma. O training job lançou, não achou CUDA device, fez fallback pra CPU. Ninguém percebeu por três dias porque o job não falhou, só rodou devagar. Quando alguém checou, o cluster tinha queimado **$4.000** em compute que nem conseguia fazer o que precisava.
+Alguém digita errado o SKU. Ao invés de `Standard_NC6s_v3` (VM GPU a ~$3.80/hr), o node pool fica rodando `Standard_D16s_v5`, uma VM CPU sem GPU nenhuma. O training job lança, não acha CUDA device, faz fallback pra CPU. Ninguém percebe por três dias porque o job não falha, só roda devagar. Quando alguém checa, o cluster queimou **$4.000** em compute que nem conseguia fazer o que precisava.
 
-Foi a última vez que provisionei infra de AI manualmente.
+Esse tipo de cenário é mais comum do que parece. E é exatamente o que IaC previne.
 
 ## Por que IaC é não-negociável pra AI
 
