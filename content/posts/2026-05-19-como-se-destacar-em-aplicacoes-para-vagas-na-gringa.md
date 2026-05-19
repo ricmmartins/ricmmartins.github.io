@@ -16,7 +16,7 @@ tags:
 
 Recrutadores gastam menos de 1 minuto na sua aplicação. Eu sei porque já estive dos dois lados: como candidato suando frio esperando resposta, e como entrevistador com 50 currículos pra revisar numa segunda-feira de manhã.
 
-Depois de anos aplicando para vagas fora do Brasil e participando de processos seletivos como hiring manager, compilei o que realmente funciona — e o que faz sua aplicação ir direto pro "não".
+Depois de anos aplicando para vagas fora do Brasil e participando de processos seletivos, compilei o que realmente funciona — e o que faz sua aplicação ir direto pro "não".
 
 ## O currículo que passa pelo filtro
 
@@ -49,7 +49,7 @@ A diferença? O segundo mostra **impacto**. Número, contexto, resultado.
 
 ## A cover letter que ninguém pula
 
-Vou ser direto: 90% das cover letters que eu recebo são genéricas. "I'm passionate about technology and would love to join your amazing team." Delete.
+Vou ser direto: 90% das cover letters que já recebi são genéricas. "I'm passionate about technology and would love to join your amazing team." Delete.
 
 Uma boa cover letter tem **5 a 10 frases** e responde uma pergunta: **por que você quer trabalhar nessa empresa específica?**
 
@@ -99,7 +99,7 @@ Um repositório com 200 stars é legal, mas um projeto com documentação clara,
 Não precisa publicar toda semana. Mas ter 5-10 posts técnicos mostrando como você resolve problemas reais vale mais que qualquer certificação no currículo.
 
 Escreva sobre:
-- Um bug difícil que você resolveu (e o processo de investigação)
+- Um bug/problema difícil que você resolveu (e o processo de investigação)
 - Uma decisão de arquitetura e os trade-offs
 - Um tutorial de algo que você precisou aprender
 
@@ -178,16 +178,37 @@ Minha regra: **gaste pelo menos 1 hora em cada aplicação**. Isso inclui:
 
 Quando eu comecei a aplicar pra vagas na gringa, cometi todos esses erros. Mandei currículo genérico, cover letter copiada, apliquei sem pesquisar. A taxa de resposta era próxima de zero.
 
+Pra dar contexto: eu vim transferido pela Microsoft do Brasil para os EUA. Mas antes disso acontecer, mandei currículo para mais de 200 vagas ao longo de aproximadamente 3 anos. Mandei mensagem para uns 150 hiring managers. Recebi resposta de metade deles apenas. Entrevistei para umas 50 vagas. Passei da primeira entrevista em talvez metade delas. E no final, apenas uma eu consegui chegar à entrevista final — e ela foi a única que de fato fui aprovado.
+
+Mas sabe o que essa vaga tinha? **Total fit** com minha experiência. Com o que eu vinha fazendo no dia a dia, com o que a vaga precisava de alguém para fazer. Não foi sorte — foi o resultado de ter construído algo consistente ao longo do tempo que eventualmente encontrou o encaixe certo.
+
 O que mudou o jogo pra mim:
 
-1. **Foquei em 5 empresas por vez** — pesquisei profundamente cada uma
+1. **Foquei em poucas empresas por vez** — pesquisei profundamente cada uma
 2. **Construí presença online consistente** — blog, GitHub, LinkedIn ativos
-3. **Investi em inglês de verdade** — não só leitura, mas escrita e conversação
+3. **Investi em inglês de verdade** — não só leitura
 4. **Networking genuíno** — ajudei pessoas antes de pedir qualquer coisa
 5. **Paciência** — o processo leva meses, não dias
 
 A realidade é que conseguir uma vaga na gringa é um projeto de médio prazo. Trate como tal: com planejamento, execução consistente, e iteração baseada em feedback.
 
+## O crachá é temporário, o capital intelectual é permanente
+
+Uma coisa que aprendi ao longo dessa jornada: **você não é seu cargo**. Layoffs acontecem com profissionais brilhantes, em empresas gigantes, por fatores completamente fora do seu controle. Estratégia corporativa muda, ciclos econômicos viram, times de alta performance são cortados.
+
+O que te protege não é o crachá. É o que você constrói fora da descrição de cargo:
+
+- **Seu blog** é o portfólio que trabalha pra você 24/7
+- **Suas contribuições** são a prova de que você entrega valor
+- **Seu networking** é a rede de segurança real
+- **Seus fundamentos** são o que te permite se adaptar quando a tecnologia muda
+
+Eu comecei a escrever em 2007, num blog simples no WordPress, documentando scripts e descobertas do dia a dia. Não tinha plano de "construir audiência" — era meu memory dump, minha forma de não esquecer o que aprendia. Mas com o tempo, essa consistência virou branding. As portas que se abriram na minha carreira vieram mais do que eu compartilhei do que de qualquer certificação.
+
+Tecnologias vão e vêm. Mas os fundamentos permanecem. E quem externaliza conhecimento de forma consistente cria algo que nenhum layoff tira: **capital intelectual portátil**.
+
+Se amanhã o crachá desaparecer, seu nome ainda carrega peso? Essa é a pergunta real.
+
 ---
 
-*Se esse conteúdo foi útil, compartilha com aquele colega que está no processo de buscar oportunidades fora. E se quiser trocar ideia sobre carreira internacional, me encontra no [LinkedIn](https://www.linkedin.com/in/yourprofile).*
+*Escrevi mais sobre esse tema nos artigos [Ninguém é à prova de layoff: como o capital intelectual pode ser sua melhor proteção](https://www.linkedin.com/pulse/ningu%C3%A9m-%C3%A9-%C3%A0-prova-de-layoff-como-o-capital-pode-ser-sua-martins-h9mge/) e [Who are you without the company's last name?](https://rmmartins.com/2025/05/14/who-are-you-without-the-companys-last-name/). Se esse conteúdo foi útil, compartilha com aquele colega que está no processo de buscar oportunidades fora.*
