@@ -225,7 +225,7 @@ Mas sabe o que essa vaga tinha? **Total fit** com minha experiência. Com o que 
 
 O que mudou o jogo pra mim:
 
-1. **Foquei em poucas empresas por vez** — pesquisei profundamente cada uma
+1. **Foquei em poucas vagas por vez** — pesquisei profundamente cada uma, mas sendo mais crítico e aplicando apenas para aquelas onde eu tinha a maioria dos requisitos pedidos, não apenas 2-3
 2. **Construí presença online consistente** — blog, GitHub, LinkedIn ativos
 3. **Investi em inglês de verdade** — não só leitura
 4. **Networking genuíno** — ajudei pessoas antes de pedir qualquer coisa
