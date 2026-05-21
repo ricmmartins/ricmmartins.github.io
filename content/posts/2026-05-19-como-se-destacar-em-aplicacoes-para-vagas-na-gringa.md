@@ -163,7 +163,7 @@ Mas networking não é mandar "Hi, can you refer me?" pra 50 pessoas aleatórias
 
 **Networking que funciona:**
 
-- **Participe de comunidades** — Discord, Slack, meetups. Responda perguntas, ajude outros devs.
+- **Participe de comunidades** — Discord, Slack, meetups. Responda perguntas, ajude outros engenheiros.
 - **Contribua em open source** — você vai interagir com engenheiros de empresas que te interessam naturalmente.
 - **Vá a conferências** — mesmo online. Faça perguntas nos Q&As, participe dos hallway tracks.
 - **Construa relacionamentos antes de precisar** — a hora de fazer networking é quando você NÃO está procurando emprego.
