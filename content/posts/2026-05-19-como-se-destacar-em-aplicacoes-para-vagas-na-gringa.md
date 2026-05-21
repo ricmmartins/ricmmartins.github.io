@@ -233,9 +233,13 @@ O que mudou o jogo pra mim:
 
 A realidade é que conseguir uma vaga na gringa é um projeto de médio prazo. Trate como tal: com planejamento, execução consistente, e iteração baseada em feedback.
 
-## O crachá é temporário, o capital intelectual é permanente
+## E depois que você chegar lá
 
-Uma coisa que aprendi ao longo dessa jornada: **você não é seu cargo**. Layoffs acontecem com profissionais brilhantes, em empresas gigantes, por fatores completamente fora do seu controle. Estratégia corporativa muda, ciclos econômicos viram, times de alta performance são cortados.
+Quando você finalmente conseguir a vaga, vai ser tentador se definir pelo crachá. Eu entendo. Depois de tanto esforço, é natural sentir que "cheguei". Mas cuidado com esse viés.
+
+Já vi gente brilhante que, depois de entrar numa big tech, parou de escrever, parou de contribuir, parou de construir fora do trabalho. O ego atrás do logo da empresa vira a identidade inteira. A pessoa se apresenta como "Fulano, Senior Engineer na [empresa X]" e toda a identidade profissional gira em torno disso. E quando vem um layoff (e layoffs vêm, com profissionais excelentes, em empresas gigantes, por fatores completamente fora do seu controle), a pessoa percebe que não tem mais nada além do cargo no LinkedIn.
+
+**Você não é seu cargo.** Estratégia corporativa muda, ciclos econômicos viram, times de alta performance são cortados. Eu vi isso acontecer ao meu redor várias vezes.
 
 O que te protege não é o crachá. É o que você constrói fora da descrição de cargo:
 
@@ -248,7 +252,7 @@ Eu comecei a escrever em 2007, num blog simples no WordPress, documentando scrip
 
 Tecnologias vão e vêm. Mas os fundamentos permanecem. E quem externaliza conhecimento de forma consistente cria algo que nenhum layoff tira: **capital intelectual portátil**.
 
-Se amanhã o crachá desaparecer, seu nome ainda carrega peso? Essa é a pergunta real.
+Se amanhã o crachá desaparecer, seu nome ainda carrega peso? Essa é a pergunta real. Nunca pare de construir fora da descrição de cargo.
 
 ---
 
