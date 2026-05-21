@@ -202,7 +202,9 @@ Se o recrutador sentir que você não escreveu aquilo, a mensagem implícita é:
 
 Se você está mandando 20 currículos por dia, está fazendo errado.
 
-Nos meus primeiros 6 meses aplicando pra fora, mandei umas 80 aplicações genéricas. Resposta? Três. E nenhuma passou da triagem. Quando mudei pra abordagem focada — pesquisando profundamente cada empresa antes de aplicar — a taxa de resposta subiu pra algo em torno de 30%. O volume caiu drasticamente, mas a qualidade das conversas mudou completamente.
+Nos meus primeiros meses aplicando pra fora, eu saía aplicando pra tudo que tivesse "infraestrutura" como requisito — sem ligar muito pros demais. Meu background é forte em infra, então achava que bastava. Mas a verdade é que a maioria dessas aplicações morria na triagem.
+
+Como eu já estava na Microsoft, apliquei muito mais para vagas internas do que externas. E o que mudou o jogo não foi volume — foi **fit**. Quando comecei a focar em vagas onde os requisitos estavam genuinamente alinhados com minhas habilidades e experiência do dia a dia, a taxa de resposta mudou completamente. Não que você precise ter 100% dos requisitos — mas quanto mais alinhamento real entre o que a vaga pede e o que você já faz, maiores as chances.
 
 Minha regra: **gaste pelo menos 1 hora em cada aplicação**. Isso inclui:
 
