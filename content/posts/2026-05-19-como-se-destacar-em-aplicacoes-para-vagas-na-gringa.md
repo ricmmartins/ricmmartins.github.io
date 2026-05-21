@@ -16,7 +16,7 @@ tags:
 
 Recrutadores gastam menos de 1 minuto na sua aplicação. Eu sei porque já estive dos dois lados: como candidato suando frio esperando resposta, e como entrevistador com 50 currículos pra revisar numa segunda-feira de manhã.
 
-Depois de anos aplicando para vagas fora do Brasil e participando de processos seletivos, compilei o que realmente funciona — e o que faz sua aplicação ir direto pro "não".
+Depois de anos aplicando para vagas fora do Brasil e participando de processos seletivos, compilei o que realmente funciona. E o que faz sua aplicação ir direto pro "não".
 
 ![Processo de aplicação para vagas na gringa](/img/processo-aplicacao-vagas-gringa.svg)
 
@@ -24,14 +24,14 @@ Depois de anos aplicando para vagas fora do Brasil e participando de processos s
 
 Vamos começar pelo básico que muita gente erra: seu currículo precisa ser **legível por máquina primeiro, humano depois**.
 
-A maioria das empresas usa ATS (Applicant Tracking System) — sistemas que parseiam seu PDF antes de qualquer humano ver. Se o ATS não consegue extrair suas informações, acabou ali.
+A maioria das empresas usa ATS (Applicant Tracking System), sistemas que parseiam seu PDF antes de qualquer humano ver. Se o ATS não consegue extrair suas informações, acabou ali.
 
 **O que funciona:**
 
 - Fundo branco, texto preto, fontes padrão (Arial, Calibri, Times)
 - Seções claras: Summary, Experience, Education, Skills
 - PDF gerado de texto (não imagem escaneada)
-- Máximo 2 páginas — 1 se você tem menos de 10 anos de experiência
+- Máximo 2 páginas (1 se você tem menos de 10 anos de experiência)
 - Bullet points que começam com verbo de ação + resultado mensurável
 
 **Exemplo de bullet ruim:**
@@ -44,7 +44,7 @@ A diferença? O segundo mostra **impacto**. Número, contexto, resultado.
 
 **Red flags que eu vejo como entrevistador:**
 
-- Currículo com design complexo, gráficos de "nível de skill" (aquelas barrinhas de 80% em Python — 80% comparado com quem?)
+- Currículo com design complexo, gráficos de "nível de skill" (aquelas barrinhas de 80% em Python. 80% comparado com quem?)
 - Foto (em empresas americanas isso pode até gerar viés no processo)
 - 5 páginas listando cada tecnologia que você já ouviu falar
 - Endereço completo (cidade e país bastam)
@@ -57,14 +57,14 @@ Uma boa cover letter tem **5 a 10 frases** e responde uma pergunta: **por que vo
 
 **Estrutura que funciona:**
 
-1. **Hook** — uma frase que mostra que você fez a lição de casa
-2. **Conexão** — por que essa empresa, esse time, esse produto
-3. **Evidência** — um ou dois links que provam que você resolve o tipo de problema deles
-4. **Disponibilidade** — quando pode começar, fuso horário, expectativa salarial se pedirem
+1. **Hook**: uma frase que mostra que você fez a lição de casa
+2. **Conexão**: por que essa empresa, esse time, esse produto
+3. **Evidência**: um ou dois links que provam que você resolve o tipo de problema deles
+4. **Disponibilidade**: quando pode começar, fuso horário, expectativa salarial se pedirem
 
 **Exemplo real (adaptado):**
 
-> Usei o [produto X] no meu time de 12 engenheiros durante 8 meses e identifiquei uma oportunidade no módulo de alertas que alinha com a vaga de SRE que vocês postaram. Implementei algo similar no meu projeto [link] — reduziu falsos positivos em 40%. Estou disponível para início imediato, fuso EST.
+> Usei o [produto X] no meu time de 12 engenheiros durante 8 meses e identifiquei uma oportunidade no módulo de alertas que alinha com a vaga de SRE que vocês postaram. Implementei algo similar no meu projeto [link]. Reduziu falsos positivos em 40%. Estou disponível para início imediato, fuso EST.
 
 Cinco frases. Específico. Memorável.
 
@@ -79,7 +79,7 @@ Cinco frases. Específico. Memorável.
 - **Entender a stack.** Olhe vagas abertas, blog de engenharia, talks de conferência dos engenheiros deles no YouTube.
 - **Conhecer o negócio.** Quem são os competidores? Qual o modelo de receita? Levantaram funding recentemente?
 
-Na minha experiência, o candidato que chega na entrevista e diz "testei o produto de vocês e notei que o tempo de resposta da API de billing é 3x mais lento que o endpoint de users — vocês estão cientes?" ganha pontos que nenhum certificado dá.
+Na minha experiência, o candidato que chega na entrevista e diz "testei o produto de vocês e notei que o tempo de resposta da API de billing é 3x mais lento que o endpoint de users. Vocês estão cientes?" ganha pontos que nenhum certificado dá.
 
 ## Presença online é seu currículo 24/7
 
@@ -116,7 +116,7 @@ meu-projeto/
 └── CONTRIBUTING.md
 ```
 
-Isso comunica: "eu sei levar software de zero a produção sozinho." Não precisa ser um projeto gigante — um serviço pequeno com essa estrutura vale mais que 50 repos com `initial commit` sem README.
+Isso comunica: "eu sei levar software de zero a produção sozinho." Não precisa ser um projeto gigante. Um serviço pequeno com essa estrutura vale mais que 50 repos com `initial commit` sem README.
 
 ### Blog técnico
 
@@ -132,7 +132,7 @@ Escreva sobre:
 - Headline com o que você faz, não seu cargo atual
 - Summary em inglês se está mirando vagas fora
 - Seção de experiência com os mesmos bullet points de impacto do currículo
-- Atividade: poste, comente, compartilhe — algoritmo favorece quem participa
+- Atividade: poste, comente, compartilhe. Algoritmo favorece quem participa
 
 **Red flag:** perfil do GitHub vazio, só com forks, ou com aquele README auto-gerado que nunca foi customizado.
 
@@ -140,10 +140,10 @@ Escreva sobre:
 
 Um side project completo demonstra que você:
 
-1. **Consegue ir de zero a deploy** — não precisa de alguém segurando sua mão
-2. **Toma decisões de arquitetura** — escolheu banco, framework, infra
-3. **Resolve problemas reais** — mesmo que o "problema" seja pequeno
-4. **Mantém software** — atualizou dependências? Corrigiu bugs? Tem monitoring?
+1. **Consegue ir de zero a deploy.** não precisa de alguém segurando sua mão
+2. **Toma decisões de arquitetura.** escolheu banco, framework, infra
+3. **Resolve problemas reais.** mesmo que o "problema" seja pequeno
+4. **Mantém software.** atualizou dependências? Corrigiu bugs? Tem monitoring?
 
 O projeto não precisa ter milhares de usuários. Precisa estar **no ar, funcionando, e demonstrar competência**.
 
@@ -163,10 +163,10 @@ Mas networking não é mandar "Hi, can you refer me?" pra 50 pessoas aleatórias
 
 **Networking que funciona:**
 
-- **Participe de comunidades** — Discord, Slack, meetups. Responda perguntas, ajude outros engenheiros.
-- **Contribua em open source** — você vai interagir com engenheiros de empresas que te interessam naturalmente.
-- **Vá a conferências** — mesmo online. Faça perguntas nos Q&As, participe dos hallway tracks.
-- **Construa relacionamentos antes de precisar** — a hora de fazer networking é quando você NÃO está procurando emprego.
+- **Participe de comunidades.** Discord, Slack, meetups. Responda perguntas, ajude outros engenheiros.
+- **Contribua em open source.** você vai interagir com engenheiros de empresas que te interessam naturalmente.
+- **Vá a conferências.** mesmo online. Faça perguntas nos Q&As, participe dos hallway tracks.
+- **Construa relacionamentos antes de precisar.** a hora de fazer networking é quando você NÃO está procurando emprego.
 
 Quando você finalmente pedir uma referral, a pessoa precisa poder dizer pro hiring manager: "Eu conheço esse cara, ele é bom, trabalhamos juntos em X."
 
@@ -174,7 +174,7 @@ Quando você finalmente pedir uma referral, a pessoa precisa poder dizer pro hir
 
 ## Sobre usar IA nas aplicações
 
-Vou ser pragmático aqui: recrutadores já identificam texto gerado por IA. E não é difícil — tem um padrão, uma "limpeza" artificial, falta de personalidade.
+Vou ser pragmático aqui: recrutadores já identificam texto gerado por IA. E não é difícil. Tem um padrão, uma "limpeza" artificial, falta de personalidade.
 
 **O problema não é usar IA como ferramenta.** É usar IA como substituto do pensamento.
 
@@ -187,7 +187,7 @@ Vou ser pragmático aqui: recrutadores já identificam texto gerado por IA. E n�
 | **Jobscan** | Comparar keywords do currículo vs descrição da vaga | Enfiar keywords sem contexto só pra passar no ATS |
 | **Hemingway Editor** | Simplificar frases muito longas | Perder sua voz no processo |
 
-**A regra de ouro:** se você remover a IA do processo e o resultado desaparecer, você está usando errado. A IA deve *polir* o que já é seu — não *criar* do zero.
+**A regra de ouro:** se você remover a IA do processo e o resultado desaparecer, você está usando errado. A IA deve *polir* o que já é seu, não *criar* do zero.
 
 - ✅ Usar IA pra revisar gramática da sua cover letter em inglês
 - ✅ Pedir sugestões de como quantificar um resultado no currículo
@@ -202,9 +202,9 @@ Se o recrutador sentir que você não escreveu aquilo, a mensagem implícita é:
 
 Se você está mandando 20 currículos por dia, está fazendo errado.
 
-Nos meus primeiros meses aplicando pra fora, eu saía aplicando pra tudo que tivesse "infraestrutura" como requisito — sem ligar muito pros demais. Meu background é forte em infra, então achava que bastava. Mas a verdade é que a maioria dessas aplicações morria na triagem.
+Nos meus primeiros meses aplicando pra fora, eu saía aplicando pra tudo que tivesse "infraestrutura" como requisito, sem ligar muito pros demais. Meu background é forte em infra, então achava que bastava. Mas a verdade é que a maioria dessas aplicações morria na triagem.
 
-Como eu já estava na Microsoft, apliquei muito mais para vagas internas do que externas. E o que mudou o jogo não foi volume — foi **fit**. Quando comecei a focar em vagas onde os requisitos estavam genuinamente alinhados com minhas habilidades e experiência do dia a dia, a taxa de resposta mudou completamente. Não que você precise ter 100% dos requisitos — mas quanto mais alinhamento real entre o que a vaga pede e o que você já faz, maiores as chances.
+Como eu já estava na Microsoft, apliquei muito mais para vagas internas do que externas. E o que mudou o jogo não foi volume, foi **fit**. Quando comecei a focar em vagas onde os requisitos estavam genuinamente alinhados com minhas habilidades e experiência do dia a dia, a taxa de resposta mudou completamente. Não que você precise ter 100% dos requisitos, mas quanto mais alinhamento real entre o que a vaga pede e o que você já faz, maiores as chances.
 
 Minha regra: **gaste pelo menos 1 hora em cada aplicação**. Isso inclui:
 
@@ -219,17 +219,17 @@ Minha regra: **gaste pelo menos 1 hora em cada aplicação**. Isso inclui:
 
 Quando eu comecei a aplicar pra vagas na gringa, cometi todos esses erros. Mandei currículo genérico, cover letter copiada, apliquei sem pesquisar. A taxa de resposta era próxima de zero.
 
-Pra dar contexto: eu vim transferido pela Microsoft do Brasil para os EUA. Mas antes disso acontecer, mandei currículo para mais de 200 vagas ao longo de aproximadamente 3 anos. Mandei mensagem para uns 150 hiring managers. Recebi resposta de metade deles apenas. Entrevistei para umas 50 vagas. Passei da primeira entrevista em talvez metade delas. E no final, apenas uma eu consegui chegar à entrevista final — e ela foi a única que de fato fui aprovado.
+Pra dar contexto: eu vim transferido pela Microsoft do Brasil para os EUA. Mas antes disso acontecer, mandei currículo para mais de 200 vagas ao longo de aproximadamente 3 anos. Mandei mensagem para uns 150 hiring managers. Recebi resposta de metade deles apenas. Entrevistei para umas 50 vagas. Passei da primeira entrevista em talvez metade delas. E no final, apenas uma eu consegui chegar à entrevista final. E ela foi a única que de fato fui aprovado.
 
-Mas sabe o que essa vaga tinha? **Total fit** com minha experiência. Com o que eu vinha fazendo no dia a dia, com o que a vaga precisava de alguém para fazer. Não foi sorte — foi o resultado de ter construído algo consistente ao longo do tempo que eventualmente encontrou o encaixe certo.
+Mas sabe o que essa vaga tinha? **Total fit** com minha experiência. Com o que eu vinha fazendo no dia a dia, com o que a vaga precisava de alguém para fazer. Não foi sorte. Foi o resultado de ter construído algo consistente ao longo do tempo que eventualmente encontrou o encaixe certo.
 
 O que mudou o jogo pra mim:
 
-1. **Foquei em poucas vagas por vez** — pesquisei profundamente cada uma, mas sendo mais crítico e aplicando apenas para aquelas onde eu tinha a maioria dos requisitos pedidos, não apenas 2-3
-2. **Construí presença online consistente** — blog, GitHub, LinkedIn ativos
-3. **Investi em inglês de verdade** — não só leitura
-4. **Networking genuíno** — ajudei pessoas antes de pedir qualquer coisa
-5. **Paciência** — o processo leva meses, não dias
+1. **Foquei em poucas vagas por vez.** pesquisei profundamente cada uma, mas sendo mais crítico e aplicando apenas para aquelas onde eu tinha a maioria dos requisitos pedidos, não apenas 2-3
+2. **Construí presença online consistente.** blog, GitHub, LinkedIn ativos
+3. **Investi em inglês de verdade.** não só leitura
+4. **Networking genuíno.** ajudei pessoas antes de pedir qualquer coisa
+5. **Paciência.** o processo leva meses, não dias
 
 A realidade é que conseguir uma vaga na gringa é um projeto de médio prazo. Trate como tal: com planejamento, execução consistente, e iteração baseada em feedback.
 
@@ -244,7 +244,7 @@ O que te protege não é o crachá. É o que você constrói fora da descrição
 - **Seu networking** é a rede de segurança real
 - **Seus fundamentos** são o que te permite se adaptar quando a tecnologia muda
 
-Eu comecei a escrever em 2007, num blog simples no WordPress, documentando scripts e descobertas do dia a dia. Não tinha plano de "construir audiência" — era meu memory dump, minha forma de não esquecer o que aprendia. Mas com o tempo, essa consistência virou branding. As portas que se abriram na minha carreira vieram mais do que eu compartilhei do que de qualquer certificação.
+Eu comecei a escrever em 2007, num blog simples no WordPress, documentando scripts e descobertas do dia a dia. Não tinha plano de "construir audiência". Era meu memory dump, minha forma de não esquecer o que aprendia. Mas com o tempo, essa consistência virou branding. As portas que se abriram na minha carreira vieram mais do que eu compartilhei do que de qualquer certificação.
 
 Tecnologias vão e vêm. Mas os fundamentos permanecem. E quem externaliza conhecimento de forma consistente cria algo que nenhum layoff tira: **capital intelectual portátil**.
 
@@ -256,11 +256,11 @@ Se amanhã o crachá desaparecer, seu nome ainda carrega peso? Essa é a pergunt
 
 Não tente implementar tudo de uma vez. Escolha **uma ação** pra esta semana:
 
-1. **Se não tem presença online:** Crie um repo no GitHub com um projeto pessoal. Pode ser pequeno — um script, uma CLI tool, uma automação. Mas com README, CI, e deploy.
+1. **Se não tem presença online:** Crie um repo no GitHub com um projeto pessoal. Pode ser pequeno: um script, uma CLI tool, uma automação. Mas com README, CI, e deploy.
 2. **Se já tem presença mas está aplicando no modo spray-and-pray:** Escolha UMA empresa que te interessa de verdade. Gaste 1 hora nela. Teste o produto. Escreva uma cover letter que só funciona pra ela.
 3. **Se já faz tudo isso mas não tem resposta:** Peça feedback. Mande seu currículo pra alguém que trabalha na gringa e pergunte: "o que está fraco aqui?" Feedback direto > suposição.
 
-O processo é longo — mas cada passo consistente encurta o caminho. Me conta no [LinkedIn](https://linkedin.com/in/ricmmartins) como foi.
+O processo é longo, mas cada passo consistente encurta o caminho. Me conta no [LinkedIn](https://linkedin.com/in/ricmmartins) como foi.
 
 ---
 
