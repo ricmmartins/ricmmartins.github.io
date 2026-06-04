@@ -117,106 +117,106 @@ Vamos separar os dois.
 
 ### Arquitetura geral
 
-<svg viewBox="0 0 920 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Write path de upload de vídeo" style="max-width:100%;height:auto;" font-family="Segoe UI, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 429" role="img" aria-label="Write path de upload de vídeo" style="max-width:100%;height:auto;" font-family="Segoe UI, Arial, sans-serif">
   <defs>
     <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
       <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
     </marker>
   </defs>
-  <rect x="10" y="10" width="900" height="340" rx="8" fill="#f5f5f5" stroke="#666666" />
-  <text x="30" y="35" font-size="14" font-weight="bold">WRITE PATH (Upload)</text>
+  <rect x="10" y="10" width="900" height="389" rx="8" fill="#f5f5f5" stroke="#666666" />
+  <text x="30" y="35" font-size="14" font-weight="bold" fill="#333333">WRITE PATH (Upload)</text>
 
   <g>
     <rect x="40" y="140" width="110" height="52" rx="6" fill="#f5f5f5" stroke="#666666" />
-    <text x="95" y="171" text-anchor="middle" font-size="12" font-weight="bold">Client</text>
+    <text x="95" y="170" text-anchor="middle" font-size="12" font-weight="bold" fill="#333333">Client</text>
   </g>
   <g>
     <rect x="190" y="140" width="140" height="52" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="260" y="171" text-anchor="middle" font-size="12" font-weight="bold">API Server</text>
+    <text x="260" y="170" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">API Server</text>
   </g>
   <g>
     <rect x="370" y="140" width="160" height="52" rx="6" fill="#fff2cc" stroke="#d6b656" />
-    <text x="450" y="160" text-anchor="middle" font-size="12" font-weight="bold">Blob Storage</text>
-    <text x="450" y="176" text-anchor="middle" font-size="10" fill="#555">raw</text>
+    <text x="450" y="162.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Blob Storage</text>
+    <text x="450" y="177.5" text-anchor="middle" font-size="10" fill="#555">raw</text>
   </g>
   <g>
     <rect x="580" y="140" width="150" height="52" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="655" y="160" text-anchor="middle" font-size="12" font-weight="bold">Message Queue</text>
-    <text x="655" y="176" text-anchor="middle" font-size="10" fill="#555">Kafka</text>
+    <text x="655" y="162.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Message Queue</text>
+    <text x="655" y="177.5" text-anchor="middle" font-size="10" fill="#555">Kafka</text>
   </g>
   <g>
     <rect x="190" y="245" width="140" height="52" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="260" y="276" text-anchor="middle" font-size="12" font-weight="bold">Metadata DB</text>
+    <text x="260" y="275" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Metadata DB</text>
   </g>
   <g>
     <rect x="580" y="245" width="150" height="52" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="655" y="265" text-anchor="middle" font-size="12" font-weight="bold">Transcoding</text>
-    <text x="655" y="281" text-anchor="middle" font-size="10" fill="#555">Workers</text>
+    <text x="655" y="267.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Transcoding</text>
+    <text x="655" y="282.5" text-anchor="middle" font-size="10" fill="#555">Workers</text>
   </g>
   <g>
     <rect x="370" y="245" width="160" height="52" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="450" y="265" text-anchor="middle" font-size="12" font-weight="bold">Blob Storage</text>
-    <text x="450" y="281" text-anchor="middle" font-size="10" fill="#555">processed</text>
+    <text x="450" y="267.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Blob Storage</text>
+    <text x="450" y="282.5" text-anchor="middle" font-size="10" fill="#555">processed</text>
   </g>
   <g>
-    <rect x="370" y="305" width="160" height="32" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="450" y="325" text-anchor="middle" font-size="12" font-weight="bold">CDN</text>
+    <rect x="370" y="337" width="160" height="32" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+    <text x="450" y="357" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">CDN</text>
   </g>
 
   <g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
-    <line x1="150" y1="166" x2="190" y2="166" />
-    <line x1="330" y1="166" x2="370" y2="166" />
-    <line x1="530" y1="166" x2="580" y2="166" />
-    <line x1="260" y1="192" x2="260" y2="245" />
-    <line x1="655" y1="192" x2="655" y2="245" />
-    <line x1="580" y1="271" x2="530" y2="271" />
-    <line x1="450" y1="297" x2="450" y2="305" />
+    <line x1="156" y1="166" x2="196" y2="166" />
+    <line x1="336" y1="166" x2="376" y2="166" />
+    <line x1="536" y1="166" x2="586" y2="166" />
+    <line x1="260" y1="198" x2="260" y2="251" />
+    <line x1="655" y1="198" x2="655" y2="251" />
+    <line x1="574" y1="271" x2="524" y2="271" />
+    <line x1="450" y1="303" x2="450" y2="343" />
   </g>
 </svg>
 
-<svg viewBox="0 0 920 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Read path de streaming de vídeo" style="max-width:100%;height:auto;" font-family="Segoe UI, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 259" role="img" aria-label="Read path de streaming de vídeo" style="max-width:100%;height:auto;" font-family="Segoe UI, Arial, sans-serif">
   <defs>
     <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
       <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
     </marker>
   </defs>
-  <rect x="10" y="10" width="900" height="210" rx="8" fill="#f5f5f5" stroke="#666666" />
-  <text x="30" y="35" font-size="14" font-weight="bold">READ PATH (Streaming)</text>
+  <rect x="10" y="10" width="900" height="219" rx="8" fill="#f5f5f5" stroke="#666666" />
+  <text x="30" y="35" font-size="14" font-weight="bold" fill="#333333">READ PATH (Streaming)</text>
 
   <g>
     <rect x="40" y="105" width="110" height="52" rx="6" fill="#f5f5f5" stroke="#666666" />
-    <text x="95" y="136" text-anchor="middle" font-size="12" font-weight="bold">Client</text>
+    <text x="95" y="135" text-anchor="middle" font-size="12" font-weight="bold" fill="#333333">Client</text>
   </g>
   <g>
     <rect x="220" y="55" width="160" height="52" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="300" y="77" text-anchor="middle" font-size="12" font-weight="bold">CDN</text>
-    <text x="300" y="93" text-anchor="middle" font-size="10" fill="#555">cache hit?</text>
+    <text x="300" y="77.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">CDN</text>
+    <text x="300" y="92.5" text-anchor="middle" font-size="10" fill="#555">cache hit?</text>
   </g>
   <g>
     <rect x="450" y="55" width="180" height="52" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="540" y="75" text-anchor="middle" font-size="12" font-weight="bold">Blob Storage</text>
-    <text x="540" y="91" text-anchor="middle" font-size="10" fill="#555">processed</text>
+    <text x="540" y="77.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Blob Storage</text>
+    <text x="540" y="92.5" text-anchor="middle" font-size="10" fill="#555">processed</text>
   </g>
   <g>
-    <rect x="220" y="145" width="160" height="52" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="300" y="176" text-anchor="middle" font-size="12" font-weight="bold">API Server</text>
+    <rect x="220" y="147" width="160" height="52" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="300" y="177" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">API Server</text>
   </g>
   <g>
-    <rect x="450" y="145" width="150" height="52" rx="6" fill="#fff2cc" stroke="#d6b656" />
-    <text x="525" y="165" text-anchor="middle" font-size="12" font-weight="bold">Cache</text>
-    <text x="525" y="181" text-anchor="middle" font-size="10" fill="#555">Redis</text>
+    <rect x="450" y="147" width="150" height="52" rx="6" fill="#fff2cc" stroke="#d6b656" />
+    <text x="525" y="169.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Cache</text>
+    <text x="525" y="184.5" text-anchor="middle" font-size="10" fill="#555">Redis</text>
   </g>
   <g>
     <rect x="670" y="145" width="150" height="52" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="745" y="176" text-anchor="middle" font-size="12" font-weight="bold">Metadata DB</text>
+    <text x="745" y="175" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Metadata DB</text>
   </g>
 
   <g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
-    <line x1="150" y1="131" x2="220" y2="81" />
-    <line x1="380" y1="81" x2="450" y2="81" />
-    <line x1="150" y1="131" x2="220" y2="171" />
-    <line x1="380" y1="171" x2="450" y2="171" />
-    <line x1="600" y1="171" x2="670" y2="171" />
+    <line x1="155.8" y1="116.2" x2="225.8" y2="99.1" />
+    <line x1="386" y1="81" x2="456" y2="81" />
+    <line x1="155.9" y1="143.5" x2="225.9" y2="157.8" />
+    <line x1="386" y1="173" x2="456" y2="173" />
+    <line x1="606" y1="172.3" x2="676" y2="171.6" />
   </g>
 </svg>
 
@@ -342,7 +342,7 @@ Um vídeo de 1 hora em 6 resoluções com segmentos de 4 segundos = **900 segmen
 
 ### Arquitetura do pipeline
 
-<svg viewBox="0 0 980 740" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pipeline de transcodificação de vídeo" style="max-width:100%;height:auto;" font-family="Segoe UI, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 804" role="img" aria-label="Pipeline de transcodificação de vídeo" style="max-width:100%;height:auto;" font-family="Segoe UI, Arial, sans-serif">
   <defs>
     <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
       <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
@@ -351,94 +351,94 @@ Um vídeo de 1 hora em 6 resoluções com segmentos de 4 segundos = **900 segmen
 
   <g>
     <rect x="380" y="20" width="220" height="48" rx="6" fill="#f5f5f5" stroke="#666666" />
-    <text x="490" y="49" text-anchor="middle" font-size="12" font-weight="bold">Upload finalizado</text>
+    <text x="490" y="48" text-anchor="middle" font-size="12" font-weight="bold" fill="#333333">Upload finalizado</text>
   </g>
   <g>
-    <rect x="380" y="95" width="220" height="48" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="490" y="117" text-anchor="middle" font-size="12" font-weight="bold">Message Queue</text>
-    <text x="490" y="133" text-anchor="middle" font-size="10" fill="#555">Kafka</text>
+    <rect x="380" y="108" width="220" height="48" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+    <text x="490" y="128.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Message Queue</text>
+    <text x="490" y="143.5" text-anchor="middle" font-size="10" fill="#555">Kafka</text>
   </g>
   <g>
-    <rect x="345" y="170" width="290" height="70" rx="8" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="490" y="200" text-anchor="middle" font-size="14" font-weight="bold">Transcoding Orchestrator</text>
-    <text x="490" y="218" text-anchor="middle" font-size="10" fill="#555">divide em jobs</text>
+    <rect x="345" y="196" width="290" height="70" rx="8" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="490" y="227.5" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a3a5c">Transcoding Orchestrator</text>
+    <text x="490" y="242.5" text-anchor="middle" font-size="10" fill="#555">divide em jobs</text>
   </g>
 
   <g>
     <rect x="60" y="285" width="130" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="125" y="307" text-anchor="middle" font-size="12" font-weight="bold">Worker 1</text>
-    <text x="125" y="323" text-anchor="middle" font-size="10" fill="#555">gerar 240p</text>
+    <text x="125" y="309.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Worker 1</text>
+    <text x="125" y="324.5" text-anchor="middle" font-size="10" fill="#555">gerar 240p</text>
   </g>
   <g>
-    <rect x="210" y="285" width="130" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="275" y="307" text-anchor="middle" font-size="12" font-weight="bold">Worker 2</text>
-    <text x="275" y="323" text-anchor="middle" font-size="10" fill="#555">gerar 360p</text>
+    <rect x="220" y="306" width="130" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="285" y="330.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Worker 2</text>
+    <text x="285" y="345.5" text-anchor="middle" font-size="10" fill="#555">gerar 360p</text>
   </g>
   <g>
-    <rect x="360" y="285" width="130" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="425" y="307" text-anchor="middle" font-size="12" font-weight="bold">Worker 3</text>
-    <text x="425" y="323" text-anchor="middle" font-size="10" fill="#555">gerar 480p</text>
+    <rect x="380" y="306" width="130" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="445" y="330.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Worker 3</text>
+    <text x="445" y="345.5" text-anchor="middle" font-size="10" fill="#555">gerar 480p</text>
   </g>
   <g>
-    <rect x="510" y="285" width="130" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="575" y="307" text-anchor="middle" font-size="12" font-weight="bold">Worker 4</text>
-    <text x="575" y="323" text-anchor="middle" font-size="10" fill="#555">gerar 720p</text>
+    <rect x="540" y="306" width="130" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="605" y="330.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Worker 4</text>
+    <text x="605" y="345.5" text-anchor="middle" font-size="10" fill="#555">gerar 720p</text>
   </g>
   <g>
-    <rect x="180" y="370" width="130" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="245" y="392" text-anchor="middle" font-size="12" font-weight="bold">Worker 5</text>
-    <text x="245" y="408" text-anchor="middle" font-size="10" fill="#555">gerar 1080p</text>
+    <rect x="180" y="402" width="130" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="245" y="426.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Worker 5</text>
+    <text x="245" y="441.5" text-anchor="middle" font-size="10" fill="#555">gerar 1080p</text>
   </g>
   <g>
-    <rect x="350" y="370" width="130" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="415" y="392" text-anchor="middle" font-size="12" font-weight="bold">Worker 6</text>
-    <text x="415" y="408" text-anchor="middle" font-size="10" fill="#555">gerar 4K</text>
+    <rect x="350" y="402" width="130" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="415" y="426.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Worker 6</text>
+    <text x="415" y="441.5" text-anchor="middle" font-size="10" fill="#555">gerar 4K</text>
   </g>
   <g>
-    <rect x="520" y="370" width="220" height="56" rx="6" fill="#fff2cc" stroke="#d6b656" />
-    <text x="630" y="392" text-anchor="middle" font-size="12" font-weight="bold">Worker 7</text>
-    <text x="630" y="408" text-anchor="middle" font-size="10" fill="#555">thumbnail + preview</text>
+    <rect x="520" y="402" width="220" height="56" rx="6" fill="#fff2cc" stroke="#d6b656" />
+    <text x="630" y="426.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Worker 7</text>
+    <text x="630" y="441.5" text-anchor="middle" font-size="10" fill="#555">thumbnail + preview</text>
   </g>
 
   <g>
-    <rect x="360" y="470" width="260" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="490" y="490" text-anchor="middle" font-size="12" font-weight="bold">Blob Storage</text>
-    <text x="490" y="506" text-anchor="middle" font-size="10" fill="#555">processed</text>
+    <rect x="360" y="498" width="260" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="490" y="522.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Blob Storage</text>
+    <text x="490" y="537.5" text-anchor="middle" font-size="10" fill="#555">processed</text>
   </g>
   <g>
     <rect x="360" y="550" width="260" height="48" rx="6" fill="#fff2cc" stroke="#d6b656" />
-    <text x="490" y="579" text-anchor="middle" font-size="12" font-weight="bold">Gerar manifest file (.m3u8)</text>
+    <text x="490" y="578" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Gerar manifest file (.m3u8)</text>
   </g>
   <g>
-    <rect x="340" y="620" width="300" height="48" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="490" y="642" text-anchor="middle" font-size="12" font-weight="bold">Atualizar Metadata DB</text>
-    <text x="490" y="658" text-anchor="middle" font-size="10" fill="#555">status: ready</text>
+    <rect x="340" y="638" width="300" height="48" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="490" y="658.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Atualizar Metadata DB</text>
+    <text x="490" y="673.5" text-anchor="middle" font-size="10" fill="#555">status: ready</text>
   </g>
   <g>
-    <rect x="360" y="690" width="260" height="48" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="490" y="719" text-anchor="middle" font-size="12" font-weight="bold">Push pra CDN</text>
+    <rect x="360" y="726" width="260" height="48" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+    <text x="490" y="754" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Push pra CDN</text>
   </g>
 
   <g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
-    <line x1="490" y1="68" x2="490" y2="95" />
-    <line x1="490" y1="143" x2="490" y2="170" />
-    <line x1="490" y1="240" x2="125" y2="285" />
-    <line x1="490" y1="240" x2="275" y2="285" />
-    <line x1="490" y1="240" x2="425" y2="285" />
-    <line x1="490" y1="240" x2="575" y2="285" />
-    <line x1="490" y1="240" x2="245" y2="370" />
-    <line x1="490" y1="240" x2="415" y2="370" />
-    <line x1="490" y1="240" x2="630" y2="370" />
-    <line x1="125" y1="341" x2="430" y2="470" />
-    <line x1="275" y1="341" x2="450" y2="470" />
-    <line x1="425" y1="341" x2="470" y2="470" />
-    <line x1="575" y1="341" x2="510" y2="470" />
-    <line x1="245" y1="426" x2="450" y2="470" />
-    <line x1="415" y1="426" x2="490" y2="470" />
-    <line x1="630" y1="426" x2="530" y2="470" />
-    <line x1="490" y1="526" x2="490" y2="550" />
-    <line x1="490" y1="598" x2="490" y2="620" />
-    <line x1="490" y1="668" x2="490" y2="690" />
+    <line x1="490" y1="74" x2="490" y2="114" />
+    <line x1="490" y1="162" x2="490" y2="202" />
+    <line x1="339.1" y1="264.9" x2="184.1" y2="299.7" />
+    <line x1="415" y1="268.7" x2="335.4" y2="308.7" />
+    <line x1="472.3" y1="271.5" x2="454.8" y2="311.5" />
+    <line x1="533.5" y1="270" x2="578.2" y2="310" />
+    <line x1="442.3" y1="269.8" x2="274.8" y2="405.8" />
+    <line x1="474.7" y1="271.6" x2="423.4" y2="407.6" />
+    <line x1="518.1" y1="270.9" x2="613.8" y2="406.9" />
+    <line x1="178.2" y1="344" x2="447.2" y2="501" />
+    <line x1="319.3" y1="366.1" x2="464.5" y2="502.1" />
+    <line x1="452.9" y1="367.8" x2="484.8" y2="503.8" />
+    <line x1="585.1" y1="367.1" x2="503.7" y2="503.1" />
+    <line x1="315.6" y1="457.7" x2="424.1" y2="500.2" />
+    <line x1="440.6" y1="462.7" x2="471.8" y2="502.7" />
+    <line x1="584.2" y1="461.4" x2="525.9" y2="501.4" />
+    <line x1="490" y1="560" x2="490" y2="556" />
+    <line x1="490" y1="604" x2="490" y2="644" />
+    <line x1="490" y1="692" x2="490" y2="732" />
   </g>
 </svg>
 
@@ -467,7 +467,7 @@ Com CDN: o segmento está cacheado num edge server em São Paulo. Latência: <10
 
 ### Como CDN funciona pra vídeo
 
-<svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Fluxo de cache hit no streaming" style="max-width:100%;height:auto;" font-family="Segoe UI, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 326" role="img" aria-label="Fluxo de cache hit no streaming" style="max-width:100%;height:auto;" font-family="Segoe UI, Arial, sans-serif">
   <defs>
     <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
       <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
@@ -476,37 +476,37 @@ Com CDN: o segmento está cacheado num edge server em São Paulo. Latência: <10
 
   <g>
     <rect x="30" y="105" width="220" height="62" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="140" y="132" text-anchor="middle" font-size="12" font-weight="bold">Player pede segmento 47</text>
-    <text x="140" y="148" text-anchor="middle" font-size="10" fill="#555">vídeo em 720p</text>
+    <text x="140" y="132.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Player pede segmento 47</text>
+    <text x="140" y="147.5" text-anchor="middle" font-size="10" fill="#555">vídeo em 720p</text>
   </g>
 
   <g>
     <path d="M350 90 L470 90 L540 150 L470 210 L350 210 L280 150 Z" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
-    <text x="410" y="142" text-anchor="middle" font-size="12" font-weight="bold">CDN Edge</text>
+    <text x="410" y="142" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">CDN Edge</text>
     <text x="410" y="158" text-anchor="middle" font-size="10" fill="#555">São Paulo: tenho no cache?</text>
   </g>
 
   <g>
     <rect x="610" y="40" width="230" height="62" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="725" y="67" text-anchor="middle" font-size="12" font-weight="bold">Retorna imediatamente</text>
-    <text x="725" y="83" text-anchor="middle" font-size="10" fill="#555">cache hit</text>
+    <text x="725" y="67.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Retorna imediatamente</text>
+    <text x="725" y="82.5" text-anchor="middle" font-size="10" fill="#555">cache hit</text>
   </g>
   <g>
-    <rect x="610" y="138" width="230" height="62" rx="6" fill="#f8cecc" stroke="#b85450" />
-    <text x="725" y="165" text-anchor="middle" font-size="12" font-weight="bold">Busca no Origin</text>
-    <text x="725" y="181" text-anchor="middle" font-size="10" fill="#555">blob storage</text>
+    <rect x="610" y="142" width="230" height="62" rx="6" fill="#f8cecc" stroke="#b85450" />
+    <text x="725" y="169.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a1c1c">Busca no Origin</text>
+    <text x="725" y="184.5" text-anchor="middle" font-size="10" fill="#555">blob storage</text>
   </g>
   <g>
-    <rect x="610" y="230" width="230" height="52" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="725" y="252" text-anchor="middle" font-size="12" font-weight="bold">Retorna pro player</text>
-    <text x="725" y="268" text-anchor="middle" font-size="10" fill="#555">e cacheia localmente</text>
+    <rect x="610" y="244" width="230" height="52" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="725" y="266.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Retorna pro player</text>
+    <text x="725" y="281.5" text-anchor="middle" font-size="10" fill="#555">e cacheia localmente</text>
   </g>
 
   <g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
-    <line x1="250" y1="136" x2="280" y2="136" />
+    <line x1="256" y1="143.3" x2="616" y2="166.1" />
     <line x1="540" y1="120" x2="610" y2="71" />
     <line x1="540" y1="180" x2="610" y2="169" />
-    <line x1="725" y1="200" x2="725" y2="230" />
+    <line x1="725" y1="210" x2="725" y2="250" />
   </g>
 
   <text x="570" y="102" font-size="10" font-weight="bold" fill="#555">SIM</text>

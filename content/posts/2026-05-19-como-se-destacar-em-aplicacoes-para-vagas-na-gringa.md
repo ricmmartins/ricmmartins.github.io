@@ -120,21 +120,21 @@ Um repositório com 200 stars é legal, mas um projeto com documentação clara,
 
   <g>
     <rect class="primary" x="540" y="20" width="200" height="56" rx="8" />
-    <text class="title" x="640" y="54" text-anchor="middle">meu-projeto/</text>
+    <text class="title" x="640" y="52" text-anchor="middle">meu-projeto/</text>
   </g>
 
   <g>
     <path class="line" d="M 625 76 L 180 120" />
-    <rect class="primary" x="30" y="120" width="300" height="220" rx="8" />
+    <rect class="primary" x="30" y="120" width="300" height="246" rx="8" />
     <text class="title" x="50" y="146">.github/</text>
-    <rect class="accent" x="60" y="160" width="240" height="150" rx="8" />
+    <rect class="accent" x="60" y="160" width="240" height="170" rx="8" />
     <text class="title" x="80" y="186">workflows/</text>
-    <rect class="neutral" x="80" y="200" width="200" height="48" rx="6" />
-    <text class="label" x="96" y="220">ci.yml</text>
-    <text class="desc" x="96" y="238">Testes automáticos em cada PR</text>
-    <rect class="neutral" x="80" y="255" width="200" height="48" rx="6" />
-    <text class="label" x="96" y="275">deploy.yml</text>
-    <text class="desc" x="96" y="293">Deploy automatizado</text>
+    <rect class="neutral" x="80" y="200" width="240" height="48" rx="6" />
+    <text class="label" x="200" y="220.5" text-anchor="middle">ci.yml</text>
+    <text class="desc" x="200" y="235.5" text-anchor="middle">Testes automáticos em cada PR</text>
+    <rect class="neutral" x="80" y="268" width="220" height="48" rx="6" />
+    <text class="label" x="190" y="288.5" text-anchor="middle">deploy.yml</text>
+    <text class="desc" x="190" y="303.5" text-anchor="middle">Deploy automatizado</text>
   </g>
 
   <g>
@@ -142,51 +142,51 @@ Um repositório com 200 stars é legal, mas um projeto com documentação clara,
     <rect class="warning" x="360" y="120" width="300" height="220" rx="8" />
     <text class="title" x="380" y="146">infra/</text>
     <rect class="neutral" x="390" y="160" width="240" height="48" rx="6" />
-    <text class="label" x="406" y="180">main.tf</text>
-    <text class="desc" x="406" y="198">Terraform definindo a infra</text>
-    <rect class="neutral" x="390" y="220" width="240" height="36" rx="6" />
-    <text class="label" x="406" y="242">variables.tf</text>
-    <rect class="neutral" x="390" y="268" width="240" height="36" rx="6" />
-    <text class="label" x="406" y="290">outputs.tf</text>
+    <text class="label" x="510" y="180.5" text-anchor="middle">main.tf</text>
+    <text class="desc" x="510" y="195.5" text-anchor="middle">Terraform definindo a infra</text>
+    <rect class="neutral" x="390" y="228" width="240" height="36" rx="6" />
+    <text class="label" x="510" y="250" text-anchor="middle">variables.tf</text>
+    <rect class="neutral" x="390" y="284" width="240" height="36" rx="6" />
+    <text class="label" x="510" y="306" text-anchor="middle">outputs.tf</text>
   </g>
 
   <g>
-    <path class="line" d="M 645 76 L 805 120" />
+    <path class="line" d="M 691.3 79.1 L 763.9 123.1" />
     <rect class="success" x="720" y="120" width="170" height="56" rx="6" />
-    <text class="label" x="805" y="154" text-anchor="middle">src/</text>
+    <text class="label" x="805" y="152" text-anchor="middle">src/</text>
   </g>
 
   <g>
-    <path class="line" d="M 655 76 L 1015 120" />
+    <path class="line" d="M 745.8 76.2 L 935.8 126.9" />
     <rect class="success" x="930" y="120" width="170" height="56" rx="6" />
-    <text class="label" x="1015" y="154" text-anchor="middle">tests/</text>
+    <text class="label" x="1015" y="152" text-anchor="middle">tests/</text>
   </g>
 
   <g>
-    <path class="line" d="M 645 76 L 805 220" />
+    <path class="line" d="M 666.9 80.6 L 785.7 224.6" />
     <rect class="neutral" x="720" y="220" width="170" height="56" rx="6" />
-    <text class="label" x="805" y="254" text-anchor="middle">Dockerfile</text>
+    <text class="label" x="805" y="252" text-anchor="middle">Dockerfile</text>
   </g>
 
   <g>
-    <path class="line" d="M 660 76 L 1065 210" />
-    <rect class="accent" x="930" y="210" width="270" height="72" rx="6" />
-    <text class="label" x="1065" y="236" text-anchor="middle">Makefile</text>
-    <text class="desc" x="1065" y="254" text-anchor="middle">make build, make test, make deploy</text>
+    <path class="line" d="M 703.7 78.6 L 995.4 218.6" />
+    <rect class="accent" x="930" y="216" width="270" height="72" rx="6" />
+    <text class="label" x="1065" y="248.5" text-anchor="middle">Makefile</text>
+    <text class="desc" x="1065" y="263.5" text-anchor="middle">make build, make test, make deploy</text>
   </g>
 
   <g>
-    <path class="line" d="M 650 76 L 855 330" />
+    <path class="line" d="M 662.3 81 L 834 335" />
     <rect class="neutral" x="720" y="330" width="270" height="72" rx="6" />
-    <text class="label" x="855" y="352" text-anchor="middle">README.md</text>
+    <text class="label" x="855" y="355" text-anchor="middle">README.md</text>
     <text class="desc" x="855" y="370" text-anchor="middle">O quê, por quê, como rodar</text>
-    <text class="desc" x="855" y="384" text-anchor="middle">decisões de arquitetura</text>
+    <text class="desc" x="855" y="385" text-anchor="middle">decisões de arquitetura</text>
   </g>
 
   <g>
-    <path class="line" d="M 665 76 L 1115 330" />
+    <path class="line" d="M 687.9 79.3 L 1077.1 333.3" />
     <rect class="neutral" x="1030" y="330" width="170" height="56" rx="6" />
-    <text class="label" x="1115" y="364" text-anchor="middle">CONTRIBUTING.md</text>
+    <text class="label" x="1115" y="362" text-anchor="middle">CONTRIBUTING.md</text>
   </g>
 </svg>
 

@@ -48,23 +48,23 @@ O agent gera output, depois critica o próprio output e refina.
   </defs>
   <g font-family="Segoe UI, Arial, sans-serif">
     <g id="reflection-arrows" fill="none" stroke="#666666" stroke-width="2" marker-end="url(#arrow)">
-      <line x1="200" y1="75" x2="248" y2="75" />
-      <line x1="428" y1="75" x2="476" y2="75" />
-      <line x1="656" y1="75" x2="704" y2="75" />
+      <line x1="206" y1="75" x2="254" y2="75" />
+      <line x1="434" y1="75" x2="482" y2="75" />
+      <line x1="662" y1="75" x2="710" y2="75" />
     </g>
     <g id="reflection-nodes">
       <rect x="20" y="40" width="180" height="70" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
       <rect x="248" y="40" width="180" height="70" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
       <rect x="476" y="40" width="180" height="70" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
       <rect x="704" y="40" width="180" height="70" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
-      <text x="110" y="68" text-anchor="middle" font-size="12" font-weight="bold">Generate</text>
-      <text x="110" y="87" text-anchor="middle" font-size="10" fill="#555">(draft)</text>
-      <text x="338" y="68" text-anchor="middle" font-size="12" font-weight="bold">Critic</text>
-      <text x="338" y="87" text-anchor="middle" font-size="10" fill="#555">(review)</text>
-      <text x="566" y="68" text-anchor="middle" font-size="12" font-weight="bold">Refine</text>
-      <text x="566" y="87" text-anchor="middle" font-size="10" fill="#555">(improve)</text>
-      <text x="794" y="68" text-anchor="middle" font-size="12" font-weight="bold">Output</text>
-      <text x="794" y="87" text-anchor="middle" font-size="10" fill="#555">(final)</text>
+      <text x="110" y="71.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Generate</text>
+      <text x="110" y="86.5" text-anchor="middle" font-size="10" fill="#555">(draft)</text>
+      <text x="338" y="71.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Critic</text>
+      <text x="338" y="86.5" text-anchor="middle" font-size="10" fill="#555">(review)</text>
+      <text x="566" y="71.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Refine</text>
+      <text x="566" y="86.5" text-anchor="middle" font-size="10" fill="#555">(improve)</text>
+      <text x="794" y="71.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Output</text>
+      <text x="794" y="86.5" text-anchor="middle" font-size="10" fill="#555">(final)</text>
     </g>
   </g>
 </svg>
@@ -187,24 +187,24 @@ Nem toda tarefa vai pro mesmo agent/modelo. Routing classifica a tarefa e direci
   <g font-family="Segoe UI, Arial, sans-serif">
     <g id="routing-core">
       <rect x="255" y="30" width="250" height="74" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
-      <text x="380" y="60" text-anchor="middle" font-size="12" font-weight="bold">Router Agent</text>
-      <text x="380" y="80" text-anchor="middle" font-size="10" fill="#555">(classifica)</text>
+      <text x="380" y="63.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Router Agent</text>
+      <text x="380" y="78.5" text-anchor="middle" font-size="10" fill="#555">(classifica)</text>
     </g>
     <g id="routing-arrows" fill="none" stroke="#666666" stroke-width="2" marker-end="url(#arrow)">
-      <path d="M 380 104 L 380 140 L 135 140 L 135 174" />
-      <path d="M 380 104 L 380 174" />
-      <path d="M 380 104 L 380 140 L 625 140 L 625 174" />
+      <path d="M 311.4 107 L 191.5 177" />
+      <path d="M 380 110 L 380 180" />
+      <path d="M 448.6 107 L 568.5 177" />
     </g>
     <g id="routing-targets">
       <rect x="40" y="174" width="190" height="72" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
       <rect x="285" y="174" width="190" height="72" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
       <rect x="530" y="174" width="190" height="72" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
-      <text x="135" y="203" text-anchor="middle" font-size="12" font-weight="bold">Agent DB</text>
-      <text x="135" y="222" text-anchor="middle" font-size="10" fill="#555">(database)</text>
-      <text x="380" y="203" text-anchor="middle" font-size="12" font-weight="bold">Agent Net</text>
-      <text x="380" y="222" text-anchor="middle" font-size="10" fill="#555">(network)</text>
-      <text x="625" y="203" text-anchor="middle" font-size="12" font-weight="bold">Agent K8s</text>
-      <text x="625" y="222" text-anchor="middle" font-size="10" fill="#555">(cluster)</text>
+      <text x="135" y="206.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Agent DB</text>
+      <text x="135" y="221.5" text-anchor="middle" font-size="10" fill="#555">(database)</text>
+      <text x="380" y="206.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Agent Net</text>
+      <text x="380" y="221.5" text-anchor="middle" font-size="10" fill="#555">(network)</text>
+      <text x="625" y="206.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Agent K8s</text>
+      <text x="625" y="221.5" text-anchor="middle" font-size="10" fill="#555">(cluster)</text>
     </g>
   </g>
 </svg>
@@ -350,7 +350,7 @@ class Orchestrator:
 
 Na prática, agents sofisticados combinam múltiplos patterns:
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" width="100%" style="max-width:900px;height:auto" role="img" aria-labelledby="combined-patterns-title combined-patterns-desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 392" width="100%" style="max-width:900px;height:auto" role="img" aria-labelledby="combined-patterns-title combined-patterns-desc">
   <title id="combined-patterns-title">Combinação de patterns agentic</title>
   <desc id="combined-patterns-desc">Fluxo em cascata com Routing, Planning, Tool use, Reflection e Evaluator.</desc>
   <defs>
@@ -360,30 +360,30 @@ Na prática, agents sofisticados combinam múltiplos patterns:
   </defs>
   <g font-family="Segoe UI, Arial, sans-serif">
     <g id="combined-arrows" fill="none" stroke="#666666" stroke-width="2" marker-end="url(#arrow)">
-      <path d="M 170 70 L 220 70 L 220 122 L 290 122" />
-      <path d="M 430 122 L 480 122 L 480 174 L 550 174" />
-      <path d="M 690 174 L 710 174 L 710 226" />
-      <path d="M 810 258 L 810 278" />
+      <path d="M 175.9 85.2 L 295.9 109.2" />
+      <path d="M 435.9 136.9 L 555.9 160.4" />
+      <path d="M 704.3 199 L 714.3 199" />
+      <path d="M 810 264 L 810 304" />
     </g>
     <g id="combined-steps">
       <rect x="30" y="38" width="140" height="64" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
       <rect x="290" y="90" width="140" height="64" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
-      <rect x="550" y="142" width="140" height="64" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
-      <rect x="710" y="194" width="160" height="64" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
-      <rect x="710" y="278" width="160" height="64" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="2" />
-      <text x="100" y="64" text-anchor="middle" font-size="12" font-weight="bold">Routing</text>
-      <text x="100" y="83" text-anchor="middle" font-size="10" fill="#555">seleciona agent</text>
-      <text x="100" y="96" text-anchor="middle" font-size="10" fill="#555">especializado</text>
-      <text x="360" y="116" text-anchor="middle" font-size="12" font-weight="bold">Planning</text>
-      <text x="360" y="135" text-anchor="middle" font-size="10" fill="#555">cria plano</text>
-      <text x="620" y="168" text-anchor="middle" font-size="12" font-weight="bold">Tool use</text>
-      <text x="620" y="187" text-anchor="middle" font-size="10" fill="#555">executa cada step</text>
-      <text x="790" y="220" text-anchor="middle" font-size="12" font-weight="bold">Reflection</text>
-      <text x="790" y="239" text-anchor="middle" font-size="10" fill="#555">valida output</text>
-      <text x="790" y="252" text-anchor="middle" font-size="10" fill="#555">de cada step</text>
-      <text x="790" y="304" text-anchor="middle" font-size="12" font-weight="bold">Evaluator</text>
-      <text x="790" y="323" text-anchor="middle" font-size="10" fill="#555">verifica qualidade</text>
-      <text x="790" y="336" text-anchor="middle" font-size="10" fill="#555">final</text>
+      <rect x="550" y="142" width="150" height="64" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
+      <rect x="730" y="194" width="160" height="64" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
+      <rect x="730" y="298" width="160" height="64" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="2" />
+      <text x="100" y="59" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Routing</text>
+      <text x="100" y="74" text-anchor="middle" font-size="10" fill="#555">seleciona agent</text>
+      <text x="100" y="89" text-anchor="middle" font-size="10" fill="#555">especializado</text>
+      <text x="360" y="118.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Planning</text>
+      <text x="360" y="133.5" text-anchor="middle" font-size="10" fill="#555">cria plano</text>
+      <text x="625" y="170.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Tool use</text>
+      <text x="625" y="185.5" text-anchor="middle" font-size="10" fill="#555">executa cada step</text>
+      <text x="810" y="215" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Reflection</text>
+      <text x="810" y="230" text-anchor="middle" font-size="10" fill="#555">valida output</text>
+      <text x="810" y="245" text-anchor="middle" font-size="10" fill="#555">de cada step</text>
+      <text x="810" y="319" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a1c1c">Evaluator</text>
+      <text x="810" y="334" text-anchor="middle" font-size="10" fill="#555">verifica qualidade</text>
+      <text x="810" y="349" text-anchor="middle" font-size="10" fill="#555">final</text>
     </g>
   </g>
 </svg>

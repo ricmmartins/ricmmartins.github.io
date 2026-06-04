@@ -122,55 +122,58 @@ Cache total: 20M × 300 bytes = ~6 GB
 
 ### Arquitetura geral
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 650" width="100%" style="max-width: 100%; height: auto;" role="img" aria-labelledby="url-paths-title">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 910 775" width="100%" style="max-width: 860px; height: auto;" role="img" aria-labelledby="url-paths-title">
   <title id="url-paths-title">Diagrama dos caminhos de criação e redirecionamento do encurtador</title>
   <defs>
     <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+      <path d="M0,0 L0,6 L9,3 z" fill="#555" />
     </marker>
   </defs>
   <g font-family="Segoe UI, Arial, sans-serif">
-    <rect x="20" y="20" width="820" height="220" rx="8" fill="#f5f5f5" stroke="#666666" />
-    <text x="430" y="46" font-size="14" font-weight="bold" text-anchor="middle">WRITE PATH (Create)</text>
-    <rect x="50" y="80" width="120" height="48" rx="6" fill="#f5f5f5" stroke="#666666" />
-    <text x="110" y="109" font-size="12" font-weight="bold" text-anchor="middle">Client</text>
-    <rect x="220" y="80" width="130" height="48" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="285" y="109" font-size="12" font-weight="bold" text-anchor="middle">API Server</text>
-    <rect x="400" y="80" width="140" height="48" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="470" y="109" font-size="12" font-weight="bold" text-anchor="middle">ID Generator</text>
-    <rect x="590" y="80" width="140" height="48" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="660" y="109" font-size="12" font-weight="bold" text-anchor="middle">URL DB</text>
-    <rect x="560" y="160" width="200" height="48" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="660" y="189" font-size="12" font-weight="bold" text-anchor="middle">Cache (warm)</text>
-    <line x1="170" y1="104" x2="220" y2="104" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="350" y1="104" x2="400" y2="104" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="540" y1="104" x2="590" y2="104" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="660" y1="128" x2="660" y2="160" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <rect x="20" y="280" width="820" height="340" rx="8" fill="#f5f5f5" stroke="#666666" />
-    <text x="430" y="306" font-size="14" font-weight="bold" text-anchor="middle">READ PATH (Redirect)</text>
-    <rect x="50" y="340" width="120" height="48" rx="6" fill="#f5f5f5" stroke="#666666" />
-    <text x="110" y="369" font-size="12" font-weight="bold" text-anchor="middle">Client</text>
-    <rect x="220" y="340" width="150" height="48" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="295" y="369" font-size="12" font-weight="bold" text-anchor="middle">CDN / Load Balancer</text>
-    <rect x="420" y="340" width="150" height="48" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="495" y="369" font-size="12" font-weight="bold" text-anchor="middle">Redirect Service</text>
-    <rect x="280" y="430" width="150" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="355" y="455" font-size="12" font-weight="bold" text-anchor="middle">Cache</text>
-    <text x="355" y="473" font-size="10" fill="#555" text-anchor="middle">hit?</text>
-    <rect x="500" y="430" width="140" height="56" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="570" y="463" font-size="12" font-weight="bold" text-anchor="middle">URL DB</text>
-    <rect x="360" y="520" width="270" height="48" rx="6" fill="#fff2cc" stroke="#d6b656" />
-    <text x="495" y="549" font-size="12" font-weight="bold" text-anchor="middle">HTTP 301/302 Redirect</text>
-    <rect x="345" y="590" width="300" height="48" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="495" y="619" font-size="12" font-weight="bold" text-anchor="middle">Analytics Pipeline</text>
-    <line x1="170" y1="364" x2="220" y2="364" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="370" y1="364" x2="420" y2="364" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="495" y1="388" x2="355" y2="430" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="495" y1="388" x2="570" y2="430" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="355" y1="486" x2="460" y2="520" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="570" y1="486" x2="530" y2="520" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="495" y1="568" x2="495" y2="590" stroke="#666666" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arrow)" />
-    <text x="510" y="584" font-size="10" fill="#555">async</text>
+    
+    <rect x="20" y="20" width="860" height="245" rx="12" fill="#f8f9fa" stroke="#ccc" stroke-width="1.5" />
+    <text x="450" y="52" font-size="15" font-weight="bold" text-anchor="middle" fill="#1a3a5c">WRITE PATH (Create)</text>
+    <rect x="60" y="90" width="130" height="55" rx="6" fill="#ffffff" stroke="#999" stroke-width="1.5" />
+    <text x="125" y="121.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#333">Client</text>
+    <rect x="250" y="90" width="150" height="55" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
+    <text x="325" y="121.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a3a5c">API Server</text>
+    <rect x="460" y="90" width="150" height="55" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
+    <text x="535" y="121.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">ID Generator</text>
+    <rect x="670" y="90" width="150" height="55" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
+    <text x="745" y="121.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a3a5c">URL DB</text>
+    <rect x="640" y="185" width="180" height="50" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
+    <text x="730" y="214" font-size="12" font-weight="bold" text-anchor="middle" fill="#1b5e20">Cache (warm)</text>
+    <line x1="196" y1="117.5" x2="256" y2="117.5" stroke="#555" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="406" y1="117.5" x2="466" y2="117.5" stroke="#555" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="616" y1="117.5" x2="676" y2="117.5" stroke="#555" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="739.6" y1="150.9" x2="733.1" y2="190.9" stroke="#555" stroke-width="2" marker-end="url(#arrow)" />
+
+    
+    <rect x="20" y="300" width="860" height="445" rx="12" fill="#f8f9fa" stroke="#ccc" stroke-width="1.5" />
+    <text x="450" y="332" font-size="15" font-weight="bold" text-anchor="middle" fill="#1a3a5c">READ PATH (Redirect)</text>
+    <rect x="60" y="370" width="130" height="55" rx="6" fill="#ffffff" stroke="#999" stroke-width="1.5" />
+    <text x="125" y="401.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#333">Client</text>
+    <rect x="250" y="370" width="190" height="55" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
+    <text x="345" y="401.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a3a5c">CDN / Load Balancer</text>
+    <rect x="500" y="370" width="170" height="55" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
+    <text x="585" y="401.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">Redirect Service</text>
+    <rect x="280" y="475" width="160" height="60" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
+    <text x="360" y="501.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#1b5e20">Cache</text>
+    <text x="360" y="516.5" font-size="10" text-anchor="middle" fill="#555">hit?</text>
+    <rect x="530" y="475" width="160" height="60" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
+    <text x="610" y="509" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a3a5c">URL DB</text>
+    <rect x="350" y="575" width="270" height="50" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
+    <text x="485" y="604" font-size="12" font-weight="bold" text-anchor="middle" fill="#7c6200">HTTP 301/302 Redirect</text>
+    <rect x="350" y="665" width="270" height="50" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
+    <text x="485" y="694" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">Analytics Pipeline</text>
+    <line x1="196" y1="397.5" x2="256" y2="397.5" stroke="#555" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="446" y1="397.5" x2="506" y2="397.5" stroke="#555" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="522" y1="427.6" x2="417.4" y2="477.6" stroke="#555" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="592.8" y1="430.8" x2="604.4" y2="480.8" stroke="#555" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="404.3" y1="538.6" x2="456.9" y2="578.6" stroke="#555" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="565.7" y1="538.6" x2="513.1" y2="578.6" stroke="#555" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="485" y1="631" x2="485" y2="671" stroke="#555" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#arrow)" />
+    <text x="485" y="636" font-size="10" fill="#555" text-anchor="middle">async</text>
   </g>
 </svg>
 
@@ -355,38 +358,46 @@ Com 1.5 TB em 5 anos, um PostgreSQL com bom hardware (NVMe SSD) serve sem proble
 
 O sistema é **extremamente read-heavy** (1000:1). Cache hit rate esperado: >99%.
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 360" width="100%" style="max-width: 100%; height: auto;" role="img" aria-labelledby="url-cache-title">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430" width="100%" style="max-width: 860px; height: auto;" role="img" aria-labelledby="url-cache-title">
   <title id="url-cache-title">Diagrama do fluxo cache-aside do redirecionamento</title>
   <defs>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+    <marker id="arrow2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#555" />
     </marker>
   </defs>
   <g font-family="Segoe UI, Arial, sans-serif">
-    <rect x="300" y="20" width="260" height="48" rx="6" fill="#f5f5f5" stroke="#666666" />
-    <text x="430" y="49" font-size="12" font-weight="bold" text-anchor="middle">Redirect request: GET /abc123</text>
-    <rect x="300" y="100" width="260" height="48" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="430" y="129" font-size="12" font-weight="bold" text-anchor="middle">Redis: GET url:abc123</text>
-    <rect x="90" y="190" width="250" height="70" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="215" y="218" font-size="12" font-weight="bold" text-anchor="middle">HIT (99%+ dos casos)</text>
-    <text x="215" y="238" font-size="10" fill="#555" text-anchor="middle">retorna long_url</text>
-    <text x="215" y="252" font-size="10" fill="#555" text-anchor="middle">redirect</text>
-    <rect x="520" y="190" width="250" height="54" rx="6" fill="#fff2cc" stroke="#d6b656" />
-    <text x="645" y="216" font-size="12" font-weight="bold" text-anchor="middle">MISS</text>
-    <text x="645" y="234" font-size="10" fill="#555" text-anchor="middle">query DB → retorna long_url</text>
-    <rect x="520" y="270" width="250" height="54" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="645" y="294" font-size="12" font-weight="bold" text-anchor="middle">SET url:abc123 {long_url} EX 86400</text>
-    <text x="645" y="312" font-size="10" fill="#555" text-anchor="middle">cacheia por 24h</text>
-    <rect x="320" y="300" width="220" height="42" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="430" y="326" font-size="12" font-weight="bold" text-anchor="middle">redirect</text>
-    <line x1="430" y1="68" x2="430" y2="100" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="370" y1="148" x2="245" y2="190" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="490" y1="148" x2="615" y2="190" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="215" y1="260" x2="380" y2="300" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="645" y1="244" x2="645" y2="270" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="610" y1="324" x2="490" y2="300" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <text x="250" y="176" font-size="10" fill="#555">HIT</text>
-    <text x="610" y="176" font-size="10" fill="#555">MISS</text>
+    
+    <rect x="300" y="20" width="300" height="55" rx="6" fill="#ffffff" stroke="#999" stroke-width="1.5" />
+    <text x="450" y="51.5" font-size="13" font-weight="bold" text-anchor="middle" fill="#333">Redirect request: GET /abc123</text>
+    
+    <rect x="300" y="115" width="300" height="55" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
+    <text x="450" y="146.5" font-size="13" font-weight="bold" text-anchor="middle" fill="#1b5e20">Redis: GET url:abc123</text>
+    
+    <rect x="60" y="220" width="280" height="80" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
+    <text x="200" y="249" font-size="13" font-weight="bold" text-anchor="middle" fill="#1b5e20">HIT (99%+ dos casos)</text>
+    <text x="200" y="264" font-size="11" text-anchor="middle" fill="#555">retorna long_url</text>
+    <text x="200" y="279" font-size="11" text-anchor="middle" fill="#555">redirect</text>
+    
+    <rect x="560" y="220" width="280" height="70" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
+    <text x="700" y="251.5" font-size="13" font-weight="bold" text-anchor="middle" fill="#7c6200">MISS</text>
+    <text x="700" y="266.5" font-size="11" text-anchor="middle" fill="#555">query DB, retorna long_url</text>
+    
+    <rect x="520" y="330" width="320" height="70" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
+    <text x="680" y="361.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a3a5c">SET url:abc123 {long_url} EX 86400</text>
+    <text x="680" y="376.5" font-size="10" text-anchor="middle" fill="#555">cacheia por 24h</text>
+    
+    <rect x="250" y="340" width="200" height="50" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
+    <text x="350" y="369" font-size="13" font-weight="bold" text-anchor="middle" fill="#4a235a">redirect</text>
+    
+    <line x1="450" y1="81" x2="450" y2="121" stroke="#555" stroke-width="2" marker-end="url(#arrow2)" />
+    <line x1="386.1" y1="172.6" x2="279.7" y2="222.6" stroke="#555" stroke-width="2" marker-end="url(#arrow2)" />
+    <line x1="516.6" y1="172.5" x2="627.7" y2="222.5" stroke="#555" stroke-width="2" marker-end="url(#arrow2)" />
+    <line x1="262.1" y1="303.4" x2="319.2" y2="343.4" stroke="#555" stroke-width="2" marker-end="url(#arrow2)" />
+    <line x1="692.6" y1="295.9" x2="685.3" y2="335.9" stroke="#555" stroke-width="2" marker-end="url(#arrow2)" />
+    <line x1="514" y1="365" x2="444" y2="365" stroke="#555" stroke-width="2" marker-end="url(#arrow2)" />
+    
+    <text x="280" y="195" font-size="11" fill="#2e7d32" font-weight="bold">HIT</text>
+    <text x="590" y="195" font-size="11" fill="#c62828" font-weight="bold">MISS</text>
   </g>
 </svg>
 
@@ -497,7 +508,7 @@ O redirect NÃO espera analytics ser processado. Registro é assíncrono.
 
 ### Arquitetura de analytics
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 390" width="100%" style="max-width: 100%; height: auto;" role="img" aria-labelledby="url-analytics-title">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 910 390" width="100%" style="max-width: 100%; height: auto;" role="img" aria-labelledby="url-analytics-title">
   <title id="url-analytics-title">Diagrama da fan-out assíncrona de analytics do encurtador</title>
   <defs>
     <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
@@ -506,27 +517,27 @@ O redirect NÃO espera analytics ser processado. Registro é assíncrono.
   </defs>
   <g font-family="Segoe UI, Arial, sans-serif">
     <rect x="340" y="20" width="220" height="48" rx="6" fill="#f5f5f5" stroke="#666666" />
-    <text x="450" y="49" font-size="12" font-weight="bold" text-anchor="middle">Redirect acontece</text>
-    <rect x="320" y="100" width="260" height="52" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="450" y="128" font-size="12" font-weight="bold" text-anchor="middle">Kafka topic: click_events</text>
-    <text x="450" y="145" font-size="10" fill="#555" text-anchor="middle">fire-and-forget</text>
-    <rect x="40" y="220" width="240" height="86" rx="8" fill="#d5e8d4" stroke="#82b366" />
-    <text x="160" y="248" font-size="12" font-weight="bold" text-anchor="middle">Consumer: Real-time counter</text>
-    <text x="160" y="268" font-size="10" fill="#555" text-anchor="middle">Redis INCR</text>
-    <text x="160" y="286" font-size="10" fill="#555" text-anchor="middle">Incrementa click_count:{short_code}</text>
-    <rect x="330" y="220" width="240" height="96" rx="8" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="450" y="248" font-size="12" font-weight="bold" text-anchor="middle">Consumer: Analytics aggregator</text>
-    <text x="450" y="268" font-size="10" fill="#555" text-anchor="middle">Agrega por hora, geo, device, referer</text>
-    <text x="450" y="286" font-size="10" fill="#555" text-anchor="middle">Escreve em batch no Analytics DB</text>
-    <text x="450" y="302" font-size="10" fill="#555" text-anchor="middle">(cada 10s)</text>
-    <rect x="620" y="220" width="240" height="86" rx="8" fill="#fff2cc" stroke="#d6b656" />
-    <text x="740" y="248" font-size="12" font-weight="bold" text-anchor="middle">Consumer: Raw event archive</text>
-    <text x="740" y="268" font-size="10" fill="#555" text-anchor="middle">S3 / Blob</text>
-    <text x="740" y="286" font-size="10" fill="#555" text-anchor="middle">pra queries ad-hoc futuras</text>
-    <line x1="450" y1="68" x2="450" y2="100" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="450" y1="152" x2="160" y2="220" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="450" y1="152" x2="450" y2="220" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="450" y1="152" x2="740" y2="220" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <text x="450" y="48" font-size="12" font-weight="bold" text-anchor="middle" fill="#333333">Redirect acontece</text>
+    <rect x="320" y="108" width="260" height="52" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+    <text x="450" y="130.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">Kafka topic: click_events</text>
+    <text x="450" y="145.5" font-size="10" fill="#555" text-anchor="middle">fire-and-forget</text>
+    <rect x="40" y="220" width="250" height="86" rx="8" fill="#d5e8d4" stroke="#82b366" />
+    <text x="165" y="252" font-size="12" font-weight="bold" text-anchor="middle" fill="#1b5e20">Consumer: Real-time counter</text>
+    <text x="165" y="267" font-size="10" fill="#555" text-anchor="middle">Redis INCR</text>
+    <text x="165" y="282" font-size="10" fill="#555" text-anchor="middle">Incrementa click_count:{short_code}</text>
+    <rect x="330" y="220" width="270" height="96" rx="8" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="465" y="249.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a3a5c">Consumer: Analytics aggregator</text>
+    <text x="465" y="264.5" font-size="10" fill="#555" text-anchor="middle">Agrega por hora, geo, device, referer</text>
+    <text x="465" y="279.5" font-size="10" fill="#555" text-anchor="middle">Escreve em batch no Analytics DB</text>
+    <text x="465" y="294.5" font-size="10" fill="#555" text-anchor="middle">(cada 10s)</text>
+    <rect x="630" y="220" width="250" height="86" rx="8" fill="#fff2cc" stroke="#d6b656" />
+    <text x="755" y="252" font-size="12" font-weight="bold" text-anchor="middle" fill="#7c6200">Consumer: Raw event archive</text>
+    <text x="755" y="267" font-size="10" fill="#555" text-anchor="middle">S3 / Blob</text>
+    <text x="755" y="282" font-size="10" fill="#555" text-anchor="middle">pra queries ad-hoc futuras</text>
+    <line x1="450" y1="74" x2="450" y2="114" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="387.1" y1="162.5" x2="254.5" y2="222.5" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="453.6" y1="166" x2="460.3" y2="226" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="517" y1="162.3" x2="658.9" y2="222.3" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
   </g>
 </svg>
 
@@ -695,7 +706,7 @@ URL shortener **não pode cair**. Links estão em emails, tweets, cartões de vi
 
 ### Multi-region deployment
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" width="100%" style="max-width: 100%; height: auto;" role="img" aria-labelledby="url-regions-title">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 448" width="100%" style="max-width: 100%; height: auto;" role="img" aria-labelledby="url-regions-title">
   <title id="url-regions-title">Diagrama do deployment multi-region do encurtador</title>
   <defs>
     <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
@@ -704,31 +715,31 @@ URL shortener **não pode cair**. Links estão em emails, tweets, cartões de vi
   </defs>
   <g font-family="Segoe UI, Arial, sans-serif">
     <rect x="355" y="20" width="250" height="50" rx="6" fill="#f5f5f5" stroke="#666666" />
-    <text x="480" y="50" font-size="12" font-weight="bold" text-anchor="middle">DNS (GeoDNS / Anycast)</text>
-    <rect x="50" y="110" width="360" height="260" rx="8" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="230" y="138" font-size="14" font-weight="bold" text-anchor="middle">Region: US-East</text>
-    <rect x="110" y="160" width="240" height="52" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="230" y="188" font-size="12" font-weight="bold" text-anchor="middle">LB → Redirect Service (N pods)</text>
-    <rect x="130" y="235" width="200" height="48" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="230" y="264" font-size="12" font-weight="bold" text-anchor="middle">Redis Cluster</text>
-    <rect x="110" y="305" width="240" height="48" rx="6" fill="#fff2cc" stroke="#d6b656" />
-    <text x="230" y="334" font-size="12" font-weight="bold" text-anchor="middle">PostgreSQL (primary)</text>
-    <rect x="550" y="110" width="360" height="260" rx="8" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="730" y="138" font-size="14" font-weight="bold" text-anchor="middle">Region: EU-West</text>
-    <rect x="610" y="160" width="240" height="52" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="730" y="188" font-size="12" font-weight="bold" text-anchor="middle">LB → Redirect Service (N pods)</text>
-    <rect x="630" y="235" width="200" height="48" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="730" y="264" font-size="12" font-weight="bold" text-anchor="middle">Redis Cluster</text>
-    <rect x="610" y="305" width="240" height="48" rx="6" fill="#fff2cc" stroke="#d6b656" />
-    <text x="730" y="334" font-size="12" font-weight="bold" text-anchor="middle">PostgreSQL (read replica)</text>
-    <line x1="480" y1="70" x2="230" y2="110" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="480" y1="70" x2="730" y2="110" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="230" y1="212" x2="230" y2="235" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="230" y1="283" x2="230" y2="305" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="730" y1="212" x2="730" y2="235" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="730" y1="283" x2="730" y2="305" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="350" y1="329" x2="610" y2="329" stroke="#666666" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arrow)" />
-    <line x1="610" y1="345" x2="350" y2="345" stroke="#666666" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arrow)" />
+    <text x="480" y="49" font-size="12" font-weight="bold" text-anchor="middle" fill="#333333">DNS (GeoDNS / Anycast)</text>
+    <rect x="50" y="110" width="360" height="308" rx="8" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="230" y="138" font-size="14" font-weight="bold" text-anchor="middle" fill="#1a3a5c">Region: US-East</text>
+    <rect x="110" y="160" width="270" height="52" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+    <text x="245" y="190" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">LB → Redirect Service (N pods)</text>
+    <rect x="130" y="252" width="200" height="48" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="230" y="280" font-size="12" font-weight="bold" text-anchor="middle" fill="#1b5e20">Redis Cluster</text>
+    <rect x="110" y="340" width="240" height="48" rx="6" fill="#fff2cc" stroke="#d6b656" />
+    <text x="230" y="368" font-size="12" font-weight="bold" text-anchor="middle" fill="#7c6200">PostgreSQL (primary)</text>
+    <rect x="550" y="110" width="360" height="308" rx="8" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="730" y="138" font-size="14" font-weight="bold" text-anchor="middle" fill="#1a3a5c">Region: EU-West</text>
+    <rect x="610" y="160" width="270" height="52" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+    <text x="745" y="190" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">LB → Redirect Service (N pods)</text>
+    <rect x="630" y="252" width="200" height="48" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="730" y="280" font-size="12" font-weight="bold" text-anchor="middle" fill="#1b5e20">Redis Cluster</text>
+    <rect x="610" y="340" width="240" height="48" rx="6" fill="#fff2cc" stroke="#d6b656" />
+    <text x="730" y="368" font-size="12" font-weight="bold" text-anchor="middle" fill="#7c6200">PostgreSQL (read replica)</text>
+    <line x1="433.2" y1="73.1" x2="283.2" y2="163.1" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="532.3" y1="72.8" x2="701.4" y2="162.8" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="239.7" y1="217.9" x2="233" y2="257.9" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="230" y1="306" x2="230" y2="346" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="739.7" y1="217.9" x2="733" y2="257.9" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="730" y1="306" x2="730" y2="346" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="532.3" y1="72.8" x2="701.4" y2="162.8" stroke="#666666" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arrow)" />
+    <line x1="604.1" y1="210.6" x2="324.1" y2="259.6" stroke="#666666" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arrow)" />
     <text x="480" y="320" font-size="10" fill="#555" text-anchor="middle">async replication</text>
   </g>
 </svg>

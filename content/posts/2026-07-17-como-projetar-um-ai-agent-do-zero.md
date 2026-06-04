@@ -239,57 +239,57 @@ Decomposição recursiva: tarefa grande → subtarefas → sub-subtarefas.
   <g font-family="Segoe UI, Arial, sans-serif">
     <g id="root-task">
       <rect x="270" y="20" width="400" height="60" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
-      <text x="470" y="45" text-anchor="middle" font-size="12" font-weight="bold">Tarefa</text>
-      <text x="470" y="63" text-anchor="middle" font-size="10" fill="#555">Migrar o banco de dados pra nova região</text>
+      <text x="470" y="46.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Tarefa</text>
+      <text x="470" y="61.5" text-anchor="middle" font-size="10" fill="#555">Migrar o banco de dados pra nova região</text>
     </g>
     <g id="subtasks">
       <g>
         <rect x="40" y="120" width="240" height="60" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
-        <text x="160" y="145" text-anchor="middle" font-size="12" font-weight="bold">Subtarefa 1</text>
-        <text x="160" y="163" text-anchor="middle" font-size="10" fill="#555">Verificar pré-requisitos</text>
+        <text x="160" y="146.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Subtarefa 1</text>
+        <text x="160" y="161.5" text-anchor="middle" font-size="10" fill="#555">Verificar pré-requisitos</text>
       </g>
       <g>
         <rect x="350" y="120" width="240" height="60" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
-        <text x="470" y="145" text-anchor="middle" font-size="12" font-weight="bold">Subtarefa 2</text>
-        <text x="470" y="163" text-anchor="middle" font-size="10" fill="#555">Executar migração</text>
+        <text x="470" y="146.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Subtarefa 2</text>
+        <text x="470" y="161.5" text-anchor="middle" font-size="10" fill="#555">Executar migração</text>
       </g>
       <g>
         <rect x="660" y="120" width="240" height="60" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
-        <text x="780" y="145" text-anchor="middle" font-size="12" font-weight="bold">Subtarefa 3</text>
-        <text x="780" y="163" text-anchor="middle" font-size="10" fill="#555">Validar</text>
+        <text x="780" y="146.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Subtarefa 3</text>
+        <text x="780" y="161.5" text-anchor="middle" font-size="10" fill="#555">Validar</text>
       </g>
     </g>
     <g id="task-arrows" fill="none" stroke="#666666" stroke-width="2" marker-end="url(#arrow)">
-      <line x1="410" y1="80" x2="160" y2="120" />
-      <line x1="470" y1="80" x2="470" y2="120" />
-      <line x1="530" y1="80" x2="780" y2="120" />
-      <line x1="160" y1="180" x2="160" y2="220" />
-      <line x1="470" y1="180" x2="470" y2="220" />
-      <line x1="780" y1="180" x2="780" y2="220" />
+      <line x1="371.3" y1="81.8" x2="247.3" y2="121.8" />
+      <line x1="470" y1="86" x2="470" y2="126" />
+      <line x1="568.7" y1="81.8" x2="692.7" y2="121.8" />
+      <line x1="160" y1="186" x2="160" y2="226" />
+      <line x1="479.7" y1="185.8" x2="490.6" y2="225.8" />
+      <line x1="780" y1="186" x2="780" y2="226" />
     </g>
     <g id="subtask-1-steps">
       <rect x="60" y="220" width="200" height="44" rx="6" fill="#f5f5f5" stroke="#666666" />
-      <rect x="60" y="276" width="200" height="44" rx="6" fill="#f5f5f5" stroke="#666666" />
-      <rect x="60" y="332" width="200" height="44" rx="6" fill="#f5f5f5" stroke="#666666" />
-      <text x="160" y="247" text-anchor="middle" font-size="12" font-weight="bold">Checar replicação</text>
-      <text x="160" y="303" text-anchor="middle" font-size="12" font-weight="bold">Verificar espaço em disco</text>
-      <text x="160" y="359" text-anchor="middle" font-size="12" font-weight="bold">Confirmar janela de manutenção</text>
+      <rect x="60" y="304" width="230" height="44" rx="6" fill="#f5f5f5" stroke="#666666" />
+      <rect x="60" y="332" width="270" height="44" rx="6" fill="#f5f5f5" stroke="#666666" />
+      <text x="160" y="246" text-anchor="middle" font-size="12" font-weight="bold" fill="#333333">Checar replicação</text>
+      <text x="175" y="330" text-anchor="middle" font-size="12" font-weight="bold" fill="#333333">Verificar espaço em disco</text>
+      <text x="195" y="358" text-anchor="middle" font-size="12" font-weight="bold" fill="#333333">Confirmar janela de manutenção</text>
     </g>
     <g id="subtask-2-steps">
-      <rect x="370" y="220" width="200" height="44" rx="6" fill="#f5f5f5" stroke="#666666" />
-      <rect x="370" y="276" width="200" height="44" rx="6" fill="#f5f5f5" stroke="#666666" />
+      <rect x="370" y="220" width="250" height="44" rx="6" fill="#f5f5f5" stroke="#666666" />
+      <rect x="370" y="304" width="200" height="44" rx="6" fill="#f5f5f5" stroke="#666666" />
       <rect x="370" y="332" width="200" height="44" rx="6" fill="#f5f5f5" stroke="#666666" />
-      <text x="470" y="247" text-anchor="middle" font-size="12" font-weight="bold">Criar réplica na nova região</text>
-      <text x="470" y="303" text-anchor="middle" font-size="12" font-weight="bold">Aguardar sync</text>
-      <text x="470" y="359" text-anchor="middle" font-size="12" font-weight="bold">Fazer cutover</text>
+      <text x="495" y="246" text-anchor="middle" font-size="12" font-weight="bold" fill="#333333">Criar réplica na nova região</text>
+      <text x="470" y="330" text-anchor="middle" font-size="12" font-weight="bold" fill="#333333">Aguardar sync</text>
+      <text x="470" y="358" text-anchor="middle" font-size="12" font-weight="bold" fill="#333333">Fazer cutover</text>
     </g>
     <g id="subtask-3-steps">
       <rect x="680" y="220" width="200" height="44" rx="6" fill="#f5f5f5" stroke="#666666" />
-      <rect x="680" y="276" width="200" height="44" rx="6" fill="#f5f5f5" stroke="#666666" />
+      <rect x="680" y="304" width="200" height="44" rx="6" fill="#f5f5f5" stroke="#666666" />
       <rect x="680" y="332" width="200" height="44" rx="6" fill="#f5f5f5" stroke="#666666" />
-      <text x="780" y="247" text-anchor="middle" font-size="12" font-weight="bold">Testar conectividade</text>
-      <text x="780" y="303" text-anchor="middle" font-size="12" font-weight="bold">Verificar integridade</text>
-      <text x="780" y="359" text-anchor="middle" font-size="12" font-weight="bold">Atualizar DNS</text>
+      <text x="780" y="246" text-anchor="middle" font-size="12" font-weight="bold" fill="#333333">Testar conectividade</text>
+      <text x="780" y="330" text-anchor="middle" font-size="12" font-weight="bold" fill="#333333">Verificar integridade</text>
+      <text x="780" y="358" text-anchor="middle" font-size="12" font-weight="bold" fill="#333333">Atualizar DNS</text>
     </g>
   </g>
 </svg>

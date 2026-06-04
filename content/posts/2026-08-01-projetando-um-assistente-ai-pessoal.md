@@ -39,51 +39,51 @@ Não é um toy project. É um system design completo, do tipo que você faria nu
 
 ## Arquitetura de alto nível
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 550" style="width:100%;height:auto" role="img" aria-label="Arquitetura de alto nível de um assistente pessoal com frontend, backend, RAG, agent core, memória e integrações">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 556" style="width:100%;height:auto" role="img" aria-label="Arquitetura de alto nível de um assistente pessoal com frontend, backend, RAG, agent core, memória e integrações">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666666"/>
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666666" />
     </marker>
   </defs>
   <g font-family="Segoe UI, Arial, sans-serif">
-    <rect x="170" y="20" width="620" height="76" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
-    <text x="480" y="48" text-anchor="middle" font-size="14" font-weight="bold" fill="#111111">FRONTEND</text>
-    <text x="480" y="68" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">Web UI (chat interface) ou Slack/Teams integration</text>
-    <line x1="480" y1="96" x2="480" y2="140" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
-    <text x="500" y="122" text-anchor="start" font-size="10" font-weight="normal" fill="#555555">WebSocket/HTTP</text>
-    <rect x="150" y="140" width="660" height="120" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
-    <text x="480" y="170" text-anchor="middle" font-size="14" font-weight="bold" fill="#111111">BACKEND API</text>
-    <text x="180" y="194" text-anchor="start" font-size="10" font-weight="normal" fill="#555555">FastAPI + WebSocket</text>
-    <text x="180" y="212" text-anchor="start" font-size="10" font-weight="normal" fill="#555555">- Auth (Entra ID)</text>
-    <text x="180" y="230" text-anchor="start" font-size="10" font-weight="normal" fill="#555555">- Session management</text>
-    <text x="180" y="248" text-anchor="start" font-size="10" font-weight="normal" fill="#555555">- Rate limiting</text>
-    <path d="M 320 260 V 320" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
-    <path d="M 480 260 V 320" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
-    <path d="M 640 260 V 320" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
-    <rect x="50" y="320" width="220" height="96" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
-    <text x="160" y="350" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">RAG Engine</text>
+    <rect x="170" y="20" width="620" height="76" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
+    <text x="480" y="54.5" text-anchor="middle" font-size="14" font-weight="bold" fill="#111111">FRONTEND</text>
+    <text x="480" y="69.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">Web UI (chat interface) ou Slack/Teams integration</text>
+    <line x1="480" y1="102" x2="480" y2="146" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <text x="480" y="166.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">WebSocket/HTTP</text>
+    <rect x="150" y="140" width="660" height="120" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2" />
+    <text x="480" y="181.5" text-anchor="middle" font-size="14" font-weight="bold" fill="#111111">BACKEND API</text>
+    <text x="480" y="196.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">FastAPI + WebSocket</text>
+    <text x="480" y="211.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">- Auth (Entra ID)</text>
+    <text x="480" y="226.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">- Session management</text>
+    <text x="480" y="241.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">- Rate limiting</text>
+    <path d="M 144 200 V 284 H 276 V 368" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <path d="M 480 266 V 290 H 480 V 314" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <path d="M 816 200 H 730 V 368 H 644" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <rect x="50" y="320" width="220" height="96" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
+    <text x="160" y="357" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">RAG Engine</text>
     <text x="160" y="372" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">Azure AI Search</text>
-    <text x="160" y="388" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">(docs index)</text>
-    <rect x="370" y="320" width="220" height="96" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
-    <text x="480" y="350" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Agent Core</text>
+    <text x="160" y="387" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">(docs index)</text>
+    <rect x="370" y="320" width="220" height="96" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
+    <text x="480" y="357" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Agent Core</text>
     <text x="480" y="372" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">LLM + Tools</text>
-    <text x="480" y="388" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">(GPT-4o)</text>
-    <rect x="650" y="320" width="280" height="96" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
-    <text x="790" y="350" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Memory Service</text>
+    <text x="480" y="387" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">(GPT-4o)</text>
+    <rect x="650" y="320" width="280" height="96" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
+    <text x="790" y="357" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Memory Service</text>
     <text x="790" y="372" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">Short-term: Redis</text>
-    <text x="790" y="388" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">Long-term: Cosmos DB</text>
-    <path d="M 480 416 V 452 H 165 V 470" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
-    <path d="M 480 416 V 470" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
-    <path d="M 480 416 V 452 H 795 V 470" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
-    <rect x="80" y="470" width="170" height="56" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
-    <text x="165" y="494" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Azure Monitor</text>
-    <text x="165" y="512" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">(metrics)</text>
-    <rect x="405" y="470" width="150" height="56" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
-    <text x="480" y="494" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">K8s API</text>
-    <text x="480" y="512" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">(pods)</text>
-    <rect x="700" y="470" width="190" height="56" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="2"/>
-    <text x="795" y="494" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Ticket System</text>
-    <text x="795" y="512" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">(create)</text>
+    <text x="790" y="387" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">Long-term: Cosmos DB</text>
+    <path d="M 364 368 V 433 H 256 V 498" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <path d="M 480 422 V 443 H 480 V 464" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <path d="M 596 368 V 433 H 694 V 498" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <rect x="80" y="470" width="170" height="56" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
+    <text x="165" y="494.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Azure Monitor</text>
+    <text x="165" y="509.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">(metrics)</text>
+    <rect x="405" y="470" width="150" height="56" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2" />
+    <text x="480" y="494.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">K8s API</text>
+    <text x="480" y="509.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">(pods)</text>
+    <rect x="700" y="470" width="190" height="56" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="2" />
+    <text x="795" y="494.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Ticket System</text>
+    <text x="795" y="509.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">(create)</text>
   </g>
 </svg>
 

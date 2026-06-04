@@ -53,12 +53,12 @@ RL funciona assim:
   </defs>
   <g font-family="Segoe UI, Arial, sans-serif">
     <rect x="70" y="70" width="150" height="70" rx="8" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="145" y="112" font-size="14" font-weight="bold" text-anchor="middle">Agent</text>
+    <text x="145" y="109" font-size="14" font-weight="bold" text-anchor="middle" fill="#1a3a5c">Agent</text>
     <rect x="410" y="55" width="180" height="100" rx="8" fill="#d5e8d4" stroke="#82b366" />
-    <text x="500" y="112" font-size="14" font-weight="bold" text-anchor="middle">Environment</text>
-    <line x1="220" y1="92" x2="410" y2="92" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <text x="500" y="109" font-size="14" font-weight="bold" text-anchor="middle" fill="#1b5e20">Environment</text>
+    <line x1="226" y1="105" x2="416" y2="105" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
     <text x="315" y="78" font-size="10" fill="#555" text-anchor="middle">ação</text>
-    <line x1="410" y1="126" x2="220" y2="126" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="404" y1="105" x2="214" y2="105" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
     <text x="315" y="156" font-size="10" fill="#555" text-anchor="middle">reward + novo estado</text>
   </g>
 </svg>
@@ -114,25 +114,25 @@ O resultado é um modelo que aprende preferências humanas sem que ninguém prec
   </defs>
   <g font-family="Segoe UI, Arial, sans-serif">
     <rect x="40" y="40" width="170" height="64" rx="8" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="125" y="68" font-size="12" font-weight="bold" text-anchor="middle">LLM base</text>
-    <text x="125" y="86" font-size="10" fill="#555" text-anchor="middle">(SFT)</text>
+    <text x="125" y="68.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a3a5c">LLM base</text>
+    <text x="125" y="83.5" font-size="10" fill="#555" text-anchor="middle">(SFT)</text>
     <rect x="600" y="40" width="190" height="64" rx="8" fill="#fff2cc" stroke="#d6b656" />
-    <text x="695" y="68" font-size="12" font-weight="bold" text-anchor="middle">Comparações humanas</text>
+    <text x="695" y="76" font-size="12" font-weight="bold" text-anchor="middle" fill="#7c6200">Comparações humanas</text>
     <rect x="595" y="145" width="200" height="58" rx="8" fill="#d5e8d4" stroke="#82b366" />
-    <text x="695" y="179" font-size="12" font-weight="bold" text-anchor="middle">Reward Model</text>
+    <text x="695" y="185.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#1b5e20">Reward Model</text>
     <rect x="580" y="250" width="230" height="64" rx="8" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="695" y="278" font-size="12" font-weight="bold" text-anchor="middle">PPO</text>
-    <text x="695" y="296" font-size="10" fill="#555" text-anchor="middle">(algoritmo)</text>
+    <text x="695" y="286" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">PPO</text>
+    <text x="695" y="301" font-size="10" fill="#555" text-anchor="middle">(algoritmo)</text>
     <rect x="40" y="250" width="180" height="64" rx="8" fill="#d5e8d4" stroke="#82b366" />
-    <text x="130" y="278" font-size="12" font-weight="bold" text-anchor="middle">LLM final</text>
-    <text x="130" y="296" font-size="10" fill="#555" text-anchor="middle">(aligned)</text>
-    <line x1="210" y1="72" x2="600" y2="72" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <text x="130" y="278.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#1b5e20">LLM final</text>
+    <text x="130" y="293.5" font-size="10" fill="#555" text-anchor="middle">(aligned)</text>
+    <line x1="216" y1="72" x2="606" y2="72" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
     <text x="405" y="58" font-size="10" fill="#555" text-anchor="middle">gera respostas</text>
-    <line x1="695" y1="104" x2="695" y2="145" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <text x="712" y="128" font-size="10" fill="#555">treina</text>
-    <line x1="695" y1="203" x2="695" y2="250" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <text x="712" y="230" font-size="10" fill="#555">score</text>
-    <line x1="580" y1="282" x2="220" y2="282" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="695" y1="110" x2="695" y2="151" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <text x="695" y="170.5" font-size="10" fill="#555" text-anchor="middle">treina</text>
+    <line x1="695" y1="209" x2="695" y2="256" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <text x="695" y="271" font-size="10" fill="#555" text-anchor="middle">score</text>
+    <line x1="574" y1="282" x2="214" y2="282" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
     <text x="400" y="268" font-size="10" fill="#555" text-anchor="middle">otimiza policy</text>
   </g>
 </svg>

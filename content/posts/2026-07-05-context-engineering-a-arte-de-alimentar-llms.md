@@ -59,7 +59,7 @@ O context window é finito. GPT-4o tem 128K tokens, mas isso não significa que 
 
 A divisão típica:
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 170" width="100%" role="img" aria-labelledby="context-window-title">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 190" width="100%" role="img" aria-labelledby="context-window-title">
   <title id="context-window-title">Divisão do context window</title>
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
@@ -67,24 +67,24 @@ A divisão típica:
     </marker>
   </defs>
   <g font-family="Segoe UI, Arial, sans-serif">
-    <rect x="20" y="20" width="800" height="130" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2" />
+    <rect x="20" y="20" width="870" height="140" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2" />
     <text x="420" y="46" text-anchor="middle" font-size="14" font-weight="bold" fill="#1f1f1f">Context Window (128K tokens)</text>
 
     <rect x="40" y="68" width="180" height="62" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
-    <text x="130" y="92" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">System prompt</text>
-    <text x="130" y="112" text-anchor="middle" font-size="10" fill="#555555">500-2000</text>
+    <text x="130" y="95.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">System prompt</text>
+    <text x="130" y="110.5" text-anchor="middle" font-size="10" fill="#555555">500-2000</text>
 
-    <rect x="230" y="68" width="180" height="62" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2" />
-    <text x="320" y="92" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">Histórico</text>
-    <text x="320" y="112" text-anchor="middle" font-size="10" fill="#555555">variável</text>
+    <rect x="250" y="68" width="180" height="62" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2" />
+    <text x="340" y="95.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">Histórico</text>
+    <text x="340" y="110.5" text-anchor="middle" font-size="10" fill="#555555">variável</text>
 
-    <rect x="420" y="68" width="180" height="62" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
-    <text x="510" y="92" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">RAG docs</text>
-    <text x="510" y="112" text-anchor="middle" font-size="10" fill="#555555">2K-10K</text>
+    <rect x="460" y="68" width="180" height="62" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
+    <text x="550" y="95.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">RAG docs</text>
+    <text x="550" y="110.5" text-anchor="middle" font-size="10" fill="#555555">2K-10K</text>
 
-    <rect x="610" y="68" width="190" height="62" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
-    <text x="705" y="92" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">Output reserved</text>
-    <text x="705" y="112" text-anchor="middle" font-size="10" fill="#555555">2K-4K</text>
+    <rect x="670" y="68" width="190" height="62" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
+    <text x="765" y="95.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">Output reserved</text>
+    <text x="765" y="110.5" text-anchor="middle" font-size="10" fill="#555555">2K-4K</text>
   </g>
 </svg>
 
