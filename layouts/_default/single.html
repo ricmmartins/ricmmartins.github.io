@@ -34,6 +34,8 @@
   {{- partial "toc.html" . }}
   {{- end }}
 
+  {{- partial "ads/ad-post-top.html" . }}
+
   {{- if .Content }}
   <div class="post-content md-content">
     {{- if not (.Param "disableAnchoredHeadings") }}
@@ -41,6 +43,8 @@
     {{- else }}{{ .Content }}{{ end }}
   </div>
   {{- end }}
+
+  {{- partial "ads/ad-post-bottom.html" . }}
 
   {{- /* Related Posts */ -}}
   {{- $related := .Site.RegularPages.Related . | first 5 }}
