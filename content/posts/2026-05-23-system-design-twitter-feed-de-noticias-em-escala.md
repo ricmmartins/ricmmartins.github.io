@@ -209,12 +209,12 @@ Na prática, ~0.1% dos usuários são "celebridades". Mas esses 0.1% são respon
     <rect x="40" y="245" width="180" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
     <text x="130" y="269.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#1b5e20">Normal user</text>
     <text x="130" y="284.5" font-size="10" fill="#555" text-anchor="middle">Push to Redis timelines</text>
-    <rect x="250" y="254" width="150" height="56" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="325" y="278.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">Search Index</text>
-    <text x="325" y="293.5" font-size="10" fill="#555" text-anchor="middle">async</text>
-    <rect x="430" y="254" width="160" height="56" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="510" y="278.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">Trending Service</text>
-    <text x="510" y="293.5" font-size="10" fill="#555" text-anchor="middle">async</text>
+    <rect x="250" y="245" width="150" height="56" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+    <text x="325" y="269.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">Search Index</text>
+    <text x="325" y="284.5" font-size="10" fill="#555" text-anchor="middle">async</text>
+    <rect x="430" y="245" width="160" height="56" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+    <text x="510" y="269.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">Trending Service</text>
+    <text x="510" y="284.5" font-size="10" fill="#555" text-anchor="middle">async</text>
     <rect x="620" y="245" width="210" height="56" rx="6" fill="#fff2cc" stroke="#d6b656" />
     <text x="725" y="269.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#7c6200">Celebrity</text>
     <text x="725" y="284.5" font-size="10" fill="#555" text-anchor="middle">Só armazena (merge no read)</text>
@@ -222,10 +222,10 @@ Na prática, ~0.1% dos usuários são "celebridades". Mas esses 0.1% são respon
     <line x1="336" y1="102" x2="376" y2="102" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
     <line x1="516" y1="102" x2="556" y2="102" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
     <line x1="440" y1="132" x2="440" y2="172" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="354.2" y1="213" x2="214.2" y2="250.5" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="405.3" y1="217.7" x2="355.3" y2="257.7" stroke="#666666" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrow)" />
-    <line x1="461.9" y1="218.8" x2="492.3" y2="258.8" stroke="#666666" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrow)" />
-    <line x1="525.8" y1="215" x2="634.6" y2="246.7" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="380" y1="214" x2="190" y2="245" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="420" y1="214" x2="325" y2="245" stroke="#666666" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrow)" />
+    <line x1="460" y1="214" x2="510" y2="245" stroke="#666666" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrow)" />
+    <line x1="500" y1="214" x2="650" y2="245" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
     <rect x="20" y="360" width="860" height="418" rx="8" fill="#f5f5f5" stroke="#666666" />
     <text x="450" y="386" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">READ PATH (Timeline)</text>
     <rect x="50" y="420" width="120" height="48" rx="6" fill="#f5f5f5" stroke="#666666" />

@@ -596,9 +596,9 @@ Pro matching (que precisa de ETA pra 20-50 candidatos), o cache evita recalcular
     <text x="160" y="340" text-anchor="middle" font-size="10" fill="#555">move driver de cell A pra cell B</text>
   </g>
   <g>
-    <rect x="375" y="314" width="230" height="62" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="490" y="341.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Kafka topic</text>
-    <text x="490" y="356.5" text-anchor="middle" font-size="10" fill="#555">driver-locations</text>
+    <rect x="375" y="290" width="230" height="62" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="490" y="317.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Kafka topic</text>
+    <text x="490" y="332.5" text-anchor="middle" font-size="10" fill="#555">driver-locations</text>
   </g>
   <g>
     <rect x="710" y="290" width="230" height="62" rx="6" fill="#fff2cc" stroke="#d6b656" />
@@ -614,9 +614,9 @@ Pro matching (que precisa de ETA pra 20-50 candidatos), o cache evita recalcular
     <text x="180" y="439" text-anchor="middle" font-size="10" fill="#555">write-optimized</text>
   </g>
   <g>
-    <rect x="370" y="416" width="240" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="490" y="440.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Consumer</text>
-    <text x="490" y="455.5" text-anchor="middle" font-size="10" fill="#555">ETA Speed Aggregator</text>
+    <rect x="370" y="392" width="240" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="490" y="416.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Consumer</text>
+    <text x="490" y="431.5" text-anchor="middle" font-size="10" fill="#555">ETA Speed Aggregator</text>
   </g>
   <g>
     <rect x="680" y="392" width="240" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
@@ -628,12 +628,12 @@ Pro matching (que precisa de ETA pra 20-50 candidatos), o cache evita recalcular
   <g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
     <line x1="490" y1="78" x2="490" y2="118" />
     <line x1="490" y1="170" x2="490" y2="210" />
-    <line x1="343.3" y1="275.4" x2="274.2" y2="292.6" />
-    <line x1="490" y1="280" x2="490" y2="320" />
-    <line x1="638.8" y1="275.4" x2="715.8" y2="294.3" />
-    <line x1="369.2" y1="374.2" x2="289.9" y2="393.4" />
-    <line x1="490" y1="382" x2="490" y2="422" />
-    <line x1="610.8" y1="374.2" x2="690.1" y2="393.4" />
+    <line x1="380" y1="274" x2="245" y2="290" />
+    <line x1="490" y1="274" x2="490" y2="290" />
+    <line x1="600" y1="274" x2="735" y2="290" />
+    <line x1="420" y1="352" x2="250" y2="392" />
+    <line x1="490" y1="352" x2="490" y2="392" />
+    <line x1="560" y1="352" x2="730" y2="392" />
   </g>
 
   <text x="490" y="65" font-size="10" fill="#555" text-anchor="middle">UDP ou HTTP/2 com batching</text>

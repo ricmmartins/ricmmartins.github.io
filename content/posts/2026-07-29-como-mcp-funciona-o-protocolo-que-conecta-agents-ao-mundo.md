@@ -101,28 +101,28 @@ Com MCP:
     <text x="490" y="161.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">protocolo padrão</text>
     <rect x="40" y="74" width="150" height="30" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
     <text x="115" y="93" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Claude</text>
-    <path d="M 196 89 H 295 V 150 H 394" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <path d="M 196 89 H 280 V 132 H 394" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
     <rect x="40" y="144" width="150" height="30" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
     <text x="115" y="163" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">GPT</text>
-    <path d="M 376 169 V 159.5 H 394 V 150" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-    <rect x="220" y="154" width="150" height="30" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
-    <text x="295" y="173" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Copilot</text>
-    <path d="M 196 159 H 295 V 150 H 394" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <path d="M 196 159 H 300 V 146 H 394" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <rect x="220" y="144" width="150" height="30" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
+    <text x="295" y="163" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Copilot</text>
+    <path d="M 376 159 H 394" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
     <rect x="40" y="224" width="370" height="30" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
     <text x="225" y="235.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Custom</text>
-    <path d="M 416 239 V 194.5 H 394 V 150" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <path d="M 416 239 V 174 H 394" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
     <rect x="700" y="74" width="220" height="30" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
     <text x="810" y="93" text-anchor="middle" font-size="11" font-weight="bold" fill="#111111">GitHub MCP Server</text>
-    <path d="M 586 150 H 640 V 89 H 694" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <path d="M 586 132 H 640 V 89 H 694" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
     <rect x="700" y="144" width="220" height="30" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
     <text x="810" y="163" text-anchor="middle" font-size="11" font-weight="bold" fill="#111111">Jira MCP Server</text>
-    <path d="M 586 150 H 765 V 169 H 944" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-    <rect x="950" y="154" width="220" height="30" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
-    <text x="1060" y="173" text-anchor="middle" font-size="11" font-weight="bold" fill="#111111">Azure Monitor MCP Server</text>
-    <path d="M 586 150 H 640 V 159 H 694" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <path d="M 586 146 H 640 V 159 H 694" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <rect x="950" y="144" width="220" height="30" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
+    <text x="1060" y="163" text-anchor="middle" font-size="11" font-weight="bold" fill="#111111">Azure Monitor MCP Server</text>
+    <path d="M 586 160 H 820 V 159 H 944" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
     <rect x="700" y="224" width="220" height="30" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
     <text x="810" y="243" text-anchor="middle" font-size="11" font-weight="bold" fill="#111111">PostgreSQL MCP Server</text>
-    <path d="M 586 150 H 640 V 239 H 694" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <path d="M 586 174 H 640 V 239 H 694" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
     <text x="225" y="250.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">4 + 4 = 8 componentes (cada um implementa MCP uma vez)</text>
   </g>
 </svg>
@@ -420,9 +420,9 @@ Client spawna o server como processo filho. Comunicação via stdin/stdout.
     <text x="200" y="119" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">MCP Client</text>
     <rect x="460" y="90" width="250" height="50" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
     <text x="585" y="119" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">MCP Server process</text>
-    <line x1="316" y1="115" x2="466" y2="115" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <line x1="316" y1="104" x2="466" y2="104" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
     <text x="385" y="100" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">spawns</text>
-    <line x1="454" y1="115" x2="304" y2="115" stroke="#666666" stroke-width="2" fill="none" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+    <line x1="454" y1="126" x2="304" y2="126" stroke="#666666" stroke-width="2" fill="none" marker-start="url(#arrow)" marker-end="url(#arrow)" />
     <text x="385" y="152" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">JSON-RPC via stdin/stdout</text>
   </g>
 </svg>
@@ -447,10 +447,10 @@ Client abre uma conexão SSE e publica mensagens JSON-RPC via POST em outro endp
     <rect x="470" y="60" width="250" height="90" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
     <text x="595" y="101.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Remote MCP endpoint</text>
     <text x="595" y="116.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">SSE + JSON-RPC</text>
-    <line x1="316" y1="112.1" x2="476" y2="108" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <line x1="316" y1="104" x2="476" y2="96" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
     <text x="390" y="80" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">GET /sse</text>
     <text x="390" y="95" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">abre stream SSE</text>
-    <line x1="316" y1="112.1" x2="476" y2="108" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <line x1="316" y1="124" x2="476" y2="124" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
     <text x="390" y="145" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">POST /messages?session_id=...</text>
     <text x="390" y="160" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">envia JSON-RPC</text>
   </g>

@@ -61,9 +61,9 @@ Um agent central coordena. Workers executam e reportam.
     <rect x="290" y="20" width="200" height="72" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
     <text x="390" y="52.5" text-anchor="middle" font-size="14" font-weight="bold" fill="#111111">Orchestrator</text>
     <text x="390" y="67.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">(coordena)</text>
-    <path d="M 284 56 V 131.5 H 186 V 207" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-    <path d="M 390 98 V 131 H 390 V 164" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-    <path d="M 496 56 V 131.5 H 594 V 207" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <path d="M 340 92 V 128 H 110 V 164" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <path d="M 390 92 V 164" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+    <path d="M 440 92 V 128 H 670 V 164" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
     <rect x="40" y="170" width="140" height="74" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
     <text x="110" y="203.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">DB Agent</text>
     <text x="110" y="218.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">5 tools</text>
