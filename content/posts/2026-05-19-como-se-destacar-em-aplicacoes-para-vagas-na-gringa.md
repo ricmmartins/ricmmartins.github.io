@@ -117,12 +117,10 @@ Um repositório com 200 stars é legal, mas um projeto com documentação clara,
 .neutral { fill:#f5f5f5; stroke:#666666; stroke-width:1.5; }
 .line { stroke:#666666; stroke-width:1.5; fill:none; marker-end:url(#arrow); }
 </style>
-
 <g>
 <rect class="primary" x="540" y="20" width="200" height="56" rx="8" />
 <text class="title" x="640" y="52" text-anchor="middle">meu-projeto/</text>
 </g>
-
 <g>
 <path class="line" d="M 625 76 L 180 120" />
 <rect class="primary" x="30" y="120" width="300" height="246" rx="8" />
@@ -136,7 +134,6 @@ Um repositório com 200 stars é legal, mas um projeto com documentação clara,
 <text class="label" x="190" y="288.5" text-anchor="middle">deploy.yml</text>
 <text class="desc" x="190" y="303.5" text-anchor="middle">Deploy automatizado</text>
 </g>
-
 <g>
 <path class="line" d="M 635 76 L 510 120" />
 <rect class="warning" x="360" y="120" width="300" height="220" rx="8" />
@@ -149,32 +146,27 @@ Um repositório com 200 stars é legal, mas um projeto com documentação clara,
 <rect class="neutral" x="390" y="284" width="240" height="36" rx="6" />
 <text class="label" x="510" y="306" text-anchor="middle">outputs.tf</text>
 </g>
-
 <g>
 <path class="line" d="M 691.3 79.1 L 763.9 123.1" />
 <rect class="success" x="720" y="120" width="170" height="56" rx="6" />
 <text class="label" x="805" y="152" text-anchor="middle">src/</text>
 </g>
-
 <g>
 <path class="line" d="M 745.8 76.2 L 935.8 126.9" />
 <rect class="success" x="930" y="120" width="170" height="56" rx="6" />
 <text class="label" x="1015" y="152" text-anchor="middle">tests/</text>
 </g>
-
 <g>
 <path class="line" d="M 666.9 80.6 L 785.7 224.6" />
 <rect class="neutral" x="720" y="220" width="170" height="56" rx="6" />
 <text class="label" x="805" y="252" text-anchor="middle">Dockerfile</text>
 </g>
-
 <g>
 <path class="line" d="M 703.7 78.6 L 995.4 218.6" />
 <rect class="accent" x="930" y="216" width="270" height="72" rx="6" />
 <text class="label" x="1065" y="248.5" text-anchor="middle">Makefile</text>
 <text class="desc" x="1065" y="263.5" text-anchor="middle">make build, make test, make deploy</text>
 </g>
-
 <g>
 <path class="line" d="M 662.3 81 L 834 335" />
 <rect class="neutral" x="720" y="330" width="270" height="72" rx="6" />
@@ -182,7 +174,6 @@ Um repositório com 200 stars é legal, mas um projeto com documentação clara,
 <text class="desc" x="855" y="370" text-anchor="middle">O quê, por quê, como rodar</text>
 <text class="desc" x="855" y="385" text-anchor="middle">decisões de arquitetura</text>
 </g>
-
 <g>
 <path class="line" d="M 687.9 79.3 L 1077.1 333.3" />
 <rect class="neutral" x="1030" y="330" width="170" height="56" rx="6" />

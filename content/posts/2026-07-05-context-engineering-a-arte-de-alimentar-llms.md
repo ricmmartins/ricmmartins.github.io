@@ -69,19 +69,15 @@ A divisão típica:
 <g font-family="Segoe UI, Arial, sans-serif">
 <rect x="20" y="20" width="870" height="140" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2" />
 <text x="420" y="46" text-anchor="middle" font-size="14" font-weight="bold" fill="#1f1f1f">Context Window (128K tokens)</text>
-
 <rect x="40" y="68" width="180" height="62" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
 <text x="130" y="95.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">System prompt</text>
 <text x="130" y="110.5" text-anchor="middle" font-size="10" fill="#555555">500-2000</text>
-
 <rect x="250" y="68" width="180" height="62" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2" />
 <text x="340" y="95.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">Histórico</text>
 <text x="340" y="110.5" text-anchor="middle" font-size="10" fill="#555555">variável</text>
-
 <rect x="460" y="68" width="180" height="62" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
 <text x="550" y="95.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">RAG docs</text>
 <text x="550" y="110.5" text-anchor="middle" font-size="10" fill="#555555">2K-10K</text>
-
 <rect x="670" y="68" width="190" height="62" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
 <text x="765" y="95.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">Output reserved</text>
 <text x="765" y="110.5" text-anchor="middle" font-size="10" fill="#555555">2K-4K</text>

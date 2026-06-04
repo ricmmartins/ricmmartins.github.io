@@ -115,7 +115,6 @@ Isso exige **conexão persistente** entre client e server. HTTP request-response
 <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
 </marker>
 </defs>
-
 <g>
 <rect x="40" y="45" width="150" height="90" rx="8" fill="#dae8fc" stroke="#6c8ebf" />
 <text x="115" y="86.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Client</text>
@@ -126,7 +125,6 @@ Isso exige **conexão persistente** entre client e server. HTTP request-response
 <text x="665" y="86.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Chat Server</text>
 <text x="665" y="101.5" text-anchor="middle" font-size="10" fill="#555">stateful</text>
 </g>
-
 <line x1="196" y1="90" x2="596" y2="90" stroke="#666666" stroke-width="3" marker-start="url(#arrow)" marker-end="url(#arrow)" />
 <text x="390" y="56" text-anchor="middle" font-size="14" font-weight="bold" fill="#1f1f1f">WebSocket</text>
 <text x="390" y="75" text-anchor="middle" font-size="10" fill="#555">conexão persistente</text>
@@ -154,7 +152,6 @@ WebSocket é full-duplex: client e server enviam dados a qualquer momento pela m
 </defs>
 <rect x="10" y="10" width="980" height="576" rx="8" fill="#f5f5f5" stroke="#666666" />
 <text x="30" y="35" font-size="14" font-weight="bold" fill="#333333">ENVIO DE MENSAGEM</text>
-
 <g>
 <rect x="30" y="210" width="120" height="56" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
 <text x="90" y="242" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Sender</text>
@@ -197,7 +194,6 @@ WebSocket é full-duplex: client e server enviam dados a qualquer momento pela m
 <rect x="650" y="516" width="180" height="40" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
 <text x="740" y="540" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Recipient</text>
 </g>
-
 <g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
 <line x1="156" y1="238" x2="206" y2="238" />
 <line x1="356" y1="238" x2="416" y2="238" />
@@ -210,7 +206,6 @@ WebSocket é full-duplex: client e server enviam dados a qualquer momento pela m
 <line x1="692.8" y1="480.6" x2="726.8" y2="520.6" />
 <line x1="820.3" y1="479.5" x2="763.5" y2="519.5" />
 </g>
-
 <text x="175" y="224" font-size="10" fill="#555">WebSocket</text>
 </svg>
 
@@ -458,7 +453,6 @@ Se 10M de usuários mudam status/minuto × 100 contatos = 1 bilhão de updates/m
 <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
 </marker>
 </defs>
-
 <g>
 <rect x="40" y="55" width="150" height="56" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
 <text x="115" y="87" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Client</text>
@@ -481,12 +475,10 @@ Se 10M de usuários mudam status/minuto × 100 contatos = 1 bilhão de updates/m
 <rect x="150" y="280" width="580" height="40" rx="6" fill="#f8cecc" stroke="#b85450" />
 <text x="440" y="304" text-anchor="middle" font-size="10" fill="#555">Se heartbeat não renova dentro do TTL, a key expira e o user é considerado offline</text>
 </g>
-
 <g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
 <line x1="196" y1="81.9" x2="526" y2="77.4" />
 <line x1="630" y1="118" x2="630" y2="158" />
 </g>
-
 <text x="355" y="68" text-anchor="middle" font-size="10" fill="#555">heartbeat (cada 30s)</text>
 </svg>
 

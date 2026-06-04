@@ -130,7 +130,6 @@ Cache total: 20M × 300 bytes = ~6 GB
 </marker>
 </defs>
 <g font-family="Segoe UI, Arial, sans-serif">
-
 <rect x="20" y="20" width="860" height="245" rx="12" fill="#f8f9fa" stroke="#ccc" stroke-width="1.5" />
 <text x="450" y="52" font-size="15" font-weight="bold" text-anchor="middle" fill="#1a3a5c">WRITE PATH (Create)</text>
 <rect x="60" y="90" width="130" height="55" rx="6" fill="#ffffff" stroke="#999" stroke-width="1.5" />
@@ -147,8 +146,6 @@ Cache total: 20M × 300 bytes = ~6 GB
 <line x1="406" y1="117.5" x2="466" y2="117.5" stroke="#555" stroke-width="2" marker-end="url(#arrow)" />
 <line x1="616" y1="117.5" x2="676" y2="117.5" stroke="#555" stroke-width="2" marker-end="url(#arrow)" />
 <line x1="739.6" y1="150.9" x2="733.1" y2="190.9" stroke="#555" stroke-width="2" marker-end="url(#arrow)" />
-
-
 <rect x="20" y="300" width="860" height="445" rx="12" fill="#f8f9fa" stroke="#ccc" stroke-width="1.5" />
 <text x="450" y="332" font-size="15" font-weight="bold" text-anchor="middle" fill="#1a3a5c">READ PATH (Redirect)</text>
 <rect x="60" y="370" width="130" height="55" rx="6" fill="#ffffff" stroke="#999" stroke-width="1.5" />
@@ -366,36 +363,28 @@ O sistema é **extremamente read-heavy** (1000:1). Cache hit rate esperado: >99%
 </marker>
 </defs>
 <g font-family="Segoe UI, Arial, sans-serif">
-
 <rect x="300" y="20" width="300" height="55" rx="6" fill="#ffffff" stroke="#999" stroke-width="1.5" />
 <text x="450" y="51.5" font-size="13" font-weight="bold" text-anchor="middle" fill="#333">Redirect request: GET /abc123</text>
-
 <rect x="300" y="115" width="300" height="55" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
 <text x="450" y="146.5" font-size="13" font-weight="bold" text-anchor="middle" fill="#1b5e20">Redis: GET url:abc123</text>
-
 <rect x="60" y="220" width="280" height="80" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
 <text x="200" y="249" font-size="13" font-weight="bold" text-anchor="middle" fill="#1b5e20">HIT (99%+ dos casos)</text>
 <text x="200" y="264" font-size="11" text-anchor="middle" fill="#555">retorna long_url</text>
 <text x="200" y="279" font-size="11" text-anchor="middle" fill="#555">redirect</text>
-
 <rect x="560" y="220" width="280" height="70" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
 <text x="700" y="251.5" font-size="13" font-weight="bold" text-anchor="middle" fill="#7c6200">MISS</text>
 <text x="700" y="266.5" font-size="11" text-anchor="middle" fill="#555">query DB, retorna long_url</text>
-
 <rect x="520" y="330" width="320" height="70" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
 <text x="680" y="361.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a3a5c">SET url:abc123 {long_url} EX 86400</text>
 <text x="680" y="376.5" font-size="10" text-anchor="middle" fill="#555">cacheia por 24h</text>
-
 <rect x="250" y="340" width="200" height="50" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
 <text x="350" y="369" font-size="13" font-weight="bold" text-anchor="middle" fill="#4a235a">redirect</text>
-
 <line x1="450" y1="81" x2="450" y2="121" stroke="#555" stroke-width="2" marker-end="url(#arrow2)" />
 <line x1="386.1" y1="172.6" x2="279.7" y2="222.6" stroke="#555" stroke-width="2" marker-end="url(#arrow2)" />
 <line x1="516.6" y1="172.5" x2="627.7" y2="222.5" stroke="#555" stroke-width="2" marker-end="url(#arrow2)" />
 <line x1="262.1" y1="303.4" x2="319.2" y2="343.4" stroke="#555" stroke-width="2" marker-end="url(#arrow2)" />
 <line x1="692.6" y1="295.9" x2="685.3" y2="335.9" stroke="#555" stroke-width="2" marker-end="url(#arrow2)" />
 <line x1="514" y1="365" x2="444" y2="365" stroke="#555" stroke-width="2" marker-end="url(#arrow2)" />
-
 <text x="280" y="195" font-size="11" fill="#2e7d32" font-weight="bold">HIT</text>
 <text x="590" y="195" font-size="11" fill="#c62828" font-weight="bold">MISS</text>
 </g>

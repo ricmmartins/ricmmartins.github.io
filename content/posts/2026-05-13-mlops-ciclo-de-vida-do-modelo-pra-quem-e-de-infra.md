@@ -157,7 +157,6 @@ az acr repository show-tags \
 .arrow { stroke:#666666; stroke-width:1.5; fill:none; marker-end:url(#arrow); }
 .link { stroke:#666666; stroke-width:1.5; fill:none; }
 </style>
-
 <g>
 <rect class="primary" x="40" y="30" width="240" height="118" rx="8" />
 <text class="title" x="160" y="70.5" text-anchor="middle">DEV</text>
@@ -171,7 +170,6 @@ az acr repository show-tags \
 <text class="desc" x="160" y="250.5" text-anchor="middle">Blob Storage</text>
 <text class="desc" x="160" y="265.5" text-anchor="middle">Experiment Tracking</text>
 </g>
-
 <g>
 <path class="arrow" d="M 286 89 L 376 89" />
 <rect class="warning" x="370" y="30" width="240" height="118" rx="8" />
@@ -186,7 +184,6 @@ az acr repository show-tags \
 <text class="desc" x="490" y="250.5" text-anchor="middle">Test Data Access</text>
 <text class="desc" x="490" y="265.5" text-anchor="middle">Isolated Network</text>
 </g>
-
 <g>
 <path class="arrow" d="M 616 89 L 706 89" />
 <rect class="success" x="700" y="30" width="240" height="118" rx="8" />

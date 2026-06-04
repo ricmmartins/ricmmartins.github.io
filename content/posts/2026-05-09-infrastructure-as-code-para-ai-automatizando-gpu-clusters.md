@@ -268,56 +268,44 @@ O decorator `@allowed` serve o mesmo propósito da `validation` do Terraform: pr
 .neutral { fill:#f5f5f5; stroke:#666666; stroke-width:1.5; }
 .line { stroke:#666666; stroke-width:1.5; fill:none; marker-end:url(#arrow); }
 </style>
-
 <g>
 <rect class="primary" x="380" y="24" width="200" height="56" rx="8" />
 <text class="title" x="480" y="56" text-anchor="middle">infra/</text>
 </g>
-
 <g>
 <path class="line" d="M 386.8 81.8 L 261.8 121.8" />
 <rect class="neutral" x="40" y="120" width="230" height="72" rx="6" />
 <text class="label" x="155" y="152.5" text-anchor="middle">main.bicep</text>
 <text class="desc" x="155" y="167.5" text-anchor="middle">Orquestrador</text>
 </g>
-
 <g>
 <path class="line" d="M 480 80 L 470 100" />
 <rect class="accent" x="310" y="100" width="320" height="330" rx="8" />
 <text class="title" x="330" y="126">modules/</text>
-
 <rect class="neutral" x="335" y="145" width="270" height="38" rx="6" />
 <text class="label" x="470" y="160.5" text-anchor="middle">network.bicep</text>
 <text class="desc" x="470" y="175.5" text-anchor="middle">VNet, subnets, NSGs, private endpoints</text>
-
 <rect class="neutral" x="335" y="203" width="270" height="38" rx="6" />
 <text class="label" x="470" y="218.5" text-anchor="middle">aks.bicep</text>
 <text class="desc" x="470" y="233.5" text-anchor="middle">AKS cluster com GPU node pool</text>
-
 <rect class="neutral" x="335" y="261" width="270" height="38" rx="6" />
 <text class="label" x="470" y="276.5" text-anchor="middle">storage.bicep</text>
 <text class="desc" x="470" y="291.5" text-anchor="middle">Storage account pra modelos e dados</text>
-
 <rect class="neutral" x="335" y="319" width="270" height="38" rx="6" />
 <text class="label" x="470" y="334.5" text-anchor="middle">monitoring.bicep</text>
 <text class="desc" x="470" y="349.5" text-anchor="middle">Log Analytics, alerts, dashboards</text>
-
 <rect class="neutral" x="335" y="377" width="270" height="38" rx="6" />
 <text class="label" x="470" y="392.5" text-anchor="middle">keyvault.bicep</text>
 <text class="desc" x="470" y="407.5" text-anchor="middle">Key Vault pra secrets</text>
 </g>
-
 <g>
 <path class="line" d="M 490 80 L 795 120" />
 <rect class="warning" x="670" y="120" width="250" height="200" rx="8" />
 <text class="title" x="690" y="146">parameters/</text>
-
 <rect class="success" x="690" y="165" width="210" height="34" rx="6" />
 <text class="label" x="795" y="186" text-anchor="middle">dev.bicepparam</text>
-
 <rect class="success" x="690" y="219" width="210" height="34" rx="6" />
 <text class="label" x="795" y="240" text-anchor="middle">staging.bicepparam</text>
-
 <rect class="success" x="690" y="273" width="210" height="34" rx="6" />
 <text class="label" x="795" y="294" text-anchor="middle">prod.bicepparam</text>
 </g>

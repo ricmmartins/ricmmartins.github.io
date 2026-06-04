@@ -123,7 +123,6 @@ O sistema tem três fluxos principais:
 <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
 </marker>
 </defs>
-
 <rect x="10" y="10" width="960" height="385" rx="8" fill="#f5f5f5" stroke="#666666" />
 <text x="30" y="35" font-size="14" font-weight="bold" fill="#333333">LOCATION INGESTION (contínuo)</text>
 <g>
@@ -148,7 +147,6 @@ O sistema tem três fluxos principais:
 <line x1="485.9" y1="145.2" x2="625.9" y2="170.3" />
 </g>
 <text x="245" y="114" text-anchor="middle" font-size="10" fill="#555">cada 4s</text>
-
 <rect x="10" y="245" width="960" height="336" rx="8" fill="#f5f5f5" stroke="#666666" />
 <text x="30" y="270" font-size="14" font-weight="bold" fill="#333333">RIDE MATCHING</text>
 <g>
@@ -196,7 +194,6 @@ O sistema tem três fluxos principais:
 <line x1="424" y1="523" x2="374" y2="523" />
 </g>
 <text x="390" y="515" font-size="10" fill="#555">Accept/Reject</text>
-
 <rect x="10" y="605" width="960" height="145" rx="8" fill="#f5f5f5" stroke="#666666" />
 <text x="30" y="630" font-size="14" font-weight="bold" fill="#333333">REAL-TIME TRACKING</text>
 <g>
@@ -375,7 +372,6 @@ Encontrar motorista não é simplesmente "o mais perto". O matching precisa otim
 <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
 </marker>
 </defs>
-
 <g>
 <rect x="270" y="20" width="360" height="58" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
 <text x="450" y="53" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">1. Rider solicita corrida</text>
@@ -402,7 +398,6 @@ Encontrar motorista não é simplesmente "o mais perto". O matching precisa otim
 <rect x="270" y="468" width="370" height="58" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
 <text x="455" y="501" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">5. Envia request pro driver com maior score</text>
 </g>
-
 <g>
 <path d="M390 560 L510 560 L570 620 L510 680 L390 680 L330 620 Z" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
 <text x="450" y="614" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">Driver aceita</text>
@@ -419,7 +414,6 @@ Encontrar motorista não é simplesmente "o mais perto". O matching precisa otim
 <text x="450" y="799.5" text-anchor="middle" font-size="10" fill="#555">Repete até 3-5 tentativas</text>
 <text x="450" y="814.5" text-anchor="middle" font-size="10" fill="#555">Se ninguém aceita: nenhum motorista disponível</text>
 </g>
-
 <g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
 <line x1="450" y1="84" x2="450" y2="124" />
 <line x1="450" y1="198" x2="450" y2="238" />
@@ -430,7 +424,6 @@ Encontrar motorista não é simplesmente "o mais perto". O matching precisa otim
 <line x1="674.6" y1="649.2" x2="522.5" y2="743.2" />
 <path d="M 450 734 V 633 H 455 V 532" />
 </g>
-
 <text x="585" y="602" font-size="10" font-weight="bold" fill="#555">SIM</text>
 <text x="465" y="716" font-size="10" font-weight="bold" fill="#555">NÃO</text>
 </svg>
@@ -489,7 +482,6 @@ ETA (Estimated Time of Arrival) parece simples mas é surpreendentemente complex
 </defs>
 <rect x="10" y="10" width="895" height="320" rx="8" fill="#f5f5f5" stroke="#666666" />
 <text x="30" y="35" font-size="14" font-weight="bold" fill="#333333">ETA Service</text>
-
 <g>
 <rect x="30" y="65" width="250" height="235" rx="8" fill="#dae8fc" stroke="#6c8ebf" />
 <text x="155" y="156.5" font-size="12" font-weight="bold" fill="#1a3a5c" text-anchor="middle">1. Route calculation</text>
@@ -573,7 +565,6 @@ Pro matching (que precisa de ETA pra 20-50 candidatos), o cache evita recalcular
 <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
 </marker>
 </defs>
-
 <g>
 <rect x="390" y="20" width="200" height="52" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
 <text x="490" y="35" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Driver App</text>
@@ -588,7 +579,6 @@ Pro matching (que precisa de ETA pra 20-50 candidatos), o cache evita recalcular
 <text x="490" y="235.5" text-anchor="middle" font-size="14" font-weight="bold" fill="#1b5e20">Location Gateway</text>
 <text x="490" y="250.5" text-anchor="middle" font-size="10" fill="#555">stateless, alto throughput</text>
 </g>
-
 <g>
 <rect x="40" y="290" width="240" height="62" rx="6" fill="#e1d5e7" stroke="#9673a6" />
 <text x="160" y="310" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Geospatial Index</text>
@@ -606,7 +596,6 @@ Pro matching (que precisa de ETA pra 20-50 candidatos), o cache evita recalcular
 <text x="825" y="325" text-anchor="middle" font-size="10" fill="#555">last_known_location:{driver_id}</text>
 <text x="825" y="340" text-anchor="middle" font-size="10" fill="#555">pra queries pontuais</text>
 </g>
-
 <g>
 <rect x="60" y="392" width="240" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
 <text x="180" y="409" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Consumer</text>
@@ -624,7 +613,6 @@ Pro matching (que precisa de ETA pra 20-50 candidatos), o cache evita recalcular
 <text x="800" y="424" text-anchor="middle" font-size="10" fill="#555">Tracking fanout</text>
 <text x="800" y="439" text-anchor="middle" font-size="10" fill="#555">riders observando</text>
 </g>
-
 <g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
 <line x1="490" y1="78" x2="490" y2="118" />
 <line x1="490" y1="170" x2="490" y2="210" />
@@ -635,7 +623,6 @@ Pro matching (que precisa de ETA pra 20-50 candidatos), o cache evita recalcular
 <line x1="490" y1="352" x2="490" y2="392" />
 <line x1="560" y1="352" x2="730" y2="392" />
 </g>
-
 <text x="490" y="65" font-size="10" fill="#555" text-anchor="middle">UDP ou HTTP/2 com batching</text>
 </svg>
 

@@ -65,7 +65,6 @@ A ideia:
 <text x="169" y="50" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">A</text>
 <text x="529" y="50" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">M</text>
 <text x="849" y="50" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">Z</text>
-
 <text x="24" y="122" font-size="12" font-weight="bold" fill="#1f1f1f">Nível 2</text>
 <rect x="120" y="90" width="974" height="218" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2" />
 <line x1="169" y1="68" x2="169" y2="108" stroke="#666666" stroke-width="2" />
@@ -88,7 +87,6 @@ A ideia:
 <text x="529" y="122" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">M</text>
 <text x="689" y="120" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">R</text>
 <text x="849" y="122" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">Z</text>
-
 <text x="24" y="192" font-size="12" font-weight="bold" fill="#1f1f1f">Nível 1</text>
 <rect x="120" y="160" width="974" height="148" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2" />
 <line x1="169" y1="140" x2="169" y2="180" stroke="#666666" stroke-width="2" />
@@ -129,7 +127,6 @@ A ideia:
 <text x="809" y="194" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">R</text>
 <text x="889" y="194" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">V</text>
 <text x="969" y="190" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">Z</text>
-
 <text x="24" y="262" font-size="12" font-weight="bold" fill="#1f1f1f">Nível 0</text>
 <rect x="120" y="230" width="974" height="78" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2" />
 <line x1="166" y1="211.9" x2="160.4" y2="251.9" stroke="#666666" stroke-width="2" />
@@ -219,21 +216,18 @@ Percebe o padrão? HNSW mora em memória. 100M vetores de 1536 dimensões precis
 </defs>
 <g font-family="Segoe UI, Arial, sans-serif">
 <text x="310" y="26" text-anchor="middle" font-size="14" font-weight="bold" fill="#1f1f1f">Espaço vetorial particionado</text>
-
 <rect x="80" y="50" width="150" height="80" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2" />
 <rect x="260" y="50" width="150" height="80" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
 <rect x="440" y="50" width="150" height="80" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2" />
 <rect x="80" y="170" width="150" height="80" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2" />
 <rect x="260" y="170" width="150" height="80" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
 <rect x="440" y="170" width="150" height="80" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2" />
-
 <text x="155" y="94" font-size="12" font-weight="bold" fill="#1f1f1f" text-anchor="middle">C1</text>
 <text x="335" y="94" font-size="12" font-weight="bold" fill="#1f1f1f" text-anchor="middle">C2</text>
 <text x="515" y="94" font-size="12" font-weight="bold" fill="#1f1f1f" text-anchor="middle">C3</text>
 <text x="155" y="214" font-size="12" font-weight="bold" fill="#1f1f1f" text-anchor="middle">C4</text>
 <text x="335" y="214" font-size="12" font-weight="bold" fill="#1f1f1f" text-anchor="middle">C5</text>
 <text x="515" y="214" font-size="12" font-weight="bold" fill="#1f1f1f" text-anchor="middle">C6</text>
-
 <g fill="#9673a6">
 <circle cx="120" cy="95" r="4" /><circle cx="135" cy="95" r="4" /><circle cx="150" cy="95" r="4" /><circle cx="135" cy="112" r="4" /><circle cx="150" cy="112" r="4" />
 <circle cx="275" cy="95" r="4" /><circle cx="290" cy="95" r="4" /><circle cx="275" cy="112" r="4" /><circle cx="290" cy="112" r="4" /><circle cx="305" cy="112" r="4" />
@@ -242,12 +236,10 @@ Percebe o padrão? HNSW mora em memória. 100M vetores de 1536 dimensões precis
 <circle cx="275" cy="180" r="4" /><circle cx="290" cy="180" r="4" /><circle cx="305" cy="180" r="4" /><circle cx="320" cy="180" r="4" /><circle cx="290" cy="197" r="4" /><circle cx="305" cy="197" r="4" />
 <circle cx="430" cy="180" r="4" /><circle cx="445" cy="197" r="4" /><circle cx="460" cy="197" r="4" />
 </g>
-
 <circle cx="310" cy="150" r="12" fill="#f8cecc" stroke="#b85450" stroke-width="2" />
 <text x="310" y="154" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">Q</text>
 <line x1="310" y1="138" x2="310" y2="88" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
 <line x1="310" y1="162" x2="310" y2="176" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-
 <text x="310" y="285" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">Query Q está perto de C2 e C5.</text>
 <text x="310" y="307" text-anchor="middle" font-size="10" fill="#555555">Em vez de buscar em todos os vetores, busca só em C2 e C5 (nprobe=2).</text>
 </g>

@@ -73,23 +73,18 @@ RAG tem duas fases: **indexação** (offline, periódica) e **query** (online, a
 <rect x="20" y="42" width="160" height="70" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2" />
 <text x="100" y="73.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">Documentos</text>
 <text x="100" y="88.5" text-anchor="middle" font-size="10" fill="#555555">(source)</text>
-
 <rect x="240" y="42" width="160" height="70" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
 <text x="320" y="73.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">Chunking</text>
 <text x="320" y="88.5" text-anchor="middle" font-size="10" fill="#555555">(split)</text>
-
 <rect x="460" y="42" width="160" height="70" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
 <text x="540" y="73.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">Embedding</text>
 <text x="540" y="88.5" text-anchor="middle" font-size="10" fill="#555555">(model)</text>
-
 <rect x="680" y="42" width="160" height="70" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
 <text x="760" y="73.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">Vector DB</text>
 <text x="760" y="88.5" text-anchor="middle" font-size="10" fill="#555555">(index)</text>
-
 <line x1="186" y1="77" x2="246" y2="77" stroke="#666666" stroke-width="2.5" marker-end="url(#arrow)" />
 <line x1="406" y1="77" x2="466" y2="77" stroke="#666666" stroke-width="2.5" marker-end="url(#arrow)" />
 <line x1="626" y1="77" x2="686" y2="77" stroke="#666666" stroke-width="2.5" marker-end="url(#arrow)" />
-
 <line x1="320" y1="112" x2="320" y2="138" stroke="#666666" stroke-width="2" />
 <line x1="540" y1="112" x2="540" y2="138" stroke="#666666" stroke-width="2" />
 <text x="320" y="160" text-anchor="middle" font-size="10" fill="#555555">Pedaços de</text>
@@ -120,31 +115,24 @@ RAG tem duas fases: **indexação** (offline, periódica) e **query** (online, a
 <rect x="20" y="42" width="160" height="70" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2" />
 <text x="100" y="73.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">Pergunta</text>
 <text x="100" y="88.5" text-anchor="middle" font-size="10" fill="#555555">do user</text>
-
 <rect x="220" y="42" width="160" height="70" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
 <text x="300" y="73.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">Embedding</text>
 <text x="300" y="88.5" text-anchor="middle" font-size="10" fill="#555555">(query)</text>
-
 <rect x="420" y="42" width="160" height="70" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
 <text x="500" y="73.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">Vector DB</text>
 <text x="500" y="88.5" text-anchor="middle" font-size="10" fill="#555555">(search)</text>
-
 <rect x="620" y="42" width="160" height="70" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
 <text x="700" y="73.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">Top K</text>
 <text x="700" y="88.5" text-anchor="middle" font-size="10" fill="#555555">chunks</text>
-
 <rect x="610" y="170" width="190" height="86" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2" />
 <text x="705" y="194.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">Prompt:</text>
 <text x="705" y="209.5" text-anchor="middle" font-size="10" fill="#555555">sistema +</text>
 <text x="705" y="224.5" text-anchor="middle" font-size="10" fill="#555555">chunks +</text>
 <text x="705" y="239.5" text-anchor="middle" font-size="10" fill="#555555">pergunta</text>
-
 <rect x="850" y="178" width="110" height="70" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
 <text x="905" y="217" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">LLM</text>
-
 <rect x="1000" y="178" width="100" height="70" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
 <text x="1050" y="217" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">Resposta</text>
-
 <line x1="186" y1="77" x2="226" y2="77" stroke="#666666" stroke-width="2.5" marker-end="url(#arrow)" />
 <line x1="386" y1="77" x2="426" y2="77" stroke="#666666" stroke-width="2.5" marker-end="url(#arrow)" />
 <line x1="586" y1="77" x2="626" y2="77" stroke="#666666" stroke-width="2.5" marker-end="url(#arrow)" />
