@@ -2,7 +2,7 @@
 slug: "system-design-whatsapp-messaging-em-tempo-real"
 aliases:
   - "/posts/system-design-whatsapp-messaging-em-tempo-real/"
-title: "System design: WhatsApp — messaging em tempo real"
+title: "System design: WhatsApp - messaging em tempo real"
 description: "Como projetar um sistema de mensagens que entrega bilhões de mensagens por dia com latência de milissegundos. WebSockets, message queues, presença online, e criptografia end-to-end."
 date: 2026-05-24T10:00:00-04:00
 categories:
@@ -20,7 +20,7 @@ series:
 
 "Design a messaging system like WhatsApp."
 
-Se o YouTube é o exercício clássico de **throughput e storage**, WhatsApp é o exercício clássico de **latência e conexões persistentes**. O desafio muda completamente: em vez de entregar arquivos grandes pra milhões de viewers passivos, precisamos entregar mensagens pequenas pra bilhões de usuários em tempo real — e garantir que nenhuma se perca.
+Se o YouTube é o exercício clássico de **throughput e storage**, WhatsApp é o exercício clássico de **latência e conexões persistentes**. O desafio muda completamente: em vez de entregar arquivos grandes pra milhões de viewers passivos, precisamos entregar mensagens pequenas pra bilhões de usuários em tempo real e garantir que nenhuma se perca.
 
 WhatsApp processa mais de 100 bilhões de mensagens por dia com uma equipe historicamente pequena (~50 engenheiros quando foi adquirido pelo Facebook em 2014). Esse é o poder de boas decisões arquiteturais.
 
@@ -52,7 +52,7 @@ Vamos aplicar o [framework da série](/posts/system-design-na-pratica-como-pensa
 
 ### Fora do escopo
 
-- Chamadas de voz/vídeo (protocolo diferente — WebRTC)
+- Chamadas de voz/vídeo (protocolo diferente: WebRTC)
 - Stories/Status (mais parecido com feed)
 - Payments
 - Bots e business API
@@ -103,18 +103,35 @@ Mídia: 30 dias de retenção = ~30 PB ativo
 
 ### O desafio core: entrega em tempo real
 
-Diferente do YouTube (pull-based — usuário pede o vídeo), messaging é **push-based** — a mensagem precisa **chegar** no recipient sem ele pedir.
+Diferente do YouTube (pull-based: usuário pede o vídeo), messaging é **push-based**: a mensagem precisa **chegar** no recipient sem ele pedir.
 
-Isso exige **conexão persistente** entre client e server. HTTP request-response não funciona aqui — a latência de abrir/fechar conexão a cada mensagem seria inaceitável.
+Isso exige **conexão persistente** entre client e server. HTTP request-response não funciona aqui: a latência de abrir/fechar conexão a cada mensagem seria inaceitável.
 
 ### WebSockets: a espinha dorsal
 
-```
-┌──────────┐         WebSocket          ┌──────────────┐
-│  Client  │ ◄════════════════════════► │  Chat Server  │
-│  (app)   │   conexão persistente      │  (stateful)   │
-└──────────┘     full-duplex            └──────────────┘
-```
+<svg viewBox="0 0 780 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Conexão WebSocket persistente entre cliente e chat server" style="max-width:100%;height:auto;" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+    </marker>
+  </defs>
+
+  <g>
+    <rect x="40" y="45" width="150" height="90" rx="8" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="115" y="82" text-anchor="middle" font-size="12" font-weight="bold">Client</text>
+    <text x="115" y="100" text-anchor="middle" font-size="10" fill="#555">app</text>
+  </g>
+  <g>
+    <rect x="590" y="45" width="150" height="90" rx="8" fill="#d5e8d4" stroke="#82b366" />
+    <text x="665" y="82" text-anchor="middle" font-size="12" font-weight="bold">Chat Server</text>
+    <text x="665" y="100" text-anchor="middle" font-size="10" fill="#555">stateful</text>
+  </g>
+
+  <line x1="190" y1="90" x2="590" y2="90" stroke="#666666" stroke-width="3" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+  <text x="390" y="56" text-anchor="middle" font-size="14" font-weight="bold">WebSocket</text>
+  <text x="390" y="75" text-anchor="middle" font-size="10" fill="#555">conexão persistente</text>
+  <text x="390" y="122" text-anchor="middle" font-size="10" fill="#555">full-duplex</text>
+</svg>
 
 **Por que WebSocket e não HTTP polling?**
 
@@ -129,32 +146,73 @@ WebSocket é full-duplex: client e server enviam dados a qualquer momento pela m
 
 ### Arquitetura geral
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                     ENVIO DE MENSAGEM                             │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                   │
-│  Sender ──WebSocket──→ Chat Server A                             │
-│                              │                                    │
-│                              ▼                                    │
-│                      Message Service                              │
-│                         │        │                                │
-│                         ▼        ▼                                │
-│                    Message DB   Session Service                    │
-│                                 "Onde está o recipient?"          │
-│                                      │                            │
-│                              ┌───────┴───────┐                   │
-│                              ▼               ▼                    │
-│                     [recipient online]  [recipient offline]       │
-│                              │               │                    │
-│                              ▼               ▼                    │
-│                     Chat Server B      Push Notification          │
-│                         │              (APNs / FCM)               │
-│                         ▼                                         │
-│                     Recipient                                     │
-│                                                                   │
-└─────────────────────────────────────────────────────────────────┘
-```
+<svg viewBox="0 0 980 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Fluxo de envio de mensagem no WhatsApp" style="max-width:100%;height:auto;" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+    </marker>
+  </defs>
+  <rect x="10" y="10" width="960" height="540" rx="8" fill="#f5f5f5" stroke="#666666" />
+  <text x="30" y="35" font-size="14" font-weight="bold">ENVIO DE MENSAGEM</text>
+
+  <g>
+    <rect x="30" y="210" width="120" height="56" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="90" y="243" text-anchor="middle" font-size="12" font-weight="bold">Sender</text>
+  </g>
+  <g>
+    <rect x="200" y="210" width="150" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="275" y="243" text-anchor="middle" font-size="12" font-weight="bold">Chat Server A</text>
+  </g>
+  <g>
+    <rect x="410" y="210" width="160" height="56" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="490" y="243" text-anchor="middle" font-size="12" font-weight="bold">Message Service</text>
+  </g>
+  <g>
+    <rect x="410" y="330" width="160" height="56" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+    <text x="490" y="363" text-anchor="middle" font-size="12" font-weight="bold">Message DB</text>
+  </g>
+  <g>
+    <rect x="630" y="210" width="180" height="56" rx="6" fill="#fff2cc" stroke="#d6b656" />
+    <text x="720" y="236" text-anchor="middle" font-size="12" font-weight="bold">Session Service</text>
+    <text x="720" y="252" text-anchor="middle" font-size="10" fill="#555">Onde está o recipient?</text>
+  </g>
+  <g>
+    <rect x="590" y="330" width="150" height="50" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="665" y="360" text-anchor="middle" font-size="12" font-weight="bold">recipient online</text>
+  </g>
+  <g>
+    <rect x="780" y="330" width="150" height="50" rx="6" fill="#f8cecc" stroke="#b85450" />
+    <text x="855" y="360" text-anchor="middle" font-size="12" font-weight="bold">recipient offline</text>
+  </g>
+  <g>
+    <rect x="590" y="420" width="150" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="665" y="453" text-anchor="middle" font-size="12" font-weight="bold">Chat Server B</text>
+  </g>
+  <g>
+    <rect x="780" y="420" width="150" height="56" rx="6" fill="#fff2cc" stroke="#d6b656" />
+    <text x="855" y="446" text-anchor="middle" font-size="12" font-weight="bold">Push Notification</text>
+    <text x="855" y="462" text-anchor="middle" font-size="10" fill="#555">APNs / FCM</text>
+  </g>
+  <g>
+    <rect x="650" y="500" width="180" height="40" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="740" y="525" text-anchor="middle" font-size="12" font-weight="bold">Recipient</text>
+  </g>
+
+  <g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="150" y1="238" x2="200" y2="238" />
+    <line x1="350" y1="238" x2="410" y2="238" />
+    <line x1="490" y1="266" x2="490" y2="330" />
+    <line x1="570" y1="238" x2="630" y2="238" />
+    <line x1="720" y1="266" x2="665" y2="330" />
+    <line x1="720" y1="266" x2="855" y2="330" />
+    <line x1="665" y1="380" x2="665" y2="420" />
+    <line x1="855" y1="380" x2="855" y2="420" />
+    <line x1="665" y1="476" x2="700" y2="500" />
+    <line x1="855" y1="476" x2="780" y2="500" />
+  </g>
+
+  <text x="175" y="224" font-size="10" fill="#555">WebSocket</text>
+</svg>
 
 ### Componentes principais
 
@@ -170,7 +228,7 @@ WebSocket é full-duplex: client e server enviam dados a qualquer momento pela m
 
 ## API Design
 
-Diferente dos artigos anteriores, aqui o protocolo principal não é REST — é **WebSocket com mensagens estruturadas**. REST é usado apenas pra operações não-realtime (login, upload de mídia, busca de histórico).
+Diferente dos artigos anteriores, aqui o protocolo principal não é REST: é **WebSocket com mensagens estruturadas**. REST é usado apenas pra operações não-realtime (login, upload de mídia, busca de histórico).
 
 ### Protocolo WebSocket
 
@@ -358,7 +416,7 @@ Kafka absorve o pico. Se consumers ficam pra trás, mensagens acumulam no topic 
 
 ## Deep Dive 3: Presença online
 
-"Online", "last seen at 14:32", "typing..." — essas features parecem simples mas são surpreendentemente caras em escala.
+"Online", "last seen at 14:32", "typing...": essas features parecem simples mas são surpreendentemente caras em escala.
 
 ### O problema
 
@@ -394,19 +452,43 @@ Se 10M de usuários mudam status/minuto × 100 contatos = 1 bilhão de updates/m
 
 ### Implementação
 
-```
-┌──────────┐   heartbeat (cada 30s)    ┌───────────────────┐
-│  Client  │ ─────────────────────────→ │  Presence Service  │
-└──────────┘                            │  (Redis TTL)       │
-                                        └───────────────────┘
-                                               │
-                                               ▼
-                                     Key: presence:{user_id}
-                                     Value: {status, last_seen}
-                                     TTL: 60 seconds
-                                     
-Se heartbeat não renova dentro do TTL → key expira → user é considerado offline
-```
+<svg viewBox="0 0 860 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Fluxo de heartbeat do presence service" style="max-width:100%;height:auto;" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+    </marker>
+  </defs>
+
+  <g>
+    <rect x="40" y="55" width="150" height="56" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="115" y="88" text-anchor="middle" font-size="12" font-weight="bold">Client</text>
+  </g>
+  <g>
+    <rect x="520" y="40" width="220" height="72" rx="8" fill="#d5e8d4" stroke="#82b366" />
+    <text x="630" y="72" text-anchor="middle" font-size="14" font-weight="bold">Presence Service</text>
+    <text x="630" y="90" text-anchor="middle" font-size="10" fill="#555">Redis TTL</text>
+  </g>
+  <g>
+    <rect x="500" y="145" width="260" height="88" rx="6" fill="#fff2cc" stroke="#d6b656" />
+    <text x="520" y="170" font-size="12" font-weight="bold">Key</text>
+    <text x="560" y="170" font-size="10" fill="#555">presence:{user_id}</text>
+    <text x="520" y="194" font-size="12" font-weight="bold">Value</text>
+    <text x="560" y="194" font-size="10" fill="#555">{status, last_seen}</text>
+    <text x="520" y="218" font-size="12" font-weight="bold">TTL</text>
+    <text x="560" y="218" font-size="10" fill="#555">60 seconds</text>
+  </g>
+  <g>
+    <rect x="150" y="245" width="580" height="40" rx="6" fill="#f8cecc" stroke="#b85450" />
+    <text x="440" y="270" text-anchor="middle" font-size="10" fill="#555">Se heartbeat não renova dentro do TTL, a key expira e o user é considerado offline</text>
+  </g>
+
+  <g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="190" y1="83" x2="520" y2="83" />
+    <line x1="630" y1="112" x2="630" y2="145" />
+  </g>
+
+  <text x="355" y="68" text-anchor="middle" font-size="10" fill="#555">heartbeat (cada 30s)</text>
+</svg>
 
 Redis com TTL é elegante aqui: se o client crash sem mandar "going offline", a key simplesmente expira e o status vira offline automaticamente. Sem necessidade de cleanup.
 
@@ -478,8 +560,8 @@ CREATE TABLE messages (
 
 **Por que esse modelo funciona:**
 
-- **Partition key: conversation_id** — todas as mensagens de uma conversa ficam no mesmo nó. Query "últimas 50 mensagens da conversa X" é uma leitura sequencial em disco (extremamente rápida).
-- **Clustering key: sequence_number** — mensagens são armazenadas ordenadas fisicamente. Range scan por order é O(N).
+- **Partition key: conversation_id**: todas as mensagens de uma conversa ficam no mesmo nó. Query "últimas 50 mensagens da conversa X" é uma leitura sequencial em disco (extremamente rápida).
+- **Clustering key: sequence_number**: mensagens são armazenadas ordenadas fisicamente. Range scan por order é O(N).
 - **Write-optimized:** Cassandra é append-only (LSM tree). Escrita é absurdamente rápida (~1ms).
 
 ### Sizing
@@ -534,7 +616,7 @@ Mensagens são E2E encrypted. O server não tem o plaintext. Como sincronizar hi
 
 3. **Sem transferência:** novo device começa do zero. Simples pra o sistema mas UX ruim.
 
-### Grupo com 1024 membros — mensagem demora?
+### Grupo com 1024 membros: mensagem demora?
 
 Fan-out de grupo grande:
 
@@ -545,7 +627,7 @@ Se cada entrega leva 5ms → 5 segundos pra todos receberem?
 
 **Solução: paralelismo.** Não entrega sequencialmente. O message service publica um evento no broker, múltiplos Chat Servers processam em paralelo. Entrega pra todos em <100ms.
 
-### Client está offline há 3 dias — 500 mensagens acumuladas
+### Client está offline há 3 dias: 500 mensagens acumuladas
 
 Quando reconecta:
 
@@ -578,9 +660,9 @@ Quando reconecta:
 | Cassandra (messages) | PostgreSQL | Write throughput de 1M+/s, partition by conversation |
 | Redis (sessions/presence) | DB relacional | Latência <1ms, TTL nativo, 6.7M writes/s |
 | Lazy presence | Broadcast presence | Fan-out de broadcast é insustentável em escala |
-| Signal Protocol (E2E) | TLS only (encrypt in transit) | Privacidade real — server não lê conteúdo |
+| Signal Protocol (E2E) | TLS only (encrypt in transit) | Privacidade real: server não lê conteúdo |
 | Sender Key (grupos) | E2E individual por membro | 1 encrypt vs N encrypts por mensagem de grupo |
-| Push notifications (offline) | Apenas entrega no reconnect | UX — user precisa saber que tem msg pendente |
+| Push notifications (offline) | Apenas entrega no reconnect | UX: user precisa saber que tem msg pendente |
 
 ## Como escalar além
 
@@ -607,4 +689,4 @@ Quando reconecta:
 
 ---
 
-*Esse é o terceiro artigo da série [System Design na Prática](/series/system-design-na-prática/). No próximo, vamos projetar o Uber — geolocalização em tempo real, matching de motoristas, e cálculo de ETA com milhões de pontos se movendo simultaneamente.*
+*Esse é o terceiro artigo da série [System Design na Prática](/series/system-design-na-prática/). No próximo, vamos projetar o Uber: geolocalização em tempo real, matching de motoristas, e cálculo de ETA com milhões de pontos se movendo simultaneamente.*

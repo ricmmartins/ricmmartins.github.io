@@ -2,7 +2,7 @@
 slug: "system-design-url-shortener-simplicidade-em-escala"
 aliases:
   - "/posts/system-design-url-shortener-simplicidade-em-escala/"
-title: "System design: URL Shortener — simplicidade em escala"
+title: "System design: URL Shortener - simplicidade em escala"
 description: "Como projetar um sistema que parece trivial mas esconde decisões profundas sobre hashing, colisão, read optimization, e analytics de bilhões de cliques em tempo real."
 date: 2026-05-30T10:00:00-04:00
 categories:
@@ -21,7 +21,7 @@ series:
 
 "Design a URL shortening service like Bitly or TinyURL."
 
-Essa é geralmente a primeira pergunta de system design que candidatos encontram. Parece simples — recebe URL longa, retorna URL curta, redireciona quando acessam. Dá pra fazer em 50 linhas de código, certo?
+Essa é geralmente a primeira pergunta de system design que candidatos encontram. Parece simples: recebe URL longa, retorna URL curta, redireciona quando acessam. Dá pra fazer em 50 linhas de código, certo?
 
 Certo. Pra 100 usuários. Agora faz isso pra **100 bilhões de URLs** com **100.000 redirects por segundo** e vamos ver o quão "simples" é.
 
@@ -122,36 +122,57 @@ Cache total: 20M × 300 bytes = ~6 GB
 
 ### Arquitetura geral
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                         WRITE PATH (Create)                           │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                       │
-│  Client ──→ API Server ──→ ID Generator ──→ URL DB                   │
-│                                │                                      │
-│                                ▼                                      │
-│                          Cache (warm)                                  │
-│                                                                       │
-└─────────────────────────────────────────────────────────────────────┘
-
-┌─────────────────────────────────────────────────────────────────────┐
-│                        READ PATH (Redirect)                           │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                       │
-│  Client ──→ CDN/Load Balancer ──→ Redirect Service                   │
-│                                        │                              │
-│                                   ┌────┴────┐                        │
-│                                   ▼         ▼                        │
-│                              Cache (hit?)  URL DB                     │
-│                                   │                                   │
-│                                   ▼                                   │
-│                          HTTP 301/302 Redirect                        │
-│                                   │                                   │
-│                                   ▼ (async)                           │
-│                          Analytics Pipeline                            │
-│                                                                       │
-└─────────────────────────────────────────────────────────────────────┘
-```
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 650" width="100%" style="max-width: 100%; height: auto;" role="img" aria-labelledby="url-paths-title">
+  <title id="url-paths-title">Diagrama dos caminhos de criação e redirecionamento do encurtador</title>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+    </marker>
+  </defs>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <rect x="20" y="20" width="820" height="220" rx="8" fill="#f5f5f5" stroke="#666666" />
+    <text x="430" y="46" font-size="14" font-weight="bold" text-anchor="middle">WRITE PATH (Create)</text>
+    <rect x="50" y="80" width="120" height="48" rx="6" fill="#f5f5f5" stroke="#666666" />
+    <text x="110" y="109" font-size="12" font-weight="bold" text-anchor="middle">Client</text>
+    <rect x="220" y="80" width="130" height="48" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="285" y="109" font-size="12" font-weight="bold" text-anchor="middle">API Server</text>
+    <rect x="400" y="80" width="140" height="48" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+    <text x="470" y="109" font-size="12" font-weight="bold" text-anchor="middle">ID Generator</text>
+    <rect x="590" y="80" width="140" height="48" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="660" y="109" font-size="12" font-weight="bold" text-anchor="middle">URL DB</text>
+    <rect x="560" y="160" width="200" height="48" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="660" y="189" font-size="12" font-weight="bold" text-anchor="middle">Cache (warm)</text>
+    <line x1="170" y1="104" x2="220" y2="104" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="350" y1="104" x2="400" y2="104" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="540" y1="104" x2="590" y2="104" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="660" y1="128" x2="660" y2="160" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <rect x="20" y="280" width="820" height="340" rx="8" fill="#f5f5f5" stroke="#666666" />
+    <text x="430" y="306" font-size="14" font-weight="bold" text-anchor="middle">READ PATH (Redirect)</text>
+    <rect x="50" y="340" width="120" height="48" rx="6" fill="#f5f5f5" stroke="#666666" />
+    <text x="110" y="369" font-size="12" font-weight="bold" text-anchor="middle">Client</text>
+    <rect x="220" y="340" width="150" height="48" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="295" y="369" font-size="12" font-weight="bold" text-anchor="middle">CDN / Load Balancer</text>
+    <rect x="420" y="340" width="150" height="48" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+    <text x="495" y="369" font-size="12" font-weight="bold" text-anchor="middle">Redirect Service</text>
+    <rect x="280" y="430" width="150" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="355" y="455" font-size="12" font-weight="bold" text-anchor="middle">Cache</text>
+    <text x="355" y="473" font-size="10" fill="#555" text-anchor="middle">hit?</text>
+    <rect x="500" y="430" width="140" height="56" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="570" y="463" font-size="12" font-weight="bold" text-anchor="middle">URL DB</text>
+    <rect x="360" y="520" width="270" height="48" rx="6" fill="#fff2cc" stroke="#d6b656" />
+    <text x="495" y="549" font-size="12" font-weight="bold" text-anchor="middle">HTTP 301/302 Redirect</text>
+    <rect x="345" y="590" width="300" height="48" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+    <text x="495" y="619" font-size="12" font-weight="bold" text-anchor="middle">Analytics Pipeline</text>
+    <line x1="170" y1="364" x2="220" y2="364" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="370" y1="364" x2="420" y2="364" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="495" y1="388" x2="355" y2="430" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="495" y1="388" x2="570" y2="430" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="355" y1="486" x2="460" y2="520" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="570" y1="486" x2="530" y2="520" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="495" y1="568" x2="495" y2="590" stroke="#666666" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arrow)" />
+    <text x="510" y="584" font-size="10" fill="#555">async</text>
+  </g>
+</svg>
 
 ### Componentes
 
@@ -165,7 +186,7 @@ Cache total: 20M × 300 bytes = ~6 GB
 | **Analytics Pipeline** | Contar cliques, metadata |
 | **Cleanup Service** | Expirar URLs com TTL |
 
-## Deep Dive 1: Geração de Short Codes — O problema mais importante
+## Deep Dive 1: Geração de Short Codes - O problema mais importante
 
 Como gerar `abc123` a partir de `https://www.example.com/very/long/path/to/something`?
 
@@ -263,7 +284,7 @@ Cada server consome seu range localmente (in-memory counter):
 - Sem coordenação por-request (counter local é O(1))
 - Coordinator só é chamado a cada ~1M URLs (raro)
 
-**Desvantagem:** IDs não são sequenciais globalmente (Server A pode estar no 500K enquanto Server B está no 1.2M). Não é problema — ninguém precisa de ordem global.
+**Desvantagem:** IDs não são sequenciais globalmente (Server A pode estar no 500K enquanto Server B está no 1.2M). Não é problema. Ninguém precisa de ordem global.
 
 **Opção C: Snowflake-style ID (timestamp + machine + sequence)**
 
@@ -334,19 +355,40 @@ Com 1.5 TB em 5 anos, um PostgreSQL com bom hardware (NVMe SSD) serve sem proble
 
 O sistema é **extremamente read-heavy** (1000:1). Cache hit rate esperado: >99%.
 
-```
-Redirect request: GET /abc123
-    │
-    ▼
-Redis: GET url:abc123
-    │
-    ├── HIT (99%+ dos casos): retorna long_url → redirect
-    │
-    └── MISS: 
-         query DB → retorna long_url
-         SET url:abc123 {long_url} EX 86400 → cacheia por 24h
-         redirect
-```
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 360" width="100%" style="max-width: 100%; height: auto;" role="img" aria-labelledby="url-cache-title">
+  <title id="url-cache-title">Diagrama do fluxo cache-aside do redirecionamento</title>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+    </marker>
+  </defs>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <rect x="300" y="20" width="260" height="48" rx="6" fill="#f5f5f5" stroke="#666666" />
+    <text x="430" y="49" font-size="12" font-weight="bold" text-anchor="middle">Redirect request: GET /abc123</text>
+    <rect x="300" y="100" width="260" height="48" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="430" y="129" font-size="12" font-weight="bold" text-anchor="middle">Redis: GET url:abc123</text>
+    <rect x="90" y="190" width="250" height="70" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="215" y="218" font-size="12" font-weight="bold" text-anchor="middle">HIT (99%+ dos casos)</text>
+    <text x="215" y="238" font-size="10" fill="#555" text-anchor="middle">retorna long_url</text>
+    <text x="215" y="252" font-size="10" fill="#555" text-anchor="middle">redirect</text>
+    <rect x="520" y="190" width="250" height="54" rx="6" fill="#fff2cc" stroke="#d6b656" />
+    <text x="645" y="216" font-size="12" font-weight="bold" text-anchor="middle">MISS</text>
+    <text x="645" y="234" font-size="10" fill="#555" text-anchor="middle">query DB → retorna long_url</text>
+    <rect x="520" y="270" width="250" height="54" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="645" y="294" font-size="12" font-weight="bold" text-anchor="middle">SET url:abc123 {long_url} EX 86400</text>
+    <text x="645" y="312" font-size="10" fill="#555" text-anchor="middle">cacheia por 24h</text>
+    <rect x="320" y="300" width="220" height="42" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+    <text x="430" y="326" font-size="12" font-weight="bold" text-anchor="middle">redirect</text>
+    <line x1="430" y1="68" x2="430" y2="100" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="370" y1="148" x2="245" y2="190" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="490" y1="148" x2="615" y2="190" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="215" y1="260" x2="380" y2="300" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="645" y1="244" x2="645" y2="270" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="610" y1="324" x2="490" y2="300" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <text x="250" y="176" font-size="10" fill="#555">HIT</text>
+    <text x="610" y="176" font-size="10" fill="#555">MISS</text>
+  </g>
+</svg>
 
 **Cache policy:**
 
@@ -386,7 +428,7 @@ CDN retorna HTTP 301 cacheado. O redirect nem chega no nosso server. Reduz load 
 
 **Escolha comum:** 302 por padrão (analytics importa), 301 opcional pra URLs que nunca mudam.
 
-## Deep Dive 3: Redirect — os 10ms mais importantes
+## Deep Dive 3: Redirect - os 10ms mais importantes
 
 O redirect precisa ser **rápido**. Cada milissegundo de latência aqui é sentido por todo mundo que clica num link encurtado.
 
@@ -455,22 +497,38 @@ O redirect NÃO espera analytics ser processado. Registro é assíncrono.
 
 ### Arquitetura de analytics
 
-```
-Redirect acontece
-    │
-    ▼ (fire-and-forget)
-Kafka topic: "click_events"
-    │
-    ├──→ Consumer: Real-time counter (Redis INCR)
-    │      └── Incrementa click_count:{short_code}
-    │
-    ├──→ Consumer: Analytics aggregator
-    │      └── Agrega por hora, geo, device, referer
-    │      └── Escreve em batch no Analytics DB (cada 10s)
-    │
-    └──→ Consumer: Raw event archive
-           └── S3/Blob (pra queries ad-hoc futuras)
-```
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 390" width="100%" style="max-width: 100%; height: auto;" role="img" aria-labelledby="url-analytics-title">
+  <title id="url-analytics-title">Diagrama da fan-out assíncrona de analytics do encurtador</title>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+    </marker>
+  </defs>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <rect x="340" y="20" width="220" height="48" rx="6" fill="#f5f5f5" stroke="#666666" />
+    <text x="450" y="49" font-size="12" font-weight="bold" text-anchor="middle">Redirect acontece</text>
+    <rect x="320" y="100" width="260" height="52" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+    <text x="450" y="128" font-size="12" font-weight="bold" text-anchor="middle">Kafka topic: click_events</text>
+    <text x="450" y="145" font-size="10" fill="#555" text-anchor="middle">fire-and-forget</text>
+    <rect x="40" y="220" width="240" height="86" rx="8" fill="#d5e8d4" stroke="#82b366" />
+    <text x="160" y="248" font-size="12" font-weight="bold" text-anchor="middle">Consumer: Real-time counter</text>
+    <text x="160" y="268" font-size="10" fill="#555" text-anchor="middle">Redis INCR</text>
+    <text x="160" y="286" font-size="10" fill="#555" text-anchor="middle">Incrementa click_count:{short_code}</text>
+    <rect x="330" y="220" width="240" height="96" rx="8" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="450" y="248" font-size="12" font-weight="bold" text-anchor="middle">Consumer: Analytics aggregator</text>
+    <text x="450" y="268" font-size="10" fill="#555" text-anchor="middle">Agrega por hora, geo, device, referer</text>
+    <text x="450" y="286" font-size="10" fill="#555" text-anchor="middle">Escreve em batch no Analytics DB</text>
+    <text x="450" y="302" font-size="10" fill="#555" text-anchor="middle">(cada 10s)</text>
+    <rect x="620" y="220" width="240" height="86" rx="8" fill="#fff2cc" stroke="#d6b656" />
+    <text x="740" y="248" font-size="12" font-weight="bold" text-anchor="middle">Consumer: Raw event archive</text>
+    <text x="740" y="268" font-size="10" fill="#555" text-anchor="middle">S3 / Blob</text>
+    <text x="740" y="286" font-size="10" fill="#555" text-anchor="middle">pra queries ad-hoc futuras</text>
+    <line x1="450" y1="68" x2="450" y2="100" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="450" y1="152" x2="160" y2="220" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="450" y1="152" x2="450" y2="220" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="450" y1="152" x2="740" y2="220" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+  </g>
+</svg>
 
 ### Evento de click
 
@@ -637,23 +695,43 @@ URL shortener **não pode cair**. Links estão em emails, tweets, cartões de vi
 
 ### Multi-region deployment
 
-```
-              ┌─── DNS (GeoDNS/Anycast) ───┐
-              │                              │
-              ▼                              ▼
-    ┌──────────────────┐        ┌──────────────────┐
-    │   Region: US-East │        │  Region: EU-West  │
-    │                    │        │                    │
-    │  LB → Redirect    │        │  LB → Redirect    │
-    │  Service (N pods) │        │  Service (N pods) │
-    │       │           │        │       │           │
-    │  Redis Cluster    │        │  Redis Cluster    │
-    │       │           │        │       │           │
-    │  PostgreSQL       │◄──────►│  PostgreSQL       │
-    │  (primary)        │  async │  (read replica)   │
-    └──────────────────┘  repli- └──────────────────┘
-                           cation
-```
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" width="100%" style="max-width: 100%; height: auto;" role="img" aria-labelledby="url-regions-title">
+  <title id="url-regions-title">Diagrama do deployment multi-region do encurtador</title>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+    </marker>
+  </defs>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <rect x="355" y="20" width="250" height="50" rx="6" fill="#f5f5f5" stroke="#666666" />
+    <text x="480" y="50" font-size="12" font-weight="bold" text-anchor="middle">DNS (GeoDNS / Anycast)</text>
+    <rect x="50" y="110" width="360" height="260" rx="8" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="230" y="138" font-size="14" font-weight="bold" text-anchor="middle">Region: US-East</text>
+    <rect x="110" y="160" width="240" height="52" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+    <text x="230" y="188" font-size="12" font-weight="bold" text-anchor="middle">LB → Redirect Service (N pods)</text>
+    <rect x="130" y="235" width="200" height="48" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="230" y="264" font-size="12" font-weight="bold" text-anchor="middle">Redis Cluster</text>
+    <rect x="110" y="305" width="240" height="48" rx="6" fill="#fff2cc" stroke="#d6b656" />
+    <text x="230" y="334" font-size="12" font-weight="bold" text-anchor="middle">PostgreSQL (primary)</text>
+    <rect x="550" y="110" width="360" height="260" rx="8" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="730" y="138" font-size="14" font-weight="bold" text-anchor="middle">Region: EU-West</text>
+    <rect x="610" y="160" width="240" height="52" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+    <text x="730" y="188" font-size="12" font-weight="bold" text-anchor="middle">LB → Redirect Service (N pods)</text>
+    <rect x="630" y="235" width="200" height="48" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="730" y="264" font-size="12" font-weight="bold" text-anchor="middle">Redis Cluster</text>
+    <rect x="610" y="305" width="240" height="48" rx="6" fill="#fff2cc" stroke="#d6b656" />
+    <text x="730" y="334" font-size="12" font-weight="bold" text-anchor="middle">PostgreSQL (read replica)</text>
+    <line x1="480" y1="70" x2="230" y2="110" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="480" y1="70" x2="730" y2="110" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="230" y1="212" x2="230" y2="235" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="230" y1="283" x2="230" y2="305" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="730" y1="212" x2="730" y2="235" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="730" y1="283" x2="730" y2="305" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+    <line x1="350" y1="329" x2="610" y2="329" stroke="#666666" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arrow)" />
+    <line x1="610" y1="345" x2="350" y2="345" stroke="#666666" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arrow)" />
+    <text x="480" y="320" font-size="10" fill="#555" text-anchor="middle">async replication</text>
+  </g>
+</svg>
 
 **DNS GeoDNS:** roteia usuário pro datacenter mais próximo. Brasileiro vai pro US-East (ou SA-East se tiver), europeu vai pro EU-West.
 
@@ -685,7 +763,7 @@ Impacto total: ~30-60 segundos de latência elevada, zero downtime real
 | Principal desafio | Read latency + analytics | Storage + bandwidth | Delivery + connections | Geolocation + real-time | Fan-out + scale |
 | Cache hit rate | >99% | >95% (CDN) | N/A | Low (data moves) | >95% (timeline) |
 
-O URL Shortener é o "hello world" do system design — mas um hello world que toca em caching, hashing, analytics pipelines, rate limiting, e HA multi-region.
+O URL Shortener é o "hello world" do system design, mas um hello world que toca em caching, hashing, analytics pipelines, rate limiting, e HA multi-region.
 
 ## Trade-offs e decisões
 
@@ -719,13 +797,13 @@ Com esse artigo, concluímos os 6 sistemas da série. Aqui está o mapa mental d
 | **CDN** | YouTube (streaming), URL Shortener (redirect cache) |
 | **Message Queue (Kafka)** | YouTube (transcoding), WhatsApp (delivery), Twitter (fan-out), URL Shortener (analytics) |
 | **WebSocket** | WhatsApp (messaging), Uber (tracking), Twitter (real-time) |
-| **Caching (Redis)** | Todos — é universal |
+| **Caching (Redis)** | Todos (é universal) |
 | **Geospatial** | Uber (H3, matching) |
 | **Fan-out** | Twitter (write vs read vs hybrid) |
 | **Consistent Hashing** | YouTube (storage), Twitter (timeline sharding) |
 | **Rate Limiting** | URL Shortener (abuse prevention) |
 | **Eventual Consistency** | YouTube (upload visibility), Twitter (timeline), URL Shortener (analytics) |
-| **Strong Consistency** | WhatsApp (delivery), Uber (matching — 1 ride = 1 driver) |
+| **Strong Consistency** | WhatsApp (delivery), Uber (matching: 1 ride = 1 driver) |
 | **Pre-signed URLs** | YouTube (upload bypass) |
 | **Snowflake IDs** | Twitter (time-ordered distributed IDs) |
 | **HyperLogLog** | URL Shortener (unique visitors) |

@@ -29,7 +29,7 @@ A série é baseada no meu livro open-source [AI for Infrastructure Professional
 
 São 8:47 da manhã de uma segunda-feira. Você está no meio do seu café, revisando um plano de Terraform pra um redesign de rede, quando uma mensagem no Slack acende sua tela. É do líder do time de data science:
 
-> *"Fala — precisamos de 8 VMs com GPU provisionadas até quarta pra um job de fine-tuning. Também precisamos de um private endpoint pro API de inferência do modelo, e você consegue configurar monitoramento de TPM? Valeu!"*
+> *"Fala, precisamos de 8 VMs com GPU provisionadas até quarta pra um job de fine-tuning. Também precisamos de um private endpoint pro API de inferência do modelo, e você consegue configurar monitoramento de TPM? Valeu!"*
 
 Você lê duas vezes. VMs com GPU? Fine-tuning? Você sabe o que é um private endpoint, já configurou centenas. Monitoramento? É seu pão de cada dia. Mas o que diabos é "TPM" nesse contexto? Não é Trusted Platform Module. É **Tokens Per Minute**, uma métrica de throughput para modelos de linguagem. Você não sabe disso ainda, mas tudo bem.
 
@@ -113,7 +113,7 @@ Na minha experiência trabalhando com startups e enterprises na Microsoft, eu ve
 
 ## Mãos na massa: seu primeiro reconhecimento de AI
 
-Você não precisa treinar um modelo nem escrever Python. Precisa entender que compute GPU está disponível pra você e quais são os limites da sua subscription. Isso é reconhecimento — o mesmo primeiro passo que você faria antes de arquitetar qualquer workload novo.
+Você não precisa treinar um modelo nem escrever Python. Precisa entender que compute GPU está disponível pra você e quais são os limites da sua subscription. Isso é reconhecimento: o mesmo primeiro passo que você faria antes de arquitetar qualquer workload novo.
 
 ### Descubra as VMs com GPU na sua região
 

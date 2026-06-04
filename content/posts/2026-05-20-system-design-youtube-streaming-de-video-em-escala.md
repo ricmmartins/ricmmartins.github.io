@@ -2,7 +2,7 @@
 slug: "system-design-youtube-streaming-de-video-em-escala"
 aliases:
   - "/posts/system-design-youtube-streaming-de-video-em-escala/"
-title: "System design: YouTube — streaming de vídeo em escala"
+title: "System design: YouTube - streaming de vídeo em escala"
 description: "Como projetar uma plataforma de vídeo que processa 500 horas de upload por minuto e entrega o primeiro frame em menos de 500ms. CDN, transcoding, adaptive bitrate, e pre-signed URLs na prática."
 date: 2026-05-22T10:00:00-04:00
 categories:
@@ -20,9 +20,9 @@ series:
 
 "Design a video-sharing platform like YouTube."
 
-Essa é possivelmente a pergunta de system design mais clássica que existe. E o motivo é simples: um sistema de vídeo toca em **quase todo conceito importante** — upload de arquivos grandes, processamento assíncrono, storage massivo, CDN global, adaptive streaming, e leitura pesada com caching agressivo.
+Essa é possivelmente a pergunta de system design mais clássica que existe. E o motivo é simples: um sistema de vídeo toca em **quase todo conceito importante**: upload de arquivos grandes, processamento assíncrono, storage massivo, CDN global, adaptive streaming, e leitura pesada com caching agressivo.
 
-Nesse artigo, vamos aplicar o [framework do post anterior](/posts/system-design-na-pratica-como-pensar-sistemas-em-escala/) pra projetar uma plataforma de vídeo do zero. Não vou fingir que estamos inventando o YouTube — vou explicar **por que** cada decisão arquitetural faz sentido no contexto de escala real.
+Nesse artigo, vamos aplicar o [framework do post anterior](/posts/system-design-na-pratica-como-pensar-sistemas-em-escala/) pra projetar uma plataforma de vídeo do zero. Não vou fingir que estamos inventando o YouTube. Vou explicar **por que** cada decisão arquitetural faz sentido no contexto de escala real.
 
 ## Fase 1: Esclarecer requisitos
 
@@ -50,7 +50,7 @@ Antes de desenhar qualquer coisa, precisamos entender o problema. Numa entrevist
 
 ### Fora do escopo
 
-- Livestreaming (arquitetura diferente — RTMP, ultra-low latency)
+- Livestreaming (arquitetura diferente: RTMP, ultra-low latency)
 - Sistema de recomendação (ML pipeline separado)
 - Comentários e likes (outro bounded context)
 - Monetização/ads
@@ -117,36 +117,108 @@ Vamos separar os dois.
 
 ### Arquitetura geral
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                          WRITE PATH (Upload)                         │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                       │
-│  Client ──→ API Server ──→ Blob Storage (raw)                        │
-│                │                    │                                  │
-│                │                    ▼                                  │
-│                │            Message Queue (Kafka)                      │
-│                │                    │                                  │
-│                ▼                    ▼                                  │
-│          Metadata DB      Transcoding Workers                         │
-│                                    │                                  │
-│                                    ▼                                  │
-│                           Blob Storage (processed)                    │
-│                                    │                                  │
-│                                    ▼                                  │
-│                                  CDN                                  │
-└─────────────────────────────────────────────────────────────────────┘
+<svg viewBox="0 0 920 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Write path de upload de vídeo" style="max-width:100%;height:auto;" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+    </marker>
+  </defs>
+  <rect x="10" y="10" width="900" height="340" rx="8" fill="#f5f5f5" stroke="#666666" />
+  <text x="30" y="35" font-size="14" font-weight="bold">WRITE PATH (Upload)</text>
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                          READ PATH (Streaming)                       │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                       │
-│  Client ──→ CDN (cache hit?) ──→ Blob Storage (processed)            │
-│    │                                                                  │
-│    └──→ API Server ──→ Cache (Redis) ──→ Metadata DB                 │
-│                                                                       │
-└─────────────────────────────────────────────────────────────────────┘
-```
+  <g>
+    <rect x="40" y="140" width="110" height="52" rx="6" fill="#f5f5f5" stroke="#666666" />
+    <text x="95" y="171" text-anchor="middle" font-size="12" font-weight="bold">Client</text>
+  </g>
+  <g>
+    <rect x="190" y="140" width="140" height="52" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="260" y="171" text-anchor="middle" font-size="12" font-weight="bold">API Server</text>
+  </g>
+  <g>
+    <rect x="370" y="140" width="160" height="52" rx="6" fill="#fff2cc" stroke="#d6b656" />
+    <text x="450" y="160" text-anchor="middle" font-size="12" font-weight="bold">Blob Storage</text>
+    <text x="450" y="176" text-anchor="middle" font-size="10" fill="#555">raw</text>
+  </g>
+  <g>
+    <rect x="580" y="140" width="150" height="52" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+    <text x="655" y="160" text-anchor="middle" font-size="12" font-weight="bold">Message Queue</text>
+    <text x="655" y="176" text-anchor="middle" font-size="10" fill="#555">Kafka</text>
+  </g>
+  <g>
+    <rect x="190" y="245" width="140" height="52" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+    <text x="260" y="276" text-anchor="middle" font-size="12" font-weight="bold">Metadata DB</text>
+  </g>
+  <g>
+    <rect x="580" y="245" width="150" height="52" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="655" y="265" text-anchor="middle" font-size="12" font-weight="bold">Transcoding</text>
+    <text x="655" y="281" text-anchor="middle" font-size="10" fill="#555">Workers</text>
+  </g>
+  <g>
+    <rect x="370" y="245" width="160" height="52" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="450" y="265" text-anchor="middle" font-size="12" font-weight="bold">Blob Storage</text>
+    <text x="450" y="281" text-anchor="middle" font-size="10" fill="#555">processed</text>
+  </g>
+  <g>
+    <rect x="370" y="305" width="160" height="32" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+    <text x="450" y="325" text-anchor="middle" font-size="12" font-weight="bold">CDN</text>
+  </g>
+
+  <g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="150" y1="166" x2="190" y2="166" />
+    <line x1="330" y1="166" x2="370" y2="166" />
+    <line x1="530" y1="166" x2="580" y2="166" />
+    <line x1="260" y1="192" x2="260" y2="245" />
+    <line x1="655" y1="192" x2="655" y2="245" />
+    <line x1="580" y1="271" x2="530" y2="271" />
+    <line x1="450" y1="297" x2="450" y2="305" />
+  </g>
+</svg>
+
+<svg viewBox="0 0 920 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Read path de streaming de vídeo" style="max-width:100%;height:auto;" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+    </marker>
+  </defs>
+  <rect x="10" y="10" width="900" height="210" rx="8" fill="#f5f5f5" stroke="#666666" />
+  <text x="30" y="35" font-size="14" font-weight="bold">READ PATH (Streaming)</text>
+
+  <g>
+    <rect x="40" y="105" width="110" height="52" rx="6" fill="#f5f5f5" stroke="#666666" />
+    <text x="95" y="136" text-anchor="middle" font-size="12" font-weight="bold">Client</text>
+  </g>
+  <g>
+    <rect x="220" y="55" width="160" height="52" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+    <text x="300" y="77" text-anchor="middle" font-size="12" font-weight="bold">CDN</text>
+    <text x="300" y="93" text-anchor="middle" font-size="10" fill="#555">cache hit?</text>
+  </g>
+  <g>
+    <rect x="450" y="55" width="180" height="52" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="540" y="75" text-anchor="middle" font-size="12" font-weight="bold">Blob Storage</text>
+    <text x="540" y="91" text-anchor="middle" font-size="10" fill="#555">processed</text>
+  </g>
+  <g>
+    <rect x="220" y="145" width="160" height="52" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="300" y="176" text-anchor="middle" font-size="12" font-weight="bold">API Server</text>
+  </g>
+  <g>
+    <rect x="450" y="145" width="150" height="52" rx="6" fill="#fff2cc" stroke="#d6b656" />
+    <text x="525" y="165" text-anchor="middle" font-size="12" font-weight="bold">Cache</text>
+    <text x="525" y="181" text-anchor="middle" font-size="10" fill="#555">Redis</text>
+  </g>
+  <g>
+    <rect x="670" y="145" width="150" height="52" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+    <text x="745" y="176" text-anchor="middle" font-size="12" font-weight="bold">Metadata DB</text>
+  </g>
+
+  <g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="150" y1="131" x2="220" y2="81" />
+    <line x1="380" y1="81" x2="450" y2="81" />
+    <line x1="150" y1="131" x2="220" y2="171" />
+    <line x1="380" y1="171" x2="450" y2="171" />
+    <line x1="600" y1="171" x2="670" y2="171" />
+  </g>
+</svg>
 
 ### Por que separar write e read?
 
@@ -190,7 +262,7 @@ Por quê?
 2. **Escala independente:** blob storage é projetado pra receber petabytes. Seus API servers não.
 3. **Resumable:** se a conexão cair, o client retoma de onde parou (multipart upload com chunk retry).
 
-O API server só lida com **metadata** (título, descrição, thumbnail) — dados pequenos, rápidos de processar.
+O API server só lida com **metadata** (título, descrição, thumbnail): dados pequenos, rápidos de processar.
 
 ### 2. Stream de vídeo
 
@@ -270,38 +342,105 @@ Um vídeo de 1 hora em 6 resoluções com segmentos de 4 segundos = **900 segmen
 
 ### Arquitetura do pipeline
 
-```
-Upload finalizado
-       │
-       ▼
-  Message Queue (Kafka)
-       │
-       ▼
-  ┌─────────────────────────────┐
-  │   Transcoding Orchestrator   │
-  │   (divide em jobs)           │
-  └─────────────────────────────┘
-       │
-       ├──→ Worker 1: gerar 240p (todos os segmentos)
-       ├──→ Worker 2: gerar 360p
-       ├──→ Worker 3: gerar 480p
-       ├──→ Worker 4: gerar 720p
-       ├──→ Worker 5: gerar 1080p
-       ├──→ Worker 6: gerar 4K
-       └──→ Worker 7: gerar thumbnail + preview
-              │
-              ▼
-       Blob Storage (processed)
-              │
-              ▼
-       Gerar manifest file (.m3u8)
-              │
-              ▼
-       Atualizar Metadata DB (status: "ready")
-              │
-              ▼
-       Push pra CDN (warm cache)
-```
+<svg viewBox="0 0 980 740" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pipeline de transcodificação de vídeo" style="max-width:100%;height:auto;" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+    </marker>
+  </defs>
+
+  <g>
+    <rect x="380" y="20" width="220" height="48" rx="6" fill="#f5f5f5" stroke="#666666" />
+    <text x="490" y="49" text-anchor="middle" font-size="12" font-weight="bold">Upload finalizado</text>
+  </g>
+  <g>
+    <rect x="380" y="95" width="220" height="48" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+    <text x="490" y="117" text-anchor="middle" font-size="12" font-weight="bold">Message Queue</text>
+    <text x="490" y="133" text-anchor="middle" font-size="10" fill="#555">Kafka</text>
+  </g>
+  <g>
+    <rect x="345" y="170" width="290" height="70" rx="8" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="490" y="200" text-anchor="middle" font-size="14" font-weight="bold">Transcoding Orchestrator</text>
+    <text x="490" y="218" text-anchor="middle" font-size="10" fill="#555">divide em jobs</text>
+  </g>
+
+  <g>
+    <rect x="60" y="285" width="130" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="125" y="307" text-anchor="middle" font-size="12" font-weight="bold">Worker 1</text>
+    <text x="125" y="323" text-anchor="middle" font-size="10" fill="#555">gerar 240p</text>
+  </g>
+  <g>
+    <rect x="210" y="285" width="130" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="275" y="307" text-anchor="middle" font-size="12" font-weight="bold">Worker 2</text>
+    <text x="275" y="323" text-anchor="middle" font-size="10" fill="#555">gerar 360p</text>
+  </g>
+  <g>
+    <rect x="360" y="285" width="130" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="425" y="307" text-anchor="middle" font-size="12" font-weight="bold">Worker 3</text>
+    <text x="425" y="323" text-anchor="middle" font-size="10" fill="#555">gerar 480p</text>
+  </g>
+  <g>
+    <rect x="510" y="285" width="130" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="575" y="307" text-anchor="middle" font-size="12" font-weight="bold">Worker 4</text>
+    <text x="575" y="323" text-anchor="middle" font-size="10" fill="#555">gerar 720p</text>
+  </g>
+  <g>
+    <rect x="180" y="370" width="130" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="245" y="392" text-anchor="middle" font-size="12" font-weight="bold">Worker 5</text>
+    <text x="245" y="408" text-anchor="middle" font-size="10" fill="#555">gerar 1080p</text>
+  </g>
+  <g>
+    <rect x="350" y="370" width="130" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="415" y="392" text-anchor="middle" font-size="12" font-weight="bold">Worker 6</text>
+    <text x="415" y="408" text-anchor="middle" font-size="10" fill="#555">gerar 4K</text>
+  </g>
+  <g>
+    <rect x="520" y="370" width="220" height="56" rx="6" fill="#fff2cc" stroke="#d6b656" />
+    <text x="630" y="392" text-anchor="middle" font-size="12" font-weight="bold">Worker 7</text>
+    <text x="630" y="408" text-anchor="middle" font-size="10" fill="#555">thumbnail + preview</text>
+  </g>
+
+  <g>
+    <rect x="360" y="470" width="260" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="490" y="490" text-anchor="middle" font-size="12" font-weight="bold">Blob Storage</text>
+    <text x="490" y="506" text-anchor="middle" font-size="10" fill="#555">processed</text>
+  </g>
+  <g>
+    <rect x="360" y="550" width="260" height="48" rx="6" fill="#fff2cc" stroke="#d6b656" />
+    <text x="490" y="579" text-anchor="middle" font-size="12" font-weight="bold">Gerar manifest file (.m3u8)</text>
+  </g>
+  <g>
+    <rect x="340" y="620" width="300" height="48" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="490" y="642" text-anchor="middle" font-size="12" font-weight="bold">Atualizar Metadata DB</text>
+    <text x="490" y="658" text-anchor="middle" font-size="10" fill="#555">status: ready</text>
+  </g>
+  <g>
+    <rect x="360" y="690" width="260" height="48" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+    <text x="490" y="719" text-anchor="middle" font-size="12" font-weight="bold">Push pra CDN</text>
+  </g>
+
+  <g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="490" y1="68" x2="490" y2="95" />
+    <line x1="490" y1="143" x2="490" y2="170" />
+    <line x1="490" y1="240" x2="125" y2="285" />
+    <line x1="490" y1="240" x2="275" y2="285" />
+    <line x1="490" y1="240" x2="425" y2="285" />
+    <line x1="490" y1="240" x2="575" y2="285" />
+    <line x1="490" y1="240" x2="245" y2="370" />
+    <line x1="490" y1="240" x2="415" y2="370" />
+    <line x1="490" y1="240" x2="630" y2="370" />
+    <line x1="125" y1="341" x2="430" y2="470" />
+    <line x1="275" y1="341" x2="450" y2="470" />
+    <line x1="425" y1="341" x2="470" y2="470" />
+    <line x1="575" y1="341" x2="510" y2="470" />
+    <line x1="245" y1="426" x2="450" y2="470" />
+    <line x1="415" y1="426" x2="490" y2="470" />
+    <line x1="630" y1="426" x2="530" y2="470" />
+    <line x1="490" y1="526" x2="490" y2="550" />
+    <line x1="490" y1="598" x2="490" y2="620" />
+    <line x1="490" y1="668" x2="490" y2="690" />
+  </g>
+</svg>
 
 ### Por que usar Message Queue aqui?
 
@@ -328,19 +467,51 @@ Com CDN: o segmento está cacheado num edge server em São Paulo. Latência: <10
 
 ### Como CDN funciona pra vídeo
 
-```
-Player pede segmento 47 do vídeo em 720p
-       │
-       ▼
-CDN Edge (São Paulo): tenho no cache? 
-       │
-       ├── SIM → retorna imediatamente (cache hit)
-       │
-       └── NÃO → busca no Origin (blob storage)
-                     │
-                     ▼
-              Retorna pro player E cacheia localmente
-```
+<svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Fluxo de cache hit no streaming" style="max-width:100%;height:auto;" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+    </marker>
+  </defs>
+
+  <g>
+    <rect x="30" y="105" width="220" height="62" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="140" y="132" text-anchor="middle" font-size="12" font-weight="bold">Player pede segmento 47</text>
+    <text x="140" y="148" text-anchor="middle" font-size="10" fill="#555">vídeo em 720p</text>
+  </g>
+
+  <g>
+    <path d="M350 90 L470 90 L540 150 L470 210 L350 210 L280 150 Z" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
+    <text x="410" y="142" text-anchor="middle" font-size="12" font-weight="bold">CDN Edge</text>
+    <text x="410" y="158" text-anchor="middle" font-size="10" fill="#555">São Paulo: tenho no cache?</text>
+  </g>
+
+  <g>
+    <rect x="610" y="40" width="230" height="62" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="725" y="67" text-anchor="middle" font-size="12" font-weight="bold">Retorna imediatamente</text>
+    <text x="725" y="83" text-anchor="middle" font-size="10" fill="#555">cache hit</text>
+  </g>
+  <g>
+    <rect x="610" y="138" width="230" height="62" rx="6" fill="#f8cecc" stroke="#b85450" />
+    <text x="725" y="165" text-anchor="middle" font-size="12" font-weight="bold">Busca no Origin</text>
+    <text x="725" y="181" text-anchor="middle" font-size="10" fill="#555">blob storage</text>
+  </g>
+  <g>
+    <rect x="610" y="230" width="230" height="52" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="725" y="252" text-anchor="middle" font-size="12" font-weight="bold">Retorna pro player</text>
+    <text x="725" y="268" text-anchor="middle" font-size="10" fill="#555">e cacheia localmente</text>
+  </g>
+
+  <g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="250" y1="136" x2="280" y2="136" />
+    <line x1="540" y1="120" x2="610" y2="71" />
+    <line x1="540" y1="180" x2="610" y2="169" />
+    <line x1="725" y1="200" x2="725" y2="230" />
+  </g>
+
+  <text x="570" y="102" font-size="10" font-weight="bold" fill="#555">SIM</text>
+  <text x="570" y="196" font-size="10" font-weight="bold" fill="#555">NÃO</text>
+</svg>
 
 **Cache hit ratio** pra vídeo popular: >95%. A grande maioria dos views é de vídeos populares (distribuição power-law). Os 1% mais populares respondem por >80% do tráfego. Esses estão **sempre** no cache.
 
@@ -385,7 +556,7 @@ Na prática, YouTube usa DASH no browser e suporta ambos. Netflix usa DASH exclu
 
 ## Deep Dive 3: Database design
 
-### Metadata DB (PostgreSQL / MySQL — relacional)
+### Metadata DB (PostgreSQL / MySQL - relacional)
 
 ```sql
 -- Tabela principal de vídeos
@@ -452,7 +623,7 @@ Com 1 milhão de vídeos/dia, após 3 anos temos ~1 bilhão de registros. Precis
 
 Elasticsearch roda em paralelo ao banco principal. Toda vez que um vídeo fica "ready", um evento atualiza o índice de busca. Search queries nunca tocam o PostgreSQL.
 
-### Progress tracking (DynamoDB / Cassandra — NoSQL)
+### Progress tracking (DynamoDB / Cassandra - NoSQL)
 
 ```json
 {
@@ -545,4 +716,4 @@ Se a entrevista permitir, mencione:
 
 ---
 
-*Esse é o segundo artigo da série [System Design na Prática](/series/system-design-na-prática/). No próximo, vamos projetar o WhatsApp — messaging em tempo real com WebSockets, presença online, e criptografia end-to-end.*
+*Esse é o segundo artigo da série [System Design na Prática](/series/system-design-na-prática/). No próximo, vamos projetar o WhatsApp: messaging em tempo real com WebSockets, presença online, e criptografia end-to-end.*

@@ -138,20 +138,71 @@ az acr repository show-tags \
 
 ## CI/CD pra modelos: o pipeline de promoção
 
-```
-┌─────────┐     ┌─────────────┐     ┌──────────────┐
-│   DEV   │────▶│   STAGING   │────▶│  PRODUCTION  │
-│         │     │             │     │              │
-│ Train   │     │ Validate    │     │ Serve        │
-│ Track   │     │ Benchmark   │     │ Monitor      │
-│ Version │     │ Security    │     │ Auto-rollback│
-└─────────┘     └─────────────┘     └──────────────┘
-     │               │                    │
-  GPU Compute    Inference Infra      Load Balanced
-  Blob Storage   Test Data Access     Multi-replica
-  Experiment     Isolated Network     Prod Network
-  Tracking                            SLA-bound
-```
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 320" role="img" aria-labelledby="mlops-pipeline-title mlops-pipeline-desc">
+  <title id="mlops-pipeline-title">Pipeline de promoção de modelos</title>
+  <desc id="mlops-pipeline-desc">Diagrama com os stages DEV, STAGING e PRODUCTION, mostrando responsabilidades e infraestrutura de cada etapa.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666666" />
+    </marker>
+  </defs>
+  <style>
+    .title { font-family:"Segoe UI", Arial, sans-serif; font-size:14px; font-weight:bold; fill:#222; }
+    .label { font-family:"Segoe UI", Arial, sans-serif; font-size:12px; font-weight:bold; fill:#222; }
+    .desc { font-family:"Segoe UI", Arial, sans-serif; font-size:10px; fill:#555; }
+    .primary { fill:#dae8fc; stroke:#6c8ebf; stroke-width:1.5; }
+    .success { fill:#d5e8d4; stroke:#82b366; stroke-width:1.5; }
+    .warning { fill:#fff2cc; stroke:#d6b656; stroke-width:1.5; }
+    .neutral { fill:#f5f5f5; stroke:#666666; stroke-width:1.5; }
+    .arrow { stroke:#666666; stroke-width:1.5; fill:none; marker-end:url(#arrow); }
+    .link { stroke:#666666; stroke-width:1.5; fill:none; }
+  </style>
+
+  <g>
+    <rect class="primary" x="40" y="30" width="240" height="118" rx="8" />
+    <text class="title" x="160" y="56" text-anchor="middle">DEV</text>
+    <text class="label" x="60" y="82">Train</text>
+    <text class="label" x="60" y="102">Track</text>
+    <text class="label" x="60" y="122">Version</text>
+    <line class="link" x1="160" y1="148" x2="160" y2="190" />
+    <rect class="neutral" x="40" y="190" width="240" height="98" rx="6" />
+    <text class="label" x="60" y="213">Infra</text>
+    <text class="desc" x="60" y="232">GPU Compute</text>
+    <text class="desc" x="60" y="248">Blob Storage</text>
+    <text class="desc" x="60" y="264">Experiment Tracking</text>
+  </g>
+
+  <g>
+    <path class="arrow" d="M 280 89 L 370 89" />
+    <rect class="warning" x="370" y="30" width="240" height="118" rx="8" />
+    <text class="title" x="490" y="56" text-anchor="middle">STAGING</text>
+    <text class="label" x="390" y="82">Validate</text>
+    <text class="label" x="390" y="102">Benchmark</text>
+    <text class="label" x="390" y="122">Security</text>
+    <line class="link" x1="490" y1="148" x2="490" y2="190" />
+    <rect class="neutral" x="370" y="190" width="240" height="98" rx="6" />
+    <text class="label" x="390" y="213">Infra</text>
+    <text class="desc" x="390" y="232">Inference Infra</text>
+    <text class="desc" x="390" y="248">Test Data Access</text>
+    <text class="desc" x="390" y="264">Isolated Network</text>
+  </g>
+
+  <g>
+    <path class="arrow" d="M 610 89 L 700 89" />
+    <rect class="success" x="700" y="30" width="240" height="118" rx="8" />
+    <text class="title" x="820" y="56" text-anchor="middle">PRODUCTION</text>
+    <text class="label" x="720" y="82">Serve</text>
+    <text class="label" x="720" y="102">Monitor</text>
+    <text class="label" x="720" y="122">Auto-rollback</text>
+    <line class="link" x1="820" y1="148" x2="820" y2="190" />
+    <rect class="neutral" x="700" y="190" width="240" height="98" rx="6" />
+    <text class="label" x="720" y="213">Infra</text>
+    <text class="desc" x="720" y="228">Load Balanced</text>
+    <text class="desc" x="720" y="242">Multi-replica</text>
+    <text class="desc" x="720" y="256">Prod Network</text>
+    <text class="desc" x="720" y="270">SLA-bound</text>
+  </g>
+</svg>
 
 ### Validation gates entre stages
 

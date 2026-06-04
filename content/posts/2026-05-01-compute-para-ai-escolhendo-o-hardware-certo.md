@@ -87,7 +87,7 @@ Escolher a família certa de VM GPU é a decisão de maior impacto que você vai
 | **ND H100 v5** | `Standard_ND96isr_H100_v5` | 8× H100 80GB | 640 GiB | InfiniBand 400 Gb/s | Flagship training, LLMs, NCCL-optimized | $98.32 |
 | **NV A10 v5** | `Standard_NV36ads_A10_v5` | 1× A10 (full) | 24 GiB | Ethernet | Visualização, AI leve, dev/test | $1.80 |
 | **NV A10 v5** | `Standard_NV6ads_A10_v5` | ⅙× A10 | 4 GiB | Ethernet | GPU fracionada pra workloads pequenos | $0.45 |
-| **D/E/F series** | `Standard_D16s_v5` | Nenhuma | — | Accel. Networking | Pré-processamento, data pipelines, CPU inference | $0.77 |
+| **D/E/F series** | `Standard_D16s_v5` | Nenhuma | - | Accel. Networking | Pré-processamento, data pipelines, CPU inference | $0.77 |
 
 *Preços aproximados pay-as-you-go East US. Sempre confira no [Azure Pricing Calculator](https://azure.microsoft.com/pricing/calculator/).*
 
@@ -168,8 +168,8 @@ Fato que surpreende a maioria de engenheiros de infra quando encontram workloads
 **InfiniBand** habilita **RDMA (Remote Direct Memory Access)**: uma máquina lê ou escreve na memória GPU de outra máquina *sem envolver nenhum CPU*. A sincronização de gradientes acontece direto entre GPUs entre nós, bypassing completamente a stack de rede do sistema operacional.
 
 No Azure, InfiniBand está disponível em:
-- `Standard_ND96asr_v4` — 200 Gb/s InfiniBand (HDR)
-- `Standard_ND96isr_H100_v5` — 400 Gb/s InfiniBand (NDR)
+- `Standard_ND96asr_v4`: 200 Gb/s InfiniBand (HDR)
+- `Standard_ND96isr_H100_v5`: 400 Gb/s InfiniBand (NDR)
 
 Pra training distribuído com NCCL (NVIDIA Collective Communications Library), InfiniBand entrega **10× ou mais throughput** comparado com TCP/IP sobre Ethernet. NCCL detecta e usa InfiniBand automaticamente quando disponível.
 

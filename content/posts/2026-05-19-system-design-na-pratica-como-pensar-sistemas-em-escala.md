@@ -3,7 +3,7 @@ slug: "system-design-na-pratica-como-pensar-sistemas-em-escala"
 aliases:
   - "/posts/system-design-na-pratica-como-pensar-sistemas-em-escala/"
 title: "System design na prática: como pensar sistemas em escala"
-description: "O framework completo pra abordar qualquer problema de system design — de capacity planning a trade-offs. O primeiro artigo da série System Design na Prática."
+description: "O framework completo pra abordar qualquer problema de system design: de capacity planning a trade-offs. O primeiro artigo da série System Design na Prática."
 date: 2026-05-20T10:00:00-04:00
 categories:
   - Carreira
@@ -19,11 +19,11 @@ series:
 
 Você está numa entrevista. O entrevistador vira e fala: "Design a video-sharing platform like YouTube." Você tem 45 minutos. O que faz primeiro?
 
-Se a resposta for "começo desenhando caixinhas no diagrama" — você já perdeu.
+Se a resposta for "começo desenhando caixinhas no diagrama", você já perdeu.
 
 System design não é sobre saber a resposta certa. É sobre **demonstrar como você pensa**. E pensar bem em system design é uma skill que se desenvolve com framework, prática e repertório.
 
-Este é o primeiro artigo da série **System Design na Prática**. Nos próximos posts, vamos dissecar sistemas reais — YouTube, WhatsApp, Uber, Twitter — mas antes precisamos do toolkit mental. Esse artigo é o seu canivete suíço.
+Este é o primeiro artigo da série **System Design na Prática**. Nos próximos posts, vamos dissecar sistemas reais como YouTube, WhatsApp, Uber e Twitter. Mas antes precisamos do toolkit mental. Esse artigo é o seu canivete suíço.
 
 ## Por que system design importa
 
@@ -46,20 +46,20 @@ Todo problema de system design, não importa o sistema, segue a mesma estrutura.
 
 Nunca comece a desenhar sem perguntar. O entrevistador deliberadamente deixa o problema vago pra ver se você busca clareza.
 
-**Perguntas funcionais** — o que o sistema faz:
+**Perguntas funcionais**: o que o sistema faz:
 
 - Quais são as funcionalidades core? (upload, streaming, busca?)
 - Quem são os usuários? (web, mobile, API?)
 - Qual o fluxo principal? (upload → processamento → visualização?)
 
-**Perguntas não-funcionais** — como o sistema se comporta:
+**Perguntas não-funcionais**: como o sistema se comporta:
 
 - Qual a escala? (DAU, requests/segundo, volume de dados)
 - Qual a latência aceitável? (real-time? segundos? minutos?)
 - Qual o nível de disponibilidade? (99.9%? 99.99%?)
 - Consistência é mais importante que disponibilidade, ou vice-versa?
 
-**Perguntas de escopo** — o que NÃO fazer:
+**Perguntas de escopo**: o que NÃO fazer:
 
 - Precisamos de feature X nesse design? (livestreaming, comentários, recommendations?)
 - Qual é o out-of-scope explícito?
@@ -68,7 +68,7 @@ Esse passo demonstra maturidade. Engenheiros juniores assumem. Seniores pergunta
 
 ### Fase 2: Estimativas e capacity planning (5 minutos)
 
-Back-of-the-envelope calculations. Não precisa ser preciso — precisa estar na ordem de grandeza certa.
+Back-of-the-envelope calculations. Não precisa ser preciso; precisa estar na ordem de grandeza certa.
 
 **Os números que você precisa ter na cabeça:**
 
@@ -143,11 +143,11 @@ O entrevistador vai pedir pra aprofundar em 1-2 áreas. Aqui é onde você mostr
 
 Áreas comuns de deep dive:
 
-- **Database schema e sharding strategy** — como particionar dados?
-- **Caching strategy** — o que cachear, invalidação, cache stampede?
-- **Failure handling** — o que acontece quando X falha?
-- **Scaling bottlenecks** — onde o sistema quebra primeiro?
-- **Consistency model** — eventual vs strong, e as implicações?
+- **Database schema e sharding strategy**: como particionar dados?
+- **Caching strategy**: o que cachear, invalidação, cache stampede?
+- **Failure handling**: o que acontece quando X falha?
+- **Scaling bottlenecks**: onde o sistema quebra primeiro?
+- **Consistency model**: eventual vs strong, e as implicações?
 
 Não espere o entrevistador pedir. Se você identifica um ponto interessante, diga: *"Aqui tem um trade-off que vale a pena explorar..."*
 
@@ -290,11 +290,11 @@ Quando sentar pra resolver um system design (entrevista ou vida real), siga isso
 
 Nos próximos artigos, vamos aplicar esse framework em sistemas reais:
 
-- **YouTube** — CDN, transcoding pipeline, adaptive bitrate, pre-signed URLs
-- **WhatsApp** — WebSockets, message queues, presença online, criptografia E2E
-- **Uber** — geospatial indexes, matching em tempo real, ETA
-- **Twitter/X** — fan-out, timeline service, caching em escala
-- **URL Shortener** — hashing, read-heavy optimization, analytics
+- **YouTube**: CDN, transcoding pipeline, adaptive bitrate, pre-signed URLs
+- **WhatsApp**: WebSockets, message queues, presença online, criptografia E2E
+- **Uber**: geospatial indexes, matching em tempo real, ETA
+- **Twitter/X**: fan-out, timeline service, caching em escala
+- **URL Shortener**: hashing, read-heavy optimization, analytics
 
 Cada artigo vai seguir a estrutura que definimos aqui. Requisitos → Estimativas → Design → Deep Dives → Trade-offs.
 

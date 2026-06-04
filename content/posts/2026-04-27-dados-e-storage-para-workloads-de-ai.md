@@ -39,7 +39,7 @@ Você acessa remotamente e puxa as métricas:
 
 O time armazenou 2 TB de imagens de treinamento num Blob Storage com Standard HDD, montado via SMB share básico. Sua arquitetura de storage está **matando de fome** o hardware mais caro do rack.
 
-Essa história acontece em organizações toda semana. Times investem fortunas em GPUs pra descobrir que o pipeline de dados — a parte que **nós** de infra somos donos — é o verdadeiro gargalo.
+Essa história acontece em organizações toda semana. Times investem fortunas em GPUs pra descobrir que o pipeline de dados, a parte pela qual **nós** de infra somos responsáveis, é o verdadeiro gargalo.
 
 ## Por que tudo começa com dados
 
@@ -47,7 +47,7 @@ Toda sistema de AI, de um classificador simples até um LLM de trilhões de par�
 
 **Dados + Modelo + Compute = AI**
 
-Remove qualquer um dos três e não tem nada. Mas o insight que a maioria de nós perde no início é: dos três componentes, **dados são o que toca infraestrutura em cada estágio**. O modelo é código. Compute é provisionado e fica rodando. Mas dados precisam ser ingeridos, armazenados, preparados, servidos pro treinamento e entregues na inferência — e **cada um desses estágios é um problema de infraestrutura**.
+Remove qualquer um dos três e não tem nada. Mas o insight que a maioria de nós perde no início é: dos três componentes, **dados são o que toca infraestrutura em cada estágio**. O modelo é código. Compute é provisionado e fica rodando. Mas dados precisam ser ingeridos, armazenados, preparados, servidos pro treinamento e entregues na inferência. E **cada um desses estágios é um problema de infraestrutura**.
 
 | Conceito de Infra | Equivalente em AI | Por que importa |
 |-------------------|-------------------|-----------------|
@@ -62,7 +62,7 @@ Se você já gerencia storage, rede e controle de acesso, você entende **70% do
 
 ## Data starvation: o gargalo invisível
 
-Aqui está a verdade contra-intuitiva sobre infra de AI: **a causa mais comum de baixa utilização de GPU não é um problema de GPU — é um problema de storage**.
+Aqui está a verdade contra-intuitiva sobre infra de AI: **a causa mais comum de baixa utilização de GPU não é um problema de GPU. É um problema de storage**.
 
 Quando o data loader não consegue alimentar batches pra GPU rápido o suficiente, a GPU fica ociosa esperando dados. Isso se chama *data starvation*, e transforma seu cluster de GPU de R$ 150.000/mês num aquecedor de ambiente caro.
 
@@ -91,7 +91,7 @@ O padrão de diagnóstico é simples:
 
 | GPU Util | CPU Util | Disk I/O | Diagnóstico |
 |----------|----------|----------|-------------|
-| Baixa | Baixa | Alto | **Data starvation** — storage não alimenta dados rápido o bastante |
+| Baixa | Baixa | Alto | **Data starvation**: storage não alimenta dados rápido o bastante |
 | Baixa | Alta | Baixo | Preprocessing de CPU é gargalo (data augmentation pesada) |
 | Alta | Alta | Alto | Tudo funcionando bem, sistema balanceado |
 | Baixa | Baixa | Baixo | Problema no código do modelo ou batch size errado |
@@ -106,7 +106,7 @@ Essa é a decisão mais impactante que você vai tomar pra performance de worklo
 |---------|-----------|------------|----------|-------|----------------|
 | **Blob Storage** | Datasets, artefatos, checkpoints | Até 60 Gbps/conta | Moderada (ms) | Baixo (~$0.018/GB/mês) | Precisa de POSIX nativo sem mount |
 | **Data Lake Gen2** | Pipelines analíticos, datasets versionados | Até 60 Gbps/conta | Moderada (ms) | Baixo | Workload simples que não precisa de ACLs granulares |
-| **NVMe local** | Scratch de treinamento, cache do data loader | 3-7 GB/s por disco | Ultra-baixa (μs) | Incluído na VM | Precisa de persistência — dados perdidos na desalocação |
+| **NVMe local** | Scratch de treinamento, cache do data loader | 3-7 GB/s por disco | Ultra-baixa (μs) | Incluído na VM | Precisa de persistência: dados perdidos na desalocação |
 | **Azure Files (NFS)** | Datasets compartilhados entre nós | Até 10 Gbps (premium) | Baixa-moderada | Moderado | Workload single-node onde NVMe local basta |
 | **Azure Files (SMB)** | Compatibilidade legacy, Windows | Até 4 Gbps (premium) | Moderada | Moderado | Treinamento em Linux de alta performance |
 | **Cosmos DB** | Feature stores, inferência real-time | N/A (baseado em request) | Single-digit ms | Mais alto | Armazenar datasets brutos de treinamento |
@@ -123,7 +123,7 @@ A maioria dos frameworks de ML (PyTorch, TensorFlow) espera dados de treinamento
 
 O BlobFuse2 tem dois modos de cache, e escolher o certo importa:
 
-- **File cache**: Baixa arquivos inteiros pra um cache local antes de servir leituras. **Use pra treinamento** — datasets são lidos repetidamente em múltiplos epochs.
+- **File cache**: Baixa arquivos inteiros pra um cache local antes de servir leituras. **Use pra treinamento**: datasets são lidos repetidamente em múltiplos epochs.
 - **Block cache (streaming)**: Faz stream em chunks sem baixar o arquivo completo. Use pra preprocessing ou inferência em arquivos grandes de mídia.
 
 ### Montar com file cache pra treinamento
@@ -145,14 +145,14 @@ sudo blobfuse2 mount /mnt/training-data \
 ### Preload: dados prontos antes do treinamento começar
 
 ```bash
-# Monta com preload — baixa dados pro cache no momento da montagem
+# Monta com preload: baixa dados pro cache no momento da montagem
 sudo blobfuse2 mount /mnt/training-data \
   --config-file=./config.yaml \
   --tmp-path=/mnt/resource/blobfuse2cache \
   --preload
 ```
 
-> 💡 **Sempre** aponte `--tmp-path` pro disco NVMe local da VM (`/mnt/resource` em VMs Azure) — não pro disco do OS. Isso dá ao cache do BlobFuse2 a menor latência possível. Em GPU VMs da série ND, o temp disk local entrega 3-7 GB/s de throughput de leitura.
+> 💡 **Sempre** aponte `--tmp-path` pro disco NVMe local da VM (`/mnt/resource` em VMs Azure), não pro disco do OS. Isso dá ao cache do BlobFuse2 a menor latência possível. Em GPU VMs da série ND, o temp disk local entrega 3-7 GB/s de throughput de leitura.
 
 ### AzCopy pra ingestão de dados em massa
 
@@ -204,7 +204,7 @@ Data scientists frequentemente copiam dados pra máquinas locais, drives compart
 
 ## Mãos na massa: storage otimizado pra AI de ponta a ponta
 
-Vamos montar um fluxo completo: provisionar, transferir, montar e validar. Todos os comandos usam `--auth-mode login` — sem storage keys.
+Vamos montar um fluxo completo: provisionar, transferir, montar e validar. Todos os comandos usam `--auth-mode login`: sem storage keys.
 
 ### 1. Cria a storage account com Data Lake Gen2
 
@@ -294,7 +294,7 @@ Antes de entregar storage pra um workload de AI:
 
 ## No próximo post
 
-Agora que você entende como dados fluem por sistemas de AI e por que suas decisões de storage determinam diretamente a performance de treinamento, é hora de olhar pro compute que consome todos esses dados. Vou falar sobre **GPUs, famílias de VMs e arquitetura de cluster** — e por que a camada de storage bem afinada é só metade da equação.
+Agora que você entende como dados fluem por sistemas de AI e por que suas decisões de storage determinam diretamente a performance de treinamento, é hora de olhar pro compute que consome todos esses dados. Vou falar sobre **GPUs, famílias de VMs e arquitetura de cluster**, e por que a camada de storage bem afinada é só metade da equação.
 
 O livro completo está disponível de graça em [ai4infra.com](https://ai4infra.com).
 

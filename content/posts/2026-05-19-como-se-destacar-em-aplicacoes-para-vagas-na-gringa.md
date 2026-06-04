@@ -98,23 +98,97 @@ Um repositório com 200 stars é legal, mas um projeto com documentação clara,
 
 **Exemplo: estrutura de repo que impressiona um hiring manager**
 
-```
-meu-projeto/
-├── .github/
-│   └── workflows/
-│       ├── ci.yml          # Testes automáticos em cada PR
-│       └── deploy.yml      # Deploy automatizado
-├── infra/
-│   ├── main.tf            # Terraform definindo a infra
-│   ├── variables.tf
-│   └── outputs.tf
-├── src/
-├── tests/
-├── Dockerfile
-├── Makefile               # make build, make test, make deploy
-├── README.md              # O quê, por quê, como rodar, decisões de arquitetura
-└── CONTRIBUTING.md
-```
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 460" role="img" aria-labelledby="repo-structure-title repo-structure-desc">
+  <title id="repo-structure-title">Estrutura de repositório que impressiona um hiring manager</title>
+  <desc id="repo-structure-desc">Diagrama do repositório meu-projeto com pastas de workflows, infraestrutura, código, testes e arquivos principais de operação e documentação.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666666" />
+    </marker>
+  </defs>
+  <style>
+    .title { font-family:"Segoe UI", Arial, sans-serif; font-size:14px; font-weight:bold; fill:#222; }
+    .label { font-family:"Segoe UI", Arial, sans-serif; font-size:12px; font-weight:bold; fill:#222; }
+    .desc { font-family:"Segoe UI", Arial, sans-serif; font-size:10px; fill:#555; }
+    .primary { fill:#dae8fc; stroke:#6c8ebf; stroke-width:1.5; }
+    .success { fill:#d5e8d4; stroke:#82b366; stroke-width:1.5; }
+    .warning { fill:#fff2cc; stroke:#d6b656; stroke-width:1.5; }
+    .accent { fill:#e1d5e7; stroke:#9673a6; stroke-width:1.5; }
+    .neutral { fill:#f5f5f5; stroke:#666666; stroke-width:1.5; }
+    .line { stroke:#666666; stroke-width:1.5; fill:none; marker-end:url(#arrow); }
+  </style>
+
+  <g>
+    <rect class="primary" x="540" y="20" width="200" height="56" rx="8" />
+    <text class="title" x="640" y="54" text-anchor="middle">meu-projeto/</text>
+  </g>
+
+  <g>
+    <path class="line" d="M 625 76 L 180 120" />
+    <rect class="primary" x="30" y="120" width="300" height="220" rx="8" />
+    <text class="title" x="50" y="146">.github/</text>
+    <rect class="accent" x="60" y="160" width="240" height="150" rx="8" />
+    <text class="title" x="80" y="186">workflows/</text>
+    <rect class="neutral" x="80" y="200" width="200" height="48" rx="6" />
+    <text class="label" x="96" y="220">ci.yml</text>
+    <text class="desc" x="96" y="238">Testes automáticos em cada PR</text>
+    <rect class="neutral" x="80" y="255" width="200" height="48" rx="6" />
+    <text class="label" x="96" y="275">deploy.yml</text>
+    <text class="desc" x="96" y="293">Deploy automatizado</text>
+  </g>
+
+  <g>
+    <path class="line" d="M 635 76 L 510 120" />
+    <rect class="warning" x="360" y="120" width="300" height="220" rx="8" />
+    <text class="title" x="380" y="146">infra/</text>
+    <rect class="neutral" x="390" y="160" width="240" height="48" rx="6" />
+    <text class="label" x="406" y="180">main.tf</text>
+    <text class="desc" x="406" y="198">Terraform definindo a infra</text>
+    <rect class="neutral" x="390" y="220" width="240" height="36" rx="6" />
+    <text class="label" x="406" y="242">variables.tf</text>
+    <rect class="neutral" x="390" y="268" width="240" height="36" rx="6" />
+    <text class="label" x="406" y="290">outputs.tf</text>
+  </g>
+
+  <g>
+    <path class="line" d="M 645 76 L 805 120" />
+    <rect class="success" x="720" y="120" width="170" height="56" rx="6" />
+    <text class="label" x="805" y="154" text-anchor="middle">src/</text>
+  </g>
+
+  <g>
+    <path class="line" d="M 655 76 L 1015 120" />
+    <rect class="success" x="930" y="120" width="170" height="56" rx="6" />
+    <text class="label" x="1015" y="154" text-anchor="middle">tests/</text>
+  </g>
+
+  <g>
+    <path class="line" d="M 645 76 L 805 220" />
+    <rect class="neutral" x="720" y="220" width="170" height="56" rx="6" />
+    <text class="label" x="805" y="254" text-anchor="middle">Dockerfile</text>
+  </g>
+
+  <g>
+    <path class="line" d="M 660 76 L 1065 210" />
+    <rect class="accent" x="930" y="210" width="270" height="72" rx="6" />
+    <text class="label" x="1065" y="236" text-anchor="middle">Makefile</text>
+    <text class="desc" x="1065" y="254" text-anchor="middle">make build, make test, make deploy</text>
+  </g>
+
+  <g>
+    <path class="line" d="M 650 76 L 855 330" />
+    <rect class="neutral" x="720" y="330" width="270" height="72" rx="6" />
+    <text class="label" x="855" y="352" text-anchor="middle">README.md</text>
+    <text class="desc" x="855" y="370" text-anchor="middle">O quê, por quê, como rodar</text>
+    <text class="desc" x="855" y="384" text-anchor="middle">decisões de arquitetura</text>
+  </g>
+
+  <g>
+    <path class="line" d="M 665 76 L 1115 330" />
+    <rect class="neutral" x="1030" y="330" width="170" height="56" rx="6" />
+    <text class="label" x="1115" y="364" text-anchor="middle">CONTRIBUTING.md</text>
+  </g>
+</svg>
 
 Isso comunica: "eu sei levar software de zero a produção sozinho." Não precisa ser um projeto gigante. Um serviço pequeno com essa estrutura vale mais que 50 repos com `initial commit` sem README.
 

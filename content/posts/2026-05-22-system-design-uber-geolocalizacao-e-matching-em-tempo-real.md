@@ -2,7 +2,7 @@
 slug: "system-design-uber-geolocalizacao-e-matching-em-tempo-real"
 aliases:
   - "/posts/system-design-uber-geolocalizacao-e-matching-em-tempo-real/"
-title: "System design: Uber — geolocalização e matching em tempo real"
+title: "System design: Uber - geolocalização e matching em tempo real"
 description: "Como projetar um sistema de ride-sharing que encontra o motorista mais próximo em segundos, rastreia milhões de veículos em movimento, e calcula ETAs precisos em tempo real."
 date: 2026-05-26T10:00:00-04:00
 categories:
@@ -20,7 +20,7 @@ series:
 
 "Design a ride-sharing platform like Uber."
 
-Se YouTube é sobre **throughput de dados** e WhatsApp sobre **latência de mensagens**, Uber é sobre **dados em movimento**. Literalmente. Milhões de carros se movendo simultaneamente, e o sistema precisa saber onde cada um está — a cada segundo — pra conectar passageiros e motoristas em tempo real.
+Se YouTube é sobre **throughput de dados** e WhatsApp sobre **latência de mensagens**, Uber é sobre **dados em movimento**. Literalmente. Milhões de carros se movendo simultaneamente, e o sistema precisa saber onde cada um está, a cada segundo, pra conectar passageiros e motoristas em tempo real.
 
 O desafio do Uber é único porque combina:
 - **Geolocalização em tempo real** (milhões de pontos se movendo)
@@ -111,51 +111,112 @@ Location history: 500K updates/s × 200 bytes × 86.400s = ~8.6 TB/dia (raw)
 
 O sistema tem três fluxos principais:
 
-1. **Location ingestion** — motoristas reportando posição continuamente
-2. **Ride matching** — encontrar e atribuir motorista ao passageiro
-3. **Real-time tracking** — passageiro acompanhando motorista no mapa
+1. **Location ingestion**: motoristas reportando posição continuamente
+2. **Ride matching**: encontrar e atribuir motorista ao passageiro
+3. **Real-time tracking**: passageiro acompanhando motorista no mapa
 
 ### Arquitetura geral
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                   LOCATION INGESTION (contínuo)                       │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                       │
-│  Driver App ──(cada 4s)──→ Location Service ──→ Geospatial Index     │
-│                                    │                                  │
-│                                    ▼                                  │
-│                            Location History DB                        │
-│                                                                       │
-└─────────────────────────────────────────────────────────────────────┘
+<svg viewBox="0 0 980 780" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Arquitetura de ingestão de localização, matching e tracking em tempo real" style="max-width:100%;height:auto;" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+    </marker>
+  </defs>
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                       RIDE MATCHING                                    │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                       │
-│  Rider App ──→ Ride Service ──→ Matching Service                     │
-│                     │                │                                 │
-│                     │                ├──→ Geospatial Index (query)    │
-│                     │                ├──→ ETA Service                  │
-│                     │                └──→ Pricing Service              │
-│                     │                         │                        │
-│                     │                         ▼                        │
-│                     │              Notify Driver (WebSocket/Push)      │
-│                     │                         │                        │
-│                     │                    Accept/Reject                 │
-│                     ▼                         │                        │
-│                  Ride DB ◄────────────────────┘                       │
-│                                                                       │
-└─────────────────────────────────────────────────────────────────────┘
+  <rect x="10" y="10" width="960" height="210" rx="8" fill="#f5f5f5" stroke="#666666" />
+  <text x="30" y="35" font-size="14" font-weight="bold">LOCATION INGESTION (contínuo)</text>
+  <g>
+    <rect x="40" y="100" width="150" height="56" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="115" y="133" text-anchor="middle" font-size="12" font-weight="bold">Driver App</text>
+  </g>
+  <g>
+    <rect x="300" y="100" width="180" height="56" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="390" y="133" text-anchor="middle" font-size="12" font-weight="bold">Location Service</text>
+  </g>
+  <g>
+    <rect x="620" y="65" width="220" height="56" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+    <text x="730" y="98" text-anchor="middle" font-size="12" font-weight="bold">Geospatial Index</text>
+  </g>
+  <g>
+    <rect x="620" y="145" width="220" height="56" rx="6" fill="#fff2cc" stroke="#d6b656" />
+    <text x="730" y="178" text-anchor="middle" font-size="12" font-weight="bold">Location History DB</text>
+  </g>
+  <g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="190" y1="128" x2="300" y2="128" />
+    <line x1="480" y1="110" x2="620" y2="93" />
+    <line x1="480" y1="146" x2="620" y2="173" />
+  </g>
+  <text x="245" y="114" text-anchor="middle" font-size="10" fill="#555">cada 4s</text>
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                     REAL-TIME TRACKING                                 │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                       │
-│  Rider App ◄──WebSocket──── Tracking Service ◄──── Location Service  │
-│                                                                       │
-└─────────────────────────────────────────────────────────────────────┘
-```
+  <rect x="10" y="245" width="960" height="335" rx="8" fill="#f5f5f5" stroke="#666666" />
+  <text x="30" y="270" font-size="14" font-weight="bold">RIDE MATCHING</text>
+  <g>
+    <rect x="40" y="385" width="150" height="56" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="115" y="418" text-anchor="middle" font-size="12" font-weight="bold">Rider App</text>
+  </g>
+  <g>
+    <rect x="230" y="385" width="150" height="56" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="305" y="418" text-anchor="middle" font-size="12" font-weight="bold">Ride Service</text>
+  </g>
+  <g>
+    <rect x="430" y="385" width="180" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="520" y="418" text-anchor="middle" font-size="12" font-weight="bold">Matching Service</text>
+  </g>
+  <g>
+    <rect x="690" y="315" width="210" height="50" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+    <text x="795" y="344" text-anchor="middle" font-size="12" font-weight="bold">Geospatial Index</text>
+    <text x="795" y="358" text-anchor="middle" font-size="10" fill="#555">query</text>
+  </g>
+  <g>
+    <rect x="690" y="390" width="210" height="50" rx="6" fill="#fff2cc" stroke="#d6b656" />
+    <text x="795" y="420" text-anchor="middle" font-size="12" font-weight="bold">ETA Service</text>
+  </g>
+  <g>
+    <rect x="690" y="465" width="210" height="50" rx="6" fill="#fff2cc" stroke="#d6b656" />
+    <text x="795" y="495" text-anchor="middle" font-size="12" font-weight="bold">Pricing Service</text>
+  </g>
+  <g>
+    <rect x="430" y="495" width="210" height="56" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+    <text x="535" y="517" text-anchor="middle" font-size="12" font-weight="bold">Notify Driver</text>
+    <text x="535" y="533" text-anchor="middle" font-size="10" fill="#555">WebSocket / Push</text>
+  </g>
+  <g>
+    <rect x="230" y="495" width="150" height="56" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+    <text x="305" y="528" text-anchor="middle" font-size="12" font-weight="bold">Ride DB</text>
+  </g>
+  <g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="190" y1="413" x2="230" y2="413" />
+    <line x1="380" y1="413" x2="430" y2="413" />
+    <line x1="305" y1="441" x2="305" y2="495" />
+    <line x1="610" y1="398" x2="690" y2="340" />
+    <line x1="610" y1="413" x2="690" y2="415" />
+    <line x1="610" y1="428" x2="690" y2="490" />
+    <line x1="795" y1="515" x2="610" y2="523" />
+    <line x1="430" y1="523" x2="380" y2="523" />
+  </g>
+  <text x="390" y="515" font-size="10" fill="#555">Accept/Reject</text>
+
+  <rect x="10" y="605" width="960" height="145" rx="8" fill="#f5f5f5" stroke="#666666" />
+  <text x="30" y="630" font-size="14" font-weight="bold">REAL-TIME TRACKING</text>
+  <g>
+    <rect x="70" y="665" width="160" height="52" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="150" y="696" text-anchor="middle" font-size="12" font-weight="bold">Rider App</text>
+  </g>
+  <g>
+    <rect x="400" y="665" width="180" height="52" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="490" y="696" text-anchor="middle" font-size="12" font-weight="bold">Tracking Service</text>
+  </g>
+  <g>
+    <rect x="730" y="665" width="180" height="52" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="820" y="696" text-anchor="middle" font-size="12" font-weight="bold">Location Service</text>
+  </g>
+  <g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="730" y1="691" x2="580" y2="691" />
+    <line x1="400" y1="691" x2="230" y2="691" />
+  </g>
+  <text x="315" y="675" text-anchor="middle" font-size="10" fill="#555">WebSocket</text>
+</svg>
 
 ### Componentes principais
 
@@ -170,7 +231,7 @@ O sistema tem três fluxos principais:
 | **Tracking Service** | Streaming de posição pro rider durante corrida |
 | **Notification Service** | Push/WebSocket pra driver aceitar/recusar |
 
-## Deep Dive 1: Geospatial Index — o coração do sistema
+## Deep Dive 1: Geospatial Index - o coração do sistema
 
 O problema mais importante: dado um ponto (localização do passageiro), encontrar rapidamente todos os motoristas disponíveis num raio.
 
@@ -188,7 +249,7 @@ Com 2 milhões de motoristas e 2.300 queries/segundo no pico, um full table scan
 
 ### Solução: dividir o mundo em células
 
-Em vez de calcular distância pra todos os motoristas, **pré-organize** os motoristas em regiões geográficas. Assim a query vira: "quais motoristas estão na minha célula e nas adjacentes?" — O(1) lookup em vez de O(N) scan.
+Em vez de calcular distância pra todos os motoristas, **pré-organize** os motoristas em regiões geográficas. Assim a query vira: "quais motoristas estão na minha célula e nas adjacentes?": O(1) lookup em vez de O(N) scan.
 
 ### Opção 1: Geohash
 
@@ -200,7 +261,7 @@ Geohash converte coordenadas (lat, lng) num string que representa uma célula re
 (-23.5505, -46.5900) → "6gycg5" (célula diferente, mais longe)
 ```
 
-**Propriedade chave:** pontos geograficamente próximos compartilham o mesmo prefixo de geohash. Isso transforma uma query geoespacial numa **query de string prefix** — algo que qualquer banco faz rápido com B-tree index.
+**Propriedade chave:** pontos geograficamente próximos compartilham o mesmo prefixo de geohash. Isso transforma uma query geoespacial numa **query de string prefix**: algo que qualquer banco faz rápido com B-tree index.
 
 **Busca de motoristas próximos:**
 
@@ -240,7 +301,7 @@ Uma árvore onde cada nó divide o espaço em 4 quadrantes. Áreas com mais moto
 
 ### Opção 3: H3 (Uber's choice)
 
-O Uber desenvolveu internamente o [H3](https://h3geo.org/) — um sistema de indexação hexagonal hierárquico.
+O Uber desenvolveu internamente o [H3](https://h3geo.org/), um sistema de indexação hexagonal hierárquico.
 
 **Por que hexágonos?**
 
@@ -308,31 +369,71 @@ Encontrar motorista não é simplesmente "o mais perto". O matching precisa otim
 
 ### O fluxo de matching
 
-```
-1. Rider solicita corrida
-   │
-   ▼
-2. Query geospatial: candidatos num raio de 3-5km
-   (retorna ~20-50 drivers)
-   │
-   ▼
-3. Pra cada candidato, calcula ETA de pickup (ETA Service)
-   (filtra: ETA > 15min? descarta)
-   │
-   ▼
-4. Score = weighted_sum(eta_score, rating_score, direction_score, ...)
-   │
-   ▼
-5. Envia request pro driver com maior score
-   │
-   ├──→ Driver aceita (10-15s pra responder)
-   │       → Corrida atribuída ✓
-   │
-   └──→ Driver recusa ou timeout
-           → Próximo da lista (step 5 com #2 do ranking)
-           → Repete até 3-5 tentativas
-           → Se ninguém aceita: "nenhum motorista disponível"
-```
+<svg viewBox="0 0 900 860" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Fluxo de matching de corrida" style="max-width:100%;height:auto;" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+    </marker>
+  </defs>
+
+  <g>
+    <rect x="270" y="20" width="360" height="58" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="450" y="54" text-anchor="middle" font-size="12" font-weight="bold">1. Rider solicita corrida</text>
+  </g>
+  <g>
+    <rect x="270" y="110" width="360" height="74" rx="6" fill="#fff2cc" stroke="#d6b656" />
+    <text x="450" y="138" text-anchor="middle" font-size="12" font-weight="bold">2. Query geospatial</text>
+    <text x="450" y="156" text-anchor="middle" font-size="10" fill="#555">candidatos num raio de 3-5 km</text>
+    <text x="450" y="172" text-anchor="middle" font-size="10" fill="#555">retorna ~20-50 drivers</text>
+  </g>
+  <g>
+    <rect x="270" y="220" width="360" height="82" rx="6" fill="#fff2cc" stroke="#d6b656" />
+    <text x="450" y="248" text-anchor="middle" font-size="12" font-weight="bold">3. Calcula ETA de pickup</text>
+    <text x="450" y="266" text-anchor="middle" font-size="10" fill="#555">ETA Service para cada candidato</text>
+    <text x="450" y="282" text-anchor="middle" font-size="10" fill="#555">filtra ETA &gt; 15 min</text>
+  </g>
+  <g>
+    <rect x="270" y="340" width="360" height="74" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="450" y="368" text-anchor="middle" font-size="12" font-weight="bold">4. Score</text>
+    <text x="450" y="386" text-anchor="middle" font-size="10" fill="#555">weighted_sum(eta_score, rating_score,</text>
+    <text x="450" y="402" text-anchor="middle" font-size="10" fill="#555">direction_score, ...)</text>
+  </g>
+  <g>
+    <rect x="270" y="450" width="360" height="58" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="450" y="484" text-anchor="middle" font-size="12" font-weight="bold">5. Envia request pro driver com maior score</text>
+  </g>
+
+  <g>
+    <path d="M390 560 L510 560 L570 620 L510 680 L390 680 L330 620 Z" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
+    <text x="450" y="614" text-anchor="middle" font-size="12" font-weight="bold">Driver aceita</text>
+    <text x="450" y="630" text-anchor="middle" font-size="10" fill="#555">10-15s pra responder</text>
+  </g>
+  <g>
+    <rect x="620" y="590" width="210" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="725" y="623" text-anchor="middle" font-size="12" font-weight="bold">Corrida atribuída ✓</text>
+  </g>
+  <g>
+    <rect x="240" y="740" width="420" height="96" rx="6" fill="#f8cecc" stroke="#b85450" />
+    <text x="450" y="766" text-anchor="middle" font-size="12" font-weight="bold">Driver recusa ou timeout</text>
+    <text x="450" y="786" text-anchor="middle" font-size="10" fill="#555">Próximo da lista: step 5 com o #2 do ranking</text>
+    <text x="450" y="802" text-anchor="middle" font-size="10" fill="#555">Repete até 3-5 tentativas</text>
+    <text x="450" y="818" text-anchor="middle" font-size="10" fill="#555">Se ninguém aceita: nenhum motorista disponível</text>
+  </g>
+
+  <g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="450" y1="78" x2="450" y2="110" />
+    <line x1="450" y1="184" x2="450" y2="220" />
+    <line x1="450" y1="302" x2="450" y2="340" />
+    <line x1="450" y1="414" x2="450" y2="450" />
+    <line x1="450" y1="508" x2="450" y2="560" />
+    <line x1="570" y1="610" x2="620" y2="618" />
+    <line x1="450" y1="680" x2="450" y2="740" />
+    <path d="M240 788 H120 V479 H270" />
+  </g>
+
+  <text x="585" y="602" font-size="10" font-weight="bold" fill="#555">SIM</text>
+  <text x="465" y="716" font-size="10" font-weight="bold" fill="#555">NÃO</text>
+</svg>
 
 ### Batch matching vs Sequential matching
 
@@ -380,27 +481,39 @@ ETA (Estimated Time of Arrival) parece simples mas é surpreendentemente complex
 
 ### Componentes do ETA
 
-```
-┌──────────────────────────────────────────────────┐
-│                  ETA Service                       │
-├──────────────────────────────────────────────────┤
-│                                                    │
-│  1. Route calculation (graph algorithm)           │
-│     - Road network como grafo (nós = interseções) │
-│     - Dijkstra/A* pra shortest path               │
-│                                                    │
-│  2. Segment speed estimation                       │
-│     - Dados históricos por trecho por hora        │
-│     - Dados real-time de motoristas ativos        │
-│     - Machine learning pra predição              │
-│                                                    │
-│  3. Aggregation                                    │
-│     - Soma tempo de cada segmento da rota         │
-│     - Adiciona overhead (semáforos, conversões)    │
-│     - Retorna ETA + confidence interval           │
-│                                                    │
-└──────────────────────────────────────────────────┘
-```
+<svg viewBox="0 0 900 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Componentes internos do ETA Service" style="max-width:100%;height:auto;" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+    </marker>
+  </defs>
+  <rect x="10" y="10" width="880" height="320" rx="8" fill="#f5f5f5" stroke="#666666" />
+  <text x="30" y="35" font-size="14" font-weight="bold">ETA Service</text>
+
+  <g>
+    <rect x="30" y="65" width="250" height="235" rx="8" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="50" y="92" font-size="12" font-weight="bold">1. Route calculation</text>
+    <text x="50" y="108" font-size="10" fill="#555">graph algorithm</text>
+    <text x="50" y="138" font-size="10" fill="#555">• Road network como grafo</text>
+    <text x="50" y="154" font-size="10" fill="#555">• nós = interseções</text>
+    <text x="50" y="170" font-size="10" fill="#555">• Dijkstra/A* pra shortest path</text>
+  </g>
+  <g>
+    <rect x="325" y="65" width="250" height="235" rx="8" fill="#fff2cc" stroke="#d6b656" />
+    <text x="345" y="92" font-size="12" font-weight="bold">2. Segment speed estimation</text>
+    <text x="345" y="138" font-size="10" fill="#555">• Dados históricos por trecho por hora</text>
+    <text x="345" y="154" font-size="10" fill="#555">• Dados real-time de motoristas ativos</text>
+    <text x="345" y="170" font-size="10" fill="#555">• Machine learning pra predição</text>
+  </g>
+  <g>
+    <rect x="620" y="65" width="250" height="235" rx="8" fill="#d5e8d4" stroke="#82b366" />
+    <text x="640" y="92" font-size="12" font-weight="bold">3. Aggregation</text>
+    <text x="640" y="138" font-size="10" fill="#555">• Soma o tempo de cada segmento</text>
+    <text x="640" y="154" font-size="10" fill="#555">• Adiciona overhead de semáforos</text>
+    <text x="640" y="170" font-size="10" fill="#555">• Adiciona overhead de conversões</text>
+    <text x="640" y="186" font-size="10" fill="#555">• Retorna ETA + confidence interval</text>
+  </g>
+</svg>
 
 ### Road network como grafo
 
@@ -434,7 +547,7 @@ Velocidade esperada (sem tráfego): 50 km/h
 Congestion factor: 50/20.5 = 2.4x mais lento
 ```
 
-Essa informação é agregada em real-time e alimenta o cálculo de ETA. É por isso que o ETA do Uber é geralmente mais preciso que o Google Maps — tem dados de velocidade real de milhares de veículos por segmento.
+Essa informação é agregada em real-time e alimenta o cálculo de ETA. É por isso que o ETA do Uber é geralmente mais preciso que o Google Maps: tem dados de velocidade real de milhares de veículos por segmento.
 
 ### Caching de ETA
 
@@ -452,29 +565,79 @@ Pro matching (que precisa de ETA pra 20-50 candidatos), o cache evita recalcular
 
 ### O pipeline de ingestão
 
-500.000 updates por segundo. Não pode passar por um API server tradicional — precisa de um pipeline de streaming.
+500.000 updates por segundo. Não pode passar por um API server tradicional: precisa de um pipeline de streaming.
 
-```
-Driver App (cada 4s)
-       │
-       ▼ (UDP ou HTTP/2 com batching)
-  Load Balancer
-       │
-       ▼
-  Location Gateway (stateless, alto throughput)
-       │
-       ├──→ Geospatial Index (in-memory, real-time)
-       │      update: move driver de cell A pra cell B
-       │
-       ├──→ Kafka topic: "driver-locations"
-       │      │
-       │      ├──→ Consumer: Location History DB (write-optimized)
-       │      ├──→ Consumer: ETA Speed Aggregator
-       │      └──→ Consumer: Tracking fanout (riders observando)
-       │
-       └──→ Redis: last_known_location:{driver_id}
-              (pra queries pontuais)
-```
+<svg viewBox="0 0 980 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pipeline de ingestão de localização dos motoristas" style="max-width:100%;height:auto;" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+    </marker>
+  </defs>
+
+  <g>
+    <rect x="390" y="20" width="200" height="52" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="490" y="42" text-anchor="middle" font-size="12" font-weight="bold">Driver App</text>
+    <text x="490" y="58" text-anchor="middle" font-size="10" fill="#555">cada 4s</text>
+  </g>
+  <g>
+    <rect x="390" y="100" width="200" height="52" rx="6" fill="#fff2cc" stroke="#d6b656" />
+    <text x="490" y="131" text-anchor="middle" font-size="12" font-weight="bold">Load Balancer</text>
+  </g>
+  <g>
+    <rect x="330" y="180" width="320" height="70" rx="8" fill="#d5e8d4" stroke="#82b366" />
+    <text x="490" y="210" text-anchor="middle" font-size="14" font-weight="bold">Location Gateway</text>
+    <text x="490" y="228" text-anchor="middle" font-size="10" fill="#555">stateless, alto throughput</text>
+  </g>
+
+  <g>
+    <rect x="40" y="290" width="230" height="62" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+    <text x="155" y="316" text-anchor="middle" font-size="12" font-weight="bold">Geospatial Index</text>
+    <text x="155" y="332" text-anchor="middle" font-size="10" fill="#555">in-memory, real-time</text>
+    <text x="155" y="346" text-anchor="middle" font-size="10" fill="#555">move driver de cell A pra cell B</text>
+  </g>
+  <g>
+    <rect x="375" y="290" width="230" height="62" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+    <text x="490" y="316" text-anchor="middle" font-size="12" font-weight="bold">Kafka topic</text>
+    <text x="490" y="332" text-anchor="middle" font-size="10" fill="#555">driver-locations</text>
+  </g>
+  <g>
+    <rect x="710" y="290" width="230" height="62" rx="6" fill="#fff2cc" stroke="#d6b656" />
+    <text x="825" y="316" text-anchor="middle" font-size="12" font-weight="bold">Redis</text>
+    <text x="825" y="332" text-anchor="middle" font-size="10" fill="#555">last_known_location:{driver_id}</text>
+    <text x="825" y="346" text-anchor="middle" font-size="10" fill="#555">pra queries pontuais</text>
+  </g>
+
+  <g>
+    <rect x="60" y="390" width="240" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="180" y="412" text-anchor="middle" font-size="12" font-weight="bold">Consumer</text>
+    <text x="180" y="428" text-anchor="middle" font-size="10" fill="#555">Location History DB</text>
+    <text x="180" y="442" text-anchor="middle" font-size="10" fill="#555">write-optimized</text>
+  </g>
+  <g>
+    <rect x="370" y="390" width="240" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="490" y="420" text-anchor="middle" font-size="12" font-weight="bold">Consumer</text>
+    <text x="490" y="436" text-anchor="middle" font-size="10" fill="#555">ETA Speed Aggregator</text>
+  </g>
+  <g>
+    <rect x="680" y="390" width="240" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
+    <text x="800" y="412" text-anchor="middle" font-size="12" font-weight="bold">Consumer</text>
+    <text x="800" y="428" text-anchor="middle" font-size="10" fill="#555">Tracking fanout</text>
+    <text x="800" y="442" text-anchor="middle" font-size="10" fill="#555">riders observando</text>
+  </g>
+
+  <g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="490" y1="72" x2="490" y2="100" />
+    <line x1="490" y1="152" x2="490" y2="180" />
+    <line x1="430" y1="250" x2="200" y2="290" />
+    <line x1="490" y1="250" x2="490" y2="290" />
+    <line x1="550" y1="250" x2="780" y2="290" />
+    <line x1="490" y1="352" x2="180" y2="390" />
+    <line x1="490" y1="352" x2="490" y2="390" />
+    <line x1="490" y1="352" x2="800" y2="390" />
+  </g>
+
+  <text x="590" y="90" font-size="10" fill="#555">UDP ou HTTP/2 com batching</text>
+</svg>
 
 ### Por que Kafka no meio?
 
@@ -510,7 +673,7 @@ Entre T=0 e T=4, client anima o carro se movendo suavemente
 usando speed + heading pra estimar posição intermediária
 ```
 
-Isso é chamado **dead reckoning** — predizer posição baseado em velocidade e direção até o próximo update real. Resultado: animação suave sem aumentar a frequência de updates.
+Isso é chamado **dead reckoning**: predizer posição baseado em velocidade e direção até o próximo update real. Resultado: animação suave sem aumentar a frequência de updates.
 
 ## Deep Dive 5: Pricing e Surge
 
@@ -565,7 +728,7 @@ Surge alto demais → riders cancelam → demand cai → surge cai → mais ride
 
 ## Deep Dive 6: Database design
 
-### Ride DB (PostgreSQL — relacional)
+### Ride DB (PostgreSQL - relacional)
 
 ```sql
 CREATE TABLE rides (
@@ -612,7 +775,7 @@ CREATE TABLE drivers (
 
 **Por que SQL?** Corridas têm relações claras (rider, driver), precisam de transações ACID (não pode atribuir mesmo driver a dois riders), e queries de histórico com filtros complexos.
 
-### Location History (time-series DB — TimescaleDB ou InfluxDB)
+### Location History (time-series DB - TimescaleDB ou InfluxDB)
 
 ```sql
 CREATE TABLE location_updates (
@@ -717,7 +880,7 @@ Ratio: 25x → surge de 8x? Insustentável.
 
 1. **Predição de demanda:** ML que antecipa picos (chuva começando, show acabando) e pre-posiciona supply
 2. **Multi-modal:** integrar transporte público no ETA (bike → metrô → UberX)
-3. **Shared rides (Pool):** matching multi-party — otimizar rota que atende N riders com desvio mínimo
+3. **Shared rides (Pool):** matching multi-party; otimizar rota que atende N riders com desvio mínimo
 4. **Autonomous vehicles:** driver é um robô, mas a arquitetura de matching/tracking é a mesma
 5. **Cross-region routing:** corrida que cruza boundary entre shards geográficos
 
@@ -737,4 +900,4 @@ Ratio: 25x → surge de 8x? Insustentável.
 
 ---
 
-*Esse é o quarto artigo da série [System Design na Prática](/series/system-design-na-prática/). No próximo, vamos projetar o Twitter/X — feed de notícias com fan-out pra centenas de milhões de timelines, caching agressivo, e o dilema de trending topics em tempo real.*
+*Esse é o quarto artigo da série [System Design na Prática](/series/system-design-na-prática/). No próximo, vamos projetar o Twitter/X: feed de notícias com fan-out pra centenas de milhões de timelines, caching agressivo, e o dilema de trending topics em tempo real.*

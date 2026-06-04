@@ -185,7 +185,7 @@ Vantagem do Bicep: sem state file, sem backend, sem locking. ARM gerencia tudo. 
   'Standard_NC48ads_A100_v4'
   'Standard_NC96ads_A100_v4'
 ])
-@description('GPU VM size — must be an N-series SKU')
+@description('GPU VM size: must be an N-series SKU')
 param vmSize string = 'Standard_NC6s_v3'
 
 param vmName string = 'vm-gpu-ai'
@@ -249,20 +249,79 @@ O decorator `@allowed` serve o mesmo propósito da `validation` do Terraform: pr
 
 ### Estrutura modular pra produção
 
-```
-infra/
-├── main.bicep              # Orquestrador
-├── modules/
-│   ├── network.bicep       # VNet, subnets, NSGs, private endpoints
-│   ├── aks.bicep           # AKS cluster com GPU node pool
-│   ├── storage.bicep       # Storage account pra modelos e dados
-│   ├── monitoring.bicep    # Log Analytics, alerts, dashboards
-│   └── keyvault.bicep      # Key Vault pra secrets
-└── parameters/
-    ├── dev.bicepparam
-    ├── staging.bicepparam
-    └── prod.bicepparam
-```
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 430" role="img" aria-labelledby="infra-structure-title infra-structure-desc">
+  <title id="infra-structure-title">Estrutura modular pra produção</title>
+  <desc id="infra-structure-desc">Diagrama da pasta infra com o arquivo main.bicep, a pasta modules e a pasta parameters.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666666" />
+    </marker>
+  </defs>
+  <style>
+    .title { font-family:"Segoe UI", Arial, sans-serif; font-size:14px; font-weight:bold; fill:#222; }
+    .label { font-family:"Segoe UI", Arial, sans-serif; font-size:12px; font-weight:bold; fill:#222; }
+    .desc { font-family:"Segoe UI", Arial, sans-serif; font-size:10px; fill:#555; }
+    .primary { fill:#dae8fc; stroke:#6c8ebf; stroke-width:1.5; }
+    .success { fill:#d5e8d4; stroke:#82b366; stroke-width:1.5; }
+    .warning { fill:#fff2cc; stroke:#d6b656; stroke-width:1.5; }
+    .accent { fill:#e1d5e7; stroke:#9673a6; stroke-width:1.5; }
+    .neutral { fill:#f5f5f5; stroke:#666666; stroke-width:1.5; }
+    .line { stroke:#666666; stroke-width:1.5; fill:none; marker-end:url(#arrow); }
+  </style>
+
+  <g>
+    <rect class="primary" x="380" y="24" width="200" height="56" rx="8" />
+    <text class="title" x="480" y="58" text-anchor="middle">infra/</text>
+  </g>
+
+  <g>
+    <path class="line" d="M 470 80 L 155 120" />
+    <rect class="neutral" x="40" y="120" width="230" height="72" rx="6" />
+    <text class="label" x="58" y="148">main.bicep</text>
+    <text class="desc" x="58" y="168">Orquestrador</text>
+  </g>
+
+  <g>
+    <path class="line" d="M 480 80 L 470 100" />
+    <rect class="accent" x="310" y="100" width="320" height="290" rx="8" />
+    <text class="title" x="330" y="126">modules/</text>
+
+    <rect class="neutral" x="335" y="145" width="270" height="38" rx="6" />
+    <text class="label" x="350" y="162">network.bicep</text>
+    <text class="desc" x="350" y="176">VNet, subnets, NSGs, private endpoints</text>
+
+    <rect class="neutral" x="335" y="190" width="270" height="38" rx="6" />
+    <text class="label" x="350" y="207">aks.bicep</text>
+    <text class="desc" x="350" y="221">AKS cluster com GPU node pool</text>
+
+    <rect class="neutral" x="335" y="235" width="270" height="38" rx="6" />
+    <text class="label" x="350" y="252">storage.bicep</text>
+    <text class="desc" x="350" y="266">Storage account pra modelos e dados</text>
+
+    <rect class="neutral" x="335" y="280" width="270" height="38" rx="6" />
+    <text class="label" x="350" y="297">monitoring.bicep</text>
+    <text class="desc" x="350" y="311">Log Analytics, alerts, dashboards</text>
+
+    <rect class="neutral" x="335" y="325" width="270" height="38" rx="6" />
+    <text class="label" x="350" y="342">keyvault.bicep</text>
+    <text class="desc" x="350" y="356">Key Vault pra secrets</text>
+  </g>
+
+  <g>
+    <path class="line" d="M 490 80 L 795 120" />
+    <rect class="warning" x="670" y="120" width="250" height="176" rx="8" />
+    <text class="title" x="690" y="146">parameters/</text>
+
+    <rect class="success" x="690" y="165" width="210" height="34" rx="6" />
+    <text class="label" x="705" y="187">dev.bicepparam</text>
+
+    <rect class="success" x="690" y="210" width="210" height="34" rx="6" />
+    <text class="label" x="705" y="232">staging.bicepparam</text>
+
+    <rect class="success" x="690" y="255" width="210" height="34" rx="6" />
+    <text class="label" x="705" y="277">prod.bicepparam</text>
+  </g>
+</svg>
 
 Um time novo sobe um ambiente completo e compliant criando um único arquivo de parâmetros.
 
@@ -273,7 +332,7 @@ Mudanças de infra de AI nunca devem ser aplicadas de um laptop. A pipeline dá 
 ### GitHub Actions com OIDC
 
 ```yaml
-name: "AI Infrastructure — Plan & Apply"
+name: "AI Infrastructure: Plan & Apply"
 
 on:
   push:
