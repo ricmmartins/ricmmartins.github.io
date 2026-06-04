@@ -470,50 +470,51 @@ Com CDN: o segmento está cacheado num edge server em São Paulo. Latência: <10
 
 ### Como CDN funciona pra vídeo
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 326" role="img" aria-label="Fluxo de cache hit no streaming" style="max-width:100%;height:auto;" font-family="Segoe UI, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" width="100%" style="max-width:860px;height:auto;" role="img" aria-label="Fluxo de cache hit no streaming" font-family="Segoe UI, Arial, sans-serif">
   <defs>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+    <marker id="arr-cdn" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#555" />
     </marker>
   </defs>
 
-  <g>
-    <rect x="30" y="105" width="220" height="62" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="140" y="132.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Player pede segmento 47</text>
-    <text x="140" y="147.5" text-anchor="middle" font-size="10" fill="#555">vídeo em 720p</text>
-  </g>
+  <!-- Player -->
+  <rect x="40" y="140" width="220" height="60" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="150" y="166" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Player pede segmento 47</text>
+  <text x="150" y="184" text-anchor="middle" font-size="10" fill="#555">vídeo em 720p</text>
 
-  <g>
-    <path d="M350 90 L470 90 L540 150 L470 210 L350 210 L280 150 Z" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
-    <text x="410" y="142" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">CDN Edge</text>
-    <text x="410" y="158" text-anchor="middle" font-size="10" fill="#555">São Paulo: tenho no cache?</text>
-  </g>
+  <!-- Arrow Player → CDN -->
+  <line x1="260" y1="170" x2="328" y2="170" stroke="#555" stroke-width="2" marker-end="url(#arr-cdn)"/>
 
-  <g>
-    <rect x="610" y="40" width="230" height="62" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="725" y="67.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Retorna imediatamente</text>
-    <text x="725" y="82.5" text-anchor="middle" font-size="10" fill="#555">cache hit</text>
-  </g>
-  <g>
-    <rect x="610" y="142" width="230" height="62" rx="6" fill="#f8cecc" stroke="#b85450" />
-    <text x="725" y="169.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a1c1c">Busca no Origin</text>
-    <text x="725" y="184.5" text-anchor="middle" font-size="10" fill="#555">blob storage</text>
-  </g>
-  <g>
-    <rect x="610" y="244" width="230" height="52" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="725" y="266.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Retorna pro player</text>
-    <text x="725" y="281.5" text-anchor="middle" font-size="10" fill="#555">e cacheia localmente</text>
-  </g>
+  <!-- CDN Edge (hexagon) -->
+  <polygon points="330,170 370,120 490,120 530,170 490,220 370,220" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+  <text x="430" y="165" text-anchor="middle" font-size="13" font-weight="bold" fill="#7c6200">CDN Edge</text>
+  <text x="430" y="183" text-anchor="middle" font-size="10" fill="#555">São Paulo: tenho no cache?</text>
 
-  <g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
-    <line x1="256" y1="143.3" x2="616" y2="166.1" />
-    <line x1="540" y1="120" x2="610" y2="71" />
-    <line x1="540" y1="180" x2="610" y2="169" />
-    <line x1="725" y1="210" x2="725" y2="250" />
-  </g>
+  <!-- Arrow CDN → Cache Hit (up-right) -->
+  <line x1="490" y1="135" x2="600" y2="80" stroke="#2e7d32" stroke-width="2" marker-end="url(#arr-cdn)"/>
+  <text x="540" y="95" font-size="11" font-weight="bold" fill="#2e7d32">SIM</text>
 
-  <text x="570" y="102" font-size="10" font-weight="bold" fill="#555">SIM</text>
-  <text x="570" y="196" font-size="10" font-weight="bold" fill="#555">NÃO</text>
+  <!-- Cache Hit -->
+  <rect x="602" y="50" width="240" height="60" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="722" y="76" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Retorna imediatamente</text>
+  <text x="722" y="94" text-anchor="middle" font-size="10" fill="#555">cache hit</text>
+
+  <!-- Arrow CDN → Origin (down-right) -->
+  <line x1="490" y1="200" x2="600" y2="250" stroke="#c62828" stroke-width="2" marker-end="url(#arr-cdn)"/>
+  <text x="540" y="240" font-size="11" font-weight="bold" fill="#c62828">NÃO</text>
+
+  <!-- Busca no Origin -->
+  <rect x="602" y="225" width="240" height="60" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="2"/>
+  <text x="722" y="251" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a1c1c">Busca no Origin</text>
+  <text x="722" y="269" text-anchor="middle" font-size="10" fill="#555">blob storage</text>
+
+  <!-- Arrow Origin → Retorna -->
+  <line x1="722" y1="285" x2="722" y2="313" stroke="#555" stroke-width="2" marker-end="url(#arr-cdn)"/>
+
+  <!-- Retorna pro player -->
+  <rect x="602" y="315" width="240" height="55" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="722" y="339" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Retorna pro player</text>
+  <text x="722" y="357" text-anchor="middle" font-size="10" fill="#555">e cacheia localmente</text>
 </svg>
 
 **Cache hit ratio** pra vídeo popular: >95%. A grande maioria dos views é de vídeos populares (distribuição power-law). Os 1% mais populares respondem por >80% do tráfego. Esses estão **sempre** no cache.
