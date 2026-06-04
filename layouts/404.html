@@ -143,6 +143,47 @@
     background: #ccc;
     color: #1e1e1e;
 }
+
+.not-found-recent {
+    max-width: 700px;
+    margin: 2.5rem auto;
+    padding: 0 1rem;
+}
+
+.not-found-recent h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.not-found-recent ul {
+    list-style: none;
+    padding: 0;
+}
+
+.not-found-recent li {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.dark .not-found-recent li {
+    border-bottom-color: rgba(255,255,255,0.1);
+}
+
+.not-found-recent a {
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.not-found-date {
+    font-size: 0.8rem;
+    color: #888;
+    white-space: nowrap;
+}
 </style>
 
 <div class="terminal-404">
@@ -165,4 +206,19 @@
         <a href="/sobre/">Sobre mim</a>
     </div>
 </div>
+
+{{ $recent := where site.RegularPages "Type" "in" site.Params.mainSections | first 5 }}
+{{ with $recent }}
+<div class="not-found-recent">
+    <h2>Posts recentes</h2>
+    <ul>
+        {{- range . }}
+        <li>
+            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+            <span class="not-found-date">{{ .Date.Format "02/01/2006" }}</span>
+        </li>
+        {{- end }}
+    </ul>
+</div>
+{{ end }}
 {{- end }}{{/* end main */}}

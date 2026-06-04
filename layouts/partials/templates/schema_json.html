@@ -22,20 +22,19 @@
     {{- if (and $index)}}, {{end }}
     {
       "@type": "ListItem",
-      "position": {{ add 1 $index  }},
-      "name": {{ $bc_pg.Name }},
-      "item": {{ $bc_pg.Permalink | safeHTML }}
+      "position": {{ add 1 $index }},
+      "name": {{ $bc_pg.Name | jsonify }},
+      "item": {{ $bc_pg.Permalink | jsonify }}
     }
     {{- end }}
 
   {{- end }}
-  {{- /*  self-page addition  */ -}}
   {{- if (ge (len $bc_list) 2) }}, {{end }}
     {
       "@type": "ListItem",
-      "position": {{len $bc_list}},
-      "name": {{ .Name }},
-      "item": {{ .Permalink | safeHTML }}
+      "position": {{ len $bc_list }},
+      "name": {{ .Name | jsonify }},
+      "item": {{ .Permalink | jsonify }}
     }
   ]
 }
@@ -45,54 +44,38 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": {{ .Title | plainify}},
-  "name": "{{ .Title | plainify }}",
-  "description": {{ with .Description | plainify }}{{ . }}{{ else }}{{ .Summary | plainify  }}{{ end -}},
+  "headline": {{ .Title | plainify | truncate 110 | jsonify }},
+  "name": {{ .Title | plainify | jsonify }},
+  "description": {{ with .Description | plainify }}{{ . | truncate 160 | jsonify }}{{ else }}{{ $.Summary | plainify | truncate 160 | jsonify }}{{ end }},
   "keywords": [
     {{- if .Params.keywords }}
-    {{ range $i, $e := .Params.keywords }}{{ if $i }}, {{ end }}{{ $e }}{{ end }}
+    {{ range $i, $e := .Params.keywords }}{{ if $i }}, {{ end }}{{ $e | jsonify }}{{ end }}
     {{- else }}
-    {{ range $i, $e := .Params.tags }}{{ if $i }}, {{ end }}{{ $e }}{{ end }}
+    {{ range $i, $e := .Params.tags }}{{ if $i }}, {{ end }}{{ $e | jsonify }}{{ end }}
     {{- end }}
   ],
-  "articleBody": {{ .Content | safeJS | htmlUnescape | plainify }},
-  "wordCount" : "{{ .WordCount }}",
-  "inLanguage": {{ .Language.Lang | default "pt-br" }},
-  {{ if .Params.cover.image -}}
-  "image":
-    {{- if (ne .Params.cover.relative true) -}}
-    {{ .Params.cover.image | absURL }},
-    {{- else -}}
-    {{ (path.Join .RelPermalink .Params.cover.image ) | absURL }},
-    {{- end}}
+  "wordCount": {{ .WordCount }},
+  "inLanguage": {{ .Language.Lang | default "pt-BR" | jsonify }},
+  {{- if .Params.cover.image }}
+  "image": {{ if (ne .Params.cover.relative true) }}{{ .Params.cover.image | absURL | jsonify }}{{ else }}{{ (path.Join .RelPermalink .Params.cover.image) | absURL | jsonify }}{{ end }},
   {{- else }}
     {{- $images := partial "templates/_funcs/get-page-images" . -}}
-    {{- with index $images 0 -}}
-  "image": {{ .Permalink }},
+    {{- with index $images 0 }}
+  "image": {{ .Permalink | jsonify }},
     {{- end }}
-  {{- end -}}
-  "datePublished": {{ .PublishDate }},
-  "dateModified": {{ .Lastmod }},
+  {{- end }}
+  "datePublished": {{ .PublishDate.Format "2006-01-02T15:04:05-07:00" | jsonify }},
+  "dateModified": {{ .Lastmod.Format "2006-01-02T15:04:05-07:00" | jsonify }},
   {{- with (.Params.author | default site.Params.author) }}
-  "author":
-    {{- if (or (eq (printf "%T" .) "[]string") (eq (printf "%T" .) "[]interface {}")) -}}
-  [{{- range $i, $v := . -}}
-  {{- if $i }}, {{end -}}
-  {
-    "@type": "Person",
-    "name": {{ $v }}
-  }
-  {{- end }}],
-    {{- else -}}
-  {
-    "@type": "Person",
-    "name": {{ . }}
-  },
-    {{- end -}}
+  "author": {{- if (or (eq (printf "%T" .) "[]string") (eq (printf "%T" .) "[]interface {}")) }}
+  [{{- range $i, $v := . }}{{ if $i }}, {{ end }}{"@type": "Person", "name": {{ $v | jsonify }}}{{ end }}],
+  {{- else }}
+  {"@type": "Person", "name": {{ . | jsonify }}},
+  {{- end }}
   {{- end }}
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": {{ .Permalink | safeHTML }}
+    "@id": {{ .Permalink | jsonify }}
   },
   "publisher": {
     "@type": "Person",
