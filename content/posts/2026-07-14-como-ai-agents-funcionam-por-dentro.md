@@ -63,50 +63,50 @@ AI Agent:
 ## O agent loop desmontado
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 770 370" width="100%" style="max-width:760px;height:auto" role="img" aria-labelledby="agent-loop-title agent-loop-desc">
-  <title id="agent-loop-title">Agent loop</title>
-  <desc id="agent-loop-desc">Fluxo Observe, Think, Act, Resultado, com condições de parada.</desc>
-  <defs>
-    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666666" />
-    </marker>
-  </defs>
-  <rect x="20" y="20" width="720" height="320" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2" />
-  <text x="380" y="48" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333333">AGENT LOOP</text>
-  <g id="loop-nodes" font-family="Segoe UI, Arial, sans-serif">
-    <g>
-      <rect x="60" y="78" width="120" height="64" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-      <text x="120" y="106.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Observe</text>
-      <text x="120" y="121.5" text-anchor="middle" font-size="10" fill="#555">(input)</text>
-    </g>
-    <g>
-      <rect x="245" y="78" width="120" height="64" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-      <text x="305" y="106.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Think</text>
-      <text x="305" y="121.5" text-anchor="middle" font-size="10" fill="#555">(LLM)</text>
-    </g>
-    <g>
-      <rect x="430" y="78" width="120" height="64" rx="6" fill="#d5e8d4" stroke="#82b366" />
-      <text x="490" y="106.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Act</text>
-      <text x="490" y="121.5" text-anchor="middle" font-size="10" fill="#555">(tool)</text>
-    </g>
-    <g>
-      <rect x="245" y="188" width="150" height="64" rx="6" fill="#fff2cc" stroke="#d6b656" />
-      <text x="320" y="216.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Resultado</text>
-      <text x="320" y="231.5" text-anchor="middle" font-size="10" fill="#555">Observação da tool</text>
-    </g>
-    <g>
-      <rect x="450" y="182" width="240" height="104" rx="8" fill="#f8cecc" stroke="#b85450" />
-      <text x="570" y="215.5" font-size="12" font-weight="bold" fill="#8a1c1c" text-anchor="middle">Condição de parada:</text>
-      <text x="570" y="230.5" font-size="10" fill="#555" text-anchor="middle">- Tarefa completa</text>
-      <text x="570" y="245.5" font-size="10" fill="#555" text-anchor="middle">- Limite de iterações atingido</text>
-      <text x="570" y="260.5" font-size="10" fill="#555" text-anchor="middle">- Erro irrecuperável</text>
-    </g>
-  </g>
-  <g id="loop-arrows" fill="none" stroke="#666666" stroke-width="2" marker-end="url(#arrow)">
-    <line x1="186" y1="110" x2="251" y2="110" />
-    <line x1="371" y1="110" x2="436" y2="110" />
-    <path d="M 435.5 145.3 L 364.4 191.3" />
-    <path d="M 256.6 185.1 L 172.9 139.1" />
-  </g>
+<title id="agent-loop-title">Agent loop</title>
+<desc id="agent-loop-desc">Fluxo Observe, Think, Act, Resultado, com condições de parada.</desc>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+<path d="M 0 0 L 10 5 L 0 10 z" fill="#666666" />
+</marker>
+</defs>
+<rect x="20" y="20" width="720" height="320" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2" />
+<text x="380" y="48" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333333">AGENT LOOP</text>
+<g id="loop-nodes" font-family="Segoe UI, Arial, sans-serif">
+<g>
+<rect x="60" y="78" width="120" height="64" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+<text x="120" y="106.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Observe</text>
+<text x="120" y="121.5" text-anchor="middle" font-size="10" fill="#555">(input)</text>
+</g>
+<g>
+<rect x="245" y="78" width="120" height="64" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+<text x="305" y="106.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Think</text>
+<text x="305" y="121.5" text-anchor="middle" font-size="10" fill="#555">(LLM)</text>
+</g>
+<g>
+<rect x="430" y="78" width="120" height="64" rx="6" fill="#d5e8d4" stroke="#82b366" />
+<text x="490" y="106.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Act</text>
+<text x="490" y="121.5" text-anchor="middle" font-size="10" fill="#555">(tool)</text>
+</g>
+<g>
+<rect x="245" y="188" width="150" height="64" rx="6" fill="#fff2cc" stroke="#d6b656" />
+<text x="320" y="216.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Resultado</text>
+<text x="320" y="231.5" text-anchor="middle" font-size="10" fill="#555">Observação da tool</text>
+</g>
+<g>
+<rect x="450" y="182" width="240" height="104" rx="8" fill="#f8cecc" stroke="#b85450" />
+<text x="570" y="215.5" font-size="12" font-weight="bold" fill="#8a1c1c" text-anchor="middle">Condição de parada:</text>
+<text x="570" y="230.5" font-size="10" fill="#555" text-anchor="middle">- Tarefa completa</text>
+<text x="570" y="245.5" font-size="10" fill="#555" text-anchor="middle">- Limite de iterações atingido</text>
+<text x="570" y="260.5" font-size="10" fill="#555" text-anchor="middle">- Erro irrecuperável</text>
+</g>
+</g>
+<g id="loop-arrows" fill="none" stroke="#666666" stroke-width="2" marker-end="url(#arrow)">
+<line x1="186" y1="110" x2="251" y2="110" />
+<line x1="371" y1="110" x2="436" y2="110" />
+<path d="M 435.5 145.3 L 364.4 191.3" />
+<path d="M 256.6 185.1 L 172.9 139.1" />
+</g>
 </svg>
 
 ### Implementação básica

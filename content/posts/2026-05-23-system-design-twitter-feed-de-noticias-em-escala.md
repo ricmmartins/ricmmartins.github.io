@@ -154,27 +154,27 @@ Contras: leitura é cara (N queries por timeline load, onde N = following)
 ### A solução do Twitter: modelo híbrido
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 310" width="100%" style="max-width: 100%; height: auto;" role="img" aria-labelledby="twitter-hybrid-title">
-  <title id="twitter-hybrid-title">Diagrama do modelo híbrido de fan-out do Twitter</title>
-  <defs>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
-    </marker>
-  </defs>
-  <g font-family="Segoe UI, Arial, sans-serif">
-    <rect x="20" y="20" width="750" height="260" rx="8" fill="#f5f5f5" stroke="#666666" />
-    <text x="390" y="46" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">HYBRID FAN-OUT</text>
-    <rect x="50" y="70" width="330" height="180" rx="8" fill="#d5e8d4" stroke="#82b366" />
-    <text x="215" y="141.5" font-size="12" font-weight="bold" fill="#1b5e20" text-anchor="middle">Usuário normal (&lt; 500K followers)</text>
-    <text x="215" y="156.5" font-size="10" fill="#555" text-anchor="middle">• Fan-out on WRITE</text>
-    <text x="215" y="171.5" font-size="10" fill="#555" text-anchor="middle">• Tweet é pushado pra timeline de cada follower</text>
-    <text x="215" y="186.5" font-size="10" fill="#555" text-anchor="middle">• Read é O(1): timeline já está montada no cache</text>
-    <rect x="410" y="70" width="330" height="180" rx="8" fill="#fff2cc" stroke="#d6b656" />
-    <text x="575" y="134" font-size="12" font-weight="bold" fill="#7c6200" text-anchor="middle">Celebridade (&gt; 500K followers)</text>
-    <text x="575" y="149" font-size="10" fill="#555" text-anchor="middle">• Fan-out on READ</text>
-    <text x="575" y="164" font-size="10" fill="#555" text-anchor="middle">• Tweet é salvo, mas NÃO pushado</text>
-    <text x="575" y="179" font-size="10" fill="#555" text-anchor="middle">• No read: merge timeline pré-computada + tweets</text>
-    <text x="575" y="194" font-size="10" fill="#555" text-anchor="middle">  recentes das celebridades que o user segue</text>
-  </g>
+<title id="twitter-hybrid-title">Diagrama do modelo híbrido de fan-out do Twitter</title>
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+<path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+</marker>
+</defs>
+<g font-family="Segoe UI, Arial, sans-serif">
+<rect x="20" y="20" width="750" height="260" rx="8" fill="#f5f5f5" stroke="#666666" />
+<text x="390" y="46" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">HYBRID FAN-OUT</text>
+<rect x="50" y="70" width="330" height="180" rx="8" fill="#d5e8d4" stroke="#82b366" />
+<text x="215" y="141.5" font-size="12" font-weight="bold" fill="#1b5e20" text-anchor="middle">Usuário normal (&lt; 500K followers)</text>
+<text x="215" y="156.5" font-size="10" fill="#555" text-anchor="middle">• Fan-out on WRITE</text>
+<text x="215" y="171.5" font-size="10" fill="#555" text-anchor="middle">• Tweet é pushado pra timeline de cada follower</text>
+<text x="215" y="186.5" font-size="10" fill="#555" text-anchor="middle">• Read é O(1): timeline já está montada no cache</text>
+<rect x="410" y="70" width="330" height="180" rx="8" fill="#fff2cc" stroke="#d6b656" />
+<text x="575" y="134" font-size="12" font-weight="bold" fill="#7c6200" text-anchor="middle">Celebridade (&gt; 500K followers)</text>
+<text x="575" y="149" font-size="10" fill="#555" text-anchor="middle">• Fan-out on READ</text>
+<text x="575" y="164" font-size="10" fill="#555" text-anchor="middle">• Tweet é salvo, mas NÃO pushado</text>
+<text x="575" y="179" font-size="10" fill="#555" text-anchor="middle">• No read: merge timeline pré-computada + tweets</text>
+<text x="575" y="194" font-size="10" fill="#555" text-anchor="middle">  recentes das celebridades que o user segue</text>
+</g>
 </svg>
 
 **Por que o threshold de ~500K?**
@@ -187,72 +187,72 @@ Na prática, ~0.1% dos usuários são "celebridades". Mas esses 0.1% são respon
 ### Arquitetura geral
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 910 808" width="100%" style="max-width: 100%; height: auto;" role="img" aria-labelledby="twitter-paths-title">
-  <title id="twitter-paths-title">Diagrama dos caminhos de escrita e leitura da timeline do Twitter</title>
-  <defs>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
-    </marker>
-  </defs>
-  <g font-family="Segoe UI, Arial, sans-serif">
-    <rect x="20" y="20" width="860" height="320" rx="8" fill="#f5f5f5" stroke="#666666" />
-    <text x="450" y="46" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">WRITE PATH (Tweet)</text>
-    <rect x="50" y="78" width="120" height="48" rx="6" fill="#f5f5f5" stroke="#666666" />
-    <text x="110" y="106" font-size="12" font-weight="bold" text-anchor="middle" fill="#333333">User</text>
-    <rect x="210" y="78" width="120" height="48" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="270" y="106" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a3a5c">API Server</text>
-    <rect x="370" y="78" width="140" height="48" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="440" y="106" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">Tweet Service</text>
-    <rect x="550" y="78" width="150" height="48" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="625" y="106" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a3a5c">Tweet Storage</text>
-    <rect x="360" y="166" width="160" height="48" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="440" y="194" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">Fan-out Service</text>
-    <rect x="40" y="245" width="180" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="130" y="269.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#1b5e20">Normal user</text>
-    <text x="130" y="284.5" font-size="10" fill="#555" text-anchor="middle">Push to Redis timelines</text>
-    <rect x="250" y="245" width="150" height="56" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="325" y="269.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">Search Index</text>
-    <text x="325" y="284.5" font-size="10" fill="#555" text-anchor="middle">async</text>
-    <rect x="430" y="245" width="160" height="56" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="510" y="269.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">Trending Service</text>
-    <text x="510" y="284.5" font-size="10" fill="#555" text-anchor="middle">async</text>
-    <rect x="620" y="245" width="210" height="56" rx="6" fill="#fff2cc" stroke="#d6b656" />
-    <text x="725" y="269.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#7c6200">Celebrity</text>
-    <text x="725" y="284.5" font-size="10" fill="#555" text-anchor="middle">Só armazena (merge no read)</text>
-    <line x1="176" y1="102" x2="216" y2="102" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="336" y1="102" x2="376" y2="102" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="516" y1="102" x2="556" y2="102" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="440" y1="132" x2="440" y2="172" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="380" y1="214" x2="190" y2="245" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="420" y1="214" x2="325" y2="245" stroke="#666666" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrow)" />
-    <line x1="460" y1="214" x2="510" y2="245" stroke="#666666" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrow)" />
-    <line x1="500" y1="214" x2="650" y2="245" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <rect x="20" y="360" width="860" height="418" rx="8" fill="#f5f5f5" stroke="#666666" />
-    <text x="450" y="386" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">READ PATH (Timeline)</text>
-    <rect x="50" y="420" width="120" height="48" rx="6" fill="#f5f5f5" stroke="#666666" />
-    <text x="110" y="448" font-size="12" font-weight="bold" text-anchor="middle" fill="#333333">User</text>
-    <rect x="210" y="420" width="120" height="48" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="270" y="448" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a3a5c">API Server</text>
-    <rect x="370" y="420" width="160" height="48" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="450" y="448" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">Timeline Service</text>
-    <rect x="210" y="510" width="220" height="62" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="320" y="537.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#1b5e20">Redis Timeline</text>
-    <text x="320" y="552.5" font-size="10" fill="#555" text-anchor="middle">(pré-computada)</text>
-    <rect x="500" y="510" width="300" height="62" rx="6" fill="#fff2cc" stroke="#d6b656" />
-    <text x="650" y="537.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#7c6200">Celebrity Tweet Cache</text>
-    <text x="650" y="552.5" font-size="10" fill="#555" text-anchor="middle">últimos tweets de VIPs que este user segue</text>
-    <rect x="360" y="612" width="180" height="48" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="450" y="640" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">Merge + Rank</text>
-    <rect x="340" y="700" width="280" height="48" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="480" y="728" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a3a5c">Hydrate (buscar tweet completo)</text>
-    <line x1="176" y1="444" x2="216" y2="444" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="336" y1="444" x2="376" y2="444" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="413" y1="471.6" x2="356.7" y2="513.6" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="504.9" y1="470.6" x2="591.5" y2="512.6" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="367.3" y1="575.5" x2="422" y2="615.5" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="579.3" y1="574.6" x2="495.1" y2="614.6" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="460.1" y1="665.7" x2="473.8" y2="705.7" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <text x="480" y="728" font-size="12" font-weight="bold" text-anchor="middle" fill="#1f1f1f">Response</text>
-  </g>
+<title id="twitter-paths-title">Diagrama dos caminhos de escrita e leitura da timeline do Twitter</title>
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+<path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+</marker>
+</defs>
+<g font-family="Segoe UI, Arial, sans-serif">
+<rect x="20" y="20" width="860" height="320" rx="8" fill="#f5f5f5" stroke="#666666" />
+<text x="450" y="46" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">WRITE PATH (Tweet)</text>
+<rect x="50" y="78" width="120" height="48" rx="6" fill="#f5f5f5" stroke="#666666" />
+<text x="110" y="106" font-size="12" font-weight="bold" text-anchor="middle" fill="#333333">User</text>
+<rect x="210" y="78" width="120" height="48" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+<text x="270" y="106" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a3a5c">API Server</text>
+<rect x="370" y="78" width="140" height="48" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+<text x="440" y="106" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">Tweet Service</text>
+<rect x="550" y="78" width="150" height="48" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+<text x="625" y="106" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a3a5c">Tweet Storage</text>
+<rect x="360" y="166" width="160" height="48" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+<text x="440" y="194" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">Fan-out Service</text>
+<rect x="40" y="245" width="180" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
+<text x="130" y="269.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#1b5e20">Normal user</text>
+<text x="130" y="284.5" font-size="10" fill="#555" text-anchor="middle">Push to Redis timelines</text>
+<rect x="250" y="245" width="150" height="56" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+<text x="325" y="269.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">Search Index</text>
+<text x="325" y="284.5" font-size="10" fill="#555" text-anchor="middle">async</text>
+<rect x="430" y="245" width="160" height="56" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+<text x="510" y="269.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">Trending Service</text>
+<text x="510" y="284.5" font-size="10" fill="#555" text-anchor="middle">async</text>
+<rect x="620" y="245" width="210" height="56" rx="6" fill="#fff2cc" stroke="#d6b656" />
+<text x="725" y="269.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#7c6200">Celebrity</text>
+<text x="725" y="284.5" font-size="10" fill="#555" text-anchor="middle">Só armazena (merge no read)</text>
+<line x1="176" y1="102" x2="216" y2="102" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+<line x1="336" y1="102" x2="376" y2="102" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+<line x1="516" y1="102" x2="556" y2="102" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+<line x1="440" y1="132" x2="440" y2="172" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+<line x1="380" y1="214" x2="190" y2="245" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+<line x1="420" y1="214" x2="325" y2="245" stroke="#666666" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrow)" />
+<line x1="460" y1="214" x2="510" y2="245" stroke="#666666" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrow)" />
+<line x1="500" y1="214" x2="650" y2="245" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+<rect x="20" y="360" width="860" height="418" rx="8" fill="#f5f5f5" stroke="#666666" />
+<text x="450" y="386" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">READ PATH (Timeline)</text>
+<rect x="50" y="420" width="120" height="48" rx="6" fill="#f5f5f5" stroke="#666666" />
+<text x="110" y="448" font-size="12" font-weight="bold" text-anchor="middle" fill="#333333">User</text>
+<rect x="210" y="420" width="120" height="48" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+<text x="270" y="448" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a3a5c">API Server</text>
+<rect x="370" y="420" width="160" height="48" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+<text x="450" y="448" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">Timeline Service</text>
+<rect x="210" y="510" width="220" height="62" rx="6" fill="#d5e8d4" stroke="#82b366" />
+<text x="320" y="537.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#1b5e20">Redis Timeline</text>
+<text x="320" y="552.5" font-size="10" fill="#555" text-anchor="middle">(pré-computada)</text>
+<rect x="500" y="510" width="300" height="62" rx="6" fill="#fff2cc" stroke="#d6b656" />
+<text x="650" y="537.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#7c6200">Celebrity Tweet Cache</text>
+<text x="650" y="552.5" font-size="10" fill="#555" text-anchor="middle">últimos tweets de VIPs que este user segue</text>
+<rect x="360" y="612" width="180" height="48" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+<text x="450" y="640" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">Merge + Rank</text>
+<rect x="340" y="700" width="280" height="48" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+<text x="480" y="728" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a3a5c">Hydrate (buscar tweet completo)</text>
+<line x1="176" y1="444" x2="216" y2="444" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+<line x1="336" y1="444" x2="376" y2="444" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+<line x1="413" y1="471.6" x2="356.7" y2="513.6" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+<line x1="504.9" y1="470.6" x2="591.5" y2="512.6" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+<line x1="367.3" y1="575.5" x2="422" y2="615.5" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+<line x1="579.3" y1="574.6" x2="495.1" y2="614.6" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+<line x1="460.1" y1="665.7" x2="473.8" y2="705.7" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+<text x="480" y="728" font-size="12" font-weight="bold" text-anchor="middle" fill="#1f1f1f">Response</text>
+</g>
 </svg>
 
 ### Componentes principais
@@ -585,47 +585,47 @@ Trending score = (volume_atual - volume_baseline) / tempo
 ### Arquitetura do Trending Service
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 580" width="100%" style="max-width: 860px; height: auto;" role="img" aria-labelledby="twitter-trending-title">
-  <title id="twitter-trending-title">Diagrama do pipeline de trending topics</title>
-  <defs>
-    <marker id="arr-trend" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L9,3 z" fill="#555" />
-    </marker>
-  </defs>
-  <g font-family="Segoe UI, Arial, sans-serif">
-    <!-- Todos os tweets -->
-    <rect x="300" y="20" width="300" height="55" rx="6" fill="#ffffff" stroke="#999" stroke-width="1.5"/>
-    <text x="450" y="52" font-size="13" font-weight="bold" text-anchor="middle" fill="#333">Todos os tweets</text>
-    <!-- Arrow -->
-    <line x1="450" y1="75" x2="450" y2="108" stroke="#555" stroke-width="2" marker-end="url(#arr-trend)"/>
-    <!-- Stream Processor -->
-    <rect x="220" y="110" width="460" height="55" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
-    <text x="450" y="143" font-size="13" font-weight="bold" text-anchor="middle" fill="#4a235a">Stream Processor (Kafka Streams / Flink)</text>
-    <!-- Arrow -->
-    <line x1="450" y1="165" x2="450" y2="198" stroke="#555" stroke-width="2" marker-end="url(#arr-trend)"/>
-    <!-- Container: Etapas -->
-    <rect x="100" y="200" width="700" height="275" rx="10" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
-    <text x="450" y="230" font-size="14" font-weight="bold" text-anchor="middle" fill="#1a3a5c">Etapas do processamento</text>
-    <!-- Step 1 -->
-    <rect x="140" y="245" width="620" height="38" rx="6" fill="#ffffff" stroke="#aaa" stroke-width="1"/>
-    <text x="450" y="269" font-size="11" text-anchor="middle" fill="#333">Extrai entidades: hashtags, mentions, keywords</text>
-    <!-- Step 2 -->
-    <rect x="140" y="295" width="620" height="48" rx="6" fill="#ffffff" stroke="#aaa" stroke-width="1"/>
-    <text x="450" y="316" font-size="11" text-anchor="middle" fill="#333">Conta frequência por janela de tempo (sliding window)</text>
-    <text x="450" y="333" font-size="10" text-anchor="middle" fill="#555">Janelas: 5min, 15min, 1h, 4h</text>
-    <!-- Step 3 -->
-    <rect x="140" y="355" width="620" height="48" rx="6" fill="#ffffff" stroke="#aaa" stroke-width="1"/>
-    <text x="450" y="376" font-size="11" text-anchor="middle" fill="#333">Calcula taxa de crescimento vs baseline</text>
-    <text x="450" y="393" font-size="10" text-anchor="middle" fill="#555">baseline = média dos últimos 7 dias pra aquela hora</text>
-    <!-- Step 4 -->
-    <rect x="140" y="415" width="620" height="38" rx="6" fill="#ffffff" stroke="#aaa" stroke-width="1"/>
-    <text x="450" y="439" font-size="11" text-anchor="middle" fill="#333">Filtra: remove spam, conteúdo proibido, ruído</text>
-    <!-- Arrow + label -->
-    <line x1="450" y1="475" x2="450" y2="508" stroke="#555" stroke-width="2" marker-end="url(#arr-trend)"/>
-    <text x="450" y="498" font-size="10" text-anchor="middle" fill="#555">Ranking: top N por região / país / global</text>
-    <!-- Trending Cache -->
-    <rect x="240" y="510" width="420" height="50" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
-    <text x="450" y="540" font-size="13" font-weight="bold" text-anchor="middle" fill="#1b5e20">Trending Cache (Redis, TTL 1-5 min)</text>
-  </g>
+<title id="twitter-trending-title">Diagrama do pipeline de trending topics</title>
+<defs>
+<marker id="arr-trend" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+<path d="M0,0 L0,6 L9,3 z" fill="#555" />
+</marker>
+</defs>
+<g font-family="Segoe UI, Arial, sans-serif">
+<!-- Todos os tweets -->
+<rect x="300" y="20" width="300" height="55" rx="6" fill="#ffffff" stroke="#999" stroke-width="1.5"/>
+<text x="450" y="52" font-size="13" font-weight="bold" text-anchor="middle" fill="#333">Todos os tweets</text>
+<!-- Arrow -->
+<line x1="450" y1="75" x2="450" y2="108" stroke="#555" stroke-width="2" marker-end="url(#arr-trend)"/>
+<!-- Stream Processor -->
+<rect x="220" y="110" width="460" height="55" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+<text x="450" y="143" font-size="13" font-weight="bold" text-anchor="middle" fill="#4a235a">Stream Processor (Kafka Streams / Flink)</text>
+<!-- Arrow -->
+<line x1="450" y1="165" x2="450" y2="198" stroke="#555" stroke-width="2" marker-end="url(#arr-trend)"/>
+<!-- Container: Etapas -->
+<rect x="100" y="200" width="700" height="275" rx="10" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+<text x="450" y="230" font-size="14" font-weight="bold" text-anchor="middle" fill="#1a3a5c">Etapas do processamento</text>
+<!-- Step 1 -->
+<rect x="140" y="245" width="620" height="38" rx="6" fill="#ffffff" stroke="#aaa" stroke-width="1"/>
+<text x="450" y="269" font-size="11" text-anchor="middle" fill="#333">Extrai entidades: hashtags, mentions, keywords</text>
+<!-- Step 2 -->
+<rect x="140" y="295" width="620" height="48" rx="6" fill="#ffffff" stroke="#aaa" stroke-width="1"/>
+<text x="450" y="316" font-size="11" text-anchor="middle" fill="#333">Conta frequência por janela de tempo (sliding window)</text>
+<text x="450" y="333" font-size="10" text-anchor="middle" fill="#555">Janelas: 5min, 15min, 1h, 4h</text>
+<!-- Step 3 -->
+<rect x="140" y="355" width="620" height="48" rx="6" fill="#ffffff" stroke="#aaa" stroke-width="1"/>
+<text x="450" y="376" font-size="11" text-anchor="middle" fill="#333">Calcula taxa de crescimento vs baseline</text>
+<text x="450" y="393" font-size="10" text-anchor="middle" fill="#555">baseline = média dos últimos 7 dias pra aquela hora</text>
+<!-- Step 4 -->
+<rect x="140" y="415" width="620" height="38" rx="6" fill="#ffffff" stroke="#aaa" stroke-width="1"/>
+<text x="450" y="439" font-size="11" text-anchor="middle" fill="#333">Filtra: remove spam, conteúdo proibido, ruído</text>
+<!-- Arrow + label -->
+<line x1="450" y1="475" x2="450" y2="508" stroke="#555" stroke-width="2" marker-end="url(#arr-trend)"/>
+<text x="450" y="498" font-size="10" text-anchor="middle" fill="#555">Ranking: top N por região / país / global</text>
+<!-- Trending Cache -->
+<rect x="240" y="510" width="420" height="50" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+<text x="450" y="540" font-size="13" font-weight="bold" text-anchor="middle" fill="#1b5e20">Trending Cache (Redis, TTL 1-5 min)</text>
+</g>
 </svg>
 
 ### Sliding window counting
@@ -674,43 +674,43 @@ User pede trends:
 ### Arquitetura
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1070 420" width="100%" style="max-width: 100%; height: auto;" role="img" aria-labelledby="twitter-search-title">
-  <title id="twitter-search-title">Diagrama do fluxo de indexação e busca do Twitter</title>
-  <defs>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
-    </marker>
-  </defs>
-  <g font-family="Segoe UI, Arial, sans-serif">
-    <rect x="40" y="34" width="120" height="48" rx="6" fill="#f5f5f5" stroke="#666666" />
-    <text x="100" y="62" font-size="12" font-weight="bold" text-anchor="middle" fill="#333333">Novo tweet</text>
-    <rect x="210" y="34" width="110" height="48" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="265" y="62" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">Kafka</text>
-    <rect x="370" y="34" width="150" height="48" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="445" y="62" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">Search Indexer</text>
-    <rect x="540" y="20" width="325" height="184" rx="8" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="680" y="46" font-size="14" font-weight="bold" text-anchor="middle" fill="#1a3a5c">Elasticsearch Cluster</text>
-    <rect x="565" y="70" width="270" height="32" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="700" y="82.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#1b5e20">Index recente (últimos 7 dias)</text>
-    <text x="700" y="97.5" font-size="10" fill="#555" text-anchor="middle">SSD, réplicas</text>
-    <rect x="565" y="142" width="240" height="40" rx="6" fill="#fff2cc" stroke="#d6b656" />
-    <text x="685" y="157" font-size="12" font-weight="bold" text-anchor="middle" fill="#7c6200">Index histórico (&gt; 7 dias)</text>
-    <text x="685" y="172" font-size="10" fill="#555" text-anchor="middle">HDD, menos réplicas</text>
-    <line x1="166" y1="58" x2="216" y2="58" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="326" y1="58" x2="376" y2="58" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="526" y1="66.9" x2="571" y2="71.8" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <rect x="40" y="260" width="130" height="48" rx="6" fill="#f5f5f5" stroke="#666666" />
-    <text x="105" y="288" font-size="12" font-weight="bold" text-anchor="middle" fill="#333333">Search query</text>
-    <rect x="220" y="260" width="150" height="48" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="295" y="288" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">Search Service</text>
-    <path d="M 176 284 H 195 V 284 H 214" fill="none" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <path d="M 376 284 H 450 V 322 H 524" fill="none" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="684.3" y1="180" x2="680.9" y2="294" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <rect x="500" y="214" width="540" height="34" rx="6" fill="#fff2cc" stroke="#d6b656" />
-    <text x="770" y="235" font-size="10" fill="#555" text-anchor="middle">Query no index recente primeiro; se precisar mais resultados, consulta o histórico</text>
-    <rect x="530" y="288" width="300" height="68" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="680" y="318.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#1b5e20">Merge + Rank + Return</text>
-    <text x="680" y="333.5" font-size="10" fill="#555" text-anchor="middle">Combina resultados, reordena e responde</text>
-  </g>
+<title id="twitter-search-title">Diagrama do fluxo de indexação e busca do Twitter</title>
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+<path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+</marker>
+</defs>
+<g font-family="Segoe UI, Arial, sans-serif">
+<rect x="40" y="34" width="120" height="48" rx="6" fill="#f5f5f5" stroke="#666666" />
+<text x="100" y="62" font-size="12" font-weight="bold" text-anchor="middle" fill="#333333">Novo tweet</text>
+<rect x="210" y="34" width="110" height="48" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+<text x="265" y="62" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">Kafka</text>
+<rect x="370" y="34" width="150" height="48" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+<text x="445" y="62" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">Search Indexer</text>
+<rect x="540" y="20" width="325" height="184" rx="8" fill="#dae8fc" stroke="#6c8ebf" />
+<text x="680" y="46" font-size="14" font-weight="bold" text-anchor="middle" fill="#1a3a5c">Elasticsearch Cluster</text>
+<rect x="565" y="70" width="270" height="32" rx="6" fill="#d5e8d4" stroke="#82b366" />
+<text x="700" y="82.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#1b5e20">Index recente (últimos 7 dias)</text>
+<text x="700" y="97.5" font-size="10" fill="#555" text-anchor="middle">SSD, réplicas</text>
+<rect x="565" y="142" width="240" height="40" rx="6" fill="#fff2cc" stroke="#d6b656" />
+<text x="685" y="157" font-size="12" font-weight="bold" text-anchor="middle" fill="#7c6200">Index histórico (&gt; 7 dias)</text>
+<text x="685" y="172" font-size="10" fill="#555" text-anchor="middle">HDD, menos réplicas</text>
+<line x1="166" y1="58" x2="216" y2="58" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+<line x1="326" y1="58" x2="376" y2="58" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+<line x1="526" y1="66.9" x2="571" y2="71.8" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+<rect x="40" y="260" width="130" height="48" rx="6" fill="#f5f5f5" stroke="#666666" />
+<text x="105" y="288" font-size="12" font-weight="bold" text-anchor="middle" fill="#333333">Search query</text>
+<rect x="220" y="260" width="150" height="48" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+<text x="295" y="288" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">Search Service</text>
+<path d="M 176 284 H 195 V 284 H 214" fill="none" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+<path d="M 376 284 H 450 V 322 H 524" fill="none" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+<line x1="684.3" y1="180" x2="680.9" y2="294" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+<rect x="500" y="214" width="540" height="34" rx="6" fill="#fff2cc" stroke="#d6b656" />
+<text x="770" y="235" font-size="10" fill="#555" text-anchor="middle">Query no index recente primeiro; se precisar mais resultados, consulta o histórico</text>
+<rect x="530" y="288" width="300" height="68" rx="6" fill="#d5e8d4" stroke="#82b366" />
+<text x="680" y="318.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#1b5e20">Merge + Rank + Return</text>
+<text x="680" y="333.5" font-size="10" fill="#555" text-anchor="middle">Combina resultados, reordena e responde</text>
+</g>
 </svg>
 
 ### Indexação em real-time
@@ -747,24 +747,24 @@ Tweet viral: 1 milhão de likes em 1 hora = ~280 likes/segundo **pra um único t
 ### Solução: write-behind counters
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 282" width="100%" style="max-width: 100%; height: auto;" role="img" aria-labelledby="twitter-likes-title">
-  <title id="twitter-likes-title">Diagrama da persistência assíncrona de likes</title>
-  <defs>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
-    </marker>
-  </defs>
-  <g font-family="Segoe UI, Arial, sans-serif">
-    <rect x="280" y="20" width="200" height="48" rx="6" fill="#f5f5f5" stroke="#666666" />
-    <text x="380" y="48" font-size="12" font-weight="bold" text-anchor="middle" fill="#333333">Like event</text>
-    <rect x="170" y="108" width="420" height="58" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="380" y="126" font-size="12" font-weight="bold" text-anchor="middle" fill="#1b5e20">Redis: INCR tweet_likes:{tweet_id}</text>
-    <text x="380" y="141" font-size="10" fill="#555" text-anchor="middle">instantâneo, in-memory</text>
-    <rect x="80" y="206" width="600" height="46" rx="6" fill="#fff2cc" stroke="#d6b656" />
-    <text x="380" y="233" font-size="10" fill="#555" text-anchor="middle">Persistence job: UPDATE tweets SET likes = {redis_value} WHERE id = X</text>
-    <line x1="380" y1="74" x2="380" y2="114" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <line x1="380" y1="172" x2="380" y2="212" stroke="#666666" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arrow)" />
-    <text x="380" y="156" font-size="10" fill="#555" text-anchor="middle">async, batched, a cada 5-10 segundos</text>
-  </g>
+<title id="twitter-likes-title">Diagrama da persistência assíncrona de likes</title>
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+<path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+</marker>
+</defs>
+<g font-family="Segoe UI, Arial, sans-serif">
+<rect x="280" y="20" width="200" height="48" rx="6" fill="#f5f5f5" stroke="#666666" />
+<text x="380" y="48" font-size="12" font-weight="bold" text-anchor="middle" fill="#333333">Like event</text>
+<rect x="170" y="108" width="420" height="58" rx="6" fill="#d5e8d4" stroke="#82b366" />
+<text x="380" y="126" font-size="12" font-weight="bold" text-anchor="middle" fill="#1b5e20">Redis: INCR tweet_likes:{tweet_id}</text>
+<text x="380" y="141" font-size="10" fill="#555" text-anchor="middle">instantâneo, in-memory</text>
+<rect x="80" y="206" width="600" height="46" rx="6" fill="#fff2cc" stroke="#d6b656" />
+<text x="380" y="233" font-size="10" fill="#555" text-anchor="middle">Persistence job: UPDATE tweets SET likes = {redis_value} WHERE id = X</text>
+<line x1="380" y1="74" x2="380" y2="114" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+<line x1="380" y1="172" x2="380" y2="212" stroke="#666666" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arrow)" />
+<text x="380" y="156" font-size="10" fill="#555" text-anchor="middle">async, batched, a cada 5-10 segundos</text>
+</g>
 </svg>
 
 O counter "real" vive no Redis. O banco é atualizado periodicamente em batch. Se Redis crashar, perde no máximo 5-10 segundos de likes (aceitável; counter não precisa ser exato em tempo real).

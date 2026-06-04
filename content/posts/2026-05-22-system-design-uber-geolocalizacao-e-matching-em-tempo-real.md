@@ -118,104 +118,104 @@ O sistema tem três fluxos principais:
 ### Arquitetura geral
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 780" role="img" aria-label="Arquitetura de ingestão de localização, matching e tracking em tempo real" style="max-width:100%;height:auto;" font-family="Segoe UI, Arial, sans-serif">
-  <defs>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
-    </marker>
-  </defs>
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+<path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+</marker>
+</defs>
 
-  <rect x="10" y="10" width="960" height="385" rx="8" fill="#f5f5f5" stroke="#666666" />
-  <text x="30" y="35" font-size="14" font-weight="bold" fill="#333333">LOCATION INGESTION (contínuo)</text>
-  <g>
-    <rect x="40" y="100" width="150" height="56" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="115" y="132" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Driver App</text>
-  </g>
-  <g>
-    <rect x="300" y="100" width="180" height="56" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="390" y="132" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Location Service</text>
-  </g>
-  <g>
-    <rect x="620" y="65" width="220" height="56" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="730" y="97" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Geospatial Index</text>
-  </g>
-  <g>
-    <rect x="620" y="161" width="220" height="56" rx="6" fill="#fff2cc" stroke="#d6b656" />
-    <text x="730" y="193" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Location History DB</text>
-  </g>
-  <g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
-    <line x1="196" y1="128" x2="306" y2="128" />
-    <line x1="486" y1="118.1" x2="626" y2="103.7" />
-    <line x1="485.9" y1="145.2" x2="625.9" y2="170.3" />
-  </g>
-  <text x="245" y="114" text-anchor="middle" font-size="10" fill="#555">cada 4s</text>
+<rect x="10" y="10" width="960" height="385" rx="8" fill="#f5f5f5" stroke="#666666" />
+<text x="30" y="35" font-size="14" font-weight="bold" fill="#333333">LOCATION INGESTION (contínuo)</text>
+<g>
+<rect x="40" y="100" width="150" height="56" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+<text x="115" y="132" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Driver App</text>
+</g>
+<g>
+<rect x="300" y="100" width="180" height="56" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+<text x="390" y="132" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Location Service</text>
+</g>
+<g>
+<rect x="620" y="65" width="220" height="56" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+<text x="730" y="97" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Geospatial Index</text>
+</g>
+<g>
+<rect x="620" y="161" width="220" height="56" rx="6" fill="#fff2cc" stroke="#d6b656" />
+<text x="730" y="193" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Location History DB</text>
+</g>
+<g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
+<line x1="196" y1="128" x2="306" y2="128" />
+<line x1="486" y1="118.1" x2="626" y2="103.7" />
+<line x1="485.9" y1="145.2" x2="625.9" y2="170.3" />
+</g>
+<text x="245" y="114" text-anchor="middle" font-size="10" fill="#555">cada 4s</text>
 
-  <rect x="10" y="245" width="960" height="336" rx="8" fill="#f5f5f5" stroke="#666666" />
-  <text x="30" y="270" font-size="14" font-weight="bold" fill="#333333">RIDE MATCHING</text>
-  <g>
-    <rect x="40" y="385" width="150" height="56" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="115" y="417" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Rider App</text>
-  </g>
-  <g>
-    <rect x="230" y="385" width="150" height="56" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="305" y="417" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Ride Service</text>
-  </g>
-  <g>
-    <rect x="430" y="385" width="180" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="520" y="417" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Matching Service</text>
-  </g>
-  <g>
-    <rect x="690" y="315" width="210" height="50" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="795" y="336.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Geospatial Index</text>
-    <text x="795" y="351.5" text-anchor="middle" font-size="10" fill="#555">query</text>
-  </g>
-  <g>
-    <rect x="690" y="405" width="210" height="50" rx="6" fill="#fff2cc" stroke="#d6b656" />
-    <text x="795" y="434" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">ETA Service</text>
-  </g>
-  <g>
-    <rect x="690" y="495" width="210" height="50" rx="6" fill="#fff2cc" stroke="#d6b656" />
-    <text x="795" y="524" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Pricing Service</text>
-  </g>
-  <g>
-    <rect x="430" y="495" width="210" height="56" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="535" y="519.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Notify Driver</text>
-    <text x="535" y="534.5" text-anchor="middle" font-size="10" fill="#555">WebSocket / Push</text>
-  </g>
-  <g>
-    <rect x="230" y="495" width="150" height="56" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="305" y="527" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Ride DB</text>
-  </g>
-  <g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
-    <line x1="196" y1="413" x2="236" y2="413" />
-    <line x1="386" y1="413" x2="436" y2="413" />
-    <line x1="305" y1="447" x2="305" y2="501" />
-    <line x1="615.8" y1="387.6" x2="706.6" y2="363.5" />
-    <line x1="616" y1="418.9" x2="696" y2="423.9" />
-    <line x1="597.6" y1="443.2" x2="736.3" y2="497.2" />
-    <line x1="725.2" y1="492.8" x2="586.4" y2="438.8" />
-    <line x1="424" y1="523" x2="374" y2="523" />
-  </g>
-  <text x="390" y="515" font-size="10" fill="#555">Accept/Reject</text>
+<rect x="10" y="245" width="960" height="336" rx="8" fill="#f5f5f5" stroke="#666666" />
+<text x="30" y="270" font-size="14" font-weight="bold" fill="#333333">RIDE MATCHING</text>
+<g>
+<rect x="40" y="385" width="150" height="56" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+<text x="115" y="417" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Rider App</text>
+</g>
+<g>
+<rect x="230" y="385" width="150" height="56" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+<text x="305" y="417" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Ride Service</text>
+</g>
+<g>
+<rect x="430" y="385" width="180" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
+<text x="520" y="417" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Matching Service</text>
+</g>
+<g>
+<rect x="690" y="315" width="210" height="50" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+<text x="795" y="336.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Geospatial Index</text>
+<text x="795" y="351.5" text-anchor="middle" font-size="10" fill="#555">query</text>
+</g>
+<g>
+<rect x="690" y="405" width="210" height="50" rx="6" fill="#fff2cc" stroke="#d6b656" />
+<text x="795" y="434" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">ETA Service</text>
+</g>
+<g>
+<rect x="690" y="495" width="210" height="50" rx="6" fill="#fff2cc" stroke="#d6b656" />
+<text x="795" y="524" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Pricing Service</text>
+</g>
+<g>
+<rect x="430" y="495" width="210" height="56" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+<text x="535" y="519.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Notify Driver</text>
+<text x="535" y="534.5" text-anchor="middle" font-size="10" fill="#555">WebSocket / Push</text>
+</g>
+<g>
+<rect x="230" y="495" width="150" height="56" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+<text x="305" y="527" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Ride DB</text>
+</g>
+<g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
+<line x1="196" y1="413" x2="236" y2="413" />
+<line x1="386" y1="413" x2="436" y2="413" />
+<line x1="305" y1="447" x2="305" y2="501" />
+<line x1="615.8" y1="387.6" x2="706.6" y2="363.5" />
+<line x1="616" y1="418.9" x2="696" y2="423.9" />
+<line x1="597.6" y1="443.2" x2="736.3" y2="497.2" />
+<line x1="725.2" y1="492.8" x2="586.4" y2="438.8" />
+<line x1="424" y1="523" x2="374" y2="523" />
+</g>
+<text x="390" y="515" font-size="10" fill="#555">Accept/Reject</text>
 
-  <rect x="10" y="605" width="960" height="145" rx="8" fill="#f5f5f5" stroke="#666666" />
-  <text x="30" y="630" font-size="14" font-weight="bold" fill="#333333">REAL-TIME TRACKING</text>
-  <g>
-    <rect x="70" y="665" width="160" height="52" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="150" y="695" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Rider App</text>
-  </g>
-  <g>
-    <rect x="400" y="665" width="180" height="52" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="490" y="695" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Tracking Service</text>
-  </g>
-  <g>
-    <rect x="730" y="665" width="180" height="52" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="820" y="695" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Location Service</text>
-  </g>
-  <g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
-    <line x1="724" y1="691" x2="574" y2="691" />
-    <line x1="394" y1="691" x2="224" y2="691" />
-  </g>
-  <text x="315" y="675" text-anchor="middle" font-size="10" fill="#555">WebSocket</text>
+<rect x="10" y="605" width="960" height="145" rx="8" fill="#f5f5f5" stroke="#666666" />
+<text x="30" y="630" font-size="14" font-weight="bold" fill="#333333">REAL-TIME TRACKING</text>
+<g>
+<rect x="70" y="665" width="160" height="52" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+<text x="150" y="695" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Rider App</text>
+</g>
+<g>
+<rect x="400" y="665" width="180" height="52" rx="6" fill="#d5e8d4" stroke="#82b366" />
+<text x="490" y="695" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Tracking Service</text>
+</g>
+<g>
+<rect x="730" y="665" width="180" height="52" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+<text x="820" y="695" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Location Service</text>
+</g>
+<g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
+<line x1="724" y1="691" x2="574" y2="691" />
+<line x1="394" y1="691" x2="224" y2="691" />
+</g>
+<text x="315" y="675" text-anchor="middle" font-size="10" fill="#555">WebSocket</text>
 </svg>
 
 ### Componentes principais
@@ -370,69 +370,69 @@ Encontrar motorista não é simplesmente "o mais perto". O matching precisa otim
 ### O fluxo de matching
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 866" role="img" aria-label="Fluxo de matching de corrida" style="max-width:100%;height:auto;" font-family="Segoe UI, Arial, sans-serif">
-  <defs>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
-    </marker>
-  </defs>
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+<path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+</marker>
+</defs>
 
-  <g>
-    <rect x="270" y="20" width="360" height="58" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="450" y="53" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">1. Rider solicita corrida</text>
-  </g>
-  <g>
-    <rect x="270" y="118" width="360" height="74" rx="6" fill="#fff2cc" stroke="#d6b656" />
-    <text x="450" y="144" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">2. Query geospatial</text>
-    <text x="450" y="159" text-anchor="middle" font-size="10" fill="#555">candidatos num raio de 3-5 km</text>
-    <text x="450" y="174" text-anchor="middle" font-size="10" fill="#555">retorna ~20-50 drivers</text>
-  </g>
-  <g>
-    <rect x="270" y="232" width="360" height="82" rx="6" fill="#fff2cc" stroke="#d6b656" />
-    <text x="450" y="262" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">3. Calcula ETA de pickup</text>
-    <text x="450" y="277" text-anchor="middle" font-size="10" fill="#555">ETA Service para cada candidato</text>
-    <text x="450" y="292" text-anchor="middle" font-size="10" fill="#555">filtra ETA &gt; 15 min</text>
-  </g>
-  <g>
-    <rect x="270" y="354" width="360" height="74" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="450" y="380" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">4. Score</text>
-    <text x="450" y="395" text-anchor="middle" font-size="10" fill="#555">weighted_sum(eta_score, rating_score,</text>
-    <text x="450" y="410" text-anchor="middle" font-size="10" fill="#555">direction_score, ...)</text>
-  </g>
-  <g>
-    <rect x="270" y="468" width="370" height="58" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="455" y="501" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">5. Envia request pro driver com maior score</text>
-  </g>
+<g>
+<rect x="270" y="20" width="360" height="58" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+<text x="450" y="53" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">1. Rider solicita corrida</text>
+</g>
+<g>
+<rect x="270" y="118" width="360" height="74" rx="6" fill="#fff2cc" stroke="#d6b656" />
+<text x="450" y="144" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">2. Query geospatial</text>
+<text x="450" y="159" text-anchor="middle" font-size="10" fill="#555">candidatos num raio de 3-5 km</text>
+<text x="450" y="174" text-anchor="middle" font-size="10" fill="#555">retorna ~20-50 drivers</text>
+</g>
+<g>
+<rect x="270" y="232" width="360" height="82" rx="6" fill="#fff2cc" stroke="#d6b656" />
+<text x="450" y="262" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">3. Calcula ETA de pickup</text>
+<text x="450" y="277" text-anchor="middle" font-size="10" fill="#555">ETA Service para cada candidato</text>
+<text x="450" y="292" text-anchor="middle" font-size="10" fill="#555">filtra ETA &gt; 15 min</text>
+</g>
+<g>
+<rect x="270" y="354" width="360" height="74" rx="6" fill="#d5e8d4" stroke="#82b366" />
+<text x="450" y="380" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">4. Score</text>
+<text x="450" y="395" text-anchor="middle" font-size="10" fill="#555">weighted_sum(eta_score, rating_score,</text>
+<text x="450" y="410" text-anchor="middle" font-size="10" fill="#555">direction_score, ...)</text>
+</g>
+<g>
+<rect x="270" y="468" width="370" height="58" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+<text x="455" y="501" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">5. Envia request pro driver com maior score</text>
+</g>
 
-  <g>
-    <path d="M390 560 L510 560 L570 620 L510 680 L390 680 L330 620 Z" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
-    <text x="450" y="614" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">Driver aceita</text>
-    <text x="450" y="630" text-anchor="middle" font-size="10" fill="#555">10-15s pra responder</text>
-  </g>
-  <g>
-    <rect x="620" y="590" width="210" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="725" y="622" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Corrida atribuída ✓</text>
-  </g>
-  <g>
-    <rect x="240" y="740" width="420" height="96" rx="6" fill="#f8cecc" stroke="#b85450" />
-    <text x="450" y="769.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a1c1c">Driver recusa ou timeout</text>
-    <text x="450" y="784.5" text-anchor="middle" font-size="10" fill="#555">Próximo da lista: step 5 com o #2 do ranking</text>
-    <text x="450" y="799.5" text-anchor="middle" font-size="10" fill="#555">Repete até 3-5 tentativas</text>
-    <text x="450" y="814.5" text-anchor="middle" font-size="10" fill="#555">Se ninguém aceita: nenhum motorista disponível</text>
-  </g>
+<g>
+<path d="M390 560 L510 560 L570 620 L510 680 L390 680 L330 620 Z" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
+<text x="450" y="614" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">Driver aceita</text>
+<text x="450" y="630" text-anchor="middle" font-size="10" fill="#555">10-15s pra responder</text>
+</g>
+<g>
+<rect x="620" y="590" width="210" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
+<text x="725" y="622" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Corrida atribuída ✓</text>
+</g>
+<g>
+<rect x="240" y="740" width="420" height="96" rx="6" fill="#f8cecc" stroke="#b85450" />
+<text x="450" y="769.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a1c1c">Driver recusa ou timeout</text>
+<text x="450" y="784.5" text-anchor="middle" font-size="10" fill="#555">Próximo da lista: step 5 com o #2 do ranking</text>
+<text x="450" y="799.5" text-anchor="middle" font-size="10" fill="#555">Repete até 3-5 tentativas</text>
+<text x="450" y="814.5" text-anchor="middle" font-size="10" fill="#555">Se ninguém aceita: nenhum motorista disponível</text>
+</g>
 
-  <g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
-    <line x1="450" y1="84" x2="450" y2="124" />
-    <line x1="450" y1="198" x2="450" y2="238" />
-    <line x1="450" y1="320" x2="450" y2="360" />
-    <line x1="452" y1="434" x2="453.9" y2="474" />
-    <line x1="525.2" y1="528.5" x2="668" y2="592.5" />
-    <line x1="570" y1="610" x2="620" y2="618" />
-    <line x1="674.6" y1="649.2" x2="522.5" y2="743.2" />
-    <path d="M 450 734 V 633 H 455 V 532" />
-  </g>
+<g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
+<line x1="450" y1="84" x2="450" y2="124" />
+<line x1="450" y1="198" x2="450" y2="238" />
+<line x1="450" y1="320" x2="450" y2="360" />
+<line x1="452" y1="434" x2="453.9" y2="474" />
+<line x1="525.2" y1="528.5" x2="668" y2="592.5" />
+<line x1="570" y1="610" x2="620" y2="618" />
+<line x1="674.6" y1="649.2" x2="522.5" y2="743.2" />
+<path d="M 450 734 V 633 H 455 V 532" />
+</g>
 
-  <text x="585" y="602" font-size="10" font-weight="bold" fill="#555">SIM</text>
-  <text x="465" y="716" font-size="10" font-weight="bold" fill="#555">NÃO</text>
+<text x="585" y="602" font-size="10" font-weight="bold" fill="#555">SIM</text>
+<text x="465" y="716" font-size="10" font-weight="bold" fill="#555">NÃO</text>
 </svg>
 
 ### Batch matching vs Sequential matching
@@ -482,37 +482,37 @@ ETA (Estimated Time of Arrival) parece simples mas é surpreendentemente complex
 ### Componentes do ETA
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 935 360" role="img" aria-label="Componentes internos do ETA Service" style="max-width:100%;height:auto;" font-family="Segoe UI, Arial, sans-serif">
-  <defs>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
-    </marker>
-  </defs>
-  <rect x="10" y="10" width="895" height="320" rx="8" fill="#f5f5f5" stroke="#666666" />
-  <text x="30" y="35" font-size="14" font-weight="bold" fill="#333333">ETA Service</text>
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+<path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+</marker>
+</defs>
+<rect x="10" y="10" width="895" height="320" rx="8" fill="#f5f5f5" stroke="#666666" />
+<text x="30" y="35" font-size="14" font-weight="bold" fill="#333333">ETA Service</text>
 
-  <g>
-    <rect x="30" y="65" width="250" height="235" rx="8" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="155" y="156.5" font-size="12" font-weight="bold" fill="#1a3a5c" text-anchor="middle">1. Route calculation</text>
-    <text x="155" y="171.5" font-size="10" fill="#555" text-anchor="middle">graph algorithm</text>
-    <text x="155" y="186.5" font-size="10" fill="#555" text-anchor="middle">• Road network como grafo</text>
-    <text x="155" y="201.5" font-size="10" fill="#555" text-anchor="middle">• nós = interseções</text>
-    <text x="155" y="216.5" font-size="10" fill="#555" text-anchor="middle">• Dijkstra/A* pra shortest path</text>
-  </g>
-  <g>
-    <rect x="325" y="65" width="270" height="235" rx="8" fill="#fff2cc" stroke="#d6b656" />
-    <text x="460" y="164" font-size="12" font-weight="bold" fill="#7c6200" text-anchor="middle">2. Segment speed estimation</text>
-    <text x="460" y="179" font-size="10" fill="#555" text-anchor="middle">• Dados históricos por trecho por hora</text>
-    <text x="460" y="194" font-size="10" fill="#555" text-anchor="middle">• Dados real-time de motoristas ativos</text>
-    <text x="460" y="209" font-size="10" fill="#555" text-anchor="middle">• Machine learning pra predição</text>
-  </g>
-  <g>
-    <rect x="625" y="65" width="250" height="235" rx="8" fill="#d5e8d4" stroke="#82b366" />
-    <text x="750" y="156.5" font-size="12" font-weight="bold" fill="#1b5e20" text-anchor="middle">3. Aggregation</text>
-    <text x="750" y="171.5" font-size="10" fill="#555" text-anchor="middle">• Soma o tempo de cada segmento</text>
-    <text x="750" y="186.5" font-size="10" fill="#555" text-anchor="middle">• Adiciona overhead de semáforos</text>
-    <text x="750" y="201.5" font-size="10" fill="#555" text-anchor="middle">• Adiciona overhead de conversões</text>
-    <text x="750" y="216.5" font-size="10" fill="#555" text-anchor="middle">• Retorna ETA + confidence interval</text>
-  </g>
+<g>
+<rect x="30" y="65" width="250" height="235" rx="8" fill="#dae8fc" stroke="#6c8ebf" />
+<text x="155" y="156.5" font-size="12" font-weight="bold" fill="#1a3a5c" text-anchor="middle">1. Route calculation</text>
+<text x="155" y="171.5" font-size="10" fill="#555" text-anchor="middle">graph algorithm</text>
+<text x="155" y="186.5" font-size="10" fill="#555" text-anchor="middle">• Road network como grafo</text>
+<text x="155" y="201.5" font-size="10" fill="#555" text-anchor="middle">• nós = interseções</text>
+<text x="155" y="216.5" font-size="10" fill="#555" text-anchor="middle">• Dijkstra/A* pra shortest path</text>
+</g>
+<g>
+<rect x="325" y="65" width="270" height="235" rx="8" fill="#fff2cc" stroke="#d6b656" />
+<text x="460" y="164" font-size="12" font-weight="bold" fill="#7c6200" text-anchor="middle">2. Segment speed estimation</text>
+<text x="460" y="179" font-size="10" fill="#555" text-anchor="middle">• Dados históricos por trecho por hora</text>
+<text x="460" y="194" font-size="10" fill="#555" text-anchor="middle">• Dados real-time de motoristas ativos</text>
+<text x="460" y="209" font-size="10" fill="#555" text-anchor="middle">• Machine learning pra predição</text>
+</g>
+<g>
+<rect x="625" y="65" width="250" height="235" rx="8" fill="#d5e8d4" stroke="#82b366" />
+<text x="750" y="156.5" font-size="12" font-weight="bold" fill="#1b5e20" text-anchor="middle">3. Aggregation</text>
+<text x="750" y="171.5" font-size="10" fill="#555" text-anchor="middle">• Soma o tempo de cada segmento</text>
+<text x="750" y="186.5" font-size="10" fill="#555" text-anchor="middle">• Adiciona overhead de semáforos</text>
+<text x="750" y="201.5" font-size="10" fill="#555" text-anchor="middle">• Adiciona overhead de conversões</text>
+<text x="750" y="216.5" font-size="10" fill="#555" text-anchor="middle">• Retorna ETA + confidence interval</text>
+</g>
 </svg>
 
 ### Road network como grafo
@@ -568,75 +568,75 @@ Pro matching (que precisa de ETA pra 20-50 candidatos), o cache evita recalcular
 500.000 updates por segundo. Não pode passar por um API server tradicional: precisa de um pipeline de streaming.
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 502" role="img" aria-label="Pipeline de ingestão de localização dos motoristas" style="max-width:100%;height:auto;" font-family="Segoe UI, Arial, sans-serif">
-  <defs>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
-    </marker>
-  </defs>
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+<path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+</marker>
+</defs>
 
-  <g>
-    <rect x="390" y="20" width="200" height="52" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="490" y="35" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Driver App</text>
-    <text x="490" y="50" text-anchor="middle" font-size="10" fill="#555">cada 4s</text>
-  </g>
-  <g>
-    <rect x="390" y="112" width="200" height="52" rx="6" fill="#fff2cc" stroke="#d6b656" />
-    <text x="490" y="142" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Load Balancer</text>
-  </g>
-  <g>
-    <rect x="330" y="204" width="320" height="70" rx="8" fill="#d5e8d4" stroke="#82b366" />
-    <text x="490" y="235.5" text-anchor="middle" font-size="14" font-weight="bold" fill="#1b5e20">Location Gateway</text>
-    <text x="490" y="250.5" text-anchor="middle" font-size="10" fill="#555">stateless, alto throughput</text>
-  </g>
+<g>
+<rect x="390" y="20" width="200" height="52" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+<text x="490" y="35" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Driver App</text>
+<text x="490" y="50" text-anchor="middle" font-size="10" fill="#555">cada 4s</text>
+</g>
+<g>
+<rect x="390" y="112" width="200" height="52" rx="6" fill="#fff2cc" stroke="#d6b656" />
+<text x="490" y="142" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Load Balancer</text>
+</g>
+<g>
+<rect x="330" y="204" width="320" height="70" rx="8" fill="#d5e8d4" stroke="#82b366" />
+<text x="490" y="235.5" text-anchor="middle" font-size="14" font-weight="bold" fill="#1b5e20">Location Gateway</text>
+<text x="490" y="250.5" text-anchor="middle" font-size="10" fill="#555">stateless, alto throughput</text>
+</g>
 
-  <g>
-    <rect x="40" y="290" width="240" height="62" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="160" y="310" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Geospatial Index</text>
-    <text x="160" y="325" text-anchor="middle" font-size="10" fill="#555">in-memory, real-time</text>
-    <text x="160" y="340" text-anchor="middle" font-size="10" fill="#555">move driver de cell A pra cell B</text>
-  </g>
-  <g>
-    <rect x="375" y="290" width="230" height="62" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="490" y="317.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Kafka topic</text>
-    <text x="490" y="332.5" text-anchor="middle" font-size="10" fill="#555">driver-locations</text>
-  </g>
-  <g>
-    <rect x="710" y="290" width="230" height="62" rx="6" fill="#fff2cc" stroke="#d6b656" />
-    <text x="825" y="310" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Redis</text>
-    <text x="825" y="325" text-anchor="middle" font-size="10" fill="#555">last_known_location:{driver_id}</text>
-    <text x="825" y="340" text-anchor="middle" font-size="10" fill="#555">pra queries pontuais</text>
-  </g>
+<g>
+<rect x="40" y="290" width="240" height="62" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+<text x="160" y="310" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Geospatial Index</text>
+<text x="160" y="325" text-anchor="middle" font-size="10" fill="#555">in-memory, real-time</text>
+<text x="160" y="340" text-anchor="middle" font-size="10" fill="#555">move driver de cell A pra cell B</text>
+</g>
+<g>
+<rect x="375" y="290" width="230" height="62" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+<text x="490" y="317.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Kafka topic</text>
+<text x="490" y="332.5" text-anchor="middle" font-size="10" fill="#555">driver-locations</text>
+</g>
+<g>
+<rect x="710" y="290" width="230" height="62" rx="6" fill="#fff2cc" stroke="#d6b656" />
+<text x="825" y="310" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Redis</text>
+<text x="825" y="325" text-anchor="middle" font-size="10" fill="#555">last_known_location:{driver_id}</text>
+<text x="825" y="340" text-anchor="middle" font-size="10" fill="#555">pra queries pontuais</text>
+</g>
 
-  <g>
-    <rect x="60" y="392" width="240" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="180" y="409" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Consumer</text>
-    <text x="180" y="424" text-anchor="middle" font-size="10" fill="#555">Location History DB</text>
-    <text x="180" y="439" text-anchor="middle" font-size="10" fill="#555">write-optimized</text>
-  </g>
-  <g>
-    <rect x="370" y="392" width="240" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="490" y="416.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Consumer</text>
-    <text x="490" y="431.5" text-anchor="middle" font-size="10" fill="#555">ETA Speed Aggregator</text>
-  </g>
-  <g>
-    <rect x="680" y="392" width="240" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="800" y="409" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Consumer</text>
-    <text x="800" y="424" text-anchor="middle" font-size="10" fill="#555">Tracking fanout</text>
-    <text x="800" y="439" text-anchor="middle" font-size="10" fill="#555">riders observando</text>
-  </g>
+<g>
+<rect x="60" y="392" width="240" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
+<text x="180" y="409" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Consumer</text>
+<text x="180" y="424" text-anchor="middle" font-size="10" fill="#555">Location History DB</text>
+<text x="180" y="439" text-anchor="middle" font-size="10" fill="#555">write-optimized</text>
+</g>
+<g>
+<rect x="370" y="392" width="240" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
+<text x="490" y="416.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Consumer</text>
+<text x="490" y="431.5" text-anchor="middle" font-size="10" fill="#555">ETA Speed Aggregator</text>
+</g>
+<g>
+<rect x="680" y="392" width="240" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
+<text x="800" y="409" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Consumer</text>
+<text x="800" y="424" text-anchor="middle" font-size="10" fill="#555">Tracking fanout</text>
+<text x="800" y="439" text-anchor="middle" font-size="10" fill="#555">riders observando</text>
+</g>
 
-  <g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
-    <line x1="490" y1="78" x2="490" y2="118" />
-    <line x1="490" y1="170" x2="490" y2="210" />
-    <line x1="380" y1="274" x2="245" y2="290" />
-    <line x1="490" y1="274" x2="490" y2="290" />
-    <line x1="600" y1="274" x2="735" y2="290" />
-    <line x1="420" y1="352" x2="250" y2="392" />
-    <line x1="490" y1="352" x2="490" y2="392" />
-    <line x1="560" y1="352" x2="730" y2="392" />
-  </g>
+<g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
+<line x1="490" y1="78" x2="490" y2="118" />
+<line x1="490" y1="170" x2="490" y2="210" />
+<line x1="380" y1="274" x2="245" y2="290" />
+<line x1="490" y1="274" x2="490" y2="290" />
+<line x1="600" y1="274" x2="735" y2="290" />
+<line x1="420" y1="352" x2="250" y2="392" />
+<line x1="490" y1="352" x2="490" y2="392" />
+<line x1="560" y1="352" x2="730" y2="392" />
+</g>
 
-  <text x="490" y="65" font-size="10" fill="#555" text-anchor="middle">UDP ou HTTP/2 com batching</text>
+<text x="490" y="65" font-size="10" fill="#555" text-anchor="middle">UDP ou HTTP/2 com batching</text>
 </svg>
 
 ### Por que Kafka no meio?

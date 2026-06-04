@@ -139,69 +139,69 @@ az acr repository show-tags \
 ## CI/CD pra modelos: o pipeline de promoção
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 320" role="img" aria-labelledby="mlops-pipeline-title mlops-pipeline-desc">
-  <title id="mlops-pipeline-title">Pipeline de promoção de modelos</title>
-  <desc id="mlops-pipeline-desc">Diagrama com os stages DEV, STAGING e PRODUCTION, mostrando responsabilidades e infraestrutura de cada etapa.</desc>
-  <defs>
-    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666666" />
-    </marker>
-  </defs>
-  <style>
-    .title { font-family:"Segoe UI", Arial, sans-serif; font-size:14px; font-weight:bold; fill:#222; }
-    .label { font-family:"Segoe UI", Arial, sans-serif; font-size:12px; font-weight:bold; fill:#222; }
-    .desc { font-family:"Segoe UI", Arial, sans-serif; font-size:10px; fill:#555; }
-    .primary { fill:#dae8fc; stroke:#6c8ebf; stroke-width:1.5; }
-    .success { fill:#d5e8d4; stroke:#82b366; stroke-width:1.5; }
-    .warning { fill:#fff2cc; stroke:#d6b656; stroke-width:1.5; }
-    .neutral { fill:#f5f5f5; stroke:#666666; stroke-width:1.5; }
-    .arrow { stroke:#666666; stroke-width:1.5; fill:none; marker-end:url(#arrow); }
-    .link { stroke:#666666; stroke-width:1.5; fill:none; }
-  </style>
+<title id="mlops-pipeline-title">Pipeline de promoção de modelos</title>
+<desc id="mlops-pipeline-desc">Diagrama com os stages DEV, STAGING e PRODUCTION, mostrando responsabilidades e infraestrutura de cada etapa.</desc>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M 0 0 L 10 5 L 0 10 z" fill="#666666" />
+</marker>
+</defs>
+<style>
+.title { font-family:"Segoe UI", Arial, sans-serif; font-size:14px; font-weight:bold; fill:#222; }
+.label { font-family:"Segoe UI", Arial, sans-serif; font-size:12px; font-weight:bold; fill:#222; }
+.desc { font-family:"Segoe UI", Arial, sans-serif; font-size:10px; fill:#555; }
+.primary { fill:#dae8fc; stroke:#6c8ebf; stroke-width:1.5; }
+.success { fill:#d5e8d4; stroke:#82b366; stroke-width:1.5; }
+.warning { fill:#fff2cc; stroke:#d6b656; stroke-width:1.5; }
+.neutral { fill:#f5f5f5; stroke:#666666; stroke-width:1.5; }
+.arrow { stroke:#666666; stroke-width:1.5; fill:none; marker-end:url(#arrow); }
+.link { stroke:#666666; stroke-width:1.5; fill:none; }
+</style>
 
-  <g>
-    <rect class="primary" x="40" y="30" width="240" height="118" rx="8" />
-    <text class="title" x="160" y="70.5" text-anchor="middle">DEV</text>
-    <text class="label" x="160" y="85.5" text-anchor="middle">Train</text>
-    <text class="label" x="160" y="100.5" text-anchor="middle">Track</text>
-    <text class="label" x="160" y="115.5" text-anchor="middle">Version</text>
-    <line class="link" x1="160" y1="154" x2="160" y2="196" />
-    <rect class="neutral" x="40" y="190" width="240" height="98" rx="6" />
-    <text class="label" x="160" y="220.5" text-anchor="middle">Infra</text>
-    <text class="desc" x="160" y="235.5" text-anchor="middle">GPU Compute</text>
-    <text class="desc" x="160" y="250.5" text-anchor="middle">Blob Storage</text>
-    <text class="desc" x="160" y="265.5" text-anchor="middle">Experiment Tracking</text>
-  </g>
+<g>
+<rect class="primary" x="40" y="30" width="240" height="118" rx="8" />
+<text class="title" x="160" y="70.5" text-anchor="middle">DEV</text>
+<text class="label" x="160" y="85.5" text-anchor="middle">Train</text>
+<text class="label" x="160" y="100.5" text-anchor="middle">Track</text>
+<text class="label" x="160" y="115.5" text-anchor="middle">Version</text>
+<line class="link" x1="160" y1="154" x2="160" y2="196" />
+<rect class="neutral" x="40" y="190" width="240" height="98" rx="6" />
+<text class="label" x="160" y="220.5" text-anchor="middle">Infra</text>
+<text class="desc" x="160" y="235.5" text-anchor="middle">GPU Compute</text>
+<text class="desc" x="160" y="250.5" text-anchor="middle">Blob Storage</text>
+<text class="desc" x="160" y="265.5" text-anchor="middle">Experiment Tracking</text>
+</g>
 
-  <g>
-    <path class="arrow" d="M 286 89 L 376 89" />
-    <rect class="warning" x="370" y="30" width="240" height="118" rx="8" />
-    <text class="title" x="490" y="70.5" text-anchor="middle">STAGING</text>
-    <text class="label" x="490" y="85.5" text-anchor="middle">Validate</text>
-    <text class="label" x="490" y="100.5" text-anchor="middle">Benchmark</text>
-    <text class="label" x="490" y="115.5" text-anchor="middle">Security</text>
-    <line class="link" x1="490" y1="154" x2="490" y2="196" />
-    <rect class="neutral" x="370" y="190" width="240" height="98" rx="6" />
-    <text class="label" x="490" y="220.5" text-anchor="middle">Infra</text>
-    <text class="desc" x="490" y="235.5" text-anchor="middle">Inference Infra</text>
-    <text class="desc" x="490" y="250.5" text-anchor="middle">Test Data Access</text>
-    <text class="desc" x="490" y="265.5" text-anchor="middle">Isolated Network</text>
-  </g>
+<g>
+<path class="arrow" d="M 286 89 L 376 89" />
+<rect class="warning" x="370" y="30" width="240" height="118" rx="8" />
+<text class="title" x="490" y="70.5" text-anchor="middle">STAGING</text>
+<text class="label" x="490" y="85.5" text-anchor="middle">Validate</text>
+<text class="label" x="490" y="100.5" text-anchor="middle">Benchmark</text>
+<text class="label" x="490" y="115.5" text-anchor="middle">Security</text>
+<line class="link" x1="490" y1="154" x2="490" y2="196" />
+<rect class="neutral" x="370" y="190" width="240" height="98" rx="6" />
+<text class="label" x="490" y="220.5" text-anchor="middle">Infra</text>
+<text class="desc" x="490" y="235.5" text-anchor="middle">Inference Infra</text>
+<text class="desc" x="490" y="250.5" text-anchor="middle">Test Data Access</text>
+<text class="desc" x="490" y="265.5" text-anchor="middle">Isolated Network</text>
+</g>
 
-  <g>
-    <path class="arrow" d="M 616 89 L 706 89" />
-    <rect class="success" x="700" y="30" width="240" height="118" rx="8" />
-    <text class="title" x="820" y="70.5" text-anchor="middle">PRODUCTION</text>
-    <text class="label" x="820" y="85.5" text-anchor="middle">Serve</text>
-    <text class="label" x="820" y="100.5" text-anchor="middle">Monitor</text>
-    <text class="label" x="820" y="115.5" text-anchor="middle">Auto-rollback</text>
-    <line class="link" x1="820" y1="154" x2="820" y2="196" />
-    <rect class="neutral" x="700" y="190" width="240" height="98" rx="6" />
-    <text class="label" x="820" y="213" text-anchor="middle">Infra</text>
-    <text class="desc" x="820" y="228" text-anchor="middle">Load Balanced</text>
-    <text class="desc" x="820" y="243" text-anchor="middle">Multi-replica</text>
-    <text class="desc" x="820" y="258" text-anchor="middle">Prod Network</text>
-    <text class="desc" x="820" y="273" text-anchor="middle">SLA-bound</text>
-  </g>
+<g>
+<path class="arrow" d="M 616 89 L 706 89" />
+<rect class="success" x="700" y="30" width="240" height="118" rx="8" />
+<text class="title" x="820" y="70.5" text-anchor="middle">PRODUCTION</text>
+<text class="label" x="820" y="85.5" text-anchor="middle">Serve</text>
+<text class="label" x="820" y="100.5" text-anchor="middle">Monitor</text>
+<text class="label" x="820" y="115.5" text-anchor="middle">Auto-rollback</text>
+<line class="link" x1="820" y1="154" x2="820" y2="196" />
+<rect class="neutral" x="700" y="190" width="240" height="98" rx="6" />
+<text class="label" x="820" y="213" text-anchor="middle">Infra</text>
+<text class="desc" x="820" y="228" text-anchor="middle">Load Balanced</text>
+<text class="desc" x="820" y="243" text-anchor="middle">Multi-replica</text>
+<text class="desc" x="820" y="258" text-anchor="middle">Prod Network</text>
+<text class="desc" x="820" y="273" text-anchor="middle">SLA-bound</text>
+</g>
 </svg>
 
 ### Validation gates entre stages

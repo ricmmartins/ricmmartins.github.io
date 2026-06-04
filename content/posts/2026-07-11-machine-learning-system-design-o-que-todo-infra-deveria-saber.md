@@ -41,114 +41,114 @@ Esse é o momento em que system design de ML vira seu problema. E a boa notícia
 Um sistema de ML em produção tem mais componentes do que parece:
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 990 564" width="100%" style="max-width:920px;height:auto" role="img" aria-labelledby="ml-system-architecture-title ml-system-architecture-desc">
-  <title id="ml-system-architecture-title">Arquitetura de referência de um sistema de ML em produção</title>
-  <desc id="ml-system-architecture-desc">Diagrama com três camadas: offline training, online serving e monitoring.</desc>
-  <defs>
-    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666666" />
-    </marker>
-  </defs>
-  <g id="offline-training">
-    <rect x="20" y="20" width="922" height="170" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
-    <text x="460" y="45" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a3a5c">OFFLINE (Training)</text>
-    <g id="offline-flow" fill="none" stroke="#666666" stroke-width="2" marker-end="url(#arrow)">
-      <line x1="178" y1="109" x2="218" y2="109" />
-      <line x1="378" y1="109" x2="408" y2="109" />
-      <line x1="548" y1="109" x2="578" y2="109" />
-      <line x1="698" y1="109" x2="728" y2="109" />
-    </g>
-    <g id="offline-nodes" font-family="Segoe UI, Arial, sans-serif">
-      <g>
-        <rect x="40" y="70" width="132" height="78" rx="6" fill="#f5f5f5" stroke="#666666" />
-        <text x="106" y="98" text-anchor="middle" font-size="12" font-weight="bold" fill="#333333">Data Sources</text>
-        <text x="106" y="113" text-anchor="middle" font-size="10" fill="#555">(SQL, Blob,</text>
-        <text x="106" y="128" text-anchor="middle" font-size="10" fill="#555">Events)</text>
-      </g>
-      <g>
-        <rect x="212" y="70" width="160" height="78" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-        <text x="292" y="105.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">ETL/Feature Eng</text>
-        <text x="292" y="120.5" text-anchor="middle" font-size="10" fill="#555">(Spark, DBX)</text>
-      </g>
-      <g>
-        <rect x="402" y="70" width="140" height="78" rx="6" fill="#fff2cc" stroke="#d6b656" />
-        <text x="472" y="105.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Feature Store</text>
-        <text x="472" y="120.5" text-anchor="middle" font-size="10" fill="#555">(Redis, SQL)</text>
-      </g>
-      <g>
-        <rect x="572" y="70" width="120" height="78" rx="6" fill="#d5e8d4" stroke="#82b366" />
-        <text x="632" y="105.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Training</text>
-        <text x="632" y="120.5" text-anchor="middle" font-size="10" fill="#555">(GPU)</text>
-      </g>
-      <g>
-        <rect x="722" y="70" width="190" height="78" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-        <text x="817" y="105.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Model Registry</text>
-        <text x="817" y="120.5" text-anchor="middle" font-size="10" fill="#555">Versionamento e artifacts</text>
-      </g>
-    </g>
-  </g>
-  <g id="online-serving">
-    <rect x="20" y="210" width="940" height="324" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
-    <text x="460" y="235" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a3a5c">ONLINE (Serving)</text>
-    <g id="online-flow" fill="none" stroke="#666666" stroke-width="2" marker-end="url(#arrow)">
-      <line x1="146" y1="308" x2="178" y2="308" />
-      <line x1="308" y1="308" x2="338" y2="308" />
-      <line x1="488" y1="308" x2="518" y2="308" />
-      <line x1="648" y1="308" x2="678" y2="308" />
-      <line x1="796" y1="308" x2="826" y2="308" />
-    </g>
-    <g id="online-nodes" font-family="Segoe UI, Arial, sans-serif">
-      <g>
-        <rect x="40" y="268" width="100" height="80" rx="6" fill="#f5f5f5" stroke="#666666" />
-        <text x="90" y="297" text-anchor="middle" font-size="12" font-weight="bold" fill="#333333">Request</text>
-        <text x="90" y="312" text-anchor="middle" font-size="10" fill="#555">Entrada</text>
-        <text x="90" y="327" text-anchor="middle" font-size="10" fill="#555">HTTP/API</text>
-      </g>
-      <g>
-        <rect x="172" y="268" width="130" height="80" rx="6" fill="#fff2cc" stroke="#d6b656" />
-        <text x="237" y="297" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Feature</text>
-        <text x="237" y="312" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Retrieval</text>
-        <text x="237" y="327" text-anchor="middle" font-size="10" fill="#555">(feature store)</text>
-      </g>
-      <g>
-        <rect x="332" y="268" width="150" height="80" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-        <text x="407" y="297" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Pre-processing</text>
-        <text x="407" y="312" text-anchor="middle" font-size="10" fill="#555">(normalize,</text>
-        <text x="407" y="327" text-anchor="middle" font-size="10" fill="#555">encode)</text>
-      </g>
-      <g>
-        <rect x="512" y="268" width="130" height="80" rx="6" fill="#d5e8d4" stroke="#82b366" />
-        <text x="577" y="304.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Model Server</text>
-        <text x="577" y="319.5" text-anchor="middle" font-size="10" fill="#555">(GPU/CPU)</text>
-      </g>
-      <g>
-        <rect x="672" y="268" width="118" height="80" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-        <text x="731" y="297" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Post-proc</text>
-        <text x="731" y="312" text-anchor="middle" font-size="10" fill="#555">(threshold,</text>
-        <text x="731" y="327" text-anchor="middle" font-size="10" fill="#555">format)</text>
-      </g>
-      <g>
-        <rect x="820" y="268" width="110" height="80" rx="6" fill="#f5f5f5" stroke="#666666" />
-        <text x="875" y="304.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#333333">Response</text>
-        <text x="875" y="319.5" text-anchor="middle" font-size="10" fill="#555">Saída final</text>
-      </g>
-    </g>
-  </g>
-  <g id="monitoring">
-    <rect x="20" y="420" width="926" height="114" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2" />
-    <text x="460" y="445" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333333">MONITORING</text>
-    <g font-family="Segoe UI, Arial, sans-serif">
-      <rect x="48" y="470" width="146" height="34" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-      <rect x="224" y="470" width="146" height="34" rx="6" fill="#d5e8d4" stroke="#82b366" />
-      <rect x="400" y="470" width="146" height="34" rx="6" fill="#fff2cc" stroke="#d6b656" />
-      <rect x="576" y="470" width="150" height="34" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-      <rect x="756" y="470" width="160" height="34" rx="6" fill="#f8cecc" stroke="#b85450" />
-      <text x="121" y="491" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Latência</text>
-      <text x="297" y="491" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Throughput</text>
-      <text x="473" y="491" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Data Drift</text>
-      <text x="651" y="491" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Model Accuracy</text>
-      <text x="836" y="491" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a1c1c">A/B Results</text>
-    </g>
-  </g>
+<title id="ml-system-architecture-title">Arquitetura de referência de um sistema de ML em produção</title>
+<desc id="ml-system-architecture-desc">Diagrama com três camadas: offline training, online serving e monitoring.</desc>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+<path d="M 0 0 L 10 5 L 0 10 z" fill="#666666" />
+</marker>
+</defs>
+<g id="offline-training">
+<rect x="20" y="20" width="922" height="170" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
+<text x="460" y="45" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a3a5c">OFFLINE (Training)</text>
+<g id="offline-flow" fill="none" stroke="#666666" stroke-width="2" marker-end="url(#arrow)">
+<line x1="178" y1="109" x2="218" y2="109" />
+<line x1="378" y1="109" x2="408" y2="109" />
+<line x1="548" y1="109" x2="578" y2="109" />
+<line x1="698" y1="109" x2="728" y2="109" />
+</g>
+<g id="offline-nodes" font-family="Segoe UI, Arial, sans-serif">
+<g>
+<rect x="40" y="70" width="132" height="78" rx="6" fill="#f5f5f5" stroke="#666666" />
+<text x="106" y="98" text-anchor="middle" font-size="12" font-weight="bold" fill="#333333">Data Sources</text>
+<text x="106" y="113" text-anchor="middle" font-size="10" fill="#555">(SQL, Blob,</text>
+<text x="106" y="128" text-anchor="middle" font-size="10" fill="#555">Events)</text>
+</g>
+<g>
+<rect x="212" y="70" width="160" height="78" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+<text x="292" y="105.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">ETL/Feature Eng</text>
+<text x="292" y="120.5" text-anchor="middle" font-size="10" fill="#555">(Spark, DBX)</text>
+</g>
+<g>
+<rect x="402" y="70" width="140" height="78" rx="6" fill="#fff2cc" stroke="#d6b656" />
+<text x="472" y="105.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Feature Store</text>
+<text x="472" y="120.5" text-anchor="middle" font-size="10" fill="#555">(Redis, SQL)</text>
+</g>
+<g>
+<rect x="572" y="70" width="120" height="78" rx="6" fill="#d5e8d4" stroke="#82b366" />
+<text x="632" y="105.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Training</text>
+<text x="632" y="120.5" text-anchor="middle" font-size="10" fill="#555">(GPU)</text>
+</g>
+<g>
+<rect x="722" y="70" width="190" height="78" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+<text x="817" y="105.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Model Registry</text>
+<text x="817" y="120.5" text-anchor="middle" font-size="10" fill="#555">Versionamento e artifacts</text>
+</g>
+</g>
+</g>
+<g id="online-serving">
+<rect x="20" y="210" width="940" height="324" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
+<text x="460" y="235" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a3a5c">ONLINE (Serving)</text>
+<g id="online-flow" fill="none" stroke="#666666" stroke-width="2" marker-end="url(#arrow)">
+<line x1="146" y1="308" x2="178" y2="308" />
+<line x1="308" y1="308" x2="338" y2="308" />
+<line x1="488" y1="308" x2="518" y2="308" />
+<line x1="648" y1="308" x2="678" y2="308" />
+<line x1="796" y1="308" x2="826" y2="308" />
+</g>
+<g id="online-nodes" font-family="Segoe UI, Arial, sans-serif">
+<g>
+<rect x="40" y="268" width="100" height="80" rx="6" fill="#f5f5f5" stroke="#666666" />
+<text x="90" y="297" text-anchor="middle" font-size="12" font-weight="bold" fill="#333333">Request</text>
+<text x="90" y="312" text-anchor="middle" font-size="10" fill="#555">Entrada</text>
+<text x="90" y="327" text-anchor="middle" font-size="10" fill="#555">HTTP/API</text>
+</g>
+<g>
+<rect x="172" y="268" width="130" height="80" rx="6" fill="#fff2cc" stroke="#d6b656" />
+<text x="237" y="297" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Feature</text>
+<text x="237" y="312" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Retrieval</text>
+<text x="237" y="327" text-anchor="middle" font-size="10" fill="#555">(feature store)</text>
+</g>
+<g>
+<rect x="332" y="268" width="150" height="80" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+<text x="407" y="297" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Pre-processing</text>
+<text x="407" y="312" text-anchor="middle" font-size="10" fill="#555">(normalize,</text>
+<text x="407" y="327" text-anchor="middle" font-size="10" fill="#555">encode)</text>
+</g>
+<g>
+<rect x="512" y="268" width="130" height="80" rx="6" fill="#d5e8d4" stroke="#82b366" />
+<text x="577" y="304.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Model Server</text>
+<text x="577" y="319.5" text-anchor="middle" font-size="10" fill="#555">(GPU/CPU)</text>
+</g>
+<g>
+<rect x="672" y="268" width="118" height="80" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+<text x="731" y="297" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Post-proc</text>
+<text x="731" y="312" text-anchor="middle" font-size="10" fill="#555">(threshold,</text>
+<text x="731" y="327" text-anchor="middle" font-size="10" fill="#555">format)</text>
+</g>
+<g>
+<rect x="820" y="268" width="110" height="80" rx="6" fill="#f5f5f5" stroke="#666666" />
+<text x="875" y="304.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#333333">Response</text>
+<text x="875" y="319.5" text-anchor="middle" font-size="10" fill="#555">Saída final</text>
+</g>
+</g>
+</g>
+<g id="monitoring">
+<rect x="20" y="420" width="926" height="114" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2" />
+<text x="460" y="445" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333333">MONITORING</text>
+<g font-family="Segoe UI, Arial, sans-serif">
+<rect x="48" y="470" width="146" height="34" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+<rect x="224" y="470" width="146" height="34" rx="6" fill="#d5e8d4" stroke="#82b366" />
+<rect x="400" y="470" width="146" height="34" rx="6" fill="#fff2cc" stroke="#d6b656" />
+<rect x="576" y="470" width="150" height="34" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+<rect x="756" y="470" width="160" height="34" rx="6" fill="#f8cecc" stroke="#b85450" />
+<text x="121" y="491" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Latência</text>
+<text x="297" y="491" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Throughput</text>
+<text x="473" y="491" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Data Drift</text>
+<text x="651" y="491" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Model Accuracy</text>
+<text x="836" y="491" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a1c1c">A/B Results</text>
+</g>
+</g>
 </svg>
 
 ## Feature store: o cache que ML ama

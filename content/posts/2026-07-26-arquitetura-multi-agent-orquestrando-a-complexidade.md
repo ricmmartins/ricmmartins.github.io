@@ -52,28 +52,28 @@ Regra prática: se você precisa de mais de 15 tools num único agent, provavelm
 Um agent central coordena. Workers executam e reportam.
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 274" style="width:100%;height:auto" role="img" aria-label="Topologia orchestrator-workers com um orquestrador e três agentes especialistas">
-  <defs>
-    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666666" />
-    </marker>
-  </defs>
-  <g font-family="Segoe UI, Arial, sans-serif">
-    <rect x="290" y="20" width="200" height="72" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
-    <text x="390" y="52.5" text-anchor="middle" font-size="14" font-weight="bold" fill="#111111">Orchestrator</text>
-    <text x="390" y="67.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">(coordena)</text>
-    <path d="M 340 92 V 128 H 110 V 164" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-    <path d="M 390 92 V 164" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-    <path d="M 440 92 V 128 H 670 V 164" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-    <rect x="40" y="170" width="140" height="74" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
-    <text x="110" y="203.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">DB Agent</text>
-    <text x="110" y="218.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">5 tools</text>
-    <rect x="320" y="170" width="140" height="74" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
-    <text x="390" y="203.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Net Agent</text>
-    <text x="390" y="218.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">5 tools</text>
-    <rect x="600" y="170" width="140" height="74" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
-    <text x="670" y="203.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">K8s Agent</text>
-    <text x="670" y="218.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">5 tools</text>
-  </g>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+<path d="M 0 0 L 10 5 L 0 10 z" fill="#666666" />
+</marker>
+</defs>
+<g font-family="Segoe UI, Arial, sans-serif">
+<rect x="290" y="20" width="200" height="72" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
+<text x="390" y="52.5" text-anchor="middle" font-size="14" font-weight="bold" fill="#111111">Orchestrator</text>
+<text x="390" y="67.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">(coordena)</text>
+<path d="M 340 92 V 128 H 110 V 164" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+<path d="M 390 92 V 164" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+<path d="M 440 92 V 128 H 670 V 164" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+<rect x="40" y="170" width="140" height="74" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
+<text x="110" y="203.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">DB Agent</text>
+<text x="110" y="218.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">5 tools</text>
+<rect x="320" y="170" width="140" height="74" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
+<text x="390" y="203.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Net Agent</text>
+<text x="390" y="218.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">5 tools</text>
+<rect x="600" y="170" width="140" height="74" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
+<text x="670" y="203.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">K8s Agent</text>
+<text x="670" y="218.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">5 tools</text>
+</g>
 </svg>
 
 ```python
@@ -149,28 +149,28 @@ Retorne JSON válido no formato:
 Agents em sequência. Output de um é input do próximo.
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 165" style="width:100%;height:auto" role="img" aria-label="Pipeline de quatro estágios: collector, analyzer, planner e executor">
-  <defs>
-    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666666" />
-    </marker>
-  </defs>
-  <g font-family="Segoe UI, Arial, sans-serif">
-    <rect x="30" y="40" width="160" height="84" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
-    <text x="110" y="78.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Collector</text>
-    <text x="110" y="93.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">(gather)</text>
-    <line x1="196" y1="82" x2="246" y2="82" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-    <rect x="240" y="40" width="160" height="84" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
-    <text x="320" y="78.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Analyzer</text>
-    <text x="320" y="93.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">(diagnose)</text>
-    <line x1="406" y1="82" x2="456" y2="82" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-    <rect x="450" y="40" width="160" height="84" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
-    <text x="530" y="78.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Planner</text>
-    <text x="530" y="93.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">(decide)</text>
-    <line x1="616" y1="82" x2="666" y2="82" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-    <rect x="660" y="40" width="160" height="84" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
-    <text x="740" y="78.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Executor</text>
-    <text x="740" y="93.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">(act)</text>
-  </g>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+<path d="M 0 0 L 10 5 L 0 10 z" fill="#666666" />
+</marker>
+</defs>
+<g font-family="Segoe UI, Arial, sans-serif">
+<rect x="30" y="40" width="160" height="84" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
+<text x="110" y="78.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Collector</text>
+<text x="110" y="93.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">(gather)</text>
+<line x1="196" y1="82" x2="246" y2="82" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+<rect x="240" y="40" width="160" height="84" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
+<text x="320" y="78.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Analyzer</text>
+<text x="320" y="93.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">(diagnose)</text>
+<line x1="406" y1="82" x2="456" y2="82" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+<rect x="450" y="40" width="160" height="84" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
+<text x="530" y="78.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Planner</text>
+<text x="530" y="93.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">(decide)</text>
+<line x1="616" y1="82" x2="666" y2="82" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+<rect x="660" y="40" width="160" height="84" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
+<text x="740" y="78.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Executor</text>
+<text x="740" y="93.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">(act)</text>
+</g>
 </svg>
 
 ```python

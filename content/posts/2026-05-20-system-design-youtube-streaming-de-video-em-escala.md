@@ -118,106 +118,106 @@ Vamos separar os dois.
 ### Arquitetura geral
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 429" role="img" aria-label="Write path de upload de vídeo" style="max-width:100%;height:auto;" font-family="Segoe UI, Arial, sans-serif">
-  <defs>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
-    </marker>
-  </defs>
-  <rect x="10" y="10" width="900" height="389" rx="8" fill="#f5f5f5" stroke="#666666" />
-  <text x="30" y="35" font-size="14" font-weight="bold" fill="#333333">WRITE PATH (Upload)</text>
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+<path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+</marker>
+</defs>
+<rect x="10" y="10" width="900" height="389" rx="8" fill="#f5f5f5" stroke="#666666" />
+<text x="30" y="35" font-size="14" font-weight="bold" fill="#333333">WRITE PATH (Upload)</text>
 
-  <g>
-    <rect x="40" y="140" width="110" height="52" rx="6" fill="#f5f5f5" stroke="#666666" />
-    <text x="95" y="170" text-anchor="middle" font-size="12" font-weight="bold" fill="#333333">Client</text>
-  </g>
-  <g>
-    <rect x="190" y="140" width="140" height="52" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="260" y="170" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">API Server</text>
-  </g>
-  <g>
-    <rect x="370" y="140" width="160" height="52" rx="6" fill="#fff2cc" stroke="#d6b656" />
-    <text x="450" y="162.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Blob Storage</text>
-    <text x="450" y="177.5" text-anchor="middle" font-size="10" fill="#555">raw</text>
-  </g>
-  <g>
-    <rect x="580" y="140" width="150" height="52" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="655" y="162.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Message Queue</text>
-    <text x="655" y="177.5" text-anchor="middle" font-size="10" fill="#555">Kafka</text>
-  </g>
-  <g>
-    <rect x="190" y="245" width="140" height="52" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="260" y="275" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Metadata DB</text>
-  </g>
-  <g>
-    <rect x="580" y="245" width="150" height="52" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="655" y="267.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Transcoding</text>
-    <text x="655" y="282.5" text-anchor="middle" font-size="10" fill="#555">Workers</text>
-  </g>
-  <g>
-    <rect x="370" y="245" width="160" height="52" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="450" y="267.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Blob Storage</text>
-    <text x="450" y="282.5" text-anchor="middle" font-size="10" fill="#555">processed</text>
-  </g>
-  <g>
-    <rect x="370" y="337" width="160" height="32" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="450" y="357" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">CDN</text>
-  </g>
+<g>
+<rect x="40" y="140" width="110" height="52" rx="6" fill="#f5f5f5" stroke="#666666" />
+<text x="95" y="170" text-anchor="middle" font-size="12" font-weight="bold" fill="#333333">Client</text>
+</g>
+<g>
+<rect x="190" y="140" width="140" height="52" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+<text x="260" y="170" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">API Server</text>
+</g>
+<g>
+<rect x="370" y="140" width="160" height="52" rx="6" fill="#fff2cc" stroke="#d6b656" />
+<text x="450" y="162.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Blob Storage</text>
+<text x="450" y="177.5" text-anchor="middle" font-size="10" fill="#555">raw</text>
+</g>
+<g>
+<rect x="580" y="140" width="150" height="52" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+<text x="655" y="162.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Message Queue</text>
+<text x="655" y="177.5" text-anchor="middle" font-size="10" fill="#555">Kafka</text>
+</g>
+<g>
+<rect x="190" y="245" width="140" height="52" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+<text x="260" y="275" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Metadata DB</text>
+</g>
+<g>
+<rect x="580" y="245" width="150" height="52" rx="6" fill="#d5e8d4" stroke="#82b366" />
+<text x="655" y="267.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Transcoding</text>
+<text x="655" y="282.5" text-anchor="middle" font-size="10" fill="#555">Workers</text>
+</g>
+<g>
+<rect x="370" y="245" width="160" height="52" rx="6" fill="#d5e8d4" stroke="#82b366" />
+<text x="450" y="267.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Blob Storage</text>
+<text x="450" y="282.5" text-anchor="middle" font-size="10" fill="#555">processed</text>
+</g>
+<g>
+<rect x="370" y="337" width="160" height="32" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+<text x="450" y="357" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">CDN</text>
+</g>
 
-  <g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
-    <line x1="156" y1="166" x2="196" y2="166" />
-    <line x1="336" y1="166" x2="376" y2="166" />
-    <line x1="536" y1="166" x2="586" y2="166" />
-    <line x1="260" y1="198" x2="260" y2="251" />
-    <line x1="655" y1="198" x2="655" y2="251" />
-    <line x1="574" y1="271" x2="524" y2="271" />
-    <line x1="450" y1="303" x2="450" y2="343" />
-  </g>
+<g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
+<line x1="156" y1="166" x2="196" y2="166" />
+<line x1="336" y1="166" x2="376" y2="166" />
+<line x1="536" y1="166" x2="586" y2="166" />
+<line x1="260" y1="198" x2="260" y2="251" />
+<line x1="655" y1="198" x2="655" y2="251" />
+<line x1="574" y1="271" x2="524" y2="271" />
+<line x1="450" y1="303" x2="450" y2="343" />
+</g>
 </svg>
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 259" role="img" aria-label="Read path de streaming de vídeo" style="max-width:100%;height:auto;" font-family="Segoe UI, Arial, sans-serif">
-  <defs>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
-    </marker>
-  </defs>
-  <rect x="10" y="10" width="900" height="219" rx="8" fill="#f5f5f5" stroke="#666666" />
-  <text x="30" y="35" font-size="14" font-weight="bold" fill="#333333">READ PATH (Streaming)</text>
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+<path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+</marker>
+</defs>
+<rect x="10" y="10" width="900" height="219" rx="8" fill="#f5f5f5" stroke="#666666" />
+<text x="30" y="35" font-size="14" font-weight="bold" fill="#333333">READ PATH (Streaming)</text>
 
-  <g>
-    <rect x="40" y="105" width="110" height="52" rx="6" fill="#f5f5f5" stroke="#666666" />
-    <text x="95" y="135" text-anchor="middle" font-size="12" font-weight="bold" fill="#333333">Client</text>
-  </g>
-  <g>
-    <rect x="220" y="55" width="160" height="52" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="300" y="77.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">CDN</text>
-    <text x="300" y="92.5" text-anchor="middle" font-size="10" fill="#555">cache hit?</text>
-  </g>
-  <g>
-    <rect x="450" y="55" width="180" height="52" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="540" y="77.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Blob Storage</text>
-    <text x="540" y="92.5" text-anchor="middle" font-size="10" fill="#555">processed</text>
-  </g>
-  <g>
-    <rect x="220" y="147" width="160" height="52" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="300" y="177" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">API Server</text>
-  </g>
-  <g>
-    <rect x="450" y="147" width="150" height="52" rx="6" fill="#fff2cc" stroke="#d6b656" />
-    <text x="525" y="169.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Cache</text>
-    <text x="525" y="184.5" text-anchor="middle" font-size="10" fill="#555">Redis</text>
-  </g>
-  <g>
-    <rect x="670" y="145" width="150" height="52" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="745" y="175" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Metadata DB</text>
-  </g>
+<g>
+<rect x="40" y="105" width="110" height="52" rx="6" fill="#f5f5f5" stroke="#666666" />
+<text x="95" y="135" text-anchor="middle" font-size="12" font-weight="bold" fill="#333333">Client</text>
+</g>
+<g>
+<rect x="220" y="55" width="160" height="52" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+<text x="300" y="77.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">CDN</text>
+<text x="300" y="92.5" text-anchor="middle" font-size="10" fill="#555">cache hit?</text>
+</g>
+<g>
+<rect x="450" y="55" width="180" height="52" rx="6" fill="#d5e8d4" stroke="#82b366" />
+<text x="540" y="77.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Blob Storage</text>
+<text x="540" y="92.5" text-anchor="middle" font-size="10" fill="#555">processed</text>
+</g>
+<g>
+<rect x="220" y="147" width="160" height="52" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
+<text x="300" y="177" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">API Server</text>
+</g>
+<g>
+<rect x="450" y="147" width="150" height="52" rx="6" fill="#fff2cc" stroke="#d6b656" />
+<text x="525" y="169.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Cache</text>
+<text x="525" y="184.5" text-anchor="middle" font-size="10" fill="#555">Redis</text>
+</g>
+<g>
+<rect x="670" y="145" width="150" height="52" rx="6" fill="#e1d5e7" stroke="#9673a6" />
+<text x="745" y="175" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Metadata DB</text>
+</g>
 
-  <g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
-    <line x1="155.8" y1="116.2" x2="225.8" y2="99.1" />
-    <line x1="386" y1="81" x2="456" y2="81" />
-    <line x1="155.9" y1="143.5" x2="225.9" y2="157.8" />
-    <line x1="386" y1="173" x2="456" y2="173" />
-    <line x1="606" y1="172.3" x2="676" y2="171.6" />
-  </g>
+<g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
+<line x1="155.8" y1="116.2" x2="225.8" y2="99.1" />
+<line x1="386" y1="81" x2="456" y2="81" />
+<line x1="155.9" y1="143.5" x2="225.9" y2="157.8" />
+<line x1="386" y1="173" x2="456" y2="173" />
+<line x1="606" y1="172.3" x2="676" y2="171.6" />
+</g>
 </svg>
 
 ### Por que separar write e read?
@@ -343,106 +343,106 @@ Um vídeo de 1 hora em 6 resoluções com segmentos de 4 segundos = **900 segmen
 ### Arquitetura do pipeline
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 720" width="100%" style="max-width:860px;height:auto;" role="img" aria-label="Pipeline de transcodificação de vídeo" font-family="Segoe UI, Arial, sans-serif">
-  <defs>
-    <marker id="arr-pipe" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L9,3 z" fill="#555" />
-    </marker>
-  </defs>
+<defs>
+<marker id="arr-pipe" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+<path d="M0,0 L0,6 L9,3 z" fill="#555" />
+</marker>
+</defs>
 
-  <!-- Upload finalizado -->
-  <rect x="310" y="20" width="240" height="50" rx="6" fill="#ffffff" stroke="#999" stroke-width="1.5"/>
-  <text x="430" y="50" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Upload finalizado</text>
+<!-- Upload finalizado -->
+<rect x="310" y="20" width="240" height="50" rx="6" fill="#ffffff" stroke="#999" stroke-width="1.5"/>
+<text x="430" y="50" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Upload finalizado</text>
 
-  <!-- Arrow -->
-  <line x1="430" y1="70" x2="430" y2="98" stroke="#555" stroke-width="2" marker-end="url(#arr-pipe)"/>
+<!-- Arrow -->
+<line x1="430" y1="70" x2="430" y2="98" stroke="#555" stroke-width="2" marker-end="url(#arr-pipe)"/>
 
-  <!-- Message Queue -->
-  <rect x="310" y="100" width="240" height="55" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
-  <text x="430" y="125" text-anchor="middle" font-size="13" font-weight="bold" fill="#4a235a">Message Queue</text>
-  <text x="430" y="143" text-anchor="middle" font-size="10" fill="#555">Kafka</text>
+<!-- Message Queue -->
+<rect x="310" y="100" width="240" height="55" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+<text x="430" y="125" text-anchor="middle" font-size="13" font-weight="bold" fill="#4a235a">Message Queue</text>
+<text x="430" y="143" text-anchor="middle" font-size="10" fill="#555">Kafka</text>
 
-  <!-- Arrow -->
-  <line x1="430" y1="155" x2="430" y2="183" stroke="#555" stroke-width="2" marker-end="url(#arr-pipe)"/>
+<!-- Arrow -->
+<line x1="430" y1="155" x2="430" y2="183" stroke="#555" stroke-width="2" marker-end="url(#arr-pipe)"/>
 
-  <!-- Transcoding Orchestrator -->
-  <rect x="270" y="185" width="320" height="60" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
-  <text x="430" y="213" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a3a5c">Transcoding Orchestrator</text>
-  <text x="430" y="231" text-anchor="middle" font-size="10" fill="#555">divide em jobs</text>
+<!-- Transcoding Orchestrator -->
+<rect x="270" y="185" width="320" height="60" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+<text x="430" y="213" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a3a5c">Transcoding Orchestrator</text>
+<text x="430" y="231" text-anchor="middle" font-size="10" fill="#555">divide em jobs</text>
 
-  <!-- Arrows from Orchestrator to Workers (fan-out, distributed exit points) -->
-  <line x1="310" y1="245" x2="130" y2="278" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
-  <line x1="370" y1="245" x2="310" y2="278" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
-  <line x1="430" y1="245" x2="430" y2="278" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
-  <line x1="490" y1="245" x2="550" y2="278" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
-  <line x1="370" y1="245" x2="190" y2="368" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
-  <line x1="430" y1="245" x2="370" y2="368" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
-  <line x1="530" y1="245" x2="670" y2="278" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+<!-- Arrows from Orchestrator to Workers (fan-out, distributed exit points) -->
+<line x1="310" y1="245" x2="130" y2="278" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+<line x1="370" y1="245" x2="310" y2="278" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+<line x1="430" y1="245" x2="430" y2="278" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+<line x1="490" y1="245" x2="550" y2="278" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+<line x1="370" y1="245" x2="190" y2="368" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+<line x1="430" y1="245" x2="370" y2="368" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+<line x1="530" y1="245" x2="670" y2="278" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
 
-  <!-- Worker Row 1: 240p, 360p, 480p, 720p -->
-  <rect x="70" y="280" width="120" height="55" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
-  <text x="130" y="304" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Worker 1</text>
-  <text x="130" y="321" text-anchor="middle" font-size="10" fill="#555">gerar 240p</text>
+<!-- Worker Row 1: 240p, 360p, 480p, 720p -->
+<rect x="70" y="280" width="120" height="55" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+<text x="130" y="304" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Worker 1</text>
+<text x="130" y="321" text-anchor="middle" font-size="10" fill="#555">gerar 240p</text>
 
-  <rect x="250" y="280" width="120" height="55" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
-  <text x="310" y="304" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Worker 2</text>
-  <text x="310" y="321" text-anchor="middle" font-size="10" fill="#555">gerar 360p</text>
+<rect x="250" y="280" width="120" height="55" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+<text x="310" y="304" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Worker 2</text>
+<text x="310" y="321" text-anchor="middle" font-size="10" fill="#555">gerar 360p</text>
 
-  <rect x="430" y="280" width="120" height="55" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
-  <text x="490" y="304" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Worker 3</text>
-  <text x="490" y="321" text-anchor="middle" font-size="10" fill="#555">gerar 480p</text>
+<rect x="430" y="280" width="120" height="55" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+<text x="490" y="304" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Worker 3</text>
+<text x="490" y="321" text-anchor="middle" font-size="10" fill="#555">gerar 480p</text>
 
-  <rect x="610" y="280" width="120" height="55" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
-  <text x="670" y="304" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Worker 4</text>
-  <text x="670" y="321" text-anchor="middle" font-size="10" fill="#555">gerar 720p</text>
+<rect x="610" y="280" width="120" height="55" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+<text x="670" y="304" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Worker 4</text>
+<text x="670" y="321" text-anchor="middle" font-size="10" fill="#555">gerar 720p</text>
 
-  <!-- Worker Row 2: 1080p, 4K, thumbnail -->
-  <rect x="130" y="370" width="120" height="55" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
-  <text x="190" y="394" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Worker 5</text>
-  <text x="190" y="411" text-anchor="middle" font-size="10" fill="#555">gerar 1080p</text>
+<!-- Worker Row 2: 1080p, 4K, thumbnail -->
+<rect x="130" y="370" width="120" height="55" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+<text x="190" y="394" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Worker 5</text>
+<text x="190" y="411" text-anchor="middle" font-size="10" fill="#555">gerar 1080p</text>
 
-  <rect x="310" y="370" width="120" height="55" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
-  <text x="370" y="394" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Worker 6</text>
-  <text x="370" y="411" text-anchor="middle" font-size="10" fill="#555">gerar 4K</text>
+<rect x="310" y="370" width="120" height="55" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+<text x="370" y="394" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Worker 6</text>
+<text x="370" y="411" text-anchor="middle" font-size="10" fill="#555">gerar 4K</text>
 
-  <rect x="550" y="370" width="180" height="55" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
-  <text x="640" y="394" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Worker 7</text>
-  <text x="640" y="411" text-anchor="middle" font-size="10" fill="#555">thumbnail + preview</text>
+<rect x="550" y="370" width="180" height="55" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+<text x="640" y="394" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Worker 7</text>
+<text x="640" y="411" text-anchor="middle" font-size="10" fill="#555">thumbnail + preview</text>
 
-  <!-- Arrows from Workers to Blob Storage (converging) -->
-  <line x1="130" y1="335" x2="380" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
-  <line x1="310" y1="335" x2="400" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
-  <line x1="490" y1="335" x2="440" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
-  <line x1="670" y1="335" x2="490" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
-  <line x1="190" y1="425" x2="390" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
-  <line x1="370" y1="425" x2="420" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
-  <line x1="640" y1="425" x2="480" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+<!-- Arrows from Workers to Blob Storage (converging) -->
+<line x1="130" y1="335" x2="380" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+<line x1="310" y1="335" x2="400" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+<line x1="490" y1="335" x2="440" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+<line x1="670" y1="335" x2="490" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+<line x1="190" y1="425" x2="390" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+<line x1="370" y1="425" x2="420" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+<line x1="640" y1="425" x2="480" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
 
-  <!-- Blob Storage -->
-  <rect x="310" y="462" width="240" height="55" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
-  <text x="430" y="487" text-anchor="middle" font-size="13" font-weight="bold" fill="#1b5e20">Blob Storage</text>
-  <text x="430" y="505" text-anchor="middle" font-size="10" fill="#555">processed</text>
+<!-- Blob Storage -->
+<rect x="310" y="462" width="240" height="55" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+<text x="430" y="487" text-anchor="middle" font-size="13" font-weight="bold" fill="#1b5e20">Blob Storage</text>
+<text x="430" y="505" text-anchor="middle" font-size="10" fill="#555">processed</text>
 
-  <!-- Arrow -->
-  <line x1="430" y1="517" x2="430" y2="538" stroke="#555" stroke-width="2" marker-end="url(#arr-pipe)"/>
+<!-- Arrow -->
+<line x1="430" y1="517" x2="430" y2="538" stroke="#555" stroke-width="2" marker-end="url(#arr-pipe)"/>
 
-  <!-- Manifest -->
-  <rect x="310" y="540" width="240" height="45" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
-  <text x="430" y="568" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Gerar manifest file (.m3u8)</text>
+<!-- Manifest -->
+<rect x="310" y="540" width="240" height="45" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+<text x="430" y="568" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Gerar manifest file (.m3u8)</text>
 
-  <!-- Arrow -->
-  <line x1="430" y1="585" x2="430" y2="608" stroke="#555" stroke-width="2" marker-end="url(#arr-pipe)"/>
+<!-- Arrow -->
+<line x1="430" y1="585" x2="430" y2="608" stroke="#555" stroke-width="2" marker-end="url(#arr-pipe)"/>
 
-  <!-- Metadata DB -->
-  <rect x="280" y="610" width="300" height="50" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
-  <text x="430" y="633" text-anchor="middle" font-size="13" font-weight="bold" fill="#1a3a5c">Atualizar Metadata DB</text>
-  <text x="430" y="650" text-anchor="middle" font-size="10" fill="#555">status: ready</text>
+<!-- Metadata DB -->
+<rect x="280" y="610" width="300" height="50" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+<text x="430" y="633" text-anchor="middle" font-size="13" font-weight="bold" fill="#1a3a5c">Atualizar Metadata DB</text>
+<text x="430" y="650" text-anchor="middle" font-size="10" fill="#555">status: ready</text>
 
-  <!-- Arrow -->
-  <line x1="430" y1="660" x2="430" y2="683" stroke="#555" stroke-width="2" marker-end="url(#arr-pipe)"/>
+<!-- Arrow -->
+<line x1="430" y1="660" x2="430" y2="683" stroke="#555" stroke-width="2" marker-end="url(#arr-pipe)"/>
 
-  <!-- Push CDN -->
-  <rect x="310" y="685" width="240" height="50" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
-  <text x="430" y="715" text-anchor="middle" font-size="13" font-weight="bold" fill="#4a235a">Push pra CDN</text>
+<!-- Push CDN -->
+<rect x="310" y="685" width="240" height="50" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+<text x="430" y="715" text-anchor="middle" font-size="13" font-weight="bold" fill="#4a235a">Push pra CDN</text>
 </svg>
 
 ### Por que usar Message Queue aqui?
@@ -471,50 +471,50 @@ Com CDN: o segmento está cacheado num edge server em São Paulo. Latência: <10
 ### Como CDN funciona pra vídeo
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" width="100%" style="max-width:860px;height:auto;" role="img" aria-label="Fluxo de cache hit no streaming" font-family="Segoe UI, Arial, sans-serif">
-  <defs>
-    <marker id="arr-cdn" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L9,3 z" fill="#555" />
-    </marker>
-  </defs>
+<defs>
+<marker id="arr-cdn" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+<path d="M0,0 L0,6 L9,3 z" fill="#555" />
+</marker>
+</defs>
 
-  <!-- Player -->
-  <rect x="40" y="140" width="220" height="60" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
-  <text x="150" y="166" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Player pede segmento 47</text>
-  <text x="150" y="184" text-anchor="middle" font-size="10" fill="#555">vídeo em 720p</text>
+<!-- Player -->
+<rect x="40" y="140" width="220" height="60" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+<text x="150" y="166" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Player pede segmento 47</text>
+<text x="150" y="184" text-anchor="middle" font-size="10" fill="#555">vídeo em 720p</text>
 
-  <!-- Arrow Player → CDN -->
-  <line x1="260" y1="170" x2="328" y2="170" stroke="#555" stroke-width="2" marker-end="url(#arr-cdn)"/>
+<!-- Arrow Player → CDN -->
+<line x1="260" y1="170" x2="328" y2="170" stroke="#555" stroke-width="2" marker-end="url(#arr-cdn)"/>
 
-  <!-- CDN Edge (hexagon) -->
-  <polygon points="330,170 370,120 490,120 530,170 490,220 370,220" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
-  <text x="430" y="165" text-anchor="middle" font-size="13" font-weight="bold" fill="#7c6200">CDN Edge</text>
-  <text x="430" y="183" text-anchor="middle" font-size="10" fill="#555">São Paulo: tenho no cache?</text>
+<!-- CDN Edge (hexagon) -->
+<polygon points="330,170 370,120 490,120 530,170 490,220 370,220" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+<text x="430" y="165" text-anchor="middle" font-size="13" font-weight="bold" fill="#7c6200">CDN Edge</text>
+<text x="430" y="183" text-anchor="middle" font-size="10" fill="#555">São Paulo: tenho no cache?</text>
 
-  <!-- Arrow CDN → Cache Hit (up-right) -->
-  <line x1="490" y1="135" x2="600" y2="80" stroke="#2e7d32" stroke-width="2" marker-end="url(#arr-cdn)"/>
-  <text x="540" y="95" font-size="11" font-weight="bold" fill="#2e7d32">SIM</text>
+<!-- Arrow CDN → Cache Hit (up-right) -->
+<line x1="490" y1="135" x2="600" y2="80" stroke="#2e7d32" stroke-width="2" marker-end="url(#arr-cdn)"/>
+<text x="540" y="95" font-size="11" font-weight="bold" fill="#2e7d32">SIM</text>
 
-  <!-- Cache Hit -->
-  <rect x="602" y="50" width="240" height="60" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
-  <text x="722" y="76" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Retorna imediatamente</text>
-  <text x="722" y="94" text-anchor="middle" font-size="10" fill="#555">cache hit</text>
+<!-- Cache Hit -->
+<rect x="602" y="50" width="240" height="60" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+<text x="722" y="76" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Retorna imediatamente</text>
+<text x="722" y="94" text-anchor="middle" font-size="10" fill="#555">cache hit</text>
 
-  <!-- Arrow CDN → Origin (down-right) -->
-  <line x1="490" y1="200" x2="600" y2="250" stroke="#c62828" stroke-width="2" marker-end="url(#arr-cdn)"/>
-  <text x="540" y="240" font-size="11" font-weight="bold" fill="#c62828">NÃO</text>
+<!-- Arrow CDN → Origin (down-right) -->
+<line x1="490" y1="200" x2="600" y2="250" stroke="#c62828" stroke-width="2" marker-end="url(#arr-cdn)"/>
+<text x="540" y="240" font-size="11" font-weight="bold" fill="#c62828">NÃO</text>
 
-  <!-- Busca no Origin -->
-  <rect x="602" y="225" width="240" height="60" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="2"/>
-  <text x="722" y="251" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a1c1c">Busca no Origin</text>
-  <text x="722" y="269" text-anchor="middle" font-size="10" fill="#555">blob storage</text>
+<!-- Busca no Origin -->
+<rect x="602" y="225" width="240" height="60" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="2"/>
+<text x="722" y="251" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a1c1c">Busca no Origin</text>
+<text x="722" y="269" text-anchor="middle" font-size="10" fill="#555">blob storage</text>
 
-  <!-- Arrow Origin → Retorna -->
-  <line x1="722" y1="285" x2="722" y2="313" stroke="#555" stroke-width="2" marker-end="url(#arr-cdn)"/>
+<!-- Arrow Origin → Retorna -->
+<line x1="722" y1="285" x2="722" y2="313" stroke="#555" stroke-width="2" marker-end="url(#arr-cdn)"/>
 
-  <!-- Retorna pro player -->
-  <rect x="602" y="315" width="240" height="55" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
-  <text x="722" y="339" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Retorna pro player</text>
-  <text x="722" y="357" text-anchor="middle" font-size="10" fill="#555">e cacheia localmente</text>
+<!-- Retorna pro player -->
+<rect x="602" y="315" width="240" height="55" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+<text x="722" y="339" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Retorna pro player</text>
+<text x="722" y="357" text-anchor="middle" font-size="10" fill="#555">e cacheia localmente</text>
 </svg>
 
 **Cache hit ratio** pra vídeo popular: >95%. A grande maioria dos views é de vídeos populares (distribuição power-law). Os 1% mais populares respondem por >80% do tráfego. Esses estão **sempre** no cache.

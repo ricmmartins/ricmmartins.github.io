@@ -45,22 +45,22 @@ A analogia clássica é treinar um cachorro. Você não explica em português pr
 RL funciona assim:
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 220" width="100%" style="max-width: 100%; height: auto;" role="img" aria-labelledby="rl-loop-title">
-  <title id="rl-loop-title">Diagrama do loop básico de reinforcement learning</title>
-  <defs>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
-    </marker>
-  </defs>
-  <g font-family="Segoe UI, Arial, sans-serif">
-    <rect x="70" y="70" width="150" height="70" rx="8" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="145" y="109" font-size="14" font-weight="bold" text-anchor="middle" fill="#1a3a5c">Agent</text>
-    <rect x="410" y="55" width="180" height="100" rx="8" fill="#d5e8d4" stroke="#82b366" />
-    <text x="500" y="109" font-size="14" font-weight="bold" text-anchor="middle" fill="#1b5e20">Environment</text>
-    <line x1="226" y1="105" x2="416" y2="105" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <text x="315" y="78" font-size="10" fill="#555" text-anchor="middle">ação</text>
-    <line x1="404" y1="105" x2="214" y2="105" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <text x="315" y="156" font-size="10" fill="#555" text-anchor="middle">reward + novo estado</text>
-  </g>
+<title id="rl-loop-title">Diagrama do loop básico de reinforcement learning</title>
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+<path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+</marker>
+</defs>
+<g font-family="Segoe UI, Arial, sans-serif">
+<rect x="70" y="70" width="150" height="70" rx="8" fill="#dae8fc" stroke="#6c8ebf" />
+<text x="145" y="109" font-size="14" font-weight="bold" text-anchor="middle" fill="#1a3a5c">Agent</text>
+<rect x="410" y="55" width="180" height="100" rx="8" fill="#d5e8d4" stroke="#82b366" />
+<text x="500" y="109" font-size="14" font-weight="bold" text-anchor="middle" fill="#1b5e20">Environment</text>
+<line x1="226" y1="105" x2="416" y2="105" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+<text x="315" y="78" font-size="10" fill="#555" text-anchor="middle">ação</text>
+<line x1="404" y1="105" x2="214" y2="105" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+<text x="315" y="156" font-size="10" fill="#555" text-anchor="middle">reward + novo estado</text>
+</g>
 </svg>
 
 O agent observa o estado do environment, toma uma ação, recebe um reward (número positivo ou negativo), observa o novo estado, e repete. Com milhares de iterações, a policy (estratégia) converge pro comportamento que maximiza reward.
@@ -106,35 +106,35 @@ O resultado é um modelo que aprende preferências humanas sem que ninguém prec
 ## RLHF na prática: o pipeline
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 350" width="100%" style="max-width: 100%; height: auto;" role="img" aria-labelledby="rlhf-title">
-  <title id="rlhf-title">Diagrama do pipeline clássico de RLHF</title>
-  <defs>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
-    </marker>
-  </defs>
-  <g font-family="Segoe UI, Arial, sans-serif">
-    <rect x="40" y="40" width="170" height="64" rx="8" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="125" y="68.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a3a5c">LLM base</text>
-    <text x="125" y="83.5" font-size="10" fill="#555" text-anchor="middle">(SFT)</text>
-    <rect x="600" y="40" width="190" height="64" rx="8" fill="#fff2cc" stroke="#d6b656" />
-    <text x="695" y="76" font-size="12" font-weight="bold" text-anchor="middle" fill="#7c6200">Comparações humanas</text>
-    <rect x="595" y="145" width="200" height="58" rx="8" fill="#d5e8d4" stroke="#82b366" />
-    <text x="695" y="185.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#1b5e20">Reward Model</text>
-    <rect x="580" y="250" width="230" height="64" rx="8" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="695" y="286" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">PPO</text>
-    <text x="695" y="301" font-size="10" fill="#555" text-anchor="middle">(algoritmo)</text>
-    <rect x="40" y="250" width="180" height="64" rx="8" fill="#d5e8d4" stroke="#82b366" />
-    <text x="130" y="278.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#1b5e20">LLM final</text>
-    <text x="130" y="293.5" font-size="10" fill="#555" text-anchor="middle">(aligned)</text>
-    <line x1="216" y1="72" x2="606" y2="72" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <text x="405" y="58" font-size="10" fill="#555" text-anchor="middle">gera respostas</text>
-    <line x1="695" y1="110" x2="695" y2="151" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <text x="695" y="170.5" font-size="10" fill="#555" text-anchor="middle">treina</text>
-    <line x1="695" y1="209" x2="695" y2="256" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <text x="695" y="271" font-size="10" fill="#555" text-anchor="middle">score</text>
-    <line x1="574" y1="282" x2="214" y2="282" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
-    <text x="400" y="268" font-size="10" fill="#555" text-anchor="middle">otimiza policy</text>
-  </g>
+<title id="rlhf-title">Diagrama do pipeline clássico de RLHF</title>
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+<path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+</marker>
+</defs>
+<g font-family="Segoe UI, Arial, sans-serif">
+<rect x="40" y="40" width="170" height="64" rx="8" fill="#dae8fc" stroke="#6c8ebf" />
+<text x="125" y="68.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#1a3a5c">LLM base</text>
+<text x="125" y="83.5" font-size="10" fill="#555" text-anchor="middle">(SFT)</text>
+<rect x="600" y="40" width="190" height="64" rx="8" fill="#fff2cc" stroke="#d6b656" />
+<text x="695" y="76" font-size="12" font-weight="bold" text-anchor="middle" fill="#7c6200">Comparações humanas</text>
+<rect x="595" y="145" width="200" height="58" rx="8" fill="#d5e8d4" stroke="#82b366" />
+<text x="695" y="185.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#1b5e20">Reward Model</text>
+<rect x="580" y="250" width="230" height="64" rx="8" fill="#e1d5e7" stroke="#9673a6" />
+<text x="695" y="286" font-size="12" font-weight="bold" text-anchor="middle" fill="#4a235a">PPO</text>
+<text x="695" y="301" font-size="10" fill="#555" text-anchor="middle">(algoritmo)</text>
+<rect x="40" y="250" width="180" height="64" rx="8" fill="#d5e8d4" stroke="#82b366" />
+<text x="130" y="278.5" font-size="12" font-weight="bold" text-anchor="middle" fill="#1b5e20">LLM final</text>
+<text x="130" y="293.5" font-size="10" fill="#555" text-anchor="middle">(aligned)</text>
+<line x1="216" y1="72" x2="606" y2="72" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+<text x="405" y="58" font-size="10" fill="#555" text-anchor="middle">gera respostas</text>
+<line x1="695" y1="110" x2="695" y2="151" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+<text x="695" y="170.5" font-size="10" fill="#555" text-anchor="middle">treina</text>
+<line x1="695" y1="209" x2="695" y2="256" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+<text x="695" y="271" font-size="10" fill="#555" text-anchor="middle">score</text>
+<line x1="574" y1="282" x2="214" y2="282" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+<text x="400" y="268" font-size="10" fill="#555" text-anchor="middle">otimiza policy</text>
+</g>
 </svg>
 
 **PPO (Proximal Policy Optimization)** é o algoritmo de RL mais usado no pipeline clássico de RLHF. Ele atualiza a policy do modelo de forma conservadora, pra não divergir demais do comportamento base. Pensa num deployment blue-green onde a nova versão não pode ser radicalmente diferente da anterior.

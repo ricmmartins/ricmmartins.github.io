@@ -250,77 +250,77 @@ O decorator `@allowed` serve o mesmo propósito da `validation` do Terraform: pr
 ### Estrutura modular pra produção
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1175 430" role="img" aria-labelledby="infra-structure-title infra-structure-desc">
-  <title id="infra-structure-title">Estrutura modular pra produção</title>
-  <desc id="infra-structure-desc">Diagrama da pasta infra com o arquivo main.bicep, a pasta modules e a pasta parameters.</desc>
-  <defs>
-    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666666" />
-    </marker>
-  </defs>
-  <style>
-    .title { font-family:"Segoe UI", Arial, sans-serif; font-size:14px; font-weight:bold; fill:#222; }
-    .label { font-family:"Segoe UI", Arial, sans-serif; font-size:12px; font-weight:bold; fill:#222; }
-    .desc { font-family:"Segoe UI", Arial, sans-serif; font-size:10px; fill:#555; }
-    .primary { fill:#dae8fc; stroke:#6c8ebf; stroke-width:1.5; }
-    .success { fill:#d5e8d4; stroke:#82b366; stroke-width:1.5; }
-    .warning { fill:#fff2cc; stroke:#d6b656; stroke-width:1.5; }
-    .accent { fill:#e1d5e7; stroke:#9673a6; stroke-width:1.5; }
-    .neutral { fill:#f5f5f5; stroke:#666666; stroke-width:1.5; }
-    .line { stroke:#666666; stroke-width:1.5; fill:none; marker-end:url(#arrow); }
-  </style>
+<title id="infra-structure-title">Estrutura modular pra produção</title>
+<desc id="infra-structure-desc">Diagrama da pasta infra com o arquivo main.bicep, a pasta modules e a pasta parameters.</desc>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M 0 0 L 10 5 L 0 10 z" fill="#666666" />
+</marker>
+</defs>
+<style>
+.title { font-family:"Segoe UI", Arial, sans-serif; font-size:14px; font-weight:bold; fill:#222; }
+.label { font-family:"Segoe UI", Arial, sans-serif; font-size:12px; font-weight:bold; fill:#222; }
+.desc { font-family:"Segoe UI", Arial, sans-serif; font-size:10px; fill:#555; }
+.primary { fill:#dae8fc; stroke:#6c8ebf; stroke-width:1.5; }
+.success { fill:#d5e8d4; stroke:#82b366; stroke-width:1.5; }
+.warning { fill:#fff2cc; stroke:#d6b656; stroke-width:1.5; }
+.accent { fill:#e1d5e7; stroke:#9673a6; stroke-width:1.5; }
+.neutral { fill:#f5f5f5; stroke:#666666; stroke-width:1.5; }
+.line { stroke:#666666; stroke-width:1.5; fill:none; marker-end:url(#arrow); }
+</style>
 
-  <g>
-    <rect class="primary" x="380" y="24" width="200" height="56" rx="8" />
-    <text class="title" x="480" y="56" text-anchor="middle">infra/</text>
-  </g>
+<g>
+<rect class="primary" x="380" y="24" width="200" height="56" rx="8" />
+<text class="title" x="480" y="56" text-anchor="middle">infra/</text>
+</g>
 
-  <g>
-    <path class="line" d="M 386.8 81.8 L 261.8 121.8" />
-    <rect class="neutral" x="40" y="120" width="230" height="72" rx="6" />
-    <text class="label" x="155" y="152.5" text-anchor="middle">main.bicep</text>
-    <text class="desc" x="155" y="167.5" text-anchor="middle">Orquestrador</text>
-  </g>
+<g>
+<path class="line" d="M 386.8 81.8 L 261.8 121.8" />
+<rect class="neutral" x="40" y="120" width="230" height="72" rx="6" />
+<text class="label" x="155" y="152.5" text-anchor="middle">main.bicep</text>
+<text class="desc" x="155" y="167.5" text-anchor="middle">Orquestrador</text>
+</g>
 
-  <g>
-    <path class="line" d="M 480 80 L 470 100" />
-    <rect class="accent" x="310" y="100" width="320" height="330" rx="8" />
-    <text class="title" x="330" y="126">modules/</text>
+<g>
+<path class="line" d="M 480 80 L 470 100" />
+<rect class="accent" x="310" y="100" width="320" height="330" rx="8" />
+<text class="title" x="330" y="126">modules/</text>
 
-    <rect class="neutral" x="335" y="145" width="270" height="38" rx="6" />
-    <text class="label" x="470" y="160.5" text-anchor="middle">network.bicep</text>
-    <text class="desc" x="470" y="175.5" text-anchor="middle">VNet, subnets, NSGs, private endpoints</text>
+<rect class="neutral" x="335" y="145" width="270" height="38" rx="6" />
+<text class="label" x="470" y="160.5" text-anchor="middle">network.bicep</text>
+<text class="desc" x="470" y="175.5" text-anchor="middle">VNet, subnets, NSGs, private endpoints</text>
 
-    <rect class="neutral" x="335" y="203" width="270" height="38" rx="6" />
-    <text class="label" x="470" y="218.5" text-anchor="middle">aks.bicep</text>
-    <text class="desc" x="470" y="233.5" text-anchor="middle">AKS cluster com GPU node pool</text>
+<rect class="neutral" x="335" y="203" width="270" height="38" rx="6" />
+<text class="label" x="470" y="218.5" text-anchor="middle">aks.bicep</text>
+<text class="desc" x="470" y="233.5" text-anchor="middle">AKS cluster com GPU node pool</text>
 
-    <rect class="neutral" x="335" y="261" width="270" height="38" rx="6" />
-    <text class="label" x="470" y="276.5" text-anchor="middle">storage.bicep</text>
-    <text class="desc" x="470" y="291.5" text-anchor="middle">Storage account pra modelos e dados</text>
+<rect class="neutral" x="335" y="261" width="270" height="38" rx="6" />
+<text class="label" x="470" y="276.5" text-anchor="middle">storage.bicep</text>
+<text class="desc" x="470" y="291.5" text-anchor="middle">Storage account pra modelos e dados</text>
 
-    <rect class="neutral" x="335" y="319" width="270" height="38" rx="6" />
-    <text class="label" x="470" y="334.5" text-anchor="middle">monitoring.bicep</text>
-    <text class="desc" x="470" y="349.5" text-anchor="middle">Log Analytics, alerts, dashboards</text>
+<rect class="neutral" x="335" y="319" width="270" height="38" rx="6" />
+<text class="label" x="470" y="334.5" text-anchor="middle">monitoring.bicep</text>
+<text class="desc" x="470" y="349.5" text-anchor="middle">Log Analytics, alerts, dashboards</text>
 
-    <rect class="neutral" x="335" y="377" width="270" height="38" rx="6" />
-    <text class="label" x="470" y="392.5" text-anchor="middle">keyvault.bicep</text>
-    <text class="desc" x="470" y="407.5" text-anchor="middle">Key Vault pra secrets</text>
-  </g>
+<rect class="neutral" x="335" y="377" width="270" height="38" rx="6" />
+<text class="label" x="470" y="392.5" text-anchor="middle">keyvault.bicep</text>
+<text class="desc" x="470" y="407.5" text-anchor="middle">Key Vault pra secrets</text>
+</g>
 
-  <g>
-    <path class="line" d="M 490 80 L 795 120" />
-    <rect class="warning" x="670" y="120" width="250" height="200" rx="8" />
-    <text class="title" x="690" y="146">parameters/</text>
+<g>
+<path class="line" d="M 490 80 L 795 120" />
+<rect class="warning" x="670" y="120" width="250" height="200" rx="8" />
+<text class="title" x="690" y="146">parameters/</text>
 
-    <rect class="success" x="690" y="165" width="210" height="34" rx="6" />
-    <text class="label" x="795" y="186" text-anchor="middle">dev.bicepparam</text>
+<rect class="success" x="690" y="165" width="210" height="34" rx="6" />
+<text class="label" x="795" y="186" text-anchor="middle">dev.bicepparam</text>
 
-    <rect class="success" x="690" y="219" width="210" height="34" rx="6" />
-    <text class="label" x="795" y="240" text-anchor="middle">staging.bicepparam</text>
+<rect class="success" x="690" y="219" width="210" height="34" rx="6" />
+<text class="label" x="795" y="240" text-anchor="middle">staging.bicepparam</text>
 
-    <rect class="success" x="690" y="273" width="210" height="34" rx="6" />
-    <text class="label" x="795" y="294" text-anchor="middle">prod.bicepparam</text>
-  </g>
+<rect class="success" x="690" y="273" width="210" height="34" rx="6" />
+<text class="label" x="795" y="294" text-anchor="middle">prod.bicepparam</text>
+</g>
 </svg>
 
 Um time novo sobe um ambiente completo e compliant criando um único arquivo de parâmetros.
