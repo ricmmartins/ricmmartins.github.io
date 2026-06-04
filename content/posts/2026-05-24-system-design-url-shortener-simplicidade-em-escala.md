@@ -2,7 +2,7 @@
 slug: "system-design-url-shortener-simplicidade-em-escala"
 aliases:
   - "/posts/system-design-url-shortener-simplicidade-em-escala/"
-title: "System design: URL Shortener - simplicidade em escala"
+title: "System design: URL Shortener, simplicidade em escala"
 description: "Como projetar um sistema que parece trivial mas esconde decisões profundas sobre hashing, colisão, read optimization, e analytics de bilhões de cliques em tempo real."
 date: 2026-05-30T10:00:00-04:00
 categories:

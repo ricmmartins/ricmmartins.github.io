@@ -2,7 +2,7 @@
 slug: "system-design-twitter-feed-de-noticias-em-escala"
 aliases:
   - "/posts/system-design-twitter-feed-de-noticias-em-escala/"
-title: "System design: Twitter/X - feed de notícias em escala"
+title: "System design: Twitter/X, feed de notícias em escala"
 description: "Como projetar um sistema que entrega timelines personalizadas pra centenas de milhões de usuários, com fan-out inteligente, trending topics em tempo real, e caching agressivo."
 date: 2026-05-28T10:00:00-04:00
 categories:

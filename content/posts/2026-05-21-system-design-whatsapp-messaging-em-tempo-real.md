@@ -2,7 +2,7 @@
 slug: "system-design-whatsapp-messaging-em-tempo-real"
 aliases:
   - "/posts/system-design-whatsapp-messaging-em-tempo-real/"
-title: "System design: WhatsApp - messaging em tempo real"
+title: "System design: WhatsApp, messaging em tempo real"
 description: "Como projetar um sistema de mensagens que entrega bilhões de mensagens por dia com latência de milissegundos. WebSockets, message queues, presença online, e criptografia end-to-end."
 date: 2026-05-24T10:00:00-04:00
 categories:

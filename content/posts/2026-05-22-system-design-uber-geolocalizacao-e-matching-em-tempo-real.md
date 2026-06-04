@@ -2,7 +2,7 @@
 slug: "system-design-uber-geolocalizacao-e-matching-em-tempo-real"
 aliases:
   - "/posts/system-design-uber-geolocalizacao-e-matching-em-tempo-real/"
-title: "System design: Uber - geolocalização e matching em tempo real"
+title: "System design: Uber, geolocalização e matching em tempo real"
 description: "Como projetar um sistema de ride-sharing que encontra o motorista mais próximo em segundos, rastreia milhões de veículos em movimento, e calcula ETAs precisos em tempo real."
 date: 2026-05-26T10:00:00-04:00
 categories:

@@ -2,7 +2,7 @@
 slug: "system-design-youtube-streaming-de-video-em-escala"
 aliases:
   - "/posts/system-design-youtube-streaming-de-video-em-escala/"
-title: "System design: YouTube - streaming de vídeo em escala"
+title: "System design: YouTube, streaming de vídeo em escala"
 description: "Como projetar uma plataforma de vídeo que processa 500 horas de upload por minuto e entrega o primeiro frame em menos de 500ms. CDN, transcoding, adaptive bitrate, e pre-signed URLs na prática."
 date: 2026-05-22T10:00:00-04:00
 categories:
@@ -342,104 +342,107 @@ Um vídeo de 1 hora em 6 resoluções com segmentos de 4 segundos = **900 segmen
 
 ### Arquitetura do pipeline
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 804" role="img" aria-label="Pipeline de transcodificação de vídeo" style="max-width:100%;height:auto;" font-family="Segoe UI, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 720" width="100%" style="max-width:860px;height:auto;" role="img" aria-label="Pipeline de transcodificação de vídeo" font-family="Segoe UI, Arial, sans-serif">
   <defs>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L9,3 z" fill="#666666" />
+    <marker id="arr-pipe" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#555" />
     </marker>
   </defs>
 
-  <g>
-    <rect x="380" y="20" width="220" height="48" rx="6" fill="#f5f5f5" stroke="#666666" />
-    <text x="490" y="48" text-anchor="middle" font-size="12" font-weight="bold" fill="#333333">Upload finalizado</text>
-  </g>
-  <g>
-    <rect x="380" y="108" width="220" height="48" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="490" y="128.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Message Queue</text>
-    <text x="490" y="143.5" text-anchor="middle" font-size="10" fill="#555">Kafka</text>
-  </g>
-  <g>
-    <rect x="345" y="196" width="290" height="70" rx="8" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="490" y="227.5" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a3a5c">Transcoding Orchestrator</text>
-    <text x="490" y="242.5" text-anchor="middle" font-size="10" fill="#555">divide em jobs</text>
-  </g>
+  <!-- Upload finalizado -->
+  <rect x="310" y="20" width="240" height="50" rx="6" fill="#ffffff" stroke="#999" stroke-width="1.5"/>
+  <text x="430" y="50" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Upload finalizado</text>
 
-  <g>
-    <rect x="60" y="285" width="130" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="125" y="309.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Worker 1</text>
-    <text x="125" y="324.5" text-anchor="middle" font-size="10" fill="#555">gerar 240p</text>
-  </g>
-  <g>
-    <rect x="220" y="306" width="130" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="285" y="330.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Worker 2</text>
-    <text x="285" y="345.5" text-anchor="middle" font-size="10" fill="#555">gerar 360p</text>
-  </g>
-  <g>
-    <rect x="380" y="306" width="130" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="445" y="330.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Worker 3</text>
-    <text x="445" y="345.5" text-anchor="middle" font-size="10" fill="#555">gerar 480p</text>
-  </g>
-  <g>
-    <rect x="540" y="306" width="130" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="605" y="330.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Worker 4</text>
-    <text x="605" y="345.5" text-anchor="middle" font-size="10" fill="#555">gerar 720p</text>
-  </g>
-  <g>
-    <rect x="180" y="402" width="130" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="245" y="426.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Worker 5</text>
-    <text x="245" y="441.5" text-anchor="middle" font-size="10" fill="#555">gerar 1080p</text>
-  </g>
-  <g>
-    <rect x="350" y="402" width="130" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="415" y="426.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Worker 6</text>
-    <text x="415" y="441.5" text-anchor="middle" font-size="10" fill="#555">gerar 4K</text>
-  </g>
-  <g>
-    <rect x="520" y="402" width="220" height="56" rx="6" fill="#fff2cc" stroke="#d6b656" />
-    <text x="630" y="426.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Worker 7</text>
-    <text x="630" y="441.5" text-anchor="middle" font-size="10" fill="#555">thumbnail + preview</text>
-  </g>
+  <!-- Arrow -->
+  <line x1="430" y1="70" x2="430" y2="98" stroke="#555" stroke-width="2" marker-end="url(#arr-pipe)"/>
 
-  <g>
-    <rect x="360" y="498" width="260" height="56" rx="6" fill="#d5e8d4" stroke="#82b366" />
-    <text x="490" y="522.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Blob Storage</text>
-    <text x="490" y="537.5" text-anchor="middle" font-size="10" fill="#555">processed</text>
-  </g>
-  <g>
-    <rect x="360" y="550" width="260" height="48" rx="6" fill="#fff2cc" stroke="#d6b656" />
-    <text x="490" y="578" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Gerar manifest file (.m3u8)</text>
-  </g>
-  <g>
-    <rect x="340" y="638" width="300" height="48" rx="6" fill="#dae8fc" stroke="#6c8ebf" />
-    <text x="490" y="658.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a5c">Atualizar Metadata DB</text>
-    <text x="490" y="673.5" text-anchor="middle" font-size="10" fill="#555">status: ready</text>
-  </g>
-  <g>
-    <rect x="360" y="726" width="260" height="48" rx="6" fill="#e1d5e7" stroke="#9673a6" />
-    <text x="490" y="754" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a235a">Push pra CDN</text>
-  </g>
+  <!-- Message Queue -->
+  <rect x="310" y="100" width="240" height="55" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+  <text x="430" y="125" text-anchor="middle" font-size="13" font-weight="bold" fill="#4a235a">Message Queue</text>
+  <text x="430" y="143" text-anchor="middle" font-size="10" fill="#555">Kafka</text>
 
-  <g stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)">
-    <line x1="490" y1="74" x2="490" y2="114" />
-    <line x1="490" y1="162" x2="490" y2="202" />
-    <line x1="339.1" y1="264.9" x2="184.1" y2="299.7" />
-    <line x1="415" y1="268.7" x2="335.4" y2="308.7" />
-    <line x1="472.3" y1="271.5" x2="454.8" y2="311.5" />
-    <line x1="533.5" y1="270" x2="578.2" y2="310" />
-    <line x1="442.3" y1="269.8" x2="274.8" y2="405.8" />
-    <line x1="474.7" y1="271.6" x2="423.4" y2="407.6" />
-    <line x1="518.1" y1="270.9" x2="613.8" y2="406.9" />
-    <line x1="178.2" y1="344" x2="447.2" y2="501" />
-    <line x1="319.3" y1="366.1" x2="464.5" y2="502.1" />
-    <line x1="452.9" y1="367.8" x2="484.8" y2="503.8" />
-    <line x1="585.1" y1="367.1" x2="503.7" y2="503.1" />
-    <line x1="315.6" y1="457.7" x2="424.1" y2="500.2" />
-    <line x1="440.6" y1="462.7" x2="471.8" y2="502.7" />
-    <line x1="584.2" y1="461.4" x2="525.9" y2="501.4" />
-    <line x1="490" y1="560" x2="490" y2="556" />
-    <line x1="490" y1="604" x2="490" y2="644" />
-    <line x1="490" y1="692" x2="490" y2="732" />
-  </g>
+  <!-- Arrow -->
+  <line x1="430" y1="155" x2="430" y2="183" stroke="#555" stroke-width="2" marker-end="url(#arr-pipe)"/>
+
+  <!-- Transcoding Orchestrator -->
+  <rect x="270" y="185" width="320" height="60" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="430" y="213" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a3a5c">Transcoding Orchestrator</text>
+  <text x="430" y="231" text-anchor="middle" font-size="10" fill="#555">divide em jobs</text>
+
+  <!-- Arrows from Orchestrator to Workers (fan-out, distributed exit points) -->
+  <line x1="310" y1="245" x2="130" y2="278" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+  <line x1="370" y1="245" x2="310" y2="278" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+  <line x1="430" y1="245" x2="430" y2="278" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+  <line x1="490" y1="245" x2="550" y2="278" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+  <line x1="370" y1="245" x2="190" y2="368" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+  <line x1="430" y1="245" x2="370" y2="368" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+  <line x1="530" y1="245" x2="670" y2="278" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+
+  <!-- Worker Row 1: 240p, 360p, 480p, 720p -->
+  <rect x="70" y="280" width="120" height="55" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="130" y="304" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Worker 1</text>
+  <text x="130" y="321" text-anchor="middle" font-size="10" fill="#555">gerar 240p</text>
+
+  <rect x="250" y="280" width="120" height="55" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="310" y="304" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Worker 2</text>
+  <text x="310" y="321" text-anchor="middle" font-size="10" fill="#555">gerar 360p</text>
+
+  <rect x="430" y="280" width="120" height="55" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="490" y="304" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Worker 3</text>
+  <text x="490" y="321" text-anchor="middle" font-size="10" fill="#555">gerar 480p</text>
+
+  <rect x="610" y="280" width="120" height="55" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="670" y="304" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Worker 4</text>
+  <text x="670" y="321" text-anchor="middle" font-size="10" fill="#555">gerar 720p</text>
+
+  <!-- Worker Row 2: 1080p, 4K, thumbnail -->
+  <rect x="130" y="370" width="120" height="55" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="190" y="394" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Worker 5</text>
+  <text x="190" y="411" text-anchor="middle" font-size="10" fill="#555">gerar 1080p</text>
+
+  <rect x="310" y="370" width="120" height="55" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="370" y="394" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">Worker 6</text>
+  <text x="370" y="411" text-anchor="middle" font-size="10" fill="#555">gerar 4K</text>
+
+  <rect x="550" y="370" width="180" height="55" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="640" y="394" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Worker 7</text>
+  <text x="640" y="411" text-anchor="middle" font-size="10" fill="#555">thumbnail + preview</text>
+
+  <!-- Arrows from Workers to Blob Storage (converging) -->
+  <line x1="130" y1="335" x2="380" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+  <line x1="310" y1="335" x2="400" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+  <line x1="490" y1="335" x2="440" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+  <line x1="670" y1="335" x2="490" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+  <line x1="190" y1="425" x2="390" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+  <line x1="370" y1="425" x2="420" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+  <line x1="640" y1="425" x2="480" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+
+  <!-- Blob Storage -->
+  <rect x="310" y="462" width="240" height="55" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="430" y="487" text-anchor="middle" font-size="13" font-weight="bold" fill="#1b5e20">Blob Storage</text>
+  <text x="430" y="505" text-anchor="middle" font-size="10" fill="#555">processed</text>
+
+  <!-- Arrow -->
+  <line x1="430" y1="517" x2="430" y2="538" stroke="#555" stroke-width="2" marker-end="url(#arr-pipe)"/>
+
+  <!-- Manifest -->
+  <rect x="310" y="540" width="240" height="45" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+  <text x="430" y="568" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Gerar manifest file (.m3u8)</text>
+
+  <!-- Arrow -->
+  <line x1="430" y1="585" x2="430" y2="608" stroke="#555" stroke-width="2" marker-end="url(#arr-pipe)"/>
+
+  <!-- Metadata DB -->
+  <rect x="280" y="610" width="300" height="50" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="430" y="633" text-anchor="middle" font-size="13" font-weight="bold" fill="#1a3a5c">Atualizar Metadata DB</text>
+  <text x="430" y="650" text-anchor="middle" font-size="10" fill="#555">status: ready</text>
+
+  <!-- Arrow -->
+  <line x1="430" y1="660" x2="430" y2="683" stroke="#555" stroke-width="2" marker-end="url(#arr-pipe)"/>
+
+  <!-- Push CDN -->
+  <rect x="310" y="685" width="240" height="50" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+  <text x="430" y="715" text-anchor="middle" font-size="13" font-weight="bold" fill="#4a235a">Push pra CDN</text>
 </svg>
 
 ### Por que usar Message Queue aqui?
