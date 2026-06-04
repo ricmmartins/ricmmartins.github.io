@@ -369,14 +369,16 @@ Um vídeo de 1 hora em 6 resoluções com segmentos de 4 segundos = **900 segmen
 <text x="430" y="213" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a3a5c">Transcoding Orchestrator</text>
 <text x="430" y="231" text-anchor="middle" font-size="10" fill="#555">divide em jobs</text>
 
-<!-- Arrows from Orchestrator to Workers (fan-out, distributed exit points) -->
+<!-- Arrows from Orchestrator to Workers (fan-out, 7 distributed exit points) -->
+<!-- Row 1: exit points distributed along bottom edge (x: 310, 360, 430, 500, 550) -->
 <line x1="310" y1="245" x2="130" y2="278" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
-<line x1="370" y1="245" x2="310" y2="278" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
-<line x1="430" y1="245" x2="430" y2="278" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
-<line x1="490" y1="245" x2="550" y2="278" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
-<line x1="370" y1="245" x2="190" y2="368" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
-<line x1="430" y1="245" x2="370" y2="368" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
-<line x1="530" y1="245" x2="670" y2="278" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+<line x1="360" y1="245" x2="310" y2="278" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+<line x1="420" y1="245" x2="490" y2="278" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+<line x1="500" y1="245" x2="670" y2="278" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+<!-- Row 2: exit points for workers 5, 6, 7 -->
+<line x1="350" y1="245" x2="190" y2="368" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+<line x1="410" y1="245" x2="370" y2="368" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+<line x1="530" y1="245" x2="640" y2="368" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
 
 <!-- Worker Row 1: 240p, 360p, 480p, 720p -->
 <rect x="70" y="280" width="120" height="55" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
@@ -408,14 +410,14 @@ Um vídeo de 1 hora em 6 resoluções com segmentos de 4 segundos = **900 segmen
 <text x="640" y="394" text-anchor="middle" font-size="12" font-weight="bold" fill="#7c6200">Worker 7</text>
 <text x="640" y="411" text-anchor="middle" font-size="10" fill="#555">thumbnail + preview</text>
 
-<!-- Arrows from Workers to Blob Storage (converging) -->
-<line x1="130" y1="335" x2="380" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
-<line x1="310" y1="335" x2="400" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
-<line x1="490" y1="335" x2="440" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
-<line x1="670" y1="335" x2="490" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
-<line x1="190" y1="425" x2="390" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
-<line x1="370" y1="425" x2="420" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
-<line x1="640" y1="425" x2="480" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+<!-- Arrows from Workers to Blob Storage (fan-in, distributed entry points along top edge) -->
+<line x1="130" y1="335" x2="330" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+<line x1="310" y1="335" x2="370" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+<line x1="490" y1="335" x2="450" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+<line x1="670" y1="335" x2="530" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+<line x1="190" y1="425" x2="350" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+<line x1="370" y1="425" x2="410" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+<line x1="640" y1="425" x2="490" y2="460" stroke="#555" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
 
 <!-- Blob Storage -->
 <rect x="310" y="462" width="240" height="55" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
