@@ -61,7 +61,7 @@ A primeira dá ao agent uma linha de base para comparação: "isso já aconteceu
 
 ## Onde o modelo entra (e onde não entra)
 
-Aqui está o ponto operacional mais importante deste post: **o modelo não roda a cada minuto**. O script determinístico do post 2 continua sendo o poller. Ele roda no cron, uma vez por minuto, a custo zero de LLM, e só dispara uma chamada de modelo quando o threshold é cruzado. Colocar um LLM no loop em toda iteração de monitoramento é gastar dinheiro em um caminho que, na esmagadora maioria do tempo, não precisa de raciocínio algum. Só vale pagar o custo da chamada de modelo nos minutos em que o threshold realmente foi cruzado.
+Um detalhe operacional que faz toda a diferença neste desenho: **o modelo não roda a cada minuto**. O script determinístico do post 2 continua sendo o poller. Ele roda no cron, uma vez por minuto, a custo zero de LLM, e só dispara uma chamada de modelo quando o threshold é cruzado. Colocar um LLM no loop em toda iteração de monitoramento é gastar dinheiro em um caminho que, na esmagadora maioria do tempo, não precisa de raciocínio algum. Só vale pagar o custo da chamada de modelo nos minutos em que o threshold realmente foi cruzado.
 
 ```
  cron (1x/min, zero LLM cost)

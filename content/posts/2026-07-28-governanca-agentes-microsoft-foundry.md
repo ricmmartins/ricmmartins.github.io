@@ -84,7 +84,7 @@ Isso te dá isolamento por project diretamente no state do Terraform: cada novo 
 
 ## O que a plataforma ainda não resolve sozinha
 
-Vale ser honesto sobre os limites, porque "a plataforma cuida disso" é uma das frases que mais geram falsa sensação de segurança. O plano de proteção para workloads de IA no Defender for Cloud (em preview no começo de 2026) cobre detecção de prompt injection, volume anômalo de inferência e acesso vindo de geolocalizações inesperadas; mas não cobre integridade dos dados de grounding (writes em containers de RAG) nem lateral movement da managed identity entre hub e Key Vault. Governança de plataforma centraliza e formaliza o que você já deveria estar fazendo; ela não pensa por você sobre quais tools um agent específico realmente precisa. Esse continua sendo o seu trabalho de design, no mesmo exercício tool-by-tool que fizemos ao longo dos quatro posts anteriores.
+Existem limites, porém, e "a plataforma cuida disso" é uma das frases que mais geram falsa sensação de segurança. O plano de proteção para workloads de IA no Defender for Cloud (em preview no começo de 2026) cobre detecção de prompt injection, volume anômalo de inferência e acesso vindo de geolocalizações inesperadas; mas não cobre integridade dos dados de grounding (writes em containers de RAG) nem lateral movement da managed identity entre hub e Key Vault. Governança de plataforma centraliza e formaliza o que você já deveria estar fazendo; ela não pensa por você sobre quais tools um agent específico realmente precisa. Esse continua sendo o seu trabalho de design, no mesmo exercício tool-by-tool que fizemos ao longo dos quatro posts anteriores.
 
 Para fechar com algo prático: você pode monitorar mudanças em content safety ou em policy de RAI diretamente via Log Analytics, tratando isso como mudança de configuração de segurança, não como operação rotineira de ML:
 
@@ -101,7 +101,7 @@ AzureActivity
 
 Cinco posts, do conceito à governança: o que é MCP e como um agent decide sozinho a sequência de chamadas; um watchdog que começou como script determinístico e só depois ganhou raciocínio, com o guardrail de nunca ganhar poder para agir; um orquestrador que correlaciona dois agents sem criar uma nova superfície de ataque; e agora a camada de plataforma que formaliza tudo isso para além do que cabe na memória de quem escreveu o código.
 
-O fio condutor dos cinco posts é sempre o mesmo: autonomia para decidir, sim; autonomia para agir em produção, não. A menos que isso seja uma escolha explícita, auditável e revisada, nunca um acidente de configuração. Isso vale para o `--access-level readonly` em uma flag de linha de comando, e vale para o catálogo de tools de uma plataforma inteira da Microsoft. Mesmo princípio, escalas diferentes.
+O fio condutor dos cinco posts é sempre o mesmo: autonomia para decidir, sim; autonomia para agir em produção, não. A menos que isso seja uma escolha explícita, auditável e revisada, nunca um acidente de configuração. Isso vale para o `--access-level readonly` em uma flag de linha de comando, e vale para o catálogo de tools de uma plataforma inteira da Microsoft, numa escala completamente diferente.
 
 Se a sua empresa está exatamente nesse ponto, com vários times subindo agents sem coordenação e ninguém ainda sabe como olhar isso centralmente, esse é o tipo de desenho em que eu gosto de ajudar. Fico feliz em conversar se isso for útil.
 

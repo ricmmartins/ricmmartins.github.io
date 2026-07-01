@@ -22,7 +22,7 @@ Em algum momento nos últimos meses, alguém do seu time apareceu falando sobre 
 
 ## O que um agent realmente é
 
-Esqueça a definição de marketing. Na prática, um agent é a combinação de quatro coisas: um modelo que decide o próximo passo, um conjunto de tools que ele pode invocar, um loop de execução que orquestra essa ida e volta, e algum tipo de memória para sustentar o estado durante o processo.
+Na prática, um agent é a combinação de quatro coisas: um modelo que decide o próximo passo, um conjunto de tools que ele pode invocar, um loop de execução que orquestra essa ida e volta, e algum tipo de memória para sustentar o estado durante o processo.
 
 A diferença entre um agent e um script de automação tradicional está em onde a decisão mora. Num script, você escreveu o fluxo: "se X, faça Y". Num agent, você descreve o objetivo e as tools disponíveis, e o modelo decide a sequência de chamadas em tempo real com base no que cada tool retorna. Na prática, o loop é sempre esta dança:
 
