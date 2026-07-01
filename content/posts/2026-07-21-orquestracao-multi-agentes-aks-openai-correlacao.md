@@ -1,9 +1,9 @@
 ---
 slug: "orquestracao-multi-agentes-aks-openai-correlacao"
-translationKey: "2026/07/17/multi-agent-orchestration-aks-openai-correlation"
+translationKey: "2026/07/21/multi-agent-orchestration-aks-openai-correlation"
 title: "Orquestração Multi-Agentes: Correlacionando AKS e Azure OpenAI"
 description: "Um orquestrador que combina o agente de diagnóstico AKS com o watchdog de tokens para responder 'alguém fez deploy?' automaticamente."
-date: 2026-07-17T10:00:00-04:00
+date: 2026-07-21T10:00:00-04:00
 categories:
   - AI
   - Azure
@@ -105,4 +105,4 @@ Com quatro agents diferentes rodando (watchdog, sub-agent de AKS, orquestrador e
 
 *Repositório companion: [agentic-infra-handbook](https://github.com/ricmmartins/agentic-infra-handbook)*
 
-*Read this post in [English](https://rmmartins.com/2026/07/17/multi-agent-orchestration-aks-openai-correlation/).*
+*Read this post in [English](https://rmmartins.com/2026/07/21/multi-agent-orchestration-aks-openai-correlation/).*

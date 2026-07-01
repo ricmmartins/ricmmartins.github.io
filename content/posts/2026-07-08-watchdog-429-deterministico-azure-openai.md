@@ -1,9 +1,9 @@
 ---
 slug: "watchdog-429-deterministico-azure-openai"
-translationKey: "2026/07/10/deterministic-429-watchdog-azure-openai"
+translationKey: "2026/07/08/deterministic-429-watchdog-azure-openai"
 title: "Construindo um Watchdog 429 Determinístico para Azure OpenAI"
 description: "Um servidor MCP que detecta tendências de consumo de tokens antes do 429 acontecer — sem LLM, só métricas e um cron job."
-date: 2026-07-10T10:00:00-04:00
+date: 2026-07-08T10:00:00-04:00
 categories:
   - AI
   - Azure
@@ -191,4 +191,4 @@ Se você quiser testar a versão puramente em script antes mesmo de encostar em 
 
 *Repositório companion: [agentic-infra-handbook](https://github.com/ricmmartins/agentic-infra-handbook)*
 
-*Read this post in [English](https://rmmartins.com/2026/07/10/deterministic-429-watchdog-azure-openai/).*
+*Read this post in [English](https://rmmartins.com/2026/07/08/deterministic-429-watchdog-azure-openai/).*

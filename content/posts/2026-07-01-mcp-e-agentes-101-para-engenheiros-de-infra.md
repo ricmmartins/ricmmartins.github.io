@@ -1,9 +1,9 @@
 ---
 slug: "mcp-e-agentes-101-para-engenheiros-de-infra"
-translationKey: "2026/07/08/mcp-and-agents-101-for-infra-engineers"
+translationKey: "2026/07/01/mcp-and-agents-101-for-infra-engineers"
 title: "MCP e Agentes de IA 101 para Engenheiros de Infraestrutura"
 description: "O que é MCP, como agentes de IA funcionam e o que muda operacionalmente — explicado para profissionais de infra/SRE com um exemplo real no AKS."
-date: 2026-07-08T10:00:00-04:00
+date: 2026-07-01T10:00:00-04:00
 categories:
   - AI
   - Azure
@@ -176,4 +176,4 @@ Se você curte conteúdo aplicado de infraestrutura como este, eu sigo escrevend
 
 *Repositório companion: [agentic-infra-handbook](https://github.com/ricmmartins/agentic-infra-handbook)*
 
-*Read this post in [English](https://rmmartins.com/2026/07/08/mcp-and-agents-101-for-infra-engineers/).*
+*Read this post in [English](https://rmmartins.com/2026/07/01/mcp-and-agents-101-for-infra-engineers/).*

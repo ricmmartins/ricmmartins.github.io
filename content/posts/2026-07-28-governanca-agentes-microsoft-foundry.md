@@ -1,9 +1,9 @@
 ---
 slug: "governanca-agentes-microsoft-foundry"
-translationKey: "2026/07/21/agent-governance-microsoft-foundry"
+translationKey: "2026/07/28/agent-governance-microsoft-foundry"
 title: "Governança de Agentes no Microsoft Foundry"
 description: "Como o Microsoft Foundry resolve identidade, RBAC, catálogo de tools e enforcement de políticas para agentes de IA em escala organizacional."
-date: 2026-07-21T10:00:00-04:00
+date: 2026-07-28T10:00:00-04:00
 categories:
   - AI
   - Azure
@@ -119,4 +119,4 @@ Se a sua empresa está exatamente nesse ponto — vários times subindo agents s
 
 *Repositório companion: [agentic-infra-handbook](https://github.com/ricmmartins/agentic-infra-handbook)*
 
-*Read this post in [English](https://rmmartins.com/2026/07/21/agent-governance-microsoft-foundry/).*
+*Read this post in [English](https://rmmartins.com/2026/07/28/agent-governance-microsoft-foundry/).*
