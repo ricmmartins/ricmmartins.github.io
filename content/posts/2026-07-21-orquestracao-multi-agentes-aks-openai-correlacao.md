@@ -18,13 +18,13 @@ series:
   - "MCP Agentes e Infraestrutura"
 ---
 
-Até aqui, a série construiu duas coisas separadas: no post 1, um agent que fala com AKS via `aks-mcp` para diagnosticar o cluster; nos posts 2 e 3, um watchdog que observa o consumo de TPM no Azure OpenAI e decide o quão urgente um alerta deve ser. Os dois funcionam isoladamente, e isolados já entregam valor. Mas, separados, eles também deixam sem resposta a pergunta mais óbvia de todas: quando o consumo de tokens dispara do nada, a primeira coisa que qualquer SRE pergunta é "alguém fez deploy?" — e hoje essa resposta ainda é manual, alguém olhando o alerta do watchdog em uma aba e o dashboard do AKS em outra.
+Até aqui, a série construiu duas coisas separadas: no post 1, um agent que fala com AKS via `aks-mcp` para diagnosticar o cluster; nos posts 2 e 3, um watchdog que observa o consumo de TPM no Azure OpenAI e decide o quão urgente um alerta deve ser. Os dois funcionam isoladamente, e isolados já entregam valor. Mas, separados, eles também deixam sem resposta a pergunta mais óbvia de todas: quando o consumo de tokens dispara do nada, a primeira coisa que qualquer SRE pergunta é "alguém fez deploy?". Hoje essa resposta ainda é manual, alguém olhando o alerta do watchdog em uma aba e o dashboard do AKS em outra.
 
 Este post é sobre fechar esse último passo manual com um orquestrador.
 
 ## O trigger muda
 
-No post 3, quando o watchdog classificava um evento como `urgent`, a tool `send_priority_alert` ia direto para o Slack. Agora esse destino muda: em vez de notificar uma pessoa imediatamente, uma classificação `urgent` passa a acionar o orquestrador, e só então ele decide o que — e quando — um humano deve ver.
+No post 3, quando o watchdog classificava um evento como `urgent`, a tool `send_priority_alert` ia direto para o Slack. Agora esse destino muda: em vez de notificar uma pessoa imediatamente, uma classificação `urgent` passa a acionar o orquestrador, e só então ele decide o que um humano deve ver, e quando.
 
 ```
  watchdog (post 3)
@@ -46,7 +46,7 @@ No post 3, quando o watchdog classificava um evento como `urgent`, a tool `send_
         with cause hypothesis)
 ```
 
-Cada sub-agent mantém exatamente o escopo que já tinha — o watchdog não ganhou acesso ao cluster, o agent de AKS não ganhou acesso à quota. O orquestrador é a única peça nova, e ele só tem acesso de leitura aos dois lados, além da mesma tool de notificação de sempre. Nenhuma nova capability de ação foi criada ao combiná-los — apenas a capacidade de correlacionar o que cada um já sabia isoladamente.
+Cada sub-agent mantém exatamente o escopo que já tinha: o watchdog não ganhou acesso ao cluster, o agent de AKS não ganhou acesso à quota. O orquestrador é a única peça nova, e ele só tem acesso de leitura aos dois lados, além da mesma tool de notificação de sempre. Nenhuma nova capability de ação foi criada ao combiná-los; apenas a capacidade de correlacionar o que cada um já sabia isoladamente.
 
 ## Correlação na prática
 
@@ -63,32 +63,32 @@ def correlate_incident(token_spike_start: str, window_minutes: int = 15) -> dict
     return rank_candidates(cluster_events)
 ```
 
-O resultado, em vez de dois alertas soltos chegando em canais diferentes, vira uma mensagem única: "TPM em 91% e subindo. Causa candidata: deploy do serviço `recommendation-api` às 14h01, que escalou de 3 para 12 réplicas via HPA — cada réplica nova faz uma warmup call para o GPT-4o ao subir, o que coincide com o início do spike." Isso já não é mais "duas métricas cruzaram um threshold". É uma hipótese verificável, com evidência anexada.
+O resultado, em vez de dois alertas soltos chegando em canais diferentes, vira uma mensagem única: "TPM em 91% e subindo. Causa candidata: deploy do serviço `recommendation-api` às 14h01, que escalou de 3 para 12 réplicas via HPA. Cada réplica nova faz uma warmup call para o GPT-4o ao subir, o que coincide com o início do spike." Isso já não é mais "duas métricas cruzaram um threshold". É uma hipótese verificável, com evidência anexada.
 
 ## O novo risco que a correlação introduz
 
-Vale ser honesto sobre o que este post adiciona em termos de risco, porque não é zero: um modelo correlacionando eventos por proximidade temporal pode produzir uma narrativa plausível e errada. Dois eventos próximos no tempo não são necessariamente causa e efeito — pode ser coincidência, pode ser um terceiro fator que afetou ambos. É o clássico "correlation isn't causation", só que agora dito por um agent com o tom confiante de quem parece saber exatamente do que está falando.
+Vale ser honesto sobre o que este post adiciona em termos de risco, porque não é zero: um modelo correlacionando eventos por proximidade temporal pode produzir uma narrativa plausível e errada. Dois eventos próximos no tempo não são necessariamente causa e efeito. Pode ser coincidência, pode ser um terceiro fator que afetou ambos. É o clássico "correlation isn't causation"; só que agora dito por um agent com o tom confiante de quem parece saber exatamente do que está falando.
 
-A mitigação não é tentar deixar o modelo "mais certo" — é nunca permitir que a saída dele vire uma afirmação categórica. A tool `correlate_incident` foi desenhada deliberadamente para devolver candidatos com nível de confiança, não uma causa única, e a mensagem final no Slack precisa preservar isso: "causa candidata", não "a causa foi". A pessoa que recebe o alerta continua responsável por decidir se a hipótese faz sentido — o agent economizou o trabalho de juntar os dados, não o julgamento final.
+A mitigação não é tentar deixar o modelo "mais certo". É nunca permitir que a saída dele vire uma afirmação categórica. A tool `correlate_incident` foi desenhada deliberadamente para devolver candidatos com nível de confiança, não uma causa única, e a mensagem final no Slack precisa preservar isso: "causa candidata", não "a causa foi". A pessoa que recebe o alerta continua responsável por decidir se a hipótese faz sentido; o agent economizou o trabalho de juntar os dados, não o julgamento final.
 
 ## O que continua igual (e por que isso importa)
 
-Vale repetir o que não mudou, porque é fácil, ao introduzir um orquestrador, relaxar guardrails por conveniência: nenhum dos três agents — watchdog, sub-agent de AKS, orquestrador — ganhou tools para agir em produção. O orquestrador não consegue fazer rollback do deploy que ele mesmo sinalizou como causa candidata, não consegue aumentar quota, não consegue reiniciar nada. Ele lê dois sistemas já existentes em modo read-only e escreve em uma única tool de notificação, também já existente. A composição não criou uma nova superfície de ataque — ela só evitou que um humano precisasse ficar pulando entre duas abas.
+Vale repetir o que não mudou, porque é fácil, ao introduzir um orquestrador, relaxar guardrails por conveniência: nenhum dos três agents, watchdog, sub-agent de AKS e orquestrador, ganhou tools para agir em produção. O orquestrador não consegue fazer rollback do deploy que ele mesmo sinalizou como causa candidata, não consegue aumentar quota, não consegue reiniciar nada. Ele lê dois sistemas já existentes em modo read-only e escreve em uma única tool de notificação, também já existente. A composição não criou uma nova superfície de ataque; ela só evitou que um humano precisasse ficar pulando entre duas abas.
 
-Sobre a própria orquestração: para este caso, não há necessidade alguma de um protocolo agent-to-agent como A2A, que eu mencionei brevemente no post 1. Os dois sub-agents pertencem ao mesmo time, ao mesmo sistema, e o orquestrador simplesmente chama cada um como chamaria uma função — não existe negociação entre partes independentes aqui. A2A faz sentido quando os agents pertencem a domínios administrativos diferentes; dentro do seu time de SRE, um orquestrador chamando sub-agents já resolve sem introduzir complexidade extra.
+Sobre a própria orquestração: para este caso, não há necessidade alguma de um protocolo agent-to-agent como A2A, que eu mencionei brevemente no post 1. Os dois sub-agents pertencem ao mesmo time, ao mesmo sistema, e o orquestrador simplesmente chama cada um como chamaria uma função. Não existe negociação entre partes independentes aqui. A2A faz sentido quando os agents pertencem a domínios administrativos diferentes; dentro do seu time de SRE, um orquestrador chamando sub-agents já resolve sem introduzir complexidade extra.
 
 ## Custo e latência: os trade-offs que ninguém pergunta até a conta chegar
 
-Vale lembrar o desenho em camadas dos posts anteriores: o cron de um minuto continua barato e sem LLM. O watchdog com raciocínio só roda quando o threshold é cruzado. E agora o orquestrador só roda depois que o watchdog já classificou algo como `urgent` — ou seja, a chamada mais cara da cadeia inteira (duas consultas a sub-agents mais uma correlação) só acontece no evento mais raro de todos. Cada camada filtra antes de entregar para a próxima, mais cara. É o mesmo princípio por trás de qualquer pipeline de alerting bem desenhado — só que aqui cada camada, além de filtrar, também raciocina um pouco mais do que a anterior.
+Vale lembrar o desenho em camadas dos posts anteriores: o cron de um minuto continua barato e sem LLM. O watchdog com raciocínio só roda quando o threshold é cruzado. E agora o orquestrador só roda depois que o watchdog já classificou algo como `urgent`; ou seja, a chamada mais cara da cadeia inteira (duas consultas a sub-agents mais uma correlação) só acontece no evento mais raro de todos. Cada camada filtra antes de entregar para a próxima, mais cara. É o mesmo princípio por trás de qualquer pipeline de alerting bem desenhado; só que aqui cada camada, além de filtrar, também raciocina um pouco mais do que a anterior.
 
-Latência adiciona alguns segundos extras antes de o alerta final sair, em comparação com um ping genérico instantâneo no Slack. Para um incidente real, trocar alguns segundos por uma hipótese de causa pronta costuma ser um bom trade-off — mas continua sendo um trade-off, e vale medir isso em vez de assumir.
+Latência adiciona alguns segundos extras antes de o alerta final sair, em comparação com um ping genérico instantâneo no Slack. Para um incidente real, trocar alguns segundos por uma hipótese de causa pronta costuma ser um bom trade-off; mas continua sendo um trade-off, e vale medir isso em vez de assumir.
 
 ## Próximo da série
 
-1. ✅ MCP e agents — o 101
+1. ✅ MCP e agents: o 101
 2. ✅ O watchdog 429 determinístico
 3. ✅ Dando autonomia de decisão com guardrails
-4. ✅ Este post — um orquestrador correlacionando AKS e consumo de tokens
+4. ✅ Este post: um orquestrador correlacionando AKS e consumo de tokens
 5. Governança base para agents no Microsoft Foundry
 
 Com quatro agents diferentes rodando (watchdog, sub-agent de AKS, orquestrador e o agent do post 1 que continua podendo ser chamado sozinho), a pergunta que sobra deixa de ser técnica e vira governança: quem sabe que esses agents existem, quem decide quais tools cada um recebe, e como você audita isso seis meses depois, quando ninguém mais lembra por que o orquestrador foi configurado daquele jeito. Esse é exatamente o assunto do próximo post.
