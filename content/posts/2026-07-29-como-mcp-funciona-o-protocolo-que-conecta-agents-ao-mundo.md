@@ -227,11 +227,9 @@ Similar a: um form template que guia o input do usuário.
 
 ## Implementando um MCP Server
 
-Vamos criar um MCP server que expõe métricas de Azure Monitor.
+Um MCP server que expõe métricas de Azure Monitor. Usando a API de decorators da SDK Python (versão atual).
 
 ### Com Python (SDK oficial)
-
-No low-level SDK atual, o `Server` recebe callbacks `on_list_tools`, `on_call_tool` e `on_list_resources`.
 
 ```python
 import asyncio
@@ -239,64 +237,51 @@ import os
 import subprocess
 
 import mcp.server.stdio
-from mcp.server import Server, ServerRequestContext
-from mcp.types import (
-    CallToolRequestParams,
-    CallToolResult,
-    ListResourcesResult,
-    ListToolsResult,
-    PaginatedRequestParams,
-    Resource,
-    TextContent,
-    Tool,
-)
+from mcp.server import Server
+from mcp.types import Resource, TextContent, Tool
 
 SUBSCRIPTION_ID = os.environ["AZURE_SUBSCRIPTION_ID"]
 
+server = Server("azure-monitor-mcp")
 
-async def handle_list_tools(
-    ctx: ServerRequestContext, params: PaginatedRequestParams | None
-) -> ListToolsResult:
-    return ListToolsResult(
-        tools=[
-            Tool(
-                name="get_vm_metrics",
-                description="Retorna métricas de CPU de uma VM Azure",
-                input_schema={
-                    "type": "object",
-                    "properties": {
-                        "resource_group": {"type": "string"},
-                        "vm_name": {"type": "string"},
-                        "offset": {
-                            "type": "string",
-                            "description": "Ex: 1h (última hora), 24h (último dia)",
-                            "default": "1h",
-                        },
+
+@server.list_tools()
+async def list_tools() -> list[Tool]:
+    return [
+        Tool(
+            name="get_vm_metrics",
+            description="Retorna métricas de CPU de uma VM Azure",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "resource_group": {"type": "string"},
+                    "vm_name": {"type": "string"},
+                    "offset": {
+                        "type": "string",
+                        "description": "Ex: 1h (última hora), 24h (último dia)",
+                        "default": "1h",
                     },
-                    "required": ["resource_group", "vm_name"],
                 },
-            ),
-            Tool(
-                name="list_metric_alert_rules",
-                description="Lista regras de alerta baseadas em métricas no resource group",
-                input_schema={
-                    "type": "object",
-                    "properties": {
-                        "resource_group": {"type": "string"}
-                    },
-                    "required": ["resource_group"],
+                "required": ["resource_group", "vm_name"],
+            },
+        ),
+        Tool(
+            name="list_metric_alert_rules",
+            description="Lista regras de alerta baseadas em métricas no resource group",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "resource_group": {"type": "string"}
                 },
-            ),
-        ]
-    )
+                "required": ["resource_group"],
+            },
+        ),
+    ]
 
 
-async def handle_call_tool(
-    ctx: ServerRequestContext, params: CallToolRequestParams
-) -> CallToolResult:
-    arguments = params.arguments or {}
-
-    if params.name == "get_vm_metrics":
+@server.call_tool()
+async def call_tool(name: str, arguments: dict) -> list[TextContent]:
+    if name == "get_vm_metrics":
         resource_id = (
             f"/subscriptions/{SUBSCRIPTION_ID}"
             f"/resourceGroups/{arguments['resource_group']}"
@@ -304,70 +289,45 @@ async def handle_call_tool(
         )
         result = subprocess.run(
             [
-                "az",
-                "monitor",
-                "metrics",
-                "list",
-                "--resource",
-                resource_id,
-                "--metric",
-                "Percentage CPU",
-                "--interval",
-                "PT5M",
-                "--offset",
-                arguments.get("offset", "1h"),
-                "--output",
-                "json",
+                "az", "monitor", "metrics", "list",
+                "--resource", resource_id,
+                "--metric", "Percentage CPU",
+                "--interval", "PT5M",
+                "--offset", arguments.get("offset", "1h"),
+                "--output", "json",
             ],
             capture_output=True,
             text=True,
             check=False,
         )
-        return CallToolResult(content=[TextContent(type="text", text=result.stdout)])
+        return [TextContent(type="text", text=result.stdout)]
 
-    if params.name == "list_metric_alert_rules":
+    if name == "list_metric_alert_rules":
         result = subprocess.run(
             [
-                "az",
-                "monitor",
-                "metrics",
-                "alert",
-                "list",
-                "--resource-group",
-                arguments["resource_group"],
-                "--output",
-                "json",
+                "az", "monitor", "metrics", "alert", "list",
+                "--resource-group", arguments["resource_group"],
+                "--output", "json",
             ],
             capture_output=True,
             text=True,
             check=False,
         )
-        return CallToolResult(content=[TextContent(type="text", text=result.stdout)])
+        return [TextContent(type="text", text=result.stdout)]
 
-    raise ValueError(f"Tool desconhecida: {params.name}")
-
-
-async def handle_list_resources(
-    ctx: ServerRequestContext, params: PaginatedRequestParams | None
-) -> ListResourcesResult:
-    return ListResourcesResult(
-        resources=[
-            Resource(
-                uri="azure://monitor/metric-alert-rules",
-                name="Regras de alertas de métricas",
-                description="Regras de alertas de métricas disponíveis na subscription",
-                mime_type="application/json",
-            )
-        ]
-    )
+    raise ValueError(f"Tool desconhecida: {name}")
 
 
-server = Server(
-    "azure-monitor-mcp",
-    on_list_tools=handle_list_tools,
-    on_call_tool=handle_call_tool,
-    on_list_resources=handle_list_resources,
-)
+@server.list_resources()
+async def list_resources() -> list[Resource]:
+    return [
+        Resource(
+            uri="azure://monitor/metric-alert-rules",
+            name="Regras de alertas de métricas",
+            description="Regras de alertas de métricas disponíveis na subscription",
+            mimeType="application/json",
+        )
+    ]
 
 
 async def main() -> None:
@@ -526,33 +486,31 @@ SAFE_TOOLS = ["get_metrics", "list_alerts", "get_logs"]
 DANGEROUS_TOOLS = ["restart_service", "scale_resource", "delete_resource"]
 
 
-async def handle_list_tools(ctx, params):
-    client_level = get_client_permission_level(ctx)
+@server.list_tools()
+async def list_tools() -> list[Tool]:
+    client_level = get_client_permission_level()
 
     tool_names = SAFE_TOOLS.copy()
     if client_level == "admin":
         tool_names += DANGEROUS_TOOLS
 
-    return ListToolsResult(tools=[build_tool_spec(name) for name in tool_names])
+    return [build_tool_spec(name) for name in tool_names]
 ```
 
 ### Input validation
 
 ```python
-async def handle_call_tool(ctx, params: CallToolRequestParams) -> CallToolResult:
-    arguments = params.arguments or {}
-
+@server.call_tool()
+async def call_tool(name: str, arguments: dict) -> list[TextContent]:
     # SEMPRE validar inputs antes de executar
-    if params.name == "get_vm_metrics":
+    if name == "get_vm_metrics":
         if not validate_resource_group(arguments["resource_group"]):
-            return CallToolResult(
-                content=[
-                    TextContent(
-                        type="text",
-                        text="Erro: resource group inválido ou sem permissão",
-                    )
-                ]
-            )
+            return [
+                TextContent(
+                    type="text",
+                    text="Erro: resource group inválido ou sem permissão",
+                )
+            ]
 
         vm_name = sanitize_resource_name(arguments["vm_name"])
         ...
@@ -586,13 +544,13 @@ MCP não substitui function calling. Ele padroniza o que está por trás. O mode
 
 ## O que levar pra segunda-feira
 
-- **MCP é o "USB-C dos AI agents".** Padroniza conexão entre models e data sources. Cada lado implementa uma vez, funciona com todos.
-- **Três primitivos**: Tools (ações), Resources (dados), Prompts (templates). Simples e composável.
-- **Segurança é sua responsabilidade.** O protocolo não resolve auth por você. Valide inputs, limite permissions, monitore uso.
-- **Comece expondo read-only tools.** get_metrics, list_resources, get_logs. Adicione ações write só quando tiver confiança.
-- **stdio pra local, HTTP/SSE pra remoto.** Escolha o transport baseado em onde o server vai rodar.
+- MCP é o "USB-C dos AI agents". Padroniza conexão entre models e data sources. Cada lado implementa uma vez, funciona com todos.
+- Três primitivos: Tools (ações), Resources (dados), Prompts (templates). Simples e composável.
+- Segurança é sua responsabilidade. O protocolo não resolve auth por você. Valide inputs, limite permissions, monitore uso.
+- Comece expondo read-only tools. get_metrics, list_resources, get_logs. Adicione ações write só quando tiver confiança.
+- stdio pra local, Streamable HTTP pra remoto. SSE ainda funciona mas está sendo depreciado em favor do transport stateless.
 
-No próximo post, vamos aplicar tudo que aprendemos: **projetando um assistente AI pessoal** de ponta a ponta.
+No próximo post: **projetando um assistente AI pessoal** de ponta a ponta.
 
 ## Leitura complementar
 

@@ -202,25 +202,29 @@ AI não sabe que sua empresa tem policy de não usar Cosmos DB, que o time de se
 
 | Ferramenta | Uso principal | Ponto forte |
 |-----------|--------------|-------------|
-| **GitHub Copilot** (editor) | Autocomplete + chat | Integração native, entende o repo |
-| **GitHub Copilot CLI** | Tasks multi-step no terminal | Executa comandos, itera, cria/edita files |
-| **Claude** (web/API) | Análise profunda, code review | Context window grande, raciocínio forte |
-| **Azure AI (custom)** | Assistentes internos com RAG | Dados privados, integração com Azure |
+| **GitHub Copilot** (editor) | Autocomplete + chat no VS Code | Entende o repo inteiro, suggestions inline em real-time |
+| **GitHub Copilot CLI** | Tasks multi-step no terminal | Cria/edita files, roda commands, itera sobre erros automaticamente |
+| **Claude** (web/API) | Análise profunda, code review, explicações | Context window de 200K tokens, bom pra colar logs longos |
+| **Azure OpenAI** (custom) | Assistentes internos com RAG | Seus dados privados, compliance, integração com Entra ID |
 
 ## Como evoluir: o mindset certo
 
 AI coding tools estão evoluindo rápido. O que funciona hoje pode ser diferente em 6 meses. Algumas verdades que acho que são duráveis:
 
-**1. AI amplifica, não substitui.**
-Se você é um engenheiro mediano, AI te torna um engenheiro mediano mais rápido. Se você é excelente, AI te torna absurdamente produtivo. A base de conhecimento ainda é sua.
+### AI amplifica, não substitui
 
-**2. O valor migrou pra cima.**
+Se você é um engenheiro mediano, AI te torna um engenheiro mediano mais rápido. Se você é excelente, AI multiplica seu output por 3-5x (na minha experiência, medida em PRs/semana e tempo de resolução de incidentes). A base de conhecimento ainda é sua.
+
+### O valor migrou pra cima
+
 Escrever código ficou comoditizado. O valor está em: saber o que construir, como estruturar, quais trade-offs aceitar. Design > implementation.
 
-**3. Prompting é uma skill temporária.**
+### Prompting é uma skill temporária
+
 Hoje, saber promptar bem é diferencial. Em 2 anos, modelos vão ser bons o suficiente pra entender qualquer input. O que não vai mudar: saber avaliar se o output está correto.
 
-**4. Review é a skill permanente.**
+### Review é a skill permanente
+
 Quanto mais AI gera código, mais importante fica saber revisar código. Security review, performance review, design review. Essas skills valorizam.
 
 ## Exercício: comece amanhã
@@ -254,7 +258,7 @@ Em 15 posts, cobrimos:
 
 O objetivo nunca foi te transformar em ML engineer. Foi te dar o **vocabulário e o mapa mental** pra entender o que está acontecendo quando o time de ML pede algo, quando um bug envolve AI, ou quando você precisa projetar infra pra esses workloads.
 
-AI engineering está se tornando parte do trabalho de todo profissional de tecnologia. Agora você tem a base pra acompanhar essa evolução sem se perder.
+Se algum post da série te ajudou a entender algo que antes parecia black box, valeu o tempo de escrever.
 
 ## Leitura complementar
 

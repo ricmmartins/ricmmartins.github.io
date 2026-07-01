@@ -22,7 +22,7 @@ Sexta-feira, 17h. Você recebe um ticket do time de data science: "O modelo est�
 
 Você olha pro ticket. Context window? Aumentar como? Isso é configuração de infra ou limitação do modelo? É memória? É disco? Onde isso vive?
 
-Se você já passou por isso, esse post é pra você. Vamos abrir o capô de um Large Language Model e entender o que cada peça faz. Não pra virar ML engineer, mas pra ter vocabulário e contexto pra resolver problemas reais no dia a dia.
+Se você já passou por isso, esse post é pra você. Aqui dentro: o que cada peça de um Large Language Model faz, explicado pra quem entende de sistemas. Não pra virar ML engineer, mas pra ter vocabulário e contexto pra resolver problemas reais no dia a dia.
 
 ## De infra pra AI: o mapa mental
 
@@ -91,12 +91,11 @@ Um embedding é um vetor (array de números) que representa o significado de um 
 Na prática, embeddings são a base de busca semântica. Quando alguém fala "RAG" (que é o tema do post 4 dessa série), o que está acontecendo por baixo é: transformar a pergunta do usuário em embedding, buscar documentos com embeddings similares, e mandar tudo pro modelo como contexto.
 
 ```bash
-# Gerar embedding usando Azure OpenAI (API v1)
-curl -X POST "https://SEU_RECURSO.openai.azure.com/openai/v1/embeddings" \
+# Gerar embedding usando Azure OpenAI
+curl -X POST "https://SEU_RECURSO.openai.azure.com/openai/deployments/meu-deployment-embedding/embeddings?api-version=2025-04-01-preview" \
   -H "Content-Type: application/json" \
   -H "api-key: $AZURE_OPENAI_KEY" \
   -d '{
-    "model": "meu-deployment-embedding",
     "input": "Como configurar autoscaling no AKS"
   }'
 ```

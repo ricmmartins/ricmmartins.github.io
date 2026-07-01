@@ -20,7 +20,7 @@ series:
 
 O time de ML acabou de te pedir um "vector database" em produção. Você sabe operar PostgreSQL, Redis, Cosmos DB. Mas isso? É um banco de dados ou um índice de busca? Precisa de backup? Tem replicação? Qual o modelo de consistência?
 
-Vamos abrir o capô.
+Aqui dentro: o que é, como funciona por dentro, e como operar em produção.
 
 ## O mapa pro profissional de infra
 
@@ -47,137 +47,73 @@ A solução? **Approximate Nearest Neighbor (ANN)**. Aceitar 95-99% de accuracy 
 
 A ideia:
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1254 338" width="100%" role="img" aria-labelledby="hnsw-structure-title">
-<title id="hnsw-structure-title">Estrutura em camadas do HNSW</title>
-<defs>
-<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-<path d="M 0 0 L 10 5 L 0 10 z" fill="#666666" />
-</marker>
-</defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 280" style="width:100%;height:auto" role="img" aria-labelledby="hnsw-structure-title">
+<title id="hnsw-structure-title">Estrutura em camadas do HNSW com 3 níveis</title>
 <g font-family="Segoe UI, Arial, sans-serif">
-<text x="24" y="52" font-size="12" font-weight="bold" fill="#1f1f1f">Nível 3</text>
-<rect x="120" y="20" width="904" height="288" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2" />
-<line x1="200" y1="46" x2="510" y2="46" stroke="#666666" stroke-width="2" />
-<line x1="560" y1="46" x2="830" y2="46" stroke="#666666" stroke-width="2" />
-<rect x="144" y="30" width="50" height="32" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
-<rect x="504" y="30" width="50" height="32" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
-<rect x="824" y="30" width="50" height="32" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
-<text x="169" y="50" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">A</text>
-<text x="529" y="50" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">M</text>
-<text x="849" y="50" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">Z</text>
-<text x="24" y="122" font-size="12" font-weight="bold" fill="#1f1f1f">Nível 2</text>
-<rect x="120" y="90" width="974" height="218" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2" />
-<line x1="169" y1="68" x2="169" y2="108" stroke="#666666" stroke-width="2" />
-<line x1="529" y1="68" x2="529" y2="108" stroke="#666666" stroke-width="2" />
-<line x1="849" y1="68" x2="849" y2="108" stroke="#666666" stroke-width="2" />
-<line x1="200" y1="117.6" x2="310" y2="116.2" stroke="#666666" stroke-width="2" />
-<line x1="360" y1="116" x2="430" y2="116" stroke="#666666" stroke-width="2" />
-<line x1="480" y1="116.8" x2="510" y2="117.5" stroke="#666666" stroke-width="2" />
-<line x1="660.8" y1="166.8" x2="683" y2="126.8" stroke="#666666" stroke-width="2" />
-<line x1="720" y1="116.4" x2="830" y2="117.8" stroke="#666666" stroke-width="2" />
-<rect x="144" y="102" width="50" height="32" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
-<rect x="304" y="100" width="50" height="32" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
-<rect x="424" y="100" width="50" height="32" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
-<rect x="504" y="102" width="50" height="32" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
-<rect x="664" y="100" width="50" height="32" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
-<rect x="824" y="102" width="50" height="32" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
-<text x="169" y="122" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">A</text>
-<text x="329" y="120" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">D</text>
-<text x="449" y="120" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">H</text>
-<text x="529" y="122" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">M</text>
-<text x="689" y="120" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">R</text>
-<text x="849" y="122" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">Z</text>
-<text x="24" y="192" font-size="12" font-weight="bold" fill="#1f1f1f">Nível 1</text>
-<rect x="120" y="160" width="974" height="148" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2" />
-<line x1="169" y1="140" x2="169" y2="180" stroke="#666666" stroke-width="2" />
-<line x1="329" y1="138" x2="329" y2="178" stroke="#666666" stroke-width="2" />
-<line x1="460.5" y1="137.3" x2="483.2" y2="179.3" stroke="#666666" stroke-width="2" />
-<line x1="559.2" y1="135.6" x2="629.2" y2="176.4" stroke="#666666" stroke-width="2" />
-<line x1="719.1" y1="134.6" x2="789.1" y2="177.7" stroke="#666666" stroke-width="2" />
-<line x1="879.2" y1="135.1" x2="949.2" y2="174.8" stroke="#666666" stroke-width="2" />
-<line x1="200" y1="188.5" x2="230" y2="187" stroke="#666666" stroke-width="2" />
-<line x1="280" y1="186.8" x2="310" y2="187.5" stroke="#666666" stroke-width="2" />
-<line x1="332" y1="186" x2="364" y2="186" stroke="#666666" stroke-width="2" />
-<line x1="400" y1="186" x2="432" y2="186" stroke="#666666" stroke-width="2" />
-<line x1="468" y1="186" x2="500" y2="186" stroke="#666666" stroke-width="2" />
-<line x1="536" y1="186" x2="568" y2="186" stroke="#666666" stroke-width="2" />
-<line x1="600" y1="189.2" x2="630" y2="188.5" stroke="#666666" stroke-width="2" />
-<line x1="680" y1="188" x2="710" y2="188" stroke="#666666" stroke-width="2" />
-<line x1="760" y1="188.8" x2="790" y2="189.5" stroke="#666666" stroke-width="2" />
-<line x1="808" y1="186" x2="840" y2="186" stroke="#666666" stroke-width="2" />
-<rect x="144" y="174" width="50" height="32" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
-<rect x="224" y="170" width="50" height="32" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
-<rect x="304" y="172" width="50" height="32" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
-<rect x="384" y="172" width="50" height="32" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
-<rect x="464" y="174" width="50" height="32" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
-<rect x="544" y="174" width="50" height="32" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
-<rect x="624" y="172" width="50" height="32" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
-<rect x="704" y="172" width="50" height="32" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
-<rect x="784" y="174" width="50" height="32" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
-<rect x="864" y="174" width="50" height="32" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
-<rect x="944" y="170" width="50" height="32" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
-<text x="169" y="194" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">A</text>
-<text x="249" y="190" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">B</text>
-<text x="329" y="192" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">D</text>
-<text x="409" y="192" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">F</text>
-<text x="489" y="194" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">H</text>
-<text x="569" y="194" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">J</text>
-<text x="649" y="192" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">M</text>
-<text x="729" y="192" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">O</text>
-<text x="809" y="194" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">R</text>
-<text x="889" y="194" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">V</text>
-<text x="969" y="190" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">Z</text>
-<text x="24" y="262" font-size="12" font-weight="bold" fill="#1f1f1f">Nível 0</text>
-<rect x="120" y="230" width="974" height="78" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2" />
-<line x1="166" y1="211.9" x2="160.4" y2="251.9" stroke="#666666" stroke-width="2" />
-<line x1="246" y1="207.9" x2="240.4" y2="247.9" stroke="#666666" stroke-width="2" />
-<line x1="348.7" y1="208.3" x2="387.6" y2="248.3" stroke="#666666" stroke-width="2" />
-<line x1="439.4" y1="203" x2="539.4" y2="252.3" stroke="#666666" stroke-width="2" />
-<line x1="519.7" y1="199.4" x2="699.7" y2="254.1" stroke="#666666" stroke-width="2" />
-<line x1="599.8" y1="197.2" x2="859.8" y2="257.6" stroke="#666666" stroke-width="2" />
-<line x1="679.9" y1="192.5" x2="1099.9" y2="253.2" stroke="#666666" stroke-width="2" />
-<line x1="190" y1="260.5" x2="220" y2="259" stroke="#666666" stroke-width="2" />
-<line x1="254" y1="256" x2="270" y2="256" stroke="#666666" stroke-width="2" />
-<line x1="306" y1="256" x2="322" y2="256" stroke="#666666" stroke-width="2" />
-<line x1="350" y1="260" x2="380" y2="260" stroke="#666666" stroke-width="2" />
-<line x1="410" y1="256" x2="426" y2="256" stroke="#666666" stroke-width="2" />
-<line x1="462" y1="256" x2="478" y2="256" stroke="#666666" stroke-width="2" />
-<line x1="510" y1="262" x2="540" y2="262" stroke="#666666" stroke-width="2" />
-<line x1="566" y1="256" x2="582" y2="256" stroke="#666666" stroke-width="2" />
-<line x1="618" y1="256" x2="634" y2="256" stroke="#666666" stroke-width="2" />
-<line x1="670" y1="260" x2="700" y2="260" stroke="#666666" stroke-width="2" />
-<line x1="722" y1="256" x2="738" y2="256" stroke="#666666" stroke-width="2" />
-<line x1="774" y1="256" x2="790" y2="256" stroke="#666666" stroke-width="2" />
-<line x1="830" y1="262" x2="860" y2="262" stroke="#666666" stroke-width="2" />
-<rect x="134" y="246" width="50" height="32" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
-<rect x="214" y="242" width="50" height="32" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
-<rect x="294" y="244" width="50" height="32" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
-<rect x="374" y="244" width="50" height="32" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
-<rect x="454" y="246" width="50" height="32" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
-<rect x="534" y="246" width="50" height="32" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
-<rect x="614" y="244" width="50" height="32" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
-<rect x="694" y="244" width="50" height="32" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
-<rect x="774" y="246" width="50" height="32" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
-<rect x="854" y="246" width="50" height="32" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
-<rect x="934" y="242" width="50" height="32" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
-<rect x="1014" y="240" width="50" height="32" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
-<rect x="1094" y="240" width="50" height="32" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
-<rect x="1174" y="240" width="50" height="32" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
-<text x="159" y="266" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">A</text>
-<text x="239" y="262" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">B</text>
-<text x="319" y="264" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">C</text>
-<text x="399" y="264" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">D</text>
-<text x="479" y="266" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">E</text>
-<text x="559" y="266" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">F</text>
-<text x="639" y="264" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">G</text>
-<text x="719" y="264" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">H</text>
-<text x="799" y="266" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">I</text>
-<text x="879" y="266" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">J</text>
-<text x="959" y="262" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">K</text>
-<text x="1039" y="260" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">L</text>
-<text x="1119" y="260" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">M</text>
-<text x="1199" y="260" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">N</text>
-<text x="1240" y="260" text-anchor="start" font-size="10" fill="#555555">...</text>
+<rect x="82" y="22" width="560" h="56" rx="6" fill="#f0f4ff" stroke="#b8cce8" stroke-width="1.5" height="56"/>
+<rect x="82" y="102" width="560" height="56" rx="6" fill="#fdf8ec" stroke="#e0d5a0" stroke-width="1.5"/>
+<rect x="82" y="182" width="560" height="56" rx="6" fill="#eef8ee" stroke="#a8d8a8" stroke-width="1.5"/>
+<text x="18" y="54" font-size="11" font-weight="bold" fill="#444">Nível 2</text>
+<text x="18" y="134" font-size="11" font-weight="bold" fill="#444">Nível 1</text>
+<text x="18" y="214" font-size="11" font-weight="bold" fill="#444">Nível 0</text>
+<text x="660" y="50" font-size="10" fill="#666">poucos nós,</text>
+<text x="660" y="62" font-size="10" fill="#666">saltos longos</text>
+<text x="660" y="210" font-size="10" fill="#666">todos os nós,</text>
+<text x="660" y="222" font-size="10" fill="#666">saltos curtos</text>
+<line x1="136" y1="50" x2="375" y2="50" stroke="#6c8ebf" stroke-width="2"/>
+<line x1="416" y1="50" x2="585" y2="50" stroke="#6c8ebf" stroke-width="2"/>
+<rect x="95" y="37" width="40" height="26" rx="5" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+<rect x="375" y="37" width="40" height="26" rx="5" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+<rect x="585" y="37" width="40" height="26" rx="5" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+<text x="115" y="54" text-anchor="middle" font-size="11" font-weight="bold" fill="#1a3a5c">A</text>
+<text x="395" y="54" text-anchor="middle" font-size="11" font-weight="bold" fill="#1a3a5c">E</text>
+<text x="605" y="54" text-anchor="middle" font-size="11" font-weight="bold" fill="#1a3a5c">H</text>
+<line x1="136" y1="130" x2="235" y2="130" stroke="#d6b656" stroke-width="2"/>
+<line x1="276" y1="130" x2="375" y2="130" stroke="#d6b656" stroke-width="2"/>
+<line x1="416" y1="130" x2="445" y2="130" stroke="#d6b656" stroke-width="2"/>
+<line x1="486" y1="130" x2="585" y2="130" stroke="#d6b656" stroke-width="2"/>
+<rect x="95" y="117" width="40" height="26" rx="5" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+<rect x="235" y="117" width="40" height="26" rx="5" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+<rect x="375" y="117" width="40" height="26" rx="5" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+<rect x="445" y="117" width="40" height="26" rx="5" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+<rect x="585" y="117" width="40" height="26" rx="5" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+<text x="115" y="134" text-anchor="middle" font-size="11" font-weight="bold" fill="#7c6200">A</text>
+<text x="255" y="134" text-anchor="middle" font-size="11" font-weight="bold" fill="#7c6200">C</text>
+<text x="395" y="134" text-anchor="middle" font-size="11" font-weight="bold" fill="#7c6200">E</text>
+<text x="465" y="134" text-anchor="middle" font-size="11" font-weight="bold" fill="#7c6200">F</text>
+<text x="605" y="134" text-anchor="middle" font-size="11" font-weight="bold" fill="#7c6200">H</text>
+<line x1="136" y1="210" x2="165" y2="210" stroke="#82b366" stroke-width="2"/>
+<line x1="206" y1="210" x2="235" y2="210" stroke="#82b366" stroke-width="2"/>
+<line x1="276" y1="210" x2="305" y2="210" stroke="#82b366" stroke-width="2"/>
+<line x1="346" y1="210" x2="375" y2="210" stroke="#82b366" stroke-width="2"/>
+<line x1="416" y1="210" x2="445" y2="210" stroke="#82b366" stroke-width="2"/>
+<line x1="486" y1="210" x2="515" y2="210" stroke="#82b366" stroke-width="2"/>
+<line x1="556" y1="210" x2="585" y2="210" stroke="#82b366" stroke-width="2"/>
+<rect x="95" y="197" width="40" height="26" rx="5" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+<rect x="165" y="197" width="40" height="26" rx="5" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+<rect x="235" y="197" width="40" height="26" rx="5" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+<rect x="305" y="197" width="40" height="26" rx="5" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+<rect x="375" y="197" width="40" height="26" rx="5" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+<rect x="445" y="197" width="40" height="26" rx="5" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+<rect x="515" y="197" width="40" height="26" rx="5" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+<rect x="585" y="197" width="40" height="26" rx="5" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+<text x="115" y="214" text-anchor="middle" font-size="11" font-weight="bold" fill="#1b5e20">A</text>
+<text x="185" y="214" text-anchor="middle" font-size="11" font-weight="bold" fill="#1b5e20">B</text>
+<text x="255" y="214" text-anchor="middle" font-size="11" font-weight="bold" fill="#1b5e20">C</text>
+<text x="325" y="214" text-anchor="middle" font-size="11" font-weight="bold" fill="#1b5e20">D</text>
+<text x="395" y="214" text-anchor="middle" font-size="11" font-weight="bold" fill="#1b5e20">E</text>
+<text x="465" y="214" text-anchor="middle" font-size="11" font-weight="bold" fill="#1b5e20">F</text>
+<text x="535" y="214" text-anchor="middle" font-size="11" font-weight="bold" fill="#1b5e20">G</text>
+<text x="605" y="214" text-anchor="middle" font-size="11" font-weight="bold" fill="#1b5e20">H</text>
+<text x="636" y="214" font-size="11" fill="#666">...</text>
+<line x1="115" y1="63" x2="115" y2="117" stroke="#999" stroke-width="1" stroke-dasharray="4,3"/>
+<line x1="395" y1="63" x2="395" y2="117" stroke="#999" stroke-width="1" stroke-dasharray="4,3"/>
+<line x1="605" y1="63" x2="605" y2="117" stroke="#999" stroke-width="1" stroke-dasharray="4,3"/>
+<line x1="115" y1="143" x2="115" y2="197" stroke="#999" stroke-width="1" stroke-dasharray="4,3"/>
+<line x1="255" y1="143" x2="255" y2="197" stroke="#999" stroke-width="1" stroke-dasharray="4,3"/>
+<line x1="395" y1="143" x2="395" y2="197" stroke="#999" stroke-width="1" stroke-dasharray="4,3"/>
+<line x1="465" y1="143" x2="465" y2="197" stroke="#999" stroke-width="1" stroke-dasharray="4,3"/>
+<line x1="605" y1="143" x2="605" y2="197" stroke="#999" stroke-width="1" stroke-dasharray="4,3"/>
 </g>
 </svg>
 
@@ -229,12 +165,12 @@ Percebe o padrão? HNSW mora em memória. 100M vetores de 1536 dimensões precis
 <text x="335" y="214" font-size="12" font-weight="bold" fill="#1f1f1f" text-anchor="middle">C5</text>
 <text x="515" y="214" font-size="12" font-weight="bold" fill="#1f1f1f" text-anchor="middle">C6</text>
 <g fill="#9673a6">
-<circle cx="120" cy="95" r="4" /><circle cx="135" cy="95" r="4" /><circle cx="150" cy="95" r="4" /><circle cx="135" cy="112" r="4" /><circle cx="150" cy="112" r="4" />
-<circle cx="275" cy="95" r="4" /><circle cx="290" cy="95" r="4" /><circle cx="275" cy="112" r="4" /><circle cx="290" cy="112" r="4" /><circle cx="305" cy="112" r="4" />
-<circle cx="430" cy="95" r="4" /><circle cx="445" cy="95" r="4" /><circle cx="460" cy="95" r="4" /><circle cx="475" cy="95" r="4" /><circle cx="445" cy="112" r="4" /><circle cx="460" cy="112" r="4" />
-<circle cx="120" cy="180" r="4" /><circle cx="135" cy="180" r="4" /><circle cx="120" cy="197" r="4" /><circle cx="135" cy="197" r="4" /><circle cx="150" cy="197" r="4" />
-<circle cx="275" cy="180" r="4" /><circle cx="290" cy="180" r="4" /><circle cx="305" cy="180" r="4" /><circle cx="320" cy="180" r="4" /><circle cx="290" cy="197" r="4" /><circle cx="305" cy="197" r="4" />
-<circle cx="430" cy="180" r="4" /><circle cx="445" cy="197" r="4" /><circle cx="460" cy="197" r="4" />
+<circle cx="120" cy="80" r="4" /><circle cx="140" cy="80" r="4" /><circle cx="160" cy="80" r="4" /><circle cx="130" cy="100" r="4" /><circle cx="150" cy="100" r="4" />
+<circle cx="290" cy="80" r="4" /><circle cx="310" cy="80" r="4" /><circle cx="290" cy="100" r="4" /><circle cx="310" cy="100" r="4" /><circle cx="330" cy="100" r="4" />
+<circle cx="470" cy="80" r="4" /><circle cx="490" cy="80" r="4" /><circle cx="510" cy="80" r="4" /><circle cx="530" cy="80" r="4" /><circle cx="490" cy="100" r="4" /><circle cx="510" cy="100" r="4" />
+<circle cx="120" cy="200" r="4" /><circle cx="140" cy="200" r="4" /><circle cx="120" cy="220" r="4" /><circle cx="140" cy="220" r="4" /><circle cx="160" cy="220" r="4" />
+<circle cx="290" cy="200" r="4" /><circle cx="310" cy="200" r="4" /><circle cx="330" cy="200" r="4" /><circle cx="350" cy="200" r="4" /><circle cx="310" cy="220" r="4" /><circle cx="330" cy="220" r="4" />
+<circle cx="470" cy="200" r="4" /><circle cx="490" cy="200" r="4" /><circle cx="510" cy="220" r="4" /><circle cx="530" cy="220" r="4" />
 </g>
 <circle cx="310" cy="150" r="12" fill="#f8cecc" stroke="#b85450" stroke-width="2" />
 <text x="310" y="154" text-anchor="middle" font-size="12" font-weight="bold" fill="#1f1f1f">Q</text>
@@ -422,13 +358,13 @@ az rest --method GET \
 
 ## O que levar pra segunda-feira
 
-- **Vector DB é como um search engine especializado**, não um banco relacional. Otimizado pra busca por similaridade, não pra queries complexas.
-- **HNSW domina** mas come RAM. Quantização (int8) reduz 4x com perda mínima.
-- **Escolha de solução**: se já tem PostgreSQL e < 5M vetores, pgvector. Se precisa de escala e features de busca, Azure AI Search. Se precisa de controle total, Qdrant self-hosted.
-- **Backup é importante** mesmo sendo dados derivados. Re-gerar embeddings custa dinheiro e tempo.
-- **A métrica que importa é recall**, não só latência. Uma busca rápida que retorna resultados irrelevantes é inútil.
+- Vector DB é um search engine especializado, não um banco relacional. Otimizado pra busca por similaridade, não pra queries complexas.
+- HNSW domina mas come RAM. Quantização (int8) reduz 4x com perda mínima.
+- Escolha de solução: se já tem PostgreSQL e < 5M vetores, pgvector. Se precisa de escala e features de busca, Azure AI Search. Se precisa de controle total, Qdrant self-hosted.
+- Backup é importante mesmo sendo dados derivados. Re-gerar embeddings custa dinheiro e tempo.
+- A métrica que importa é recall, não só latência. Uma busca rápida que retorna resultados irrelevantes é inútil.
 
-No próximo post, vamos juntar embeddings + vector database + LLM no padrão que todo mundo está implementando: **RAG (Retrieval-Augmented Generation)**.
+No próximo post: embeddings + vector database + LLM juntos no padrão que todo mundo está implementando, **RAG (Retrieval-Augmented Generation)**.
 
 ## Leitura complementar
 

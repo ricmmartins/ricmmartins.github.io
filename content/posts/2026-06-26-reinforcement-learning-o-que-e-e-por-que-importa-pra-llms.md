@@ -194,12 +194,12 @@ Na prática, a maioria dos times não faz RLHF from scratch. Eles usam modelos j
 
 ## O que levar pra segunda-feira
 
-- **RLHF é o motivo** pelo qual LLMs parecem "inteligentes". Sem ele, são só geradores de texto que completam frases.
-- **Reward hacking é real.** Se o modelo faz algo estranho (responde verbosamente, inventa coisas com confiança), provavelmente é uma falha no reward signal.
-- **RL em infra já existe.** Autoscalers inteligentes, cache policies, scheduling. O conceito é o mesmo: agent observa, age, recebe feedback, melhora.
-- **DPO simplificou muito** o pipeline. Times pequenos podem alinhar modelos sem a complexidade toda de PPO.
+- RLHF é o motivo pelo qual LLMs parecem "inteligentes". Sem ele, são só geradores de texto que completam frases.
+- Reward hacking é real. Se o modelo faz algo estranho (responde verbosamente, inventa coisas com confiança), provavelmente é uma falha no reward signal.
+- RL em infra já existe. Autoscalers inteligentes, cache policies, scheduling. O conceito é o mesmo: agent observa, age, recebe feedback, melhora.
+- DPO simplificou muito o pipeline. Times pequenos podem alinhar modelos sem a complexidade toda de PPO.
 
-No próximo post, vamos falar de **vector databases**. Agora que você sabe o que são embeddings (do post anterior) e como modelos aprendem (esse post), vamos ver onde e como esses vetores são armazenados e buscados em produção.
+No próximo post: **vector databases**. Agora que você sabe o que são embeddings (do post anterior) e como modelos aprendem (esse post), falta ver onde e como esses vetores são armazenados e buscados em produção.
 
 ## Leitura complementar
 

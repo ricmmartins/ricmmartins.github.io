@@ -18,7 +18,7 @@ series:
   - "AI Engineering pra quem é de infra"
 ---
 
-Você leu 13 posts dessa série. Agora vamos juntar tudo num projeto real: um assistente AI pessoal que responde perguntas sobre sua infraestrutura usando seus runbooks, documentação interna, e ferramentas de monitoramento.
+Você leu 13 posts dessa série. Esse é o projeto que junta os conceitos: um assistente AI pessoal que responde perguntas sobre sua infraestrutura usando seus runbooks, documentação interna, e ferramentas de monitoramento.
 
 Não é um toy project. É um system design completo, do tipo que você faria numa entrevista ou num design doc interno.
 
@@ -100,6 +100,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from azure.core.credentials import AzureKeyCredential
+from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 from azure.search.documents import SearchIndexingBufferedSender
 from openai import AzureOpenAI
 
@@ -113,8 +114,10 @@ class DocumentIndexer:
         )
         self.openai = AzureOpenAI(
             azure_endpoint=os.environ["OPENAI_ENDPOINT"],
-            api_key=os.environ["OPENAI_KEY"],
-            api_version="2024-06-01",
+            azure_ad_token_provider=get_bearer_token_provider(
+                DefaultAzureCredential(), "https://cognitiveservices.azure.com/.default"
+            ),
+            api_version="2025-04-01-preview",
         )
 
     def index_directory(self, docs_path: str):
@@ -179,6 +182,7 @@ class DocumentIndexer:
 
 ```python
 from azure.core.credentials import AzureKeyCredential
+from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 from azure.search.documents import SearchClient
 from azure.search.documents.models import VectorizedQuery
 from openai import AzureOpenAI
@@ -193,8 +197,10 @@ class RAGEngine:
         )
         self.openai = AzureOpenAI(
             azure_endpoint=os.environ["OPENAI_ENDPOINT"],
-            api_key=os.environ["OPENAI_KEY"],
-            api_version="2024-06-01",
+            azure_ad_token_provider=get_bearer_token_provider(
+                DefaultAzureCredential(), "https://cognitiveservices.azure.com/.default"
+            ),
+            api_version="2025-04-01-preview",
         )
 
     def search(self, query: str, user_context: dict | None = None, top_k: int = 5):
@@ -246,6 +252,7 @@ class RAGEngine:
 O cérebro do assistente. Recebe a pergunta, decide se precisa de RAG, tools, ou ambos.
 
 ```python
+from azure.identity.aio import DefaultAzureCredential, get_bearer_token_provider
 from openai import AsyncAzureOpenAI
 
 
@@ -256,8 +263,10 @@ class AssistantAgent:
         self.tools = tools
         self.client = AsyncAzureOpenAI(
             azure_endpoint=os.environ["OPENAI_ENDPOINT"],
-            api_key=os.environ["OPENAI_KEY"],
-            api_version="2024-06-01",
+            azure_ad_token_provider=get_bearer_token_provider(
+                DefaultAzureCredential(), "https://cognitiveservices.azure.com/.default"
+            ),
+            api_version="2025-04-01-preview",
         )
 
     async def respond(self, user_id: str, message: str, session_id: str):
@@ -328,6 +337,7 @@ from uuid import uuid4
 
 import redis.asyncio as redis
 from azure.cosmos.aio import CosmosClient
+from azure.identity.aio import DefaultAzureCredential, get_bearer_token_provider
 from openai import AsyncAzureOpenAI
 
 
@@ -344,8 +354,10 @@ class MemoryService:
         self.memories = self.database.get_container_client("user-memory")
         self.client = AsyncAzureOpenAI(
             azure_endpoint=os.environ["OPENAI_ENDPOINT"],
-            api_key=os.environ["OPENAI_KEY"],
-            api_version="2024-06-01",
+            azure_ad_token_provider=get_bearer_token_provider(
+                DefaultAzureCredential(), "https://cognitiveservices.azure.com/.default"
+            ),
+            api_version="2025-04-01-preview",
         )
 
     async def get_conversation(self, session_id: str):
@@ -573,34 +585,58 @@ Pra otimizar:
 
 ## Monitoring e observabilidade
 
-```python
-# Métricas do assistente
-import time
-from dataclasses import dataclass
+Métricas que importam pro assistente (não são as mesmas de um CRUD):
 
-@dataclass
-class AssistantMetrics:
-    total_queries: int = 0
-    avg_latency_ms: float = 0
-    tool_calls_per_query: float = 0
-    rag_hit_rate: float = 0  # % queries que usaram RAG
-    escalation_rate: float = 0  # % que disse "não sei"
-    cost_per_query: float = 0
-    
-    def log_query(self, latency_ms, tools_used, rag_used, escalated, cost):
-        self.total_queries += 1
-        # Rolling average
-        self.avg_latency_ms = (self.avg_latency_ms * (self.total_queries - 1) + latency_ms) / self.total_queries
-        # ... atualizar demais métricas
+| Métrica | Por que importa | Alerta se |
+|---------|----------------|-----------|
+| Latência p95 | UX degrada acima de 8s | > 10s por 5min |
+| Token cost/query | Budget burn rate | > $0.15/query (média) |
+| RAG hit rate | Se cai, docs estão desatualizados | < 60% em 1h |
+| Escalation rate | "Não sei" frequente = gap no knowledge | > 30% em 1h |
+| Tool error rate | Integração quebrada | > 5% em 15min |
+
+Implementação com OpenTelemetry (funciona com Azure Monitor via OTLP exporter):
+
+```python
+from opentelemetry import metrics, trace
+from opentelemetry.exporter.otlp.proto.grpc.metric_exporter import OTLPMetricExporter
+from opentelemetry.sdk.metrics import MeterProvider
+from opentelemetry.sdk.metrics.export import PeriodicExportingMetricReader
+
+reader = PeriodicExportingMetricReader(
+    OTLPMetricExporter(endpoint=os.environ["OTEL_ENDPOINT"])
+)
+provider = MeterProvider(metric_readers=[reader])
+metrics.set_meter_provider(provider)
+meter = metrics.get_meter("ai-assistant")
+
+query_duration = meter.create_histogram("assistant.query.duration_ms")
+query_cost = meter.create_histogram("assistant.query.cost_usd")
+rag_hits = meter.create_counter("assistant.rag.hits")
+rag_misses = meter.create_counter("assistant.rag.misses")
+tool_errors = meter.create_counter("assistant.tools.errors")
+
+
+async def respond_with_telemetry(agent, user_id, message, session_id):
+    start = time.perf_counter()
+    tracer = trace.get_tracer("ai-assistant")
+
+    with tracer.start_as_current_span("assistant.respond") as span:
+        span.set_attribute("user_id", user_id)
+        response = await agent.respond(user_id, message, session_id)
+        duration_ms = (time.perf_counter() - start) * 1000
+        query_duration.record(duration_ms, {"model": "gpt-4o"})
+
+    return response
 ```
 
 ## O que levar pra segunda-feira
 
-- **O design é composição dos conceitos da série.** RAG (post 4), context engineering (post 5), agent loop (post 8), memory (post 10), tools (post 9).
-- **Comece simples.** RAG + LLM sem tools já entrega 70% do valor. Adicione tools depois.
-- **Custo é controlável.** Modelo menor pra tasks simples, caching, rate limiting.
-- **Memória diferencia um chatbot de um assistente.** Short-term pra conversa, long-term pra preferências e fatos.
-- **Security from day 1.** RBAC nos docs, auth no API, validação nas tools.
+- O design é composição dos conceitos da série. RAG (post 4), context engineering (post 5), agent loop (post 8), memory (post 10), tools (post 9).
+- Comece simples. RAG + LLM sem tools já entrega 70% do valor. Adicione tools depois.
+- Custo é controlável. Modelo menor pra tasks simples, caching, rate limiting.
+- Memória diferencia um chatbot de um assistente. Short-term pra conversa, long-term pra preferências e fatos.
+- Security from day 1. RBAC nos docs, managed identity em vez de API keys, validação nas tools.
 
 No próximo e último post da série, vamos falar de **AI Coding Workflow**: como usar AI no seu dia a dia como profissional de infraestrutura.
 
