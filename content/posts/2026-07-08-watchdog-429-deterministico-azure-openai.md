@@ -171,13 +171,13 @@ Por enquanto, o guardrail mais importante já está no desenho: o servidor **só
 
 ## Próximo da série
 
-1. ✅ MCP e agents — o 101 (com o exemplo do AKS-MCP)
-2. ✅ Este post — o servidor que detecta tendências de 429 antes que elas aconteçam
+1. ✅ MCP e agents: o 101 (com o exemplo do AKS-MCP)
+2. ✅ Este post: o servidor que detecta tendências de 429 antes que elas aconteçam
 3. De script a agent: dando autonomia de decisão ao watchdog, com guardrails explícitos contra alert fatigue
 4. Times de agents na prática: combinando o diagnóstico de AKS com o watchdog de quota em um único orquestrador
 5. Governança base para agents no Microsoft Foundry
 
-Se você quiser testar a versão puramente em script antes mesmo de encostar em MCP, são literalmente as duas funções acima e um cron job — comece por aí.
+Se você quiser testar a versão puramente em script antes mesmo de encostar em MCP, são literalmente as duas funções acima e um cron job; comece por aí.
 
 ---
 
