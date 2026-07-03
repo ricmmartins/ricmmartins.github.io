@@ -1,5 +1,6 @@
 ---
 slug: "da-prompt-engineering-a-frontier-company"
+translationKey: "2026/07/02/from-prompt-engineering-to-frontier-company"
 title: "Da prompt engineering à frontier company: por que o modelo já não é o diferencial"
 description: "Modelos viraram commodity. O diferencial agora é o sistema ao redor: harness engineering, context engineering, governança. Como a conversa evoluiu em 3 anos e onde estamos hoje."
 date: 2026-07-02T18:00:00-04:00
@@ -219,4 +220,4 @@ E o sistema que permite isso tem nome: harness.
 
 ---
 
-*Se você quer se aprofundar nos conceitos técnicos mencionados aqui, recomendo os posts da série [AI Engineering pra quem é de infra](/series/ai-engineering-pra-quem-é-de-infra/), especialmente os sobre [context engineering](/posts/context-engineering-a-arte-de-alimentar-llms/), [RAG](/posts/como-rag-funciona-da-teoria-ao-pipeline/) e [MCP](/posts/mcp-e-agentes-101-para-engenheiros-de-infra/).*
+*Este post também está disponível em [inglês](https://rmmartins.com/2026/07/02/from-prompt-engineering-to-frontier-company/). Se você quer se aprofundar nos conceitos técnicos mencionados aqui, recomendo os posts da série [AI Engineering pra quem é de infra](/series/ai-engineering-pra-quem-é-de-infra/), especialmente os sobre [context engineering](/posts/context-engineering-a-arte-de-alimentar-llms/), [RAG](/posts/como-rag-funciona-da-teoria-ao-pipeline/) e [MCP](/posts/mcp-e-agentes-101-para-engenheiros-de-infra/).*
