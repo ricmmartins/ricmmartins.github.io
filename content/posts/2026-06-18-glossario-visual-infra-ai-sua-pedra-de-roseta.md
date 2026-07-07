@@ -132,3 +132,21 @@ Pin esse card. É sua Pedra de Roseta.
 O livro completo, em inglês, está disponível gratuitamente em [ai4infra.com](https://www.ai4infra.com). Se preferiu a versão condensada em português com os exemplos práticos desta série, compartilhe com outros profissionais de infra que estão fazendo a transição pra AI.
 
 AI não é uma revolução que substitui o que você sabe. É uma extensão. Seus skills de networking, storage, compute, segurança e automação são exatamente o que projetos AI precisam pra funcionar em produção. A diferença é que agora você tem o vocabulário e os patterns pra conectar os dois mundos.
+
+## Todos os posts da série
+
+1. [AI para engenheiros de infraestrutura: por que AI precisa de você](/ai-para-engenheiros-de-infraestrutura-por-que-ai-precisa-de-voce/)
+2. [Dados e storage para workloads de AI: o gargalo que ninguém vê](/dados-e-storage-para-workloads-de-ai/)
+3. [Compute para AI: escolhendo o hardware certo (e conectando ele direito)](/compute-para-ai-escolhendo-o-hardware-certo/)
+4. [GPU deep dive: o que acontece dentro do silício](/gpu-deep-dive-o-que-acontece-dentro-do-silicio/)
+5. [Infrastructure as Code para AI: automatizando GPU clusters](/infrastructure-as-code-para-ai-automatizando-gpu-clusters/)
+6. [MLOps: ciclo de vida do modelo pra quem é de infra](/mlops-ciclo-de-vida-do-modelo-pra-quem-e-de-infra/)
+7. [Monitoramento e observabilidade para AI: quando o dashboard verde mente](/monitoramento-e-observabilidade-para-ai/)
+8. [Segurança para AI: ameaças que seu firewall não pega](/seguranca-para-ai-ameacas-que-seu-firewall-nao-pega/)
+9. [Cost engineering para AI: quando GPU idle custa mais que seu carro](/cost-engineering-para-ai-quando-gpu-idle-custa-mais-que-seu-carro/)
+10. [Platform ops: construindo uma plataforma AI self-service](/platform-ops-construindo-uma-plataforma-ai-self-service/)
+11. [Azure OpenAI em produção: tokens, throughput e alta disponibilidade](/azure-openai-em-producao-tokens-throughput-e-alta-disponibilidade/)
+12. [Troubleshooting playbook: os incidentes que vão te acordar às 2AM](/troubleshooting-playbook-os-incidentes-que-vao-te-acordar-as-2am/)
+13. [AI use cases pra infra teams: AIOps e além](/ai-use-cases-pra-infra-teams-aiops-e-alem/)
+14. [Framework de adoção AI: do entusiasmo à governança](/framework-de-adocao-ai-do-entusiasmo-a-governanca/)
+15. [Glossário visual infra ↔ AI: sua Pedra de Roseta](/glossario-visual-infra-ai-sua-pedra-de-roseta/) ← você está aqui
