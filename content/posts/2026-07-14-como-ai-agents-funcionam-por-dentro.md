@@ -14,7 +14,7 @@ tags:
   - function-calling
   - automação
 series:
-  - "AI Engineering pra quem é de infra"
+  - "AI por dentro: de tokens a agents"
 ---
 
 Terça-feira, 14h. Seu colega mostra um demo: ele pede pro "agent" verificar o status de 5 servidores, identificar qual tem mais CPU usage, e criar um ticket pra investigação. O agent faz tudo sozinho. Sem scripts. Sem runbooks.

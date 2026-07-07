@@ -15,7 +15,7 @@ tags:
   - integracoes
   - agents
 series:
-  - "AI Engineering pra quem é de infra"
+  - "AI por dentro: de tokens a agents"
 ---
 
 Cada vez que um agent precisa acessar um novo data source, alguém escreve uma integração custom. GitHub? Integração custom. Jira? Integração custom. Azure Monitor? Integração custom. Banco de dados? Mais uma.

@@ -14,7 +14,7 @@ tags:
   - mlops
   - arquitetura
 series:
-  - "AI Engineering pra quem é de infra"
+  - "AI por dentro: de tokens a agents"
 ---
 
 O time de ML conseguiu um modelo que funciona no notebook Jupyter deles. Accuracy de 94%. Todos comemoram. Agora precisa ir pra produção. Eles olham pra você.

@@ -15,7 +15,7 @@ tags:
   - estado
   - consistencia
 series:
-  - "AI Engineering pra quem é de infra"
+  - "AI por dentro: de tokens a agents"
 ---
 
 Seu agent de diagnóstico funciona perfeitamente pra uma interação. Mas quando o mesmo alerta volta na semana seguinte, ele começa do zero. Não lembra que já investigou, não lembra que a causa raiz era aquele cronjob que estoura memória toda quarta-feira às 3h da manhã.

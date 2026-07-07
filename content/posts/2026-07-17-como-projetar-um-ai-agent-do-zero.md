@@ -14,7 +14,7 @@ tags:
   - design
   - arquitetura
 series:
-  - "AI Engineering pra quem é de infra"
+  - "AI por dentro: de tokens a agents"
 ---
 
 No post anterior, vimos como agents funcionam (LLM + tools + loop). Agora vamos um nível acima: como **projetar** um agent que funciona de verdade em produção. Não o demo de 5 minutos, mas o agent que opera 24/7 sem supervisão constante.

@@ -15,7 +15,7 @@ tags:
   - embeddings
   - transformers
 series:
-  - "AI Engineering pra quem é de infra"
+  - "AI por dentro: de tokens a agents"
 ---
 
 Sexta-feira, 17h. Você recebe um ticket do time de data science: "O modelo está retornando respostas cortadas. Parece que o context window encheu. Pode aumentar?"

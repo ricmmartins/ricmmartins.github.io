@@ -15,7 +15,7 @@ tags:
   - rag
   - projeto-pratico
 series:
-  - "AI Engineering pra quem é de infra"
+  - "AI por dentro: de tokens a agents"
 ---
 
 Você leu 13 posts dessa série. Esse é o projeto que junta os conceitos: um assistente AI pessoal que responde perguntas sobre sua infraestrutura usando seus runbooks, documentação interna, e ferramentas de monitoramento.

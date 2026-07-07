@@ -15,7 +15,7 @@ tags:
   - qualidade
   - testing
 series:
-  - "AI Engineering pra quem é de infra"
+  - "AI por dentro: de tokens a agents"
 ---
 
 Você mudou o system prompt. O time de ML acha que ficou melhor. Mas "achar" não é métrica. Em infra, você não faz deploy sem rodar tests. Em AI, o equivalente é **evals**.

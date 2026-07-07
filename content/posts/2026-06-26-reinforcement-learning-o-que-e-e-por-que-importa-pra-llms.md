@@ -14,7 +14,7 @@ tags:
   - rlhf
   - treinamento
 series:
-  - "AI Engineering pra quem é de infra"
+  - "AI por dentro: de tokens a agents"
 ---
 
 Você já se perguntou por que o ChatGPT responde educadamente em vez de cuspir texto incoerente? Um modelo base sem alignment gera texto estatisticamente provável. Ele completa frases. Não "quer" ajudar ninguém.

@@ -14,7 +14,7 @@ tags:
   - prompts
   - llm
 series:
-  - "AI Engineering pra quem é de infra"
+  - "AI por dentro: de tokens a agents"
 ---
 
 Você monta um RAG pipeline, conecta ao Azure OpenAI, e as respostas ficam... meh. Genéricas. Às vezes ignora o contexto que você enviou. Às vezes inventa coisas. O modelo é potente, mas o input que você manda determina 80% da qualidade do output.

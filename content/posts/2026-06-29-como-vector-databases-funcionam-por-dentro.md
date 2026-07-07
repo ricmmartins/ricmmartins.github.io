@@ -15,7 +15,7 @@ tags:
   - similarity-search
   - azure-ai-search
 series:
-  - "AI Engineering pra quem é de infra"
+  - "AI por dentro: de tokens a agents"
 ---
 
 O time de ML acabou de te pedir um "vector database" em produção. Você sabe operar PostgreSQL, Redis, Cosmos DB. Mas isso? É um banco de dados ou um índice de busca? Precisa de backup? Tem replicação? Qual o modelo de consistência?

@@ -14,7 +14,7 @@ tags:
   - copilot
   - workflow
 series:
-  - "AI Engineering pra quem é de infra"
+  - "AI por dentro: de tokens a agents"
 ---
 
 Último post da série. Nos 14 anteriores, entendemos como AI funciona por dentro. Agora o ângulo é prático: como usar essas ferramentas no dia a dia pra ser mais produtivo sem perder a capacidade de pensar por conta própria.

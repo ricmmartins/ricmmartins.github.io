@@ -15,7 +15,7 @@ tags:
   - embeddings
   - retrieval
 series:
-  - "AI Engineering pra quem é de infra"
+  - "AI por dentro: de tokens a agents"
 ---
 
 O VP de produto chega na daily: "Quero que o chatbot responda perguntas sobre nossa documentação interna. Tem 2000 páginas de runbooks, políticas, e procedimentos. O ChatGPT não sabe nada disso."

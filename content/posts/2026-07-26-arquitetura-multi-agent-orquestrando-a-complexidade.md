@@ -14,7 +14,7 @@ tags:
   - orquestracao
   - arquitetura
 series:
-  - "AI Engineering pra quem é de infra"
+  - "AI por dentro: de tokens a agents"
 ---
 
 Um agent sozinho é como um microserviço monolítico. Resolve tudo, mas fica complexo demais. Quando a tarefa cresce, você precisa de especialização. Múltiplos agents, cada um expert no seu domínio, colaborando.

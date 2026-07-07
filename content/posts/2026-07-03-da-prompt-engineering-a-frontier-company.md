@@ -226,4 +226,4 @@ E o sistema que permite isso tem nome: harness.
 
 ---
 
-*Este post também está disponível em [inglês](https://rmmartins.com/2026/07/02/from-prompt-engineering-to-frontier-company/). Se você quer se aprofundar nos conceitos técnicos mencionados aqui, recomendo os posts da série [AI Engineering pra quem é de infra](/series/ai-engineering-pra-quem-é-de-infra/), especialmente os sobre [context engineering](/posts/context-engineering-a-arte-de-alimentar-llms/), [RAG](/posts/como-rag-funciona-da-teoria-ao-pipeline/) e [MCP](/posts/mcp-e-agentes-101-para-engenheiros-de-infra/).*
+*Este post também está disponível em [inglês](https://rmmartins.com/2026/07/02/from-prompt-engineering-to-frontier-company/). Se você quer se aprofundar nos conceitos técnicos mencionados aqui, recomendo os posts da série [AI por dentro: de tokens a agents](/series/ai-engineering-pra-quem-é-de-infra/), especialmente os sobre [context engineering](/posts/context-engineering-a-arte-de-alimentar-llms/), [RAG](/posts/como-rag-funciona-da-teoria-ao-pipeline/) e [MCP](/posts/mcp-e-agentes-101-para-engenheiros-de-infra/).*

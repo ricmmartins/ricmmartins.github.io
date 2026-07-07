@@ -14,7 +14,7 @@ tags:
   - design-patterns
   - arquitetura
 series:
-  - "AI Engineering pra quem é de infra"
+  - "AI por dentro: de tokens a agents"
 ---
 
 Se agents são controllers (LLM + tools + loop), padrões agentic são os **design patterns** que esses controllers usam. Assim como em software tradicional você tem Observer, Strategy, Chain of Responsibility, em AI agents existem patterns recorrentes que resolvem problemas específicos.
