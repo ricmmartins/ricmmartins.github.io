@@ -46,6 +46,31 @@
 
   {{- partial "ads/ad-post-bottom.html" . }}
 
+  {{- /* Series Box */ -}}
+  {{- with .Params.series }}
+  {{- range . }}
+  {{- $seriesName := . }}
+  {{- $seriesPages := where $.Site.RegularPages "Params.series" "intersect" (slice $seriesName) }}
+  {{- if gt (len $seriesPages) 1 }}
+  <nav class="series-box" aria-label="Série">
+    <h2>📚 Este post faz parte da série "{{ $seriesName }}"</h2>
+    <p>Confira os demais posts desta série:</p>
+    <ol>
+      {{- range $seriesPages.ByDate }}
+      <li{{ if eq $.RelPermalink .RelPermalink }} class="series-current"{{ end }}>
+        {{- if eq $.RelPermalink .RelPermalink }}
+        <strong>{{ .Title }}</strong> ← você está aqui
+        {{- else }}
+        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        {{- end }}
+      </li>
+      {{- end }}
+    </ol>
+  </nav>
+  {{- end }}
+  {{- end }}
+  {{- end }}
+
   {{- /* Related Posts */ -}}
   {{- $related := .Site.RegularPages.Related . | first 5 }}
   {{- with $related }}
