@@ -18,118 +18,117 @@ series:
   - "AI para Engenheiros de Infraestrutura"
 ---
 
-Último post da série. No [anterior](/framework-de-adocao-ai-do-entusiasmo-a-governanca/), construímos o framework de adoção de 6 fases. Agora: seu quick-reference card permanente.
+Último post da série. No [anterior](/framework-de-adocao-ai-do-entusiasmo-a-governanca/), a gente montou o framework de adoção em 6 fases. Agora vem a cola final.
 
-Você já fala infraestrutura fluentemente. AI não é uma língua estrangeira; é um dialeto. Este glossário mapeia cada termo de AI pra algo que você já entende.
+Você já fala infraestrutura com fluência. AI não é idioma alienígena. É um dialeto com nome ruim e sigla demais. Este glossário faz a ponte entre os termos de AI e os conceitos de infra que você já usa todo dia.
 
 ## Como usar
 
-Toda entrada tem: o **termo AI**, a **analogia de infra** entre parênteses, uma **definição concisa**, e **quando você vai encontrar isso** no seu trabalho. Organizado em 6 categorias. Pin essa página.
+Cada entrada tem o **termo de AI**, a **analogia de infra**, uma **definição curta** e **onde isso aparece na prática**. Organizei em 6 blocos pra ficar fácil achar o que interessa sem fingir que você lembra tudo de cabeça.
 
-## Core AI concepts
-
-| Termo AI | Analogia de infra | Definição | Quando aparece |
-|----------|-------------------|-----------|----------------|
-| **Model** | Binary compilado | O artefato treinado, deployável pra servir predictions. Contém os parâmetros aprendidos. | Managing deployments, versionando artefatos, sizing storage (modelos vão de MBs a centenas de GBs) |
-| **Training** | Batch job | Processo de ensinar o modelo alimentando dados e ajustando parâmetros. Long-running, GPU-intensivo. | Provisionando GPU clusters, estimando duração de jobs, planejando bursts de compute |
-| **Inference** | API endpoint | Rodar um modelo treinado com dados novos pra gerar respostas. Real-time, latency-sensitive. | Toda vez que um user ou sistema chama um serviço AI. É o workload de produção que você monitora e escala |
-| **LLM** | Serviço API especializado (text-in, text-out) | Foundation model treinado em corpus massivo de texto pra entender e gerar linguagem humana. GPT-4, Claude, LLaMA. | Deployando endpoints Azure OpenAI, sizing token quotas, planejando capacidade |
-| **Fine-tuning** | Customização de configuração | Adaptar modelo pré-treinado pro seu domínio treinando com seus dados. | Quando times precisam que modelo entenda terminologia interna ou processos específicos |
-| **Foundation Model** | Base image / golden image | Modelo grande e pré-treinado (GPT-4, LLaMA, Mistral) pra ser adaptado pra muitas tarefas downstream. | Selecionando qual base model deployar ou fine-tunar. É o artefato inicial na maioria dos projetos AI |
-| **Parameters / Weights** | Valores de configuração | Os valores numéricos internos que definem como o modelo processa input e gera output. GPT-4 tem trilhões. | Sizing infra: mais parâmetros = mais memória, mais compute, mais storage |
-| **Epoch** | Ciclo de backup completo | Uma passada completa por todo o dataset de training. Modelos tipicamente treinam por dezenas a centenas de epochs. | Estimando duração e custo de training jobs |
-| **Batch Size** | Chunk size | Número de amostras processadas antes de atualizar pesos. Maior = mais GPU memory, mais eficiente. | Tuning training jobs e troubleshooting OOM errors (reduzir batch size é geralmente o primeiro fix) |
-| **Transfer Learning** | Reuso de template | Usar modelo pré-treinado em uma tarefa como ponto de partida pra outra, preservando conhecimento aprendido. | Quando times querem resultados mais rápido e barato partindo de um foundation model |
-
-## Data e storage
+## Conceitos centrais de AI
 
 | Termo AI | Analogia de infra | Definição | Quando aparece |
 |----------|-------------------|-----------|----------------|
-| **Dataset** | Data source / storage volume | Dados estruturados ou não usados pra treinar, validar ou testar um modelo. GBs a PBs. | Provisionando storage, planejando pipelines de dados, gerenciando access controls |
-| **Embedding** | Hash / index key | Representação numérica vetorial de texto/imagens que captura significado semântico. Habilita similarity search. | Deployando RAG architectures, sizing vector databases |
-| **Tokenization** | Serialização | Quebrar texto em unidades menores (tokens) que o modelo processa. Similar a serialização de objetos. | Calculando custos (paga por token), estimando context window usage, otimizando prompts |
-| **Vector Database** | Search index | Database especializado que armazena embeddings e busca por similaridade (nearest-neighbor). | Deployando RAG, provisionando Azure AI Search com vector capabilities |
-| **Feature Store** | Caching layer pra ML inputs | Repositório centralizado de features pré-computadas pra training e inference. | Arquitetando ML platforms que precisam de acesso low-latency a features |
-| **Data Drift** | Schema change / distribuição de input mudou | Quando propriedades estatísticas dos dados de produção divergem dos dados de training. Degrada accuracy. | Model performance degrada sem code changes. O assassino silencioso de ML accuracy |
+| **Model** | Binário compilado | O artefato treinado que você publica pra servir previsões ou respostas. Carrega os parâmetros aprendidos. | Deploy de modelo, versionamento de artefato e dimensionamento de storage |
+| **Training** | Batch job | Processo de ensinar o modelo com dados e ajustar parâmetros. É longo e costuma gastar muita GPU. | Provisionamento de cluster com GPU, estimativa de duração de job e planejamento de pico de compute |
+| **Inference** | API endpoint | Execução do modelo treinado em dados novos pra gerar resposta ou previsão. | Toda chamada ao serviço em produção. É a parte que você monitora e escala |
+| **LLM** | Serviço de texto de propósito geral | Modelo de linguagem treinado em volume grande de texto pra entender e gerar linguagem natural. | Azure OpenAI, planejamento de quota, troubleshooting de token e latência |
+| **Fine-tuning** | Customização de configuração | Ajuste de um modelo pré-treinado usando dado do seu domínio. | Quando o time precisa adaptar terminologia, estilo ou tarefa específica |
+| **Foundation Model** | Base image | Modelo base, grande e pré-treinado, usado como ponto de partida pra várias tarefas. | Escolha do modelo inicial em quase todo projeto de AI |
+| **Parameters / Weights** | Valores de configuração | Valores numéricos internos que definem como o modelo processa entrada e gera saída. Fabricantes muitas vezes não divulgam o total exato. | Conta de memória, compute e storage |
+| **Epoch** | Passada completa no dataset | Uma passagem completa por todo o dataset de treino. Em fine-tuning isso aparece bastante; em pretraining grande a conversa costuma ser em tokens. | Estimativa de duração e custo de treino |
+| **Batch Size** | Tamanho do lote | Quantidade de amostras processadas antes de atualizar os pesos. Quanto maior, mais memória consome. | Ajuste de treino e troubleshooting de OOM |
+| **Transfer Learning** | Reuso de template | Uso de um modelo já treinado como base pra outra tarefa, reaproveitando conhecimento. | Projeto que quer resultado mais rápido sem começar do zero |
+
+## Dados e armazenamento
+
+| Termo AI | Analogia de infra | Definição | Quando aparece |
+|----------|-------------------|-----------|----------------|
+| **Dataset** | Fonte de dados ou volume | Conjunto de dados estruturados ou não usados pra treinar, validar ou testar um modelo. | Storage, pipeline de dados e controle de acesso |
+| **Embedding** | Chave de índice semântico | Representação vetorial de texto, imagem ou outro conteúdo que preserva significado. | RAG, busca por similaridade e banco vetorial |
+| **Tokenization** | Serialização | Quebra do texto em tokens que o modelo consegue processar. | Conta de custo, uso de janela de contexto e otimização de prompt |
+| **Vector Database** | Índice de busca | Banco especializado em armazenar embeddings e buscar por similaridade. | Arquitetura RAG e Azure AI Search com vetor |
+| **Feature Store** | Camada de cache pra features | Repositório centralizado de features pré-computadas pra treino e inferência. | Plataforma de ML com reuso e baixa latência |
+| **Data Drift** | Mudança na distribuição de entrada | Quando os dados de produção deixam de parecer com os dados de treino e a qualidade cai. | Modelo degrada sem mudança de código |
 
 ## Compute e hardware
 
 | Termo AI | Analogia de infra | Definição | Quando aparece |
 |----------|-------------------|-----------|----------------|
-| **GPU** | Coprocessador | Processador projetado pra computação paralela massiva, offloading matrix math da CPU. | Em todo lugar em AI infra: provisioning VM SKUs, monitoring utilization, managing costs |
-| **CUDA** | GPU instruction set / SDK | Plataforma de parallel computing da NVIDIA que permite código executado em GPUs. | Instalando drivers, configurando containers GPU, troubleshooting "CUDA out of memory" |
-| **HBM** | GPU RAM | Memória high-bandwidth empilhada no die do GPU. A100 tem 80 GB HBM2e. | Selecionando GPU SKUs: HBM capacity determina model size máximo que uma GPU suporta |
-| **InfiniBand** | High-speed node-to-node networking | Interconnect ultra-low-latency e high-bandwidth pra distributed training. Muito mais rápido que Ethernet. | Provisionando multi-node GPU clusters (ND-series VMs) pra training jobs grandes |
-| **NVLink** | GPU-to-GPU interconnect | Link high-speed conectando GPUs dentro de um único nó. ~10x a bandwidth de PCIe. | Sizing multi-GPU VMs: GPUs com NVLink compartilham dados rápido o suficiente pra agir como unified memory |
-| **Tensor Core** | Unidade especializada de matrix math | Hardware dedicado em GPUs NVIDIA otimizado pra operações matrix multiply-and-accumulate que dominam AI. | Avaliando gerações de GPU: Tensor Cores são por que A100 é dramaticamente mais rápido pra AI que gaming GPU |
+| **GPU** | Coprocessador | Processador desenhado pra computação paralela massiva, muito bom em multiplicação de matriz. | Escolha de VM, observabilidade e custo |
+| **CUDA** | Plataforma e SDK de GPU | Plataforma de computação paralela da NVIDIA que permite rodar código na GPU. | Driver, container com GPU e troubleshooting de memória |
+| **HBM** | RAM da GPU | Memória de alta largura de banda empilhada junto da GPU. Uma A100 de 80 GB usa HBM2e. | Escolha de SKU, porque o tamanho do modelo depende bastante disso |
+| **InfiniBand** | Rede de alta velocidade entre nós | Interconexão de baixa latência e alta banda pra treino distribuído. | Cluster multi-node com GPU, em especial em séries ND |
+| **NVLink** | Link GPU a GPU | Interconexão rápida entre GPUs do mesmo host. Entrega banda bem maior que PCIe, mas a diferença exata depende da geração. | VM com múltiplas GPUs e workloads com paralelismo de modelo |
+| **Tensor Core** | Unidade especializada de multiplicação de matriz | Bloco de hardware da NVIDIA otimizado pra operações que dominam AI. | Comparação entre gerações de GPU |
 
-## Model operations
-
-| Termo AI | Analogia de infra | Definição | Quando aparece |
-|----------|-------------------|-----------|----------------|
-| **Checkpoint** | Snapshot / backup | Cópia salva do estado do modelo durante training: weights, optimizer state, progresso. | Gerenciando storage (checkpoints podem ter dezenas de GBs cada), desenhando training fault-tolerant |
-| **Gradient** | Error signal | Valor matemático indicando direção e magnitude dos ajustes de pesos pra reduzir erro. | Troubleshooting training instability: "exploding gradients" e "vanishing gradients" |
-| **Hyperparameter** | Config value tunável | Valor setado antes do training que controla o processo: learning rate, batch size, layers. Como thread count ou pool size. | Quando data scientists pedem múltiplos training runs com configs diferentes: cada combo é um job separado |
-| **MLOps** | DevOps pra modelos | Aplicar práticas DevOps (CI/CD, versioning, monitoring, automação) ao lifecycle de ML. | Construindo ML platforms, desenhando model deployment pipelines |
-| **Model Registry** | Container registry pra modelos | Repositório versionado pra armazenar e gerenciar artefatos de modelo treinado. | Implementando MLOps pipelines que precisam versionar, promover e rollback model deployments |
-
-## Deployment e serving
+## Operação de modelos
 
 | Termo AI | Analogia de infra | Definição | Quando aparece |
 |----------|-------------------|-----------|----------------|
-| **Prompt** | API request body | Input de texto enviado ao modelo pra guiar output: instruções, contexto, exemplos, pergunta. | Toda interação com LLM. Prompt design impacta qualidade, token consumption e custo |
-| **Completion** | API response body | Output gerado pelo modelo em resposta a um prompt. | Parsing responses, calculando output token costs, monitoring qualidade |
-| **Context Window** | Tamanho máximo de request payload | Máximo de tokens que modelo processa em um request (prompt + completion combinados). | Desenhando prompts e RAG systems: exceder context window trunca input ou causa erros |
-| **Inference Endpoint** | API endpoint servindo predictions | Modelo deployado exposto como HTTP API que aceita input e retorna predictions. | Provisionando, escalando e monitorando o serviço AI production-facing |
-| **PTU** | Reserved capacity (como reserved instances) | Capacidade de compute pré-alocada e garantida pra modelos Azure OpenAI. Latência e throughput consistentes. | Quando workloads precisam de performance previsível: PTU elimina throttling a custo fixo |
-| **RAG** | Enriquecimento dinâmico de prompt com dados externos | Pattern que busca documentos relevantes de uma knowledge base e injeta no prompt antes da geração. | Construindo soluções enterprise AI que precisam responder usando dados específicos e atualizados |
-| **TPM** | Bandwidth / throughput quota | Máximo de tokens processados por minuto pra um deployment. Principal métrica de throughput pra LLM endpoints. | Sizing deployments, estimando custos, diagnosticando throttling |
-| **RPM** | Request rate limit | Máximo de API calls por minuto pra um deployment. Independente de token quotas. | Capacity planning e troubleshooting HTTP 429 |
+| **Checkpoint** | Snapshot ou backup | Estado salvo do treino, incluindo pesos, estado do otimizador e progresso. | Retomada de treino e planejamento de storage |
+| **Gradient** | Sinal de erro | Valor matemático que aponta direção e magnitude do ajuste necessário nos pesos. | Diagnóstico de instabilidade, como exploding ou vanishing gradients |
+| **Hyperparameter** | Config tunável | Valor definido antes do treino, como learning rate ou batch size. | Grade de experimentos e múltiplos runs |
+| **MLOps** | DevOps pra modelo | Aplicação de versionamento, CI/CD, observabilidade e automação ao ciclo de vida de ML. | Plataforma de ML e pipeline de promoção de modelo |
+| **Model Registry** | Registry de artefato | Repositório versionado pra armazenar e promover modelos treinados. | Rollback, promoção entre ambientes e governança |
 
-## Advanced concepts
+## Deploy e serving
 
 | Termo AI | Analogia de infra | Definição | Quando aparece |
 |----------|-------------------|-----------|----------------|
-| **Data Parallelism** | Sharding data across GPUs | Estratégia onde dataset é dividido entre GPUs, cada uma processando batch diferente com cópia completa do modelo. | Escalando training pra múltiplas GPUs. Abordagem mais simples de distributed training |
-| **Model Parallelism** | Sharding modelo across GPUs | Dividir modelo em múltiplas GPUs quando não cabe na memória de uma só. Cada GPU segura parte das layers. | Deployando modelos muito grandes (70B+ parâmetros) que excedem HBM de uma GPU |
-| **LoRA** | Fine-tuning lightweight | Técnica que treina uma adapter layer pequena (~1-2% dos parâmetros) em vez do modelo inteiro. | Quando times querem customizar foundation model sem custo de full fine-tuning |
-| **Mixed Precision** | Otimização de data type variável | Training com mix de FP32 e BF16/FP16, usando lower precision onde possível pra reduzir memória e aumentar throughput. | Otimizando training jobs: mixed precision pode quase dobrar throughput em GPUs modernas |
-| **Quantization** | Compressão | Reduzir precisão do modelo (FP32 → INT8 ou INT4) pra shrink size e acelerar inference. Troca accuracy pequena por eficiência grande. | Deployando modelos com constraints de custo ou latência: quantization pode cortar memory usage em 4x+ |
-| **Prompt Injection** | SQL injection pra AI | Ataque onde input não confiável é crafted pra override instruções do modelo, causando comportamento não intendido. | Securing AI endpoints expostos a user input. A preocupação de segurança #1 pra aplicações LLM |
-| **ZeRO** | Memory optimization pra distributed training | Família de técnicas que particiona optimizer states, gradients e parameters entre GPUs pra eliminar redundância. | Training de modelos grandes que não cabem em GPU memory mesmo com data parallelism. Solução padrão em DeepSpeed |
+| **Prompt** | Corpo do request | Texto enviado ao modelo com instrução, contexto e pergunta. | Toda interação com LLM |
+| **Completion** | Corpo da resposta | Saída gerada pelo modelo em resposta ao prompt. | Parsing, custo e avaliação de qualidade |
+| **Context Window** | Tamanho máximo do payload | Total de tokens que o modelo consegue processar em uma chamada, somando prompt e resposta. | Desenho de prompt e arquitetura RAG |
+| **Inference Endpoint** | API de produção | Endpoint HTTP que recebe entrada e devolve previsão ou texto gerado. | Escala, SLO e observabilidade |
+| **PTU** | Capacidade reservada | Capacidade reservada no Azure OpenAI. Dá throughput e latência mais previsíveis dentro da capacidade comprada. | Workload estável que precisa de previsibilidade |
+| **RAG** | Enriquecimento dinâmico do prompt | Padrão que busca conteúdo relevante e injeta no prompt antes da geração. | Chat corporativo, busca em documento e AI com dado atualizado |
+| **TPM** | Quota de throughput | Máximo de tokens processados por minuto em um deployment. | Sizing, custo e troubleshooting de 429 |
+| **RPM** | Quota de requests | Máximo de chamadas por minuto em um deployment. | Capacidade e limitação de taxa |
 
-## Quick reference: top 20 termos
+## Conceitos avançados
 
-Pin esse card. É sua Pedra de Roseta.
+| Termo AI | Analogia de infra | Definição | Quando aparece |
+|----------|-------------------|-----------|----------------|
+| **Data Parallelism** | Sharding de dado entre GPUs | Estratégia em que cada GPU processa um batch diferente com uma cópia completa do modelo. | Escala horizontal de treino |
+| **Model Parallelism** | Sharding do modelo | Divisão do modelo entre várias GPUs quando ele não cabe em uma só. | Modelos muito grandes, como 70B ou mais |
+| **LoRA** | Fine-tuning leve | Técnica que treina um conjunto pequeno de adaptadores em vez do modelo inteiro. | Customização mais barata de foundation model |
+| **Mixed Precision** | Otimização por tipo de dado | Uso combinado de FP32 com BF16 ou FP16 pra reduzir memória e aumentar throughput. | Treino em GPU moderna |
+| **Quantization** | Compressão | Redução da precisão numérica do modelo, como FP32 pra INT8 ou INT4, pra baixar custo e acelerar inferência. | Deploy com restrição de memória ou latência |
+| **Prompt Injection** | Injeção de instrução maliciosa | Ataque em que entrada não confiável tenta sobrescrever a instrução do sistema e desviar o comportamento do modelo. | Segurança de aplicação com LLM exposto a usuário |
+| **ZeRO** | Otimização de memória distribuída | Conjunto de técnicas que reparte estados do otimizador, gradientes e parâmetros entre GPUs pra reduzir redundância. | Treino distribuído com modelo grande demais pra memória disponível |
+
+## Referência rápida: 20 termos
+
+Guarda esse quadro. Ele poupa tempo.
 
 | # | Termo AI | Tradução infra |
 |---|----------|----------------|
-| 1 | **Model** | Binary compilado, output deployável de training |
-| 2 | **Training** | Batch job long-running que produz um model |
-| 3 | **Inference** | API call real-time contra modelo deployado |
-| 4 | **GPU** | Coprocessador que offloads matrix math |
-| 5 | **LLM** | Serviço API text-in/text-out |
-| 6 | **Prompt** | API request body |
-| 7 | **Completion** | API response body |
-| 8 | **Token** | Unidade mínima de processamento (paga por token como paga por byte transferido) |
-| 9 | **Context Window** | Tamanho máximo de request payload |
-| 10 | **Fine-tuning** | Customizar base image com seus dados |
-| 11 | **RAG** | Enriquecimento dinâmico de prompt com dados buscados |
-| 12 | **Embedding** | Hash/index key numérico pra similarity search |
-| 13 | **Checkpoint** | Snapshot/backup de training state |
-| 14 | **TPM** | Bandwidth quota (tokens por minuto) |
-| 15 | **PTU** | Reserved capacity (como reserved instances) |
-| 16 | **CUDA** | GPU SDK/instruction set da NVIDIA |
-| 17 | **LoRA** | Fine-tuning lightweight (<1% dos parâmetros) |
-| 18 | **MLOps** | DevOps aplicado a model lifecycle |
-| 19 | **Data Drift** | Distribuição de input mudou, modelo degrada |
-| 20 | **Quantization** | Compressão de modelo (4x menos memória) |
+| 1 | **Model** | Binário treinado e publicável |
+| 2 | **Training** | Batch job que produz o modelo |
+| 3 | **Inference** | Chamada em tempo real a um modelo publicado |
+| 4 | **GPU** | Coprocessador pra matemática paralela |
+| 5 | **LLM** | Serviço de texto de propósito geral |
+| 6 | **Prompt** | Corpo do request |
+| 7 | **Completion** | Corpo da resposta |
+| 8 | **Token** | Unidade mínima de processamento e cobrança |
+| 9 | **Context Window** | Tamanho máximo do payload |
+| 10 | **Fine-tuning** | Ajuste do modelo base com dado do seu domínio |
+| 11 | **RAG** | Prompt enriquecido com dado buscado externamente |
+| 12 | **Embedding** | Chave vetorial pra busca semântica |
+| 13 | **Checkpoint** | Snapshot do treino |
+| 14 | **TPM** | Quota de tokens por minuto |
+| 15 | **PTU** | Capacidade reservada no Azure OpenAI |
+| 16 | **CUDA** | Plataforma e SDK de GPU da NVIDIA |
+| 17 | **LoRA** | Fine-tuning com adaptadores pequenos |
+| 18 | **MLOps** | DevOps aplicado ao ciclo de vida do modelo |
+| 19 | **Data Drift** | Dado de produção mudou e o modelo piorou |
+| 20 | **Quantization** | Compressão do modelo pra gastar menos memória |
 
 ## Encerramento da série
 
-15 posts. Do primeiro conceito (por que engenheiros de infra importam pra AI) até este glossário completo. Se você acompanhou tudo, tem hoje uma base sólida pra operar workloads AI em produção com segurança, eficiência de custo e governança.
+Foram 15 posts. Do primeiro conceito, que era por que engenheiro de infra importa pra AI, até este glossário. Se você chegou até aqui, já tem base pra conversar com data scientist, arquiteto, segurança e finanças sem tratar AI como truque de palco.
 
-O livro completo, em inglês, está disponível gratuitamente em [ai4infra.com](https://www.ai4infra.com). Se preferiu a versão condensada em português com os exemplos práticos desta série, compartilhe com outros profissionais de infra que estão fazendo a transição pra AI.
+O livro completo, em inglês, continua disponível de graça em [ai4infra.com](https://www.ai4infra.com). Se esta série em português te poupou algumas horas de tropeço, manda pra outro profissional de infra que caiu em projeto de AI sem ter pedido muito.
 
-AI não é uma revolução que substitui o que você sabe. É uma extensão. Seus skills de networking, storage, compute, segurança e automação são exatamente o que projetos AI precisam pra funcionar em produção. A diferença é que agora você tem o vocabulário e os patterns pra conectar os dois mundos.
-
+AI não apaga o que você já sabe. Ela exige isso. Rede, storage, compute, segurança, automação, custo e resposta a incidente continuam no centro. Agora você só ganhou um vocabulário melhor pra ligar uma coisa na outra.

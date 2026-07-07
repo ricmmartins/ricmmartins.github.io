@@ -22,13 +22,13 @@ No post anterior eu expliquei o que é MCP e como um agent decide sozinho a sequ
 
 ## Por que isso é mais sutil do que parece
 
-A primeira reação de quem nunca sofreu com 429 costuma ser: "fácil, é só medir o uso e comparar com a quota". O problema é que TPM (tokens per minute) e RPM (requests per minute) no Azure OpenAI são avaliados em janelas **deslizantes**, em intervalos curtos (normalmente de 1 a 10 segundos), e não como uma média suave ao longo do minuto. Isso significa que você pode estourar o limite mesmo ficando "dentro da quota" no agregado, simplesmente porque as requisições chegaram em burst em vez de distribuídas no tempo. É por isso que tanta equipe relata 429 "mesmo dentro do limite documentado": o problema não é o volume total, e sim a distribuição ao longo do tempo.
+A primeira reação de quem nunca sofreu com 429 costuma ser: "fácil, é só medir o uso e comparar com a quota". O problema é que TPM (tokens per minute) e RPM (requests per minute) no Azure OpenAI são avaliados em janelas **deslizantes**, não como uma média suave ao longo do minuto. Isso significa que você pode estourar o limite mesmo ficando "dentro da quota" no agregado, simplesmente porque as requisições chegaram em burst em vez de distribuídas no tempo. É por isso que tanta equipe relata 429 "mesmo dentro do limite documentado": o problema não é o volume total, e sim a distribuição ao longo do tempo.
 
-A resposta padrão da indústria é: retry com exponential backoff e jitter, respeitando o header `retry-after-ms` que a própria API já devolve. Isso é necessário, mas é reativo: o cliente já sentiu o erro. O que queremos aqui é a camada anterior: enxergar a tendência de consumo subindo em direção ao limite e agir antes de o primeiro 429 sequer disparar.
+A resposta padrão da indústria é: retry com exponential backoff e jitter, respeitando `Retry-After` ou `retry-after-ms` quando o serviço devolve um deles. Isso é necessário, mas é reativo: o cliente já sentiu o erro. O que queremos aqui é a camada anterior: enxergar a tendência de consumo subindo em direção ao limite e agir antes de o primeiro 429 sequer disparar.
 
 ## O que o Azure já resolve sem você escrever uma linha de código
 
-Antes de construir qualquer coisa, porém: a plataforma já resolve uma parte considerável desse problema sozinha. O Azure OpenAI expõe métricas nativas no Azure Monitor por deployment: os nomes reais da API são `TokenTransaction` (tokens processados), `AzureOpenAIRequests` (total de chamadas), `ProcessedPromptTokens`, `GeneratedTokens` e as métricas de latência, todas filtráveis pela dimensão `ModelDeploymentName`. Um alerta simples por threshold, como "avise quando `TokenTransaction` passar de X tokens em 1 minuto", não precisa de agent, MCP nem código algum. É um `azurerm_monitor_metric_alert` apontando para um `azurerm_monitor_action_group` com email e webhook do Slack, resolvido em Terraform puro:
+Antes de construir qualquer coisa, porém: a plataforma já resolve uma parte boa desse problema sozinha. O Azure OpenAI expõe métricas nativas no Azure Monitor por deployment. As que importam aqui são `TokenTransaction` (tokens de inferência processados, isto é, prompt + completion), `AzureOpenAIRequests` (volume de chamadas), `ProcessedPromptTokens`, `GeneratedTokens` e as métricas de latência, todas filtráveis pela dimensão `ModelDeploymentName`. Um alerta simples por threshold, como "avise quando `TokenTransaction` passar de X tokens em 1 minuto", não precisa de agent, MCP nem código algum. É um `azurerm_monitor_metric_alert` apontando para um `azurerm_monitor_action_group` com email e webhook, resolvido em Terraform puro:
 
 ```hcl
 resource "azurerm_monitor_action_group" "ia_oncall" {
@@ -61,7 +61,7 @@ resource "azurerm_monitor_metric_alert" "tpm_80pct" {
     metric_name      = "TokenTransaction"
     aggregation      = "Total"
     operator         = "GreaterThan"
-    threshold        = 200000 # 80% of a 250k TPM deployment — adjust to yours
+    threshold        = 200000 # 80% of a 250k TPM deployment; adjust to yours
 
     dimension {
       name     = "ModelDeploymentName"
@@ -88,7 +88,7 @@ O servidor expõe um conjunto deliberadamente pequeno de tools, dividido em dois
  ┌─────────────────────────────┐
  │            HOST              │   Claude / agent runtime / simple cron
  └──────────────┬────────────────┘
-                 │ MCP (stdio or HTTP)
+                 │ MCP (stdio ou Streamable HTTP)
                  ▼
  ┌─────────────────────────────┐
  │     MCP SERVER: watchdog429   │
@@ -101,26 +101,29 @@ O servidor expõe um conjunto deliberadamente pequeno de tools, dividido em dois
    Azure Monitor (TokenTransaction, AzureOpenAIRequests)
 ```
 
-A tool central é `get_token_usage_trend`. Ela consulta a API de métricas do Azure Monitor para o recurso do Azure OpenAI, via o pacote oficial `azure-monitor-query` (`MetricsQueryClient`), puxa `TokenTransaction` em uma janela curta (por exemplo, os últimos 5 minutos em buckets de 1 minuto, filtrando por `ModelDeploymentName`) e devolve a porcentagem do TPM configurado que já foi consumida, junto com a inclinação da curva: não só "quanto", mas "em que velocidade está subindo".
+A tool central é `get_token_usage_trend`. Ela consulta a API de métricas do Azure Monitor para o recurso do Azure OpenAI via o pacote oficial `azure-monitor-query` (`MetricsQueryClient`), lê `TokenTransaction` em uma janela curta, com buckets de 1 minuto e filtro por `ModelDeploymentName`, e devolve dois sinais: quanto o bucket mais recente representa do TPM configurado e se a curva está subindo, estabilizando ou caindo. Não é só "quanto". É "quanto agora" e "em que direção".
 
 ```python
-# pip install mcp azure-monitor-query azure-identity
+# pip install mcp azure-monitor-query azure-identity httpx
+import os
 from datetime import timedelta
-from mcp.server.fastmcp import FastMCP
-from azure.monitor.query import MetricsQueryClient
+
 from azure.identity import DefaultAzureCredential
+from azure.monitor.query import MetricsQueryClient
+from mcp.server.fastmcp import FastMCP
 
 mcp = FastMCP("watchdog429")
 metrics_client = MetricsQueryClient(DefaultAzureCredential())
 
 OPENAI_RESOURCE_ID = os.environ["OPENAI_RESOURCE_ID"]
 
+def get_configured_tpm(deployment_name: str) -> int:
+    return 250_000  # replace with your inventory or Terraform output
+
 @mcp.tool()
-def get_token_usage_trend(deployment_name: str, window_minutes: int = 5) -> dict:
-    """Returns the percentage of TPM consumed over the last N minutes for the
-    given deployment, plus the trend (rising/stable/falling). Uses the native
-    TokenTransaction Azure Monitor metric, filtered by the ModelDeploymentName
-    dimension. Performs no action on the deployment itself."""
+def get_token_usage_trend(deployment_name: str, window_minutes: int = 5) -> dict[str, object]:
+    """Returns how much of the configured TPM the latest 1-minute bucket used,
+    plus a simple trend classification for the recent window."""
     response = metrics_client.query_resource(
         resource_uri=OPENAI_RESOURCE_ID,
         metric_names=["TokenTransaction"],
@@ -128,11 +131,36 @@ def get_token_usage_trend(deployment_name: str, window_minutes: int = 5) -> dict
         granularity=timedelta(minutes=1),
         filter=f"ModelDeploymentName eq '{deployment_name}'",
     )
-    series = [p.total or 0 for p in response.metrics[0].timeseries[0].data]
-    tpm_limit = get_configured_tpm(deployment_name)  # comes from your Terraform/inventory
-    pct_used = sum(series) / tpm_limit
-    trend = "rising" if series[-1] > series[0] else "stable"
-    return {"deployment_name": deployment_name, "pct_of_tpm": pct_used, "trend": trend, "window_minutes": window_minutes}
+
+    points = response.metrics[0].timeseries[0].data if response.metrics and response.metrics[0].timeseries else []
+    series = [point.total or 0 for point in points]
+
+    if not series:
+        return {
+            "deployment_name": deployment_name,
+            "pct_of_tpm": 0.0,
+            "trend": "stable",
+            "window_minutes": window_minutes,
+        }
+
+    current_minute = series[-1]
+    previous_minute = series[-2] if len(series) > 1 else series[-1]
+    tpm_limit = get_configured_tpm(deployment_name)
+    pct_used = current_minute / tpm_limit
+
+    if current_minute > previous_minute * 1.05:
+        trend = "rising"
+    elif current_minute < previous_minute * 0.95:
+        trend = "falling"
+    else:
+        trend = "stable"
+
+    return {
+        "deployment_name": deployment_name,
+        "pct_of_tpm": pct_used,
+        "trend": trend,
+        "window_minutes": window_minutes,
+    }
 
 if __name__ == "__main__":
     mcp.run(transport="stdio")
@@ -141,11 +169,15 @@ if __name__ == "__main__":
 E a tool de notificação é propositalmente burra: ela não decide nada, só transmite o que mandarem:
 
 ```python
+import httpx
+
+SLACK_WEBHOOK_URL = os.environ["SLACK_WEBHOOK_URL"]
+
 @mcp.tool()
-def send_slack_alert(channel: str, message: str) -> str:
-    """Sends a message to a Slack channel. Doesn't decide the content,
-    just transmits it. The decision to alert belongs to whoever calls this tool."""
-    httpx.post(SLACK_WEBHOOK_URL, json={"channel": channel, "text": message}, timeout=10)
+def send_slack_alert(message: str) -> str:
+    """Posts a message to a preconfigured Slack incoming webhook."""
+    response = httpx.post(SLACK_WEBHOOK_URL, json={"text": message}, timeout=10.0)
+    response.raise_for_status()
     return "sent"
 ```
 
@@ -156,7 +188,7 @@ Para este post, o "agent" pode começar como um script rodando em cron a cada mi
 ```python
 trend = get_token_usage_trend("gpt-4o-prod", window_minutes=5)
 if trend["pct_of_tpm"] > 0.8 and trend["trend"] == "rising":
-    send_slack_alert("#oncall-ai", f"Deployment gpt-4o-prod at {trend['pct_of_tpm']:.0%} of TPM and rising")
+    send_slack_alert(f"Deployment gpt-4o-prod at {trend['pct_of_tpm']:.0%} of TPM and rising")
 ```
 
 Perceba que isso nem precisa de um MCP host de verdade: é só um script chamando as mesmas funções que o servidor expõe. O ganho de empacotar isso como MCP aparece depois, quando você quiser que um agent mais generalista (o mesmo que já investiga o cluster AKS do post anterior) enxergue essa telemetria também, sem que você precise escrever uma integração nova para cada consumidor.

@@ -29,8 +29,13 @@ O que **não** muda: o servidor continua apenas lendo telemetria e apenas escrev
 O que muda é o que acontece entre detectar o threshold e decidir a resposta. Duas novas tools entram no servidor:
 
 ```python
+from datetime import timedelta
+from typing import Literal
+
+import httpx
+
 @mcp.tool()
-def get_token_usage_history(deployment_name: str, days_back: int = 30) -> dict:
+def get_token_usage_history(deployment_name: str, days_back: int = 30) -> dict[str, object]:
     """Returns the deployment's consumption pattern over the last N days,
     aggregated by day of week and hour of day, for comparison against
     the current spike."""
@@ -41,23 +46,26 @@ def get_token_usage_history(deployment_name: str, days_back: int = 30) -> dict:
         granularity=timedelta(hours=1),
         filter=f"ModelDeploymentName eq '{deployment_name}'",
     )
-    # aggregates by weekday-hour and returns avg/max per bucket
+    # aggregate by weekday-hour and return avg/max per bucket
     ...
 
 @mcp.tool()
-def send_priority_alert(channel: str, message: str, priority: Literal["info", "warning", "urgent"]) -> str:
-    """Sends an alert with a priority level: 'info' (normal channel, no
-    mention), 'warning' (normal channel, with context), or 'urgent'
-    (mentions the on-call group). The priority choice belongs to whoever
-    calls this tool, not to this function."""
+def send_priority_alert(message: str, priority: Literal["info", "warning", "urgent"]) -> str:
+    """Posts an alert to the right notification path for its priority."""
+    webhook_url = {
+        "info": SLACK_INFO_WEBHOOK_URL,
+        "warning": SLACK_INFO_WEBHOOK_URL,
+        "urgent": SLACK_URGENT_WEBHOOK_URL,
+    }[priority]
     prefix = {"info": "ℹ️", "warning": "⚠️", "urgent": "🚨 @oncall-ai"}[priority]
-    httpx.post(SLACK_WEBHOOK_URL, json={"channel": channel, "text": f"{prefix} {message}"}, timeout=10)
+    response = httpx.post(webhook_url, json={"text": f"{prefix} {message}"}, timeout=10.0)
+    response.raise_for_status()
     return "sent"
 ```
 
 (`mcp` aqui é a mesma instância de `FastMCP` criada no post 2: essas duas tools entram no mesmo servidor `watchdog429`, não em um servidor separado.)
 
-A primeira dá ao agent uma linha de base para comparação: "isso já aconteceu neste mesmo horário antes?" A segunda separa o ato de notificar do nível de urgência: a camada de raciocínio decide o nível, não a tool.
+A primeira dá ao agent uma linha de base para comparação: "isso já aconteceu neste mesmo horário antes?" A segunda separa o ato de notificar do nível de urgência: a camada de raciocínio decide a prioridade, e a tool só publica no destino correspondente.
 
 ## Onde o modelo entra (e onde não entra)
 
@@ -113,7 +121,7 @@ A diferença entre os dois cenários não estava em nenhum threshold fixo. Estav
 
 Dar autonomia de decisão, ainda que só sobre o nível do alerta, abre uma categoria nova de risco que o script puro não tinha: alert fatigue ao contrário. Um agent mal calibrado pode alertar demais (tudo vira `urgent` e o time aprende a ignorar) ou alertar de menos (um incidente real é classificado como `info` porque o histórico coincidiu por acaso). Três coisas resolvem a maior parte disso.
 
-Primeiro, um rate limit no próprio alerta: no máximo N chamadas para `send_priority_alert` por hora, independentemente do que o agent decidir, para impedir que uma reavaliação a cada minuto vire uma enxurrada. Segundo, logar cada decisão junto com o raciocínio que o modelo devolveu, não só o resultado. É isso que permite, num retro depois de um incidente, responder "por que isso foi classificado como info" sem chute. Terceiro, revisão humana periódica das decisões classificadas como `info`: não para aprovar uma a uma em tempo real (isso destruiria o benefício da automação), mas para auditar em lote, semanalmente, se o padrão de classificação continua fazendo sentido.
+Primeiro, um rate limit no próprio alerta: no máximo N chamadas para `send_priority_alert` por hora, independentemente do que o agent decidir, para impedir que uma reavaliação a cada minuto vire uma enxurrada. Segundo, registrar cada decisão com os sinais usados na classificação e uma justificativa curta para auditoria, não o texto bruto do raciocínio interno. É isso que permite, num retro depois de um incidente, responder "por que isso foi classificado como info" sem chute. Terceiro, revisão humana periódica das decisões classificadas como `info`: não para aprovar uma a uma em tempo real, o que destruiria o benefício da automação, mas para auditar em lote, semanalmente, se o padrão de classificação continua fazendo sentido.
 
 Vale notar uma diferença em relação ao risco do post 1: lá, os dados que alimentavam o raciocínio do agent vinham de fora (logs, que podem ser adulterados). Aqui, a entrada são métricas numéricas do próprio Azure Monitor. A superfície de prompt injection é praticamente inexistente, porque não há texto arbitrário de terceiros entrando no contexto. Nem todo agent tem o mesmo perfil de risco, e vale mapear isso caso a caso em vez de aplicar o mesmo checklist para tudo.
 

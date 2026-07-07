@@ -22,7 +22,7 @@ series:
   - "AI para Engenheiros de Infraestrutura"
 ---
 
-Sexto post da série. No [anterior](/infrastructure-as-code-para-ai-automatizando-gpu-clusters/), automatizamos provisioning de clusters GPU. Agora vamos falar do que acontece **depois** do hardware estar pronto: como um modelo vai de "funciona no meu notebook" pra "roda em produção com SLA".
+Sexto post da série. No [anterior](/infrastructure-as-code-para-ai-automatizando-gpu-clusters/), automatizamos provisioning de clusters GPU. Agora entra a parte que começa **depois** do hardware pronto: como um modelo sai do "funciona no meu notebook" e vira algo que roda em produção com SLA.
 
 ## O modelo que chegou sem certidão de nascimento
 
@@ -36,7 +36,7 @@ Esse filme você já viu antes, só com atores diferentes. Developers costumavam
 
 ## Modelos são artefatos: trate como tal
 
-Se você já puxou uma imagem de um container registry, tageou um release no Git, ou promoveu um build de staging pra produção, já entende os conceitos core de model lifecycle.
+Se você já puxou uma imagem de um container registry, tageou um release no Git, ou promoveu um build de staging pra produção, já entende os conceitos básicos de lifecycle de modelo.
 
 | Conceito de Infra | Equivalente ML |
 |-------------------|----------------|
@@ -52,7 +52,7 @@ Um arquivo de modelo sem metadados é como uma container image sem tag. Você po
 
 ## Model registries
 
-O registry é a single source of truth pros modelos da organização. Guarda artefatos com metadados: versão, métricas de training, lineage e status de deployment.
+O registry vira a referência oficial pros modelos da organização. Ele guarda o artefato e os metadados que importam: versão, métricas de training, lineage e status de deployment.
 
 ### Azure Machine Learning Model Registry
 
@@ -74,13 +74,14 @@ az ml model list \
   --workspace-name ml-prod-ws \
   --output table
 
-# Ver lineage: qual run produziu esse modelo
+# Ver lineage: qual job produziu esse modelo
 az ml model show \
   --name sentiment-classifier \
   --version 3 \
   --resource-group ml-prod-rg \
   --workspace-name ml-prod-ws \
-  --query "jobs"
+  --query "properties.jobName" \
+  --output tsv
 ```
 
 ### MLflow (open-source, multi-framework)
@@ -213,6 +214,8 @@ az acr repository show-tags \
 
 ### GitHub Actions workflow pra deploy de modelo
 
+Assumindo que o endpoint e os arquivos base de deployment já estão versionados no repositório:
+
 ```yaml
 name: Model Deployment Pipeline
 
@@ -257,14 +260,19 @@ jobs:
     needs: validate
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      - uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: Deploy to staging endpoint
         run: |
           az ml online-deployment create \
-            --name staging-${{ inputs.model_version }} \
-            --endpoint-name sentiment-staging \
-            --model azureml:${{ inputs.model_name }}:${{ inputs.model_version }} \
-            --instance-type Standard_NC4as_T4_v3 \
-            --instance-count 1 \
+            --file ./.azureml/staging-deployment.yml \
+            --set name=staging-${{ inputs.model_version }} \
+            --set endpoint_name=sentiment-staging \
+            --set model=azureml:${{ inputs.model_name }}:${{ inputs.model_version }} \
+            --set instance_type=Standard_NC4as_T4_v3 \
+            --set instance_count=1 \
             --resource-group ${{ env.AZURE_RG }} \
             --workspace-name ${{ env.AZURE_ML_WS }}
 
@@ -273,14 +281,19 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
+      - uses: actions/checkout@v4
+      - uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: Deploy canary (10% traffic)
         run: |
           az ml online-deployment create \
-            --name prod-${{ inputs.model_version }} \
-            --endpoint-name sentiment-prod \
-            --model azureml:${{ inputs.model_name }}:${{ inputs.model_version }} \
-            --instance-type Standard_NC4as_T4_v3 \
-            --instance-count 2 \
+            --file ./.azureml/prod-deployment.yml \
+            --set name=prod-${{ inputs.model_version }} \
+            --set endpoint_name=sentiment-prod \
+            --set model=azureml:${{ inputs.model_name }}:${{ inputs.model_version }} \
+            --set instance_type=Standard_NC4as_T4_v3 \
+            --set instance_count=2 \
             --resource-group ${{ env.AZURE_RG }} \
             --workspace-name ${{ env.AZURE_ML_WS }}
 
@@ -295,7 +308,7 @@ jobs:
 
 ## Suas responsabilidades em cada stage
 
-Como engenheiro de infra, seu ownership cobre o pipeline todo:
+Como engenheiro de infra, você acaba cobrindo o pipeline inteiro:
 
 - **Compute provisioning**: GPU node pools pra training (Dev), VMs de inference pra validação (Staging), clusters GPU com autoscaling pra serving (Prod)
 - **Networking**: VNets isoladas pra staging, private endpoints pro model registry, load balancer pra traffic splitting
@@ -305,7 +318,7 @@ Como engenheiro de infra, seu ownership cobre o pipeline todo:
 
 ## Traffic splitting: canary e blue/green pra modelos
 
-Deploying um modelo não é evento binário. Você shifta tráfego gradualmente:
+Deploy de modelo não é evento binário. Você vai mudando o tráfego aos poucos:
 
 | Padrão | Como funciona | Quando usar |
 |--------|--------------|-------------|

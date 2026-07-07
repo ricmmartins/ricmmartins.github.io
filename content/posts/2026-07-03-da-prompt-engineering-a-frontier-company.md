@@ -22,9 +22,9 @@ Dois anos atrás, mudou pra: "como faço RAG?"
 
 Ano passado: "como construo um agent?"
 
-Esse ano, a conversa é diferente. As pessoas estão perguntando como transformar uma organização inteira pra operar com agents. Não um chatbot no site. Dezenas de agents integrados nos processos, com governança, observabilidade, permissões granulares.
+Esse ano, a conversa mudou de tamanho. Ninguém está perguntando só como fazer um chatbot melhor. A pergunta agora é como uma empresa inteira opera com agents, com governança, observabilidade e permissões de verdade.
 
-Essa evolução conta uma história. E acho que poucos pararam pra conectar os pontos.
+Essa sequência conta uma história boa sobre maturidade. E vale conectar os pontos porque ela explica por que tanta gente ainda discute o problema errado.
 
 ## A timeline
 
@@ -82,27 +82,25 @@ Cada etapa resolveu um problema real que a anterior não cobria. Prompt engineer
 
 ## O modelo virou commodity
 
-Vou ser direto: o modelo já não é o diferencial competitivo.
+Vou ser direto: modelo sozinho já não sustenta diferencial competitivo por muito tempo.
 
-Em 2023, ter acesso ao GPT-4 era vantagem real. Hoje existem GPT-5, Claude, Gemini, Llama, DeepSeek, Mistral, Qwen. Todos excelentes. Todos capazes de escrever código, interpretar imagens, chamar ferramentas, resolver problemas complexos.
-
-Ainda existem diferenças entre eles? Sim. Mas o gap entre o melhor e o quinto melhor encolheu tanto que raramente determina o sucesso de um projeto.
+Em 2023, ter acesso ao GPT-4 era vantagem real. Hoje o cenário é outro. GPT-5, Claude, Gemini, Llama, DeepSeek, Mistral e Qwen cobrem boa parte do mesmo terreno. Eles ainda diferem em custo, latência, janela de contexto e alguns benchmarks. Só que, na maioria dos projetos, isso não é o que separa quem entrega de quem só faz demo.
 
 Pensa assim: duas empresas usando o mesmo modelo. A primeira conecta esse modelo ao CRM, ERP, monitoramento, documentação interna, pipelines, políticas de segurança e workflows da organização. A segunda abre uma janela de chat.
 
 Mesmo modelo. Resultados completamente diferentes.
 
-O valor nunca esteve só no cérebro. Sempre esteve no sistema ao redor dele.
+O valor nunca esteve só no cérebro. O que muda o jogo é o sistema ao redor dele.
 
 ## Harness engineering: o nome do jogo agora
 
-Uma fórmula que apareceu bastante esse ano resume bem:
+Uma fórmula que apareceu bastante este ano resume bem a mudança:
 
 ```
 Agent = Model + Harness
 ```
 
-O modelo é o "cérebro". O harness é tudo que transforma esse cérebro num agent que funciona em produção. Uma analogia que gosto: pensa num piloto de F1. O piloto é o LLM. O carro, rádio, telemetria, equipe de box, estratégia de pneus e regulamento da corrida são o harness. Coloca o melhor piloto num carro ruim e ele perde a corrida.
+O modelo é o cérebro. O harness é o resto do sistema: contexto, ferramentas, memória, guardrails, observabilidade, aprovação humana e deploy. Eu gosto de comparar com F1. O LLM é o piloto. O carro, a telemetria, o rádio, a equipe de box e a estratégia de corrida são o harness. Coloca o melhor piloto num carro ruim e acabou a mágica.
 
 Na prática, o harness de um agent corporativo inclui:
 
@@ -177,13 +175,13 @@ Context engineering é decidir:
 - Em qual formato recebe os dados (structured vs unstructured)
 - Quanto espaço cada peça ocupa no token budget
 
-Escrevi sobre isso em detalhe no [post sobre context engineering](/posts/context-engineering-a-arte-de-alimentar-llms/). A versão curta: contexto bem montado é 80% do resultado. Modelo mediano com contexto excelente supera modelo top com contexto ruim.
+Escrevi sobre isso em detalhe no [post sobre context engineering](/posts/context-engineering-a-arte-de-alimentar-llms/). A versão curta: contexto bem montado costuma pesar mais do que trocar de modelo. Já vi modelo mediano, bem alimentado, entregar mais valor que modelo top com contexto ruim.
 
 ## MCP: o USB-C dos agents
 
 Outro componente do harness que explodiu em 2026: o Model Context Protocol. Já escrevi sobre isso [aqui](/posts/mcp-e-agentes-101-para-engenheiros-de-infra/) e [aqui](/posts/como-mcp-funciona-o-protocolo-que-conecta-agents-ao-mundo/), mas no contexto desse post o ponto é simples.
 
-Antes do MCP, cada ferramenta precisava de uma integração custom. Agora existe um protocolo padronizado que conecta qualquer modelo a qualquer sistema. É o que permitiu harness engineering escalar. Em vez de construir integrações one-off, você expõe seus sistemas como MCP servers e qualquer agent pode consumir.
+Antes do MCP, cada ferramenta pedia uma integração feita sob medida. Agora existe um protocolo aberto pra ligar hosts e clients que falam MCP a sistemas expostos como MCP servers. Não elimina trabalho, claro. Mas tira muito código repetido do caminho e facilita reaproveitar a mesma integração em mais de um agent.
 
 ## Frontier company: quando o harness vira a empresa
 
@@ -216,13 +214,11 @@ Daqui a alguns anos, duvido que alguém pergunte qual modelo sua empresa usa. Da
 O diferencial vai estar em outro lugar:
 
 - Na qualidade do contexto que seus agents recebem
-- Na engenharia do harness (segurança, observabilidade, governança)
+- Na engenharia do harness, com segurança, observabilidade e governança
 - Na integração entre agents e pessoas
-- Na capacidade de transformar inteligência artificial em inteligência organizacional
+- Na capacidade de transformar inteligência artificial em decisão útil no dia a dia
 
-Porque empresas não competem por modelos. Competem pela capacidade de usar conhecimento pra tomar decisões melhores, mais rápido.
-
-E o sistema que permite isso tem nome: harness.
+Empresas não competem por modelo. Competem por processo, integração e capacidade de usar conhecimento pra decidir melhor e mais rápido.
 
 ---
 

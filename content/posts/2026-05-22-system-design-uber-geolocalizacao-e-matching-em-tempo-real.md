@@ -242,11 +242,11 @@ ORDER BY ST_Distance(location, POINT(-23.55, -46.63))
 LIMIT 10;
 ```
 
-Com 2 milhões de motoristas e 2.300 queries/segundo no pico, um full table scan com cálculo de distância em cada row é **catastrófico**. O(N) por query × 2.300 queries/s = impossível.
+Com 2 milhões de motoristas e 2.300 queries/segundo no pico, jogar isso direto num índice espacial on-disk vira gargalo. PostGIS ajuda bastante em muitos cenários, mas aqui o custo de manter o índice atualizado 500K vezes por segundo pesa demais.
 
 ### Solução: dividir o mundo em células
 
-Em vez de calcular distância pra todos os motoristas, **pré-organize** os motoristas em regiões geográficas. Assim a query vira: "quais motoristas estão na minha célula e nas adjacentes?": O(1) lookup em vez de O(N) scan.
+Em vez de calcular distância pra todos os motoristas, **pré-organize** os motoristas em regiões geográficas. Assim a query vira: "quais motoristas estão na minha célula e nas adjacentes?": lookup local nas células vizinhas em vez de scan global.
 
 ### Opção 1: Geohash
 
@@ -270,7 +270,7 @@ Geohash converte coordenadas (lat, lng) num string que representa uma célula re
 5. Rankear
 ```
 
-De 2M de motoristas, reduz pra ~50-200 candidatos nas 9 células. De O(N) pra O(1) lookup + O(K) filtro onde K << N.
+De 2M de motoristas, reduz pra ~50-200 candidatos nas 9 células. Em vez de varrer tudo, você consulta poucas células e depois filtra um conjunto pequeno de candidatos.
 
 ### Opção 2: Quadtree
 
@@ -307,10 +307,10 @@ O Uber desenvolveu internamente o [H3](https://h3geo.org/), um sistema de indexa
 - Isso elimina edge cases em boundary: "motorista está a 100m mas numa célula 'longe'"
 
 ```
-Resoluções H3:
-  Res 7: ~5.16 km² (bom pra matching)
-  Res 9: ~0.1 km² (bom pra ETA granular)
-  Res 12: ~0.003 km² (tracking preciso)
+Resoluções H3 (área média por célula):
+  Res 7: ~2.4 km² (bom pra oferta/demanda por zona)
+  Res 9: ~0.035 km² (bom pra matching fino)
+  Res 12: ~0.00048 km², ou ~478 m² (tracking bem preciso)
 ```
 
 **O fluxo com H3:**
@@ -539,7 +539,7 @@ Velocidade esperada (sem tráfego): 50 km/h
 Congestion factor: 50/20.5 = 2.4x mais lento
 ```
 
-Essa informação é agregada em real-time e alimenta o cálculo de ETA. É por isso que o ETA do Uber é geralmente mais preciso que o Google Maps: tem dados de velocidade real de milhares de veículos por segmento.
+Essa informação é agregada em real-time e alimenta o cálculo de ETA. Quando você tem frota própria gerando telemetria o tempo todo, consegue ajustar o modelo com muito mais contexto do que um mapa estático.
 
 ### Caching de ETA
 
@@ -623,7 +623,7 @@ Pro matching (que precisa de ETA pra 20-50 candidatos), o cache evita recalcular
 <line x1="490" y1="352" x2="490" y2="392" />
 <line x1="560" y1="352" x2="730" y2="392" />
 </g>
-<text x="490" y="65" font-size="10" fill="#555" text-anchor="middle">UDP ou HTTP/2 com batching</text>
+<text x="490" y="65" font-size="10" fill="#555" text-anchor="middle">gRPC/HTTP-2 ou QUIC com batching</text>
 </svg>
 
 ### Por que Kafka no meio?
@@ -646,7 +646,7 @@ Quando o rider está acompanhando a corrida, precisa ver a posição do motorist
 4. Rider vê o ícone do carro se movendo no mapa
 ```
 
-**Escala:** durante uma corrida, 1 rider observa 1 driver. Não é fan-out massivo (diferente de presença em WhatsApp). Mas com 5M de corridas ativas simultaneamente, são 5M de WebSocket connections no Tracking Service.
+**Escala:** durante uma corrida, 1 rider observa 1 driver. Não é fan-out massivo (diferente de presença em WhatsApp). Mas, mesmo com algumas centenas de milhares de corridas ativas ao mesmo tempo em pico global, o Tracking Service ainda precisa segurar um volume grande de WebSockets.
 
 ### Otimização: client-side interpolation
 
@@ -725,26 +725,26 @@ CREATE TABLE rides (
     status TEXT NOT NULL,
     -- 'requested','matched','driver_en_route','arrived',
     -- 'in_progress','completed','cancelled'
-    
+
     pickup_lat DECIMAL(9,6),
     pickup_lng DECIMAL(9,6),
     dropoff_lat DECIMAL(9,6),
     dropoff_lng DECIMAL(9,6),
-    
+
     pickup_eta_seconds INT,
     estimated_fare_cents BIGINT,
     actual_fare_cents BIGINT,
     surge_multiplier DECIMAL(3,2),
-    
+
     requested_at TIMESTAMP,
     matched_at TIMESTAMP,
     pickup_at TIMESTAMP,
-    dropoff_at TIMESTAMP,
-    
-    INDEX idx_rider (rider_id, requested_at DESC),
-    INDEX idx_driver (driver_id, requested_at DESC),
-    INDEX idx_status (status)
+    dropoff_at TIMESTAMP
 );
+
+CREATE INDEX idx_rides_rider_requested_at ON rides (rider_id, requested_at DESC);
+CREATE INDEX idx_rides_driver_requested_at ON rides (driver_id, requested_at DESC);
+CREATE INDEX idx_rides_status ON rides (status);
 
 CREATE TABLE drivers (
     id UUID PRIMARY KEY,
@@ -754,10 +754,10 @@ CREATE TABLE drivers (
     status TEXT,              -- 'available', 'busy', 'offline'
     current_ride_id UUID,
     rating DECIMAL(2,1),
-    acceptance_rate DECIMAL(3,2),
-    
-    INDEX idx_status (status)
+    acceptance_rate DECIMAL(3,2)
 );
+
+CREATE INDEX idx_drivers_status ON drivers (status);
 ```
 
 **Por que SQL?** Corridas têm relações claras (rider, driver), precisam de transações ACID (não pode atribuir mesmo driver a dois riders), e queries de histórico com filtros complexos.
@@ -773,12 +773,10 @@ CREATE TABLE location_updates (
     speed_kmh DECIMAL(5,1),
     heading DECIMAL(5,2),
     accuracy_meters DECIMAL(4,1),
-    
-    -- TimescaleDB: particiona automaticamente por tempo
     PRIMARY KEY (driver_id, timestamp)
 );
 
--- Retenção: 7 dias raw, depois downsample pra 1 update/30s
+SELECT create_hypertable('location_updates', 'timestamp');
 SELECT set_chunk_time_interval('location_updates', INTERVAL '1 day');
 ```
 
@@ -799,7 +797,7 @@ SADD "cell:892a100800f:available" "drv_123"
 SUNION "cell:892a1008003:available" "cell:892a1008007:available" "cell:892a100800f:available" ...
 ```
 
-O(1) pra cada operação. Redis Cluster com sharding por região geográfica.
+Atualizar a membership de um driver é O(1). A query depende do número de células consultadas e da quantidade de candidatos retornados. Redis Cluster continua sendo uma boa escolha pra shardear por região geográfica.
 
 ## Handling de cenários edge
 
@@ -875,7 +873,7 @@ Ratio: 25x → surge de 8x? Insustentável.
 
 | Componente | Tecnologia | Motivo |
 |-----------|-----------|--------|
-| Geospatial index | Redis + H3 (in-memory) | 500K updates/s, queries O(1) |
+| Geospatial index | Redis + H3 (in-memory) | 500K updates/s, lookup local + filtro rápido |
 | Location ingestion | Kafka pipeline | Desacoplamento, múltiplos consumers |
 | Location history | TimescaleDB/InfluxDB | Time-series otimizado, compressão |
 | Ride management | PostgreSQL | ACID, relações, queries complexas |

@@ -17,11 +17,11 @@ series:
   - "AI por dentro: de tokens a agents"
 ---
 
-O time de ML conseguiu um modelo que funciona no notebook Jupyter deles. Accuracy de 94%. Todos comemoram. Agora precisa ir pra produção. Eles olham pra você.
+O time de ML treinou um modelo que funciona no notebook. Accuracy de 94%. Todo mundo comemora. Aí vem a parte menos glamourosa: colocar isso em produção.
 
-"Dá pra colocar isso numa API com 99.9% de uptime, latência < 200ms, processando 10K requests/segundo?"
+"Dá pra colocar isso numa API com 99.9% de uptime, latência < 200ms e 10K requests por segundo?"
 
-Esse é o momento em que system design de ML vira seu problema. E a boa notícia: 90% dos desafios são problemas de infra que você já sabe resolver. A diferença está nos 10% que são específicos de ML.
+É aqui que system design de ML cai no colo de infra. A boa notícia é que a maior parte do problema parece familiar. Serving, rollout, observabilidade e capacity planning continuam sendo trabalho de sistema distribuído. O pedaço realmente diferente existe, mas é menor do que o hype sugere.
 
 ## O mapa pro profissional de infra
 
@@ -155,7 +155,7 @@ Um sistema de ML em produção tem mais componentes do que parece:
 
 Uma feature é um dado processado que o modelo usa como input. Exemplo: pra um modelo de fraude, features podem ser "total de transações nas últimas 24h", "média de valor por transação", "número de países diferentes".
 
-O problema: calcular essas features em tempo real a cada request é caro. Feature store resolve isso pré-computando e servindo features com baixa latência.
+O problema: calcular essas features em tempo real a cada request é caro. Feature store resolve isso separando o jogo em duas camadas: um storage offline pra treino e backfill, e um storage online de baixa latência pro request path.
 
 ```
 Sem feature store:
@@ -167,10 +167,12 @@ Request → lookup no Redis/cache → modelo
 (latência: 5ms pra montar o input)
 ```
 
+Na prática, muita arquitetura usa um par: Delta/Parquet/SQL no offline store e Redis no online store. O ponto importante é manter a mesma lógica de feature nos dois lados. Senão você ganha training-serving skew de brinde.
+
 ### Na prática com Azure
 
 ```bash
-# Azure ML Feature Store (preview) ou Redis como feature store
+# Azure ML managed feature store ou Redis como feature store
 
 # Opção 1: Redis pra features online
 az redis create \
@@ -216,7 +218,7 @@ Existem três padrões principais:
 Usar Azure OpenAI, GPT-4o, Claude via API. Você não hospeda o modelo.
 
 - **Prós**: zero ops, escala automática, sempre atualizado
-- **Contras**: latência de rede, custo por token, vendor lock-in, dados saem do seu ambiente
+- **Contras**: latência de rede, custo por token, vendor lock-in, menos controle sobre runtime e tuning
 - **Quando**: LLMs, modelos gerais, prototipação
 
 ### 2. Model-in-Container (self-hosted)
@@ -321,7 +323,7 @@ az ml online-deployment create \
 ```
 
 - **Prós**: modelos open-source, customização total, sem custo por token
-- **Contras**: GPU caro ($3-10/hora), cold start longo (minutos), ops complexa
+- **Contras**: GPU caro, cold start longo (minutos), ops complexa
 - **Quando**: fine-tuned models, requisitos de privacidade extremos, volume alto que justifica o custo fixo
 
 ## A/B testing: canary deployment pra modelos
@@ -345,9 +347,11 @@ az ml online-endpoint update \
 ```
 
 Métricas pra comparar durante A/B:
-- **Accuracy**: v3 acerta mais que v2?
-- **Latência**: v3 é mais lento? (modelos maiores costumam ser)
-- **Business metrics**: taxa de conversão, falsos positivos em fraude, etc.
+- **Qualidade do modelo**: accuracy, precision/recall, ou a métrica de negócio equivalente
+- **Latência**: v3 é mais lento? Modelos maiores costumam ser
+- **Business metrics**: taxa de conversão, falsos positivos em fraude, abandono, SLA
+
+Se o ground truth chega atrasado, use proxies online durante o canary e confirme a qualidade real depois, quando os labels aparecerem.
 
 ## Data drift: quando produção diverge do treinamento
 
@@ -381,6 +385,8 @@ result = detect_drift(training_amounts, production_amounts)
 # Alerta: feature mudou significativamente!
 ```
 
+KS funciona bem pra features numéricas contínuas. Pra categóricas, eu costumo olhar chi-square, PSI ou Jensen-Shannon.
+
 ### Monitorando em produção
 
 ```yaml
@@ -389,9 +395,9 @@ data_collector:
   sampling_rate: 0.1
   collections:
     request:
-      enabled: 'True'
+      enabled: true
     response:
-      enabled: 'True'
+      enabled: true
 ```
 
 ```bash
@@ -446,15 +452,16 @@ Cada versão tem metadata: quem treinou, com quais dados, quais métricas obteve
 ## O que levar pra segunda-feira
 
 - **ML em produção é 90% infra, 10% ML.** Feature stores, APIs, monitoring, CI/CD. Tudo que você já sabe.
-- **Feature store é o cache layer** mais importante. Sem ele, latência de inference explode.
+- **Quando há features caras no request path, feature store vira o cache layer mais importante.** Sem ele, a latência de inference sobe rápido.
 - **Model serving segue os mesmos patterns** de qualquer API: health checks, autoscaling, blue-green deploys. A diferença é cold start mais longo e uso de GPU.
 - **A/B testing é canary deployment.** Mesma lógica, métricas diferentes (accuracy vs latência).
 - **Data drift é silent killer.** Monitore as distribuições de input, não só métricas de infra.
 
-No próximo post, vamos mergulhar no tema mais quente de 2025-2026: **Como AI Agents funcionam por dentro**.
+O próximo post entra em **como AI Agents funcionam por dentro**: loop, tools, custo e guardrails.
 
 ## Leitura complementar
 
 - [Machine Learning System Design 101](https://lnkd.in/dFGuMknJ) (Neo Kim, System Design Newsletter)
 - [Azure ML endpoints documentation](https://learn.microsoft.com/azure/machine-learning/concept-endpoints)
 - [Designing Machine Learning Systems](https://www.oreilly.com/library/view/designing-machine-learning/9781098107956/) (Chip Huyen, O'Reilly)
+

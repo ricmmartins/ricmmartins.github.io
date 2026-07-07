@@ -18,9 +18,9 @@ series:
   - "AI por dentro: de tokens a agents"
 ---
 
-Seu agent de diagnóstico funciona perfeitamente pra uma interação. Mas quando o mesmo alerta volta na semana seguinte, ele começa do zero. Não lembra que já investigou, não lembra que a causa raiz era aquele cronjob que estoura memória toda quarta-feira às 3h da manhã.
+Seu agent de diagnóstico vai bem numa interação. Aí o mesmo alerta volta na semana seguinte e ele zera a memória. Não lembra que já investigou. Não lembra que a causa raiz era aquele cronjob que explode memória toda quarta às 3h da manhã.
 
-Agentes sem memória são como um engenheiro que perde o caderno toda segunda-feira. Competente, mas incapaz de aprender com o passado.
+Agent sem memória é como engenheiro que perde o caderno toda segunda. Sabe trabalhar. Só reaprende as mesmas coisas o tempo todo.
 
 ## O mapa pro profissional de infra
 
@@ -132,6 +132,8 @@ class LongTermMemory:
 - "O usuário Ricardo prefere respostas curtas com comandos diretos"
 - "Alertas de CPU em batch-workers-* são normais entre 02:00-04:00 (jobs de ETL)"
 
+Pra fatos operacionais, eu não confiaria só em busca vetorial. Guarde também campos estruturados, timestamp da observação e origem do dado. Embedding ajuda a achar; não substitui source of truth.
+
 ### 3. Episodic memory (o que aconteceu antes)
 
 Lembranças estruturadas de interações passadas. Como um log de incidentes que o agent pode consultar.
@@ -199,7 +201,7 @@ def agent_with_episodic_memory(task, episodic_memory, system_prompt):
 
 Base de conhecimento do agent. Runbooks, documentação, policies. Geralmente implementado via RAG.
 
-A diferença de episodic: semantic é "o que eu sei" (fatos), episodic é "o que eu vivi" (experiências).
+A diferença é simples: semantic é "o que eu sei" (fatos), episodic é "o que eu vivi" (experiências).
 
 ## Gerenciamento de estado
 
@@ -315,11 +317,11 @@ Memória em agents tem os mesmos problemas de consistência que bancos de dados 
 
 ### Problemas reais
 
-**Memória contradição**: o agent lembrou que "servidor X tem 16GB RAM" de uma interação antiga, mas o servidor foi upgraded pra 32GB.
+**Memória contraditória**: o agent lembra que "servidor X tem 16GB de RAM" de uma interação antiga, mas o servidor já foi ampliado pra 32GB.
 
-**Stale memory**: episódio anterior diz "reiniciar o nginx resolve", mas a arquitetura mudou e agora é containerizado.
+**Memória desatualizada**: um episódio antigo diz "reiniciar o nginx resolve", mas a arquitetura mudou e agora tudo roda em container.
 
-**Memory corruption**: o agent "aprende" algo errado de uma interação com hallucination e usa essa informação errada no futuro.
+**Memória corrompida**: o agent "aprende" algo errado a partir de uma alucinação e usa essa informação no futuro.
 
 ### Estratégias de mitigação
 
@@ -410,6 +412,8 @@ def summarize_old_context(messages, keep_recent=5):
     ]
 ```
 
+Resumo ajuda a caber no contexto, mas também apaga detalhe. Eu não usaria summary como único registro de auditoria.
+
 ### 2. Memory as RAG
 
 Tratar todas as memórias como documentos num vector store. O agent "lembra" buscando semanticamente.
@@ -431,6 +435,8 @@ def agent_with_memory_rag(task, memory_store):
     system_prompt = BASE_PROMPT + memory_context
     return run_agent(task, system_prompt)
 ```
+
+Busca vetorial é ótima pra recall. Quando precisão importa, combine similaridade com metadata filters, TTL e alguma forma de revalidar a informação.
 
 ### 3. Structured memory (key-value com categories)
 
@@ -459,7 +465,7 @@ MEMORY_SCHEMA = {
 - **State recovery é essencial pra produção.** Agents que crasham no meio de uma ação precisam retomar com segurança.
 - **Consistência é difícil.** Memórias podem estar erradas ou desatualizadas. Preferir observação recente sobre memória antiga.
 
-No próximo post, vamos falar de **padrões agentic**: os building blocks que combinam pra criar agents mais sofisticados.
+O próximo post vai pros **padrões agentic**: os building blocks que se combinam pra criar agents mais sofisticados.
 
 ## Leitura complementar
 

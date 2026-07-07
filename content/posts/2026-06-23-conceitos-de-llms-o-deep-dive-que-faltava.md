@@ -26,7 +26,7 @@ Se você já passou por isso, esse post é pra você. Aqui dentro: o que cada pe
 
 ## De infra pra AI: o mapa mental
 
-Antes de entrar nos conceitos, vamos ancorar o vocabulário novo em coisas que você já conhece.
+Antes de entrar nos conceitos, vale ancorar o vocabulário novo em coisas que você já conhece.
 
 | Conceito AI | O que faz | Seu equivalente em infra |
 |-------------|-----------|--------------------------|
@@ -88,7 +88,7 @@ Um embedding é um vetor (array de números) que representa o significado de um 
 "Banana"     → [-0.91, 0.33, -0.12, 0.78, ...] (completamente diferente)
 ```
 
-Na prática, embeddings são a base de busca semântica. Quando alguém fala "RAG" (que é o tema do post 4 dessa série), o que está acontecendo por baixo é: transformar a pergunta do usuário em embedding, buscar documentos com embeddings similares, e mandar tudo pro modelo como contexto.
+Na prática, embeddings são a base de busca semântica. Quando alguém fala "RAG", o que está acontecendo por baixo é: transformar a pergunta do usuário em embedding, buscar documentos com embeddings similares, e mandar isso pro modelo como contexto.
 
 ```bash
 # Gerar embedding usando Azure OpenAI
@@ -108,9 +108,9 @@ Em 2017, o paper "Attention Is All You Need" criou a arquitetura Transformer, qu
 
 Imagina que você está lendo um parágrafo de documentação sobre Terraform. Quando vê a palavra "resource", seu cérebro automaticamente dá mais peso às palavras ao redor que são relevantes: "azurerm_virtual_network", "name", "address_space". Você ignora os "the", "is", "a".
 
-Attention faz exatamente isso, mas com matemática. Pra cada token no input, o modelo calcula um score de relevância com todos os outros tokens. Tokens mais relevantes ganham peso maior na hora de gerar a resposta.
+Attention faz isso com matemática. Cada token vira três projeções internas: query (Q), key (K) e value (V). O modelo calcula `Q · K^T / √d_k`, aplica softmax pra transformar esses scores em pesos que somam 1, e usa esses pesos pra misturar os values mais relevantes. É assim que um token "olha" pros outros antes de seguir pra próxima camada.
 
-O problema? Attention é O(n²). Se o context window tem 128K tokens, o modelo precisa calcular relações entre **cada par** de tokens. Isso é 128K × 128K = 16 bilhões de operações de attention. É por isso que modelos com context window grande precisam de tanta GPU.
+O problema é custo. Na self-attention tradicional, o número de scores cresce com O(n²). Com 128K tokens, só a matriz de atenção tem 128K × 128K = 16,4 bilhões de pares por cabeça de attention, antes de contar multiplicações, somas e projeções. É por isso que contexto grande puxa tanta GPU.
 
 ### Por que isso importa pra infra
 
@@ -121,7 +121,7 @@ Quando seu time pede "inferência mais rápida", existem poucos knobs:
 3. **Batch requests** (processar múltiplos requests em paralelo na mesma GPU)
 4. **Quantização** (reduzir precisão dos pesos, menos memória, mais throughput)
 
-Não existe "adicionar mais réplicas" como num web server stateless. Cada request precisa do modelo inteiro carregado em memória de GPU. Um modelo de 70B parâmetros ocupa ~140GB em FP16. Isso é mais que uma A100 de 80GB. Você precisa de tensor parallelism entre múltiplas GPUs.
+Escalar horizontalmente ajuda throughput, mas cada request ainda precisa do modelo inteiro, ou de um arranjo de tensor ou pipeline parallelism entre GPUs. Não é o mesmo jogo de um web server stateless. Um modelo de 70B parâmetros ocupa ~140GB em FP16, então uma A100 de 80GB sozinha não fecha a conta.
 
 ## Temperature e sampling: controlando a aleatoriedade
 
@@ -211,7 +211,7 @@ Quando o time de data science falar algo que parece grego, agora você tem o map
 - "Preciso de fine-tuning" → Eles vão precisar de GPU pra training e um endpoint dedicado pra servir o modelo. Não é só "configuração".
 - "Tokens estão caros" → Otimizar prompts pra usar menos tokens, implementar caching semântico, ou trocar pra modelo menor em queries simples.
 
-No próximo post, vamos falar de **Reinforcement Learning** e como isso se conecta com o treinamento de LLMs (spoiler: é assim que o ChatGPT aprendeu a ser "educado").
+Já dá pra conversar com o time de ML sem tratar tudo como mágica. Se falarem de janela, tokens, attention ou fine-tuning, pelo menos a conversa começa no nível certo.
 
 ## Leitura complementar
 

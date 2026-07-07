@@ -34,9 +34,9 @@ Em duas semanas, alguém do jurídico descobre que crafting prompts específicos
 
 Suas regras de firewall estão perfeitas. NSGs apertados. Key Vault trancado. E dados sensíveis saíram pela porta da frente através de uma conversa em linguagem natural.
 
-**Tradução infra ↔ AI:** Prompt injection é pra AI o que SQL injection é pra databases. Mesmo problema fundamental (input não confiável interpretado como instrução) em contexto novo. E o fix não é um controle só. É defense in depth.
+**Tradução infra ↔ AI:** Prompt injection em AI é o parente direto do SQL injection. Entrada não confiável vira instrução. E isso não se resolve com uma trava só, mas com defense in depth.
 
-## O landscape de ameaças AI
+## O mapa de ameaças em AI
 
 | Ameaça | Como funciona | Por que controles tradicionais não pegam |
 |--------|--------------|----------------------------------------|
@@ -92,14 +92,20 @@ az role assignment create \
 ### Desabilitar local auth (obrigatório em prod)
 
 ```bash
-# Verificar se auth por API key está desabilitada
+# Desabilitar auth por API key
+az cognitiveservices account update \
+  --name aoai-prod \
+  --resource-group rg-ai-prod \
+  --disable-local-auth true
+
+# Verificar
 az cognitiveservices account show \
   --name aoai-prod \
   --resource-group rg-ai-prod \
   --query "properties.disableLocalAuth"
 ```
 
-Se retorna `true`, só autenticação Entra ID (via managed identity ou tokens) é aceita. Recomendado pra produção: dá audit trail completo e enforcement de conditional access.
+Se o segundo comando retornar `true`, só autenticação Entra ID (via managed identity ou tokens) é aceita. Em produção, isso simplifica auditoria e enforcement de Conditional Access.
 
 ### Federated credentials pra CI/CD (zero secrets no GitHub)
 
@@ -146,9 +152,16 @@ az aks enable-addons \
   --resource-group rg-ai-prod \
   --name aks-ai-prod \
   --addons azure-keyvault-secrets-provider
+
+az aks addon update \
+  --resource-group rg-ai-prod \
+  --name aks-ai-prod \
+  --addon azure-keyvault-secrets-provider \
+  --enable-secret-rotation true \
+  --rotation-poll-interval 120
 ```
 
-Configure `enableSecretRotation: true` e `rotationPollInterval: 2m`. Quando rotacionar um secret no Key Vault, pods pegam o novo valor sem restart.
+Com isso, o driver volta no Key Vault a cada 120 segundos. Quando o secret muda, o volume montado é atualizado sem precisar recriar o pod.
 
 > **Nunca use storage account keys pra workloads AI.** Keys dão acesso full ao account inteiro. Se vazar, blast radius é tudo. Sempre use managed identity com roles RBAC específicas como `Storage Blob Data Reader`.
 
@@ -156,7 +169,7 @@ Configure `enableSecretRotation: true` e `rotationPollInterval: 2m`. Quando rota
 
 ### Private endpoints pra serviços AI
 
-Tudo que suporta Private Link deve usar. Private endpoints colocam a interface de rede do serviço dentro da sua VNet, eliminando exposição pública. Tráfego nunca sai do backbone Azure.
+Tudo que suporta Private Link deve usar. Private endpoints colocam a interface de rede do serviço dentro da sua VNet e tiram a exposição pública da jogada. O tráfego fica no backbone Azure, mas não esqueça do DNS privado, senão a rota bonita no diagrama não funciona no mundo real.
 
 ```bash
 # Private endpoint pro Azure OpenAI

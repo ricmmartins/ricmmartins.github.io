@@ -18,9 +18,9 @@ series:
   - "AI por dentro: de tokens a agents"
 ---
 
-Você leu 13 posts dessa série. Esse é o projeto que junta os conceitos: um assistente AI pessoal que responde perguntas sobre sua infraestrutura usando seus runbooks, documentação interna, e ferramentas de monitoramento.
+Você leu 13 posts dessa série. Este aqui junta as peças num projeto só: um assistente AI pessoal que responde perguntas sobre sua infraestrutura usando runbooks, documentação interna e ferramentas de monitoramento.
 
-Não é um toy project. É um system design completo, do tipo que você faria numa entrevista ou num design doc interno.
+Não é toy project. É um system design de verdade, do tipo que caberia numa entrevista ou num design doc interno.
 
 ## Requirements
 
@@ -204,7 +204,7 @@ class RAGEngine:
         )
 
     def search(self, query: str, user_context: dict | None = None, top_k: int = 5):
-        """Busca docs relevantes com filtering por permissão."""
+        """Busca docs relevantes com filtro por permissão."""
         filter_expr = None
         if user_context and user_context.get("team"):
             allowed_paths = get_allowed_doc_paths(user_context["team"])
@@ -380,7 +380,7 @@ class MemoryService:
         SELECT TOP {top_k}
             c.id,
             c.content,
-            VectorDistance(c.embedding, @embedding) AS similarity
+            VectorDistance(c.embedding, @embedding) AS distance
         FROM c
         WHERE c.user_id = @user_id
         ORDER BY VectorDistance(c.embedding, @embedding)
@@ -397,7 +397,8 @@ class MemoryService:
         ):
             results.append(item)
 
-        return [item for item in results if item["similarity"] > 0.7]
+        # Em VectorDistance, menor é melhor. O threshold exato depende da métrica escolhida.
+        return [item for item in results if item["distance"] < 0.35]
 
     async def maybe_store_long_term(self, user_id, user_msg, assistant_msg):
         should_store = await self.client.chat.completions.create(
@@ -537,7 +538,7 @@ az redis create \
   --vm-size c1
 
 # Cosmos DB for NoSQL (long-term memory + vector)
-# Serverless e vector search não combinam hoje. Se quiser vector search, use throughput provisionado/autoscale.
+# Serverless e vector search não combinam hoje. Se quiser vector search, use throughput provisionado ou autoscale.
 az cosmosdb create \
   --name ai-assistant-cosmos \
   --resource-group rg-ai-assistant \
@@ -550,19 +551,44 @@ az containerapp env create \
   --resource-group rg-ai-assistant \
   --location eastus2
 
+# Registry pra imagem do backend
+az acr create \
+  --name aiassistantacr \
+  --resource-group rg-ai-assistant \
+  --sku Basic
+
+az acr build \
+  --registry aiassistantacr \
+  --image ai-assistant:latest .
+
 # Container Apps (backend API)
 az containerapp create \
   --name ai-assistant-api \
   --resource-group rg-ai-assistant \
   --environment ai-assistant-env \
-  --image acr.azurecr.io/ai-assistant:latest \
-  --registry-server acr.azurecr.io \
+  --image aiassistantacr.azurecr.io/ai-assistant:latest \
   --ingress external \
   --target-port 8000 \
   --cpu 1 \
   --memory 2.0Gi \
   --min-replicas 1 \
-  --max-replicas 5
+  --max-replicas 5 \
+  --system-assigned
+
+ACR_ID=$(az acr show --name aiassistantacr --resource-group rg-ai-assistant --query id -o tsv)
+PRINCIPAL_ID=$(az containerapp show --name ai-assistant-api --resource-group rg-ai-assistant --query identity.principalId -o tsv)
+
+az role assignment create \
+  --assignee-object-id "$PRINCIPAL_ID" \
+  --assignee-principal-type ServicePrincipal \
+  --role AcrPull \
+  --scope "$ACR_ID"
+
+az containerapp registry set \
+  --name ai-assistant-api \
+  --resource-group rg-ai-assistant \
+  --server aiassistantacr.azurecr.io \
+  --identity system
 ```
 
 ### Estimativa de custo
@@ -598,6 +624,9 @@ Métricas que importam pro assistente (não são as mesmas de um CRUD):
 Implementação com OpenTelemetry (funciona com Azure Monitor via OTLP exporter):
 
 ```python
+import os
+import time
+
 from opentelemetry import metrics, trace
 from opentelemetry.exporter.otlp.proto.grpc.metric_exporter import OTLPMetricExporter
 from opentelemetry.sdk.metrics import MeterProvider

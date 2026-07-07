@@ -22,7 +22,7 @@ series:
 
 Se o YouTube é o exercício clássico de **throughput e storage**, WhatsApp é o exercício clássico de **latência e conexões persistentes**. O desafio muda completamente: em vez de entregar arquivos grandes pra milhões de viewers passivos, precisamos entregar mensagens pequenas pra bilhões de usuários em tempo real e garantir que nenhuma se perca.
 
-WhatsApp processa mais de 100 bilhões de mensagens por dia com uma equipe historicamente pequena (~50 engenheiros quando foi adquirido pelo Facebook em 2014). Esse é o poder de boas decisões arquiteturais.
+WhatsApp processa mais de 100 bilhões de mensagens por dia. O que impressiona aqui não é só a escala, mas a pressão simultânea por latência baixa, conexões persistentes e durabilidade.
 
 Vamos aplicar o [framework da série](/posts/system-design-na-pratica-como-pensar-sistemas-em-escala/).
 
@@ -81,11 +81,11 @@ Usuários online simultâneos (pico): ~200M
 Cada usuário = 1 conexão WebSocket persistente
 200 milhões de conexões TCP simultâneas
 
-Se cada server aguenta ~500K conexões:
-  Servers necessários: 200M / 500K = ~400 servers (só pra conexões)
+Se cada server aguenta ~200K conexões WebSocket estáveis:
+  Servers necessários: 200M / 200K = ~1000 servers (só pra conexões)
 ```
 
-400 servers mínimo só pra manter as conexões vivas. Na prática, com redundância e overhead, estamos falando de 1000+ servers.
+Mil servidores só pra manter conexão não é absurdo nesse cenário. Com redundância, drenagem de conexão e folga operacional, essa conta sobe fácil pra 1500-2000+ instâncias.
 
 ### Storage
 
@@ -308,7 +308,7 @@ user_id → { chat_server_id, connection_id, last_heartbeat }
 
 | Opção | Prós | Contras |
 |-------|------|---------|
-| Redis (in-memory) | Ultra-rápido (~0.1ms), TTL nativo | Custo alto pra 2B entries |
+| Redis (in-memory) | Ultra-rápido (~0.1ms), TTL nativo | Custo alto pra centenas de milhões de conexões simultâneas |
 | Consistent Hash Ring | Cada server sabe seus users | Complexo, rebalanceamento |
 | Redis Cluster (sharded) | Rápido + distribuído | Precisa gerenciar slots |
 
@@ -348,9 +348,9 @@ Com 1000+ Chat Servers, eles precisam se comunicar. Opções:
 
 - **RPC direto (gRPC):** Chat Server A chama Chat Server B diretamente. Simples mas cria acoplamento.
 - **Message broker (Kafka/RabbitMQ):** desacopla servers. Mais resiliente mas adiciona latência.
-- **Pub/Sub (Redis Pub/Sub):** cada Chat Server subscribes no canal do user que está conectado nele. Quando msg chega, publica no canal do recipient.
+- **Pub/Sub (NATS, Redis Streams, etc.):** roteia eventos por shard ou por server de destino. Desacopla bem, mas você paga com mais hops e operação mais chata.
 
-Na prática, **combinação**: RPC direto pra casos normais (latência mínima), message queue como fallback pra quando o server destino está sobrecarregado ou indisponível.
+Na prática, o desenho costuma ficar híbrido: RPC direto no caminho quente, message queue como fallback quando o destino está sobrecarregado ou temporariamente fora.
 
 ## Deep Dive 2: Garantia de entrega
 
@@ -407,7 +407,7 @@ Pra picos extremos (Ano Novo, eventos), mensagens entram mais rápido do que pod
 Sender → Chat Server → Kafka (topic: messages) → Consumer → Recipient
 ```
 
-Kafka absorve o pico. Se consumers ficam pra trás, mensagens acumulam no topic (persistente em disco) e são processadas quando o sistema recupera. **Nenhuma mensagem é perdida.**
+Kafka absorve o pico. Se consumers ficam pra trás, mensagens acumulam no topic e são processadas quando o sistema recupera. Com replicação e ACKs configurados direito, você ganha durabilidade suficiente pra atravessar o pico sem derrubar a entrega.
 
 ## Deep Dive 3: Presença online
 
@@ -482,7 +482,7 @@ Se 10M de usuários mudam status/minuto × 100 contatos = 1 bilhão de updates/m
 <text x="355" y="68" text-anchor="middle" font-size="10" fill="#555">heartbeat (cada 30s)</text>
 </svg>
 
-Redis com TTL é elegante aqui: se o client crash sem mandar "going offline", a key simplesmente expira e o status vira offline automaticamente. Sem necessidade de cleanup.
+Redis com TTL funciona muito bem aqui: se o client cair sem mandar "going offline", a key expira sozinha e o status vira offline sem job de cleanup.
 
 ## Deep Dive 4: Criptografia end-to-end (E2E)
 
@@ -502,7 +502,7 @@ O WhatsApp usa o **Signal Protocol** (Double Ratchet Algorithm):
 
 1. **Key exchange (X3DH):** quando Alice quer falar com Bob pela primeira vez, eles trocam chaves públicas pra estabelecer um segredo compartilhado. O server facilita essa troca mas não conhece o segredo.
 
-2. **Double Ratchet:** cada mensagem usa uma chave diferente (derivada da anterior). Se uma chave for comprometida, mensagens anteriores e futuras continuam protegidas (forward secrecy + backward secrecy).
+2. **Double Ratchet:** cada mensagem usa uma chave diferente. Se uma chave for comprometida, mensagens anteriores continuam protegidas e o protocolo consegue se recuperar nas trocas seguintes (forward secrecy + post-compromise recovery).
 
 3. **Pre-keys:** Bob registra chaves públicas "descartáveis" no server. Alice pode iniciar conversa com Bob mesmo se ele estiver offline, usando uma pre-key.
 
@@ -533,7 +533,7 @@ Uma encrypt por mensagem (independente do tamanho do grupo). Eficiente.
 
 ### Message storage
 
-**Opção avaliada: Cassandra (escolha real do WhatsApp original com Erlang/Mnesia, depois migraram)**
+**Opção avaliada: Cassandra (uma escolha comum pra esse padrão de acesso)**
 
 ```
 CREATE TABLE messages (
@@ -560,9 +560,9 @@ CREATE TABLE messages (
 
 ```
 100B mensagens/dia × 500 bytes = 50 TB/dia
-Retenção de 30 dias (pending messages) = ~1.5 PB
-Mensagens entregues podem ir pra cold storage ou serem deletadas do server
-  (E2E = server não precisa guardar após entrega)
+Se o produto retiver mensagens não entregues por até 30 dias = ~1.5 PB
+Mensagens já entregues podem ser apagadas do server ou migradas
+  (com E2E, o conteúdo não precisa ficar disponível indefinidamente no backend)
 ```
 
 ### Conversa metadata (separado)

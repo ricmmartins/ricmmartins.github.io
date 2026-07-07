@@ -91,7 +91,7 @@ Storage/mês: 100M × 250 bytes = ~25 GB/mês
 Storage/5 anos: ~1.5 TB
 ```
 
-1.5 TB em 5 anos. Cabe num único PostgreSQL confortavelmente. Escala de write é trivial (~40/s). O desafio **não é write**.
+1.5 TB em 5 anos. Cabe num PostgreSQL bem montado sem drama. Escala de write é trivial (~40/s). O desafio aqui não é write.
 
 ### Redirect (read)
 
@@ -112,11 +112,12 @@ Distribuição de acessos segue power law:
   20% das URLs respondem por 80% do tráfego
 
 URLs "hot" (acessadas frequentemente): ~20M URLs
-Tamanho por entry no cache: short_code + long_url ≈ 300 bytes
-Cache total: 20M × 300 bytes = ~6 GB
+Payload bruto por entry: short_code + long_url ≈ 300 bytes
+Com overhead real de Redis: pense em ~500-700 bytes por entry
+Cache total: ~10-14 GB úteis
 ```
 
-6 GB cabe em **um único Redis node**. Esse é o tipo de sistema onde caching resolve quase tudo.
+Ainda é um cache pequeno pros padrões de produção. Com réplica e folga operacional, você resolve isso com um cluster Redis enxuto.
 
 ## Fase 3: High-level design
 
@@ -263,7 +264,7 @@ INSERT INTO urls (long_url) VALUES ('https://...') RETURNING id;
 -- short_code = base62(7483921) = "1Ri7B"
 ```
 
-Simples. Mas o DB vira single point of contention. Com ~40 writes/s é ok. Com burst de 200/s pode ser gargalo (lock no sequence).
+Simples. E, pra ~40 writes/s com pico de 200/s, funciona muito bem. Sequence do PostgreSQL aguenta isso dormindo. O gargalo só começa a aparecer se o serviço crescer várias ordens de grandeza ou se você precisar gerar IDs longe do banco.
 
 **Opção B: Pre-allocated ranges**
 
@@ -294,7 +295,7 @@ Cada server consome seu range localmente (in-memory counter):
 
 Gera IDs únicos sem coordenação. Mas produz números de 64 bits que em base62 têm 11 chars. Mais longo que necessário pra URL shortener (queremos 6-7).
 
-**Escolha recomendada:** Pre-allocated ranges. Combina simplicidade, zero colisão, e escala horizontal.
+**Escolha recomendada nesse cenário:** counter + Base62 usando sequence do banco. Pre-allocated ranges entram na conversa quando o write path deixa de ser trivial ou quando você precisa gerar IDs em múltiplas regiões sem depender do primary.
 
 ### Approach 3: Custom alias (slug escolhido pelo user)
 
@@ -335,11 +336,11 @@ CREATE TABLE urls (
     user_id BIGINT,                  -- quem criou (nullable pra anônimos)
     created_at TIMESTAMP DEFAULT NOW(),
     expires_at TIMESTAMP,            -- NULL = nunca expira
-    click_count BIGINT DEFAULT 0,    -- counter denormalizado
-    
-    INDEX idx_short_code (short_code),
-    INDEX idx_expires (expires_at) WHERE expires_at IS NOT NULL
+    click_count BIGINT DEFAULT 0     -- counter denormalizado
 );
+
+CREATE UNIQUE INDEX idx_urls_short_code ON urls(short_code);
+CREATE INDEX idx_urls_expires ON urls(expires_at) WHERE expires_at IS NOT NULL;
 ```
 
 **Por que PostgreSQL (e não NoSQL)?**
@@ -399,12 +400,12 @@ O sistema é **extremamente read-heavy** (1000:1). Cache hit rate esperado: >99%
 | Warm-up | Ao criar URL, já escreve no cache | Primeira visita não sofre cold start |
 | Invalidação | Ao deletar/expirar URL | Remove do cache imediatamente |
 
-**Cache hit rate com 6 GB:**
+**Cache hit rate com ~10-14 GB úteis:**
 
 ```
 Total URLs: 1 bilhão
 URLs acessadas nas últimas 24h: ~20 milhões (2%)
-Cache cabe: ~20M entries × 300 bytes = 6 GB
+Cache cabe: ~20M entries × 500-700 bytes = ~10-14 GB
 Hit rate: ~99.5% (quase todo acesso é pra URLs recentes/populares)
 ```
 
@@ -606,13 +607,19 @@ Redirect request → busca URL → verifica expires_at → se expirado: 404
 
 ```sql
 -- A cada 5 minutos:
-DELETE FROM urls 
-WHERE expires_at IS NOT NULL 
-  AND expires_at < NOW()
-LIMIT 10000;  -- batch pra não lockar tabela
+WITH expired AS (
+    SELECT ctid
+    FROM urls
+    WHERE expires_at IS NOT NULL
+      AND expires_at < NOW()
+    ORDER BY expires_at
+    LIMIT 10000
+)
+DELETE FROM urls
+WHERE ctid IN (SELECT ctid FROM expired);
 ```
 
-**Prós:** limpa storage, libera short codes pra reuso.
+**Prós:** limpa storage e reduz lixo no índice.
 **Contras:** precisa de index eficiente em `expires_at`, query pode ser cara se muitas URLs expiram ao mesmo tempo.
 
 ### Approach 3: Combinação (o melhor dos dois mundos)
@@ -733,7 +740,7 @@ URL shortener **não pode cair**. Links estão em emails, tweets, cartões de vi
 </g>
 </svg>
 
-**DNS GeoDNS:** roteia usuário pro datacenter mais próximo. Brasileiro vai pro US-East (ou SA-East se tiver), europeu vai pro EU-West.
+**DNS GeoDNS:** roteia o usuário pro datacenter mais próximo. Brasileiro idealmente vai pra SA-East; se não existir presença local, cai no US-East. Europeu vai pra EU-West.
 
 **Read replica:** redirect é read-only. Replica é suficiente. Se primary cai, promote replica. Writes (criar URL) são raros e podem ter latência ligeiramente maior.
 
@@ -750,7 +757,7 @@ Cenário: região US-East fica offline
 4. EU-West tem read replica → serve redirects normalmente
 5. Creates são redirecionados pra nova primary (failover de DB)
 
-Impacto total: ~30-60 segundos de latência elevada, zero downtime real
+Impacto total: ~30-120 segundos de degradação enquanto caches e DNS convergem, mas sem transformar todo link em erro hard
 ```
 
 ## Comparação: URL Shortener vs sistemas anteriores
@@ -769,10 +776,10 @@ O URL Shortener é o "hello world" do system design, mas um hello world que toca
 
 | Decisão | Alternativa | Por que essa escolha |
 |---------|-------------|---------------------|
-| Pre-allocated ranges (ID) | Hash + collision check | Zero colisão, O(1) generation, distributed |
+| Auto-increment + Base62 | Hash + collision check | Simples, sem colisão, e mais do que suficiente pra esse volume |
 | Base62 encoding | Base64, UUID | URL-safe, legível, curto |
 | PostgreSQL | DynamoDB/Cassandra | Write volume baixo, queries de analytics, unique constraints |
-| Redis (single layer) | Multi-tier cache | 6 GB cabe em 1 node, simplicidade |
+| Redis com réplica | Multi-tier cache | Cache pequeno, operação simples, latência baixa |
 | 302 Redirect (padrão) | 301 Redirect | Mantém controle: analytics, pode mudar destino |
 | Kafka (analytics) | Sync write | Redirect não pode esperar analytics |
 | HyperLogLog (uniques) | Exact count | 12 KB vs 6 MB, <2% erro |
@@ -786,7 +793,7 @@ O URL Shortener é o "hello world" do system design, mas um hello world que toca
 2. **A/B testing:** mesma short URL redireciona pra destinos diferentes baseado em % de tráfego
 3. **Smart routing:** device=mobile → URL mobile, device=desktop → URL desktop
 4. **Branded domains:** empresas usam seu próprio domínio (links.empresa.com.br) com seu backend
-5. **Real-time dashboard:** WebSocket streaming de clicks conforme acontecem (dashbard ao vivo pra campanhas de marketing)
+5. **Real-time dashboard:** WebSocket streaming de clicks conforme acontecem (dashboard ao vivo pra campanhas de marketing)
 
 ## Resumo da série
 
@@ -800,7 +807,7 @@ Com esse artigo, concluímos os 6 sistemas da série. Aqui está o mapa mental d
 | **Caching (Redis)** | Todos (é universal) |
 | **Geospatial** | Uber (H3, matching) |
 | **Fan-out** | Twitter (write vs read vs hybrid) |
-| **Consistent Hashing** | YouTube (storage), Twitter (timeline sharding) |
+| **Sharding / partitioning** | Twitter (social graph), URL Shortener (crescimento futuro) |
 | **Rate Limiting** | URL Shortener (abuse prevention) |
 | **Eventual Consistency** | YouTube (upload visibility), Twitter (timeline), URL Shortener (analytics) |
 | **Strong Consistency** | WhatsApp (delivery), Uber (matching: 1 ride = 1 driver) |

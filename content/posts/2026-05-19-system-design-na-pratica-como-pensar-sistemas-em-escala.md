@@ -21,9 +21,9 @@ Você está numa entrevista. O entrevistador vira e fala: "Design a video-sharin
 
 Se a resposta for "começo desenhando caixinhas no diagrama", você já perdeu.
 
-System design não é sobre saber a resposta certa. É sobre **demonstrar como você pensa**. E pensar bem em system design é uma skill que se desenvolve com framework, prática e repertório.
+System design não é sobre saber a resposta certa. É sobre mostrar como você pensa quando o problema ainda está meio em aberto. E isso melhora com framework, prática e repertório.
 
-Este é o primeiro artigo da série **System Design na Prática**. Nos próximos posts, vamos dissecar sistemas reais como YouTube, WhatsApp, Uber e Twitter. Mas antes precisamos do toolkit mental. Esse artigo é o seu canivete suíço.
+Este é o primeiro artigo da série **System Design na Prática**. Nos próximos posts eu vou aplicar esse framework em sistemas reais como YouTube, WhatsApp, Uber e Twitter. Mas antes precisamos do toolkit mental. Esse artigo é o seu canivete suíço.
 
 ## Por que system design importa
 
@@ -75,7 +75,7 @@ Back-of-the-envelope calculations. Não precisa ser preciso; precisa estar na or
 | Recurso | Valor aproximado |
 |---------|-----------------|
 | 1 dia | 86.400 segundos (~100k pra facilitar) |
-| 1 mês | ~2.5 milhões de segundos |
+| 1 mês | ~2.6 milhões de segundos |
 | QPS de 1M requests/dia | ~12 requests/segundo |
 | 1 char (UTF-8) | 1-4 bytes |
 | 1 tweet/post curto | ~1 KB |
@@ -83,7 +83,7 @@ Back-of-the-envelope calculations. Não precisa ser preciso; precisa estar na or
 | 1 minuto de vídeo (720p) | ~50 MB |
 | 1 TB | 1 trilhão de bytes |
 | Leitura de SSD | ~0.1 ms |
-| Round-trip na mesma região | ~1 ms |
+| Round-trip na mesma região | ~1-5 ms |
 | Round-trip cross-continent | ~100-150 ms |
 | Leitura de disco (HDD) | ~5-10 ms |
 
@@ -157,12 +157,12 @@ System design é sobre trade-offs. Não existe solução perfeita. Toda escolha 
 
 ### Consistência vs. Disponibilidade (CAP Theorem)
 
-O CAP Theorem diz que num sistema distribuído com partição de rede, você só pode ter **dois de três**: Consistência, Disponibilidade, e tolerância a Partição.
+O CAP Theorem costuma ser resumido de um jeito meio torto. O ponto não é "escolher dois de três" em qualquer situação. O ponto é que, quando existe partição de rede, você precisa escolher entre consistência forte e disponibilidade.
 
-Na prática, partições de rede acontecem (você não escolhe). Então a escolha real é:
+Na prática, partições acontecem. Então a decisão vira:
 
-- **CP (Consistência + Partição):** o sistema recusa requests até resolver a inconsistência. Bom pra: transações financeiras, inventário.
-- **AP (Disponibilidade + Partição):** o sistema responde mesmo com dados possivelmente stale. Bom pra: feeds, likes, view counts.
+- **CP (Consistência + Partição):** o sistema prefere bloquear ou falhar algumas requests a responder com dados inconsistentes. Bom pra: transações financeiras, inventário.
+- **AP (Disponibilidade + Partição):** o sistema continua respondendo mesmo com dados possivelmente stale. Bom pra: feeds, likes, view counts.
 
 **Como isso aparece na entrevista:**
 
@@ -202,7 +202,7 @@ Quando alguém posta conteúdo que followers precisam ver:
 
 ### Cache: onde, o que, e quando invalidar
 
-Cache é a resposta pra 80% dos problemas de latência. Mas cache mal feito é a causa de 80% dos bugs de consistência.
+Cache resolve muita latência. Também cria boa parte da dor de cabeça de consistência quando é mal desenhado.
 
 **Estratégias de caching:**
 
@@ -218,7 +218,7 @@ Cache é a resposta pra 80% dos problemas de latência. Mas cache mal feito é a
 
 ## Números mágicos pra entrevista
 
-Esses números aparecem em toda entrevista. Decore-os:
+Esses números aparecem o tempo todo. Vale ter isso na cabeça:
 
 | SLA | Downtime/ano |
 |-----|-------------|

@@ -68,7 +68,7 @@ Esse detalhe parece pequeno, mas é por isso que a **descrição** da tool impor
 
 ## E é aí que entra o MCP
 
-MCP (Model Context Protocol) é um protocolo aberto, criado pela Anthropic em novembro de 2024 e doado em dezembro de 2025 para a Agentic AI Foundation, sob o guarda-chuva da Linux Foundation. Ou seja, hoje ele é um padrão com governança neutra, não um recurso proprietário de um único vendor. Ele padroniza **como** uma aplicação com LLM se conecta a data sources e tools externas, usando JSON-RPC 2.0 por baixo dos panos.
+MCP (Model Context Protocol) é um protocolo aberto que padroniza **como** uma aplicação com LLM se conecta a data sources e tools externas. Na prática, ele usa JSON-RPC 2.0 como envelope de mensagem e hoje tem dois transports padrão: `stdio` para processos locais e `Streamable HTTP` para uso remoto. Se você viu documentação antiga falando em HTTP+SSE, era o formato anterior do transport remoto.
 
 A analogia que costuma funcionar melhor para quem é de infra é a do LSP (Language Server Protocol). Antes do LSP, cada editor precisava da própria integração para cada linguagem. O LSP resolveu isso ao criar um protocolo comum: qualquer editor que fala LSP conversa com qualquer language server que fala LSP. O MCP faz o mesmo para agents: antes dele, toda aplicação de IA que quisesse integrar com GitHub, um banco de dados ou Azure precisava de uma integração proprietária. Com MCP, você escreve **um** servidor, e qualquer host compatível, como Claude, Copilot, Cursor ou VS Code, consegue falar com ele sem código custom.
 
@@ -92,7 +92,7 @@ A arquitetura tem três peças:
 <line x1="145" y1="125" x2="145" y2="188" stroke="#555" stroke-width="1.5" marker-end="url(#arr2)"/>
 <line x1="350" y1="125" x2="350" y2="188" stroke="#555" stroke-width="1.5" marker-end="url(#arr2)"/>
 <line x1="555" y1="125" x2="555" y2="188" stroke="#555" stroke-width="1.5" marker-end="url(#arr2)"/>
-<text x="350" y="160" text-anchor="middle" font-size="10" fill="#555">JSON-RPC 2.0 via stdio / HTTP + streaming</text>
+<text x="350" y="160" text-anchor="middle" font-size="10" fill="#555">JSON-RPC 2.0 via stdio / Streamable HTTP</text>
 <rect x="60" y="195" width="170" height="75" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
 <text x="145" y="220" text-anchor="middle" font-size="12" font-weight="bold" fill="#1b5e20">GitHub MCP</text>
 <text x="145" y="250" text-anchor="middle" font-size="9" fill="#1b5e20">tools · resources · prompts</text>
@@ -117,7 +117,9 @@ A arquitetura tem três peças:
 
 - **Host**: a aplicação que orquestra o loop e apresenta a interface para o usuário.
 - **MCP Client**: vive dentro do host e mantém uma conexão 1:1 com cada servidor.
-- **MCP Server**: o processo que expõe capacidades, localmente (via `stdio`) ou remotamente (via HTTP com streaming e OAuth).
+- **MCP Server**: o processo que expõe capacidades, localmente via `stdio` ou remotamente via `Streamable HTTP`. Quando ele fica exposto fora da máquina local, autenticação e autorização precisam entrar no desenho também.
+
+Antes do primeiro tool call, client e server passam pelo `initialize`: negociam versão do protocolo, trocam capabilities e só depois o client envia `notifications/initialized`. É isso que define, por exemplo, se aquele servidor anuncia `tools`, `resources`, `prompts`, `logging` ou notificações de mudança de lista.
 
 E o que um servidor expõe são três tipos de primitivas: **tools** (ações, verbos como `scale_deployment`), **resources** (dados que podem virar contexto, substantivos como um log ou um documento) e **prompts** (templates reutilizáveis que o servidor sugere para o modelo usar em uma tarefa específica).
 
@@ -155,8 +157,8 @@ mcp = FastMCP("k8s-ops")
 def scale_deployment(namespace: str, deployment: str, replicas: int) -> str:
     """Scales a Kubernetes Deployment to the given number of replicas.
     Do not use on StatefulSets. Requires the exact namespace and name."""
-    # the real call to the K8s API goes here
-    return result
+    # call the K8s API here
+    return f"scaled {deployment} in {namespace} to {replicas} replicas"
 
 if __name__ == "__main__":
     mcp.run(transport="stdio")
@@ -181,8 +183,8 @@ mcp = FastMCP("k8s-ops")
 def scale_deployment(namespace: str, deployment: str, replicas: int) -> str:
     """Scales a Kubernetes Deployment to the given number of replicas.
     Do not use on StatefulSets. Requires the exact namespace and name."""
-    # the real call to the K8s API goes here
-    return result
+    # call the K8s API here
+    return f"scaled {deployment} in {namespace} to {replicas} replicas"
 ```
 
 Você registra a função, expõe o schema, escolhe o transport, e qualquer host compatível passa a ver essa capability automaticamente.
@@ -191,11 +193,13 @@ Se você quiser testar isso hoje à noite sem sequer subir um host, o caminho ma
 
 ## Times de agents (sistemas multi-agent)
 
-Um único agent começa a quebrar quando a tarefa é grande demais para uma única context window, ou quando ela se beneficia de especialização. Voltando ao cenário do crash loop: em vez de um agent com acesso a tudo, você pode ter um orquestrador que delega para sub-agents especializados: um chamando `aks-mcp` para diagnosticar o cluster, outro consultando o histórico de deploy no Azure DevOps para ver se uma mudança recente coincide com o incidente, um terceiro apenas redigindo o resumo do incidente no formato que o seu time usa. No fim, o orquestrador junta tudo.
+Um único agent começa a quebrar quando a tarefa é grande demais para uma única context window, ou quando ela se beneficia de especialização. Voltando ao cenário do crash loop: em vez de um agent com acesso a tudo, você pode ter um orquestrador que delega para sub-agents especializados. Um chama `aks-mcp` para diagnosticar o cluster. Outro consulta o histórico de deploy no Azure DevOps para ver se uma mudança recente coincide com o incidente. Um terceiro só redige o resumo no formato que o seu time usa. No fim, o orquestrador junta tudo.
 
-A analogia mais honesta para o seu dia a dia é: microservices versus monolito. Dividir em sub-agents dá isolamento de contexto e reduz o blast radius por componente, mas adiciona latência, custo (mais chamadas de API por tarefa) e complexidade de coordenação. Depurar "por que o time de agents chegou a essa conclusão" é mais difícil do que depurar um único agent, pelo mesmo motivo que depurar uma cadeia de microservices é mais difícil do que depurar um monolito. Essa complexidade só vale a pena quando a tarefa realmente ganha com paralelismo ou especialização que um único system prompt não cobre bem; caso contrário, é overhead.
+Esse desenho é o padrão supervisor-worker, uma forma simples de arquitetura hierárquica. O oposto é um swarm, em que agents pares trocam mensagens e decidem entre si quem faz o quê. Eu quase sempre começaria pelo modelo hierárquico, porque debug, custo e governança ficam bem mais claros.
 
-Um comentário lateral: existe também o A2A (Agent-to-Agent Protocol), que resolve um problema diferente de MCP: comunicação entre agents, não entre agent e tool. MCP dá mãos ao agent; A2A deixa agents conversarem entre si sem um orquestrador central. Para o padrão orquestrador-worker descrito acima, você nem precisa disso; um orquestrador chamando sub-agents como funções já resolve. O A2A entra em cena quando os agents pertencem a sistemas ou times diferentes e precisam negociar sem hierarquia compartilhada.
+A analogia mais honesta para o seu dia a dia é: microservices versus monolito. Dividir em sub-agents dá isolamento de contexto e reduz o blast radius por componente, mas adiciona latência, custo e complexidade de coordenação. Depurar "por que o time de agents chegou a essa conclusão" é mais difícil do que depurar um único agent, pelo mesmo motivo que depurar uma cadeia de microservices é mais difícil do que depurar um monolito. Essa complexidade só vale a pena quando a tarefa realmente ganha com paralelismo ou especialização que um único system prompt não cobre bem. Caso contrário, é overhead.
+
+Um comentário lateral: existe também o A2A (Agent-to-Agent Protocol), que resolve um problema diferente de MCP: comunicação entre agents, não entre agent e tool. MCP dá mãos ao agent. A2A deixa agents conversarem entre si sem um orquestrador central. Para o padrão supervisor-worker descrito acima, você nem precisa disso. Um orquestrador chamando sub-agents como funções já resolve. O A2A entra em cena quando os agents pertencem a sistemas ou times diferentes e precisam negociar sem hierarquia compartilhada.
 
 ## O que isso muda operacionalmente
 
@@ -207,7 +211,7 @@ Por fim, custo é métrica operacional, não só financeira. Cada iteração do 
 
 ## Fechando
 
-MCP é o protocolo que padroniza como agents se conectam a tools e dados: o LSP do mundo dos agents, agora sob governança neutra da Linux Foundation. Um agent é modelo, tools, loop de execução e guardrails. Não é mágica: é uma arquitetura com um componente não determinístico no meio. Um time de agents é composição: vários agents especializados coordenados, com os mesmos trade-offs de qualquer sistema distribuído. E, como o `aks-mcp` mostra, isso já não é mais experimento de laboratório. É tooling oficial rodando contra clusters de produção, com os mesmos riscos e as mesmas exigências de qualquer outro componente que toca infraestrutura crítica: least privilege, observabilidade, limites de custo e approval gates sempre que a ação for irreversível.
+MCP é o protocolo que padroniza como agents se conectam a tools e dados: o LSP do mundo dos agents. Um agent é modelo, tools, loop de execução e guardrails. Não é mágica: é uma arquitetura com um componente não determinístico no meio. Um time de agents é composição: vários agents especializados coordenados, com os mesmos trade-offs de qualquer sistema distribuído. E, como o `aks-mcp` mostra, isso já não é mais experimento de laboratório. É tooling oficial rodando contra clusters de produção, com os mesmos riscos e as mesmas exigências de qualquer outro componente que toca infraestrutura crítica: least privilege, observabilidade, limites de custo e approval gates sempre que a ação for irreversível.
 
 Se você curte conteúdo aplicado de infraestrutura como este, eu sigo escrevendo sobre Azure, AKS e SRE em [rmmartins.com](https://rmmartins.com). Há mais material hands-on de Kubernetes em [k8shackathon.com](https://k8shackathon.com) e [fromservertocluster.com](https://fromservertocluster.com).
 

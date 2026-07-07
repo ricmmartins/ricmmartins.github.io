@@ -21,15 +21,15 @@ series:
   - "AI para Engenheiros de Infraestrutura"
 ---
 
-Esse é o segundo post da série onde traduzo o mundo de AI para a linguagem de engenheiros de infraestrutura. No [primeiro post](/posts/ai-para-engenheiros-de-infraestrutura-por-que-ai-precisa-de-voce/), mostrei que AI é só mais um workload e que suas habilidades de infra já te preparam mais do que imagina.
+Esse é o segundo post da série onde traduzo o mundo de AI pra linguagem de engenheiros de infraestrutura. No [primeiro post](/posts/ai-para-engenheiros-de-infraestrutura-por-que-ai-precisa-de-voce/), mostrei que AI é só mais um workload e que suas habilidades de infra já te deixam bem mais perto desse mundo do que parece.
 
-Agora vamos falar do gargalo que **todo mundo ignora** e que acaba sendo o vilão escondido de performance em praticamente todo projeto de AI que já vi: **storage**.
+Agora é hora de falar do gargalo que quase todo mundo descobre tarde demais: **storage**.
 
 ## A ligação de meia-noite
 
 Você fez tudo certo. O time de ML pediu um cluster GPU e você entregou: oito NVIDIA A100 em dois nós, rede de alta banda, drivers CUDA atualizados. Deploy impecável. O time começou o primeiro job de treinamento sexta às 18h e você foi pra casa tranquilo.
 
-Seu celular toca à meia-noite. O lead de data science está frustrado: *"As GPUs não estão funcionando. O treinamento que deveria levar quatro horas nem terminou o primeiro epoch."*
+Seu celular toca à meia-noite. O lead de data science está irritado: *"As GPUs não estão funcionando. O treinamento que deveria levar quatro horas nem terminou o primeiro epoch."*
 
 Você acessa remotamente e puxa as métricas:
 
@@ -37,94 +37,94 @@ Você acessa remotamente e puxa as métricas:
 - **GPU memory**: um terço do total
 - **Disk I/O**: 100%, throughput de leitura arrastando a 60 MB/s
 
-O time armazenou 2 TB de imagens de treinamento num Blob Storage com Standard HDD, montado via SMB share básico. Sua arquitetura de storage está **matando de fome** o hardware mais caro do rack.
+O time colocou 2 TB de imagens de treinamento num Azure Files Standard montado via SMB. Sua camada de storage está **matando de fome** o hardware mais caro do ambiente.
 
-Essa história acontece em organizações toda semana. Times investem fortunas em GPUs pra descobrir que o pipeline de dados, a parte pela qual **nós** de infra somos responsáveis, é o verdadeiro gargalo.
+Essa história se repete toda semana. Times investem pesado em GPU e descobrem depois que o pipeline de dados, justamente a parte pela qual **nós** de infra respondemos, é o gargalo real.
 
 ## Por que tudo começa com dados
 
-Toda sistema de AI, de um classificador simples até um LLM de trilhões de parâmetros, depende de uma fórmula:
+Todo sistema de AI, de um classificador simples até um LLM de trilhões de parâmetros, depende da mesma conta:
 
 **Dados + Modelo + Compute = AI**
 
-Remove qualquer um dos três e não tem nada. Mas o insight que a maioria de nós perde no início é: dos três componentes, **dados são o que toca infraestrutura em cada estágio**. O modelo é código. Compute é provisionado e fica rodando. Mas dados precisam ser ingeridos, armazenados, preparados, servidos pro treinamento e entregues na inferência. E **cada um desses estágios é um problema de infraestrutura**.
+Tira qualquer um dos três e não sobra nada. O ponto que muita gente demora pra enxergar é outro: dos três componentes, **dados são o que encosta em infraestrutura o tempo inteiro**. O modelo é código. Compute você provisiona e deixa rodando. Já os dados precisam ser ingeridos, armazenados, preparados, servidos pro treinamento e entregues na inferência. Cada etapa dessas cai no seu colo.
 
-| Conceito de Infra | Equivalente em AI | Por que importa |
+| Conceito de infra | Equivalente em AI | Por que importa |
 |-------------------|-------------------|-----------------|
 | Storage account / volume | Repositório de dataset | Onde os dados brutos vivem antes do modelo ver |
 | Read throughput (MB/s) | Velocidade do data loader | Determina quão rápido as GPUs recebem batches de treinamento |
-| IOPS | Amostras por segundo | Workloads de arquivos pequenos (imagens) precisam de IOPS alto |
+| IOPS | Amostras por segundo | Workloads com arquivos pequenos, como imagens, pedem IOPS alto |
 | Storage tiers (Hot/Cool/Archive) | Estágios do ciclo de vida | Hot pra treino ativo, Cool pra datasets concluídos, Archive pra compliance |
 | NFS/SMB mount | Acesso POSIX pra frameworks | PyTorch e TensorFlow esperam semântica de filesystem |
 | Criptografia em repouso | Compliance de proteção de dados | Obrigatório pra PII, dados médicos e financeiros |
 
-Se você já gerencia storage, rede e controle de acesso, você entende **70% do data stack de AI**. O que muda é a *intensidade*: workloads de AI empurram throughput de leitura, IOPS e I/O sequencial mais forte do que quase qualquer coisa que você já provisionou.
+Se você já gerencia storage, rede e controle de acesso, você entende uma boa parte do data stack de AI. O que muda é a intensidade. Workloads de AI apertam throughput de leitura, IOPS e I/O sequencial com uma força que poucas aplicações tradicionais conseguem imitar.
 
 ## Data starvation: o gargalo invisível
 
-Aqui está a verdade contra-intuitiva sobre infra de AI: **a causa mais comum de baixa utilização de GPU não é um problema de GPU. É um problema de storage**.
+Aqui está a parte contra-intuitiva: **a causa mais comum de baixa utilização de GPU não é a GPU. É o storage**.
 
-Quando o data loader não consegue alimentar batches pra GPU rápido o suficiente, a GPU fica ociosa esperando dados. Isso se chama *data starvation*, e transforma seu cluster de GPU de R$ 150.000/mês num aquecedor de ambiente caro.
+Quando o data loader não entrega batches rápido o bastante, a GPU fica parada esperando dados. Isso se chama *data starvation*. Na prática, seu cluster de GPU vira um aquecedor caro.
 
 ### Como diagnosticar
 
-Se um data scientist reportar que a GPU utilization está suspeitamente baixa, **verifique o storage antes de investigar qualquer outra coisa**. Nove em cada dez vezes, o problema é um desses:
+Se um data scientist reportar GPU utilization estranhamente baixa, **olhe pro storage antes de olhar pra qualquer outra coisa**. Na maioria dos casos, o problema cai em um destes cenários:
 
-1. Dados de treinamento em **Standard HDD**
+1. Dados de treinamento em **Standard HDD** ou em um share Standard subdimensionado
 2. Mount remoto **sem cache**
-3. Cache do BlobFuse2 apontando pro **disco do OS** em vez do NVMe local
+3. Cache do BlobFuse2 apontando pro **disco do sistema operacional** em vez do NVMe local
 
 Sinais clássicos de data starvation:
 
 ```bash
-# GPU utilization: se está abaixo de 80% durante treinamento, é quase certeza storage
+# GPU utilization: se está abaixo de 80% durante treinamento, suspeite do storage
 nvidia-smi dmon -s u -d 5
 
-# Disk I/O: se está a 100% com GPU baixa, gargalo clássico
+# Disk I/O: se está a 100% com GPU baixa, o padrão é bem conhecido
 iostat -x 1 5
 
-# Rede (se o dataset está remoto): throughput real vs capacidade
+# Rede, se o dataset está remoto: throughput real vs capacidade
 sar -n DEV 1 5
 ```
 
-O padrão de diagnóstico é simples:
+O padrão de diagnóstico costuma ser esse:
 
 | GPU Util | CPU Util | Disk I/O | Diagnóstico |
 |----------|----------|----------|-------------|
-| Baixa | Baixa | Alto | **Data starvation**: storage não alimenta dados rápido o bastante |
-| Baixa | Alta | Baixo | Preprocessing de CPU é gargalo (data augmentation pesada) |
-| Alta | Alta | Alto | Tudo funcionando bem, sistema balanceado |
-| Baixa | Baixa | Baixo | Problema no código do modelo ou batch size errado |
+| Baixa | Baixa | Alto | **Data starvation**: storage não entrega dados rápido o bastante |
+| Baixa | Alta | Baixo | Preprocessing de CPU virou gargalo |
+| Alta | Alta | Alto | Tudo funcionando como deveria, sistema balanceado |
+| Baixa | Baixa | Baixo | Problema no código do modelo ou batch size mal ajustado |
 
-> ⚠️ **Regra de ouro**: Um fix de storage de cinco minutos pode transformar um treinamento de três dias num treinamento overnight. Sempre comece pelo storage.
+> **Regra de ouro**: um ajuste de storage feito em cinco minutos pode derrubar horas do tempo total de treino. Comece por aí.
 
 ## Escolhendo o storage certo: a matriz de decisão
 
-Essa é a decisão mais impactante que você vai tomar pra performance de workloads de AI. Aqui está o mapa:
+Essa é a decisão de maior impacto na performance de um workload de AI. O mapa, em geral, é este:
 
 | Storage | Melhor pra | Throughput | Latência | Custo | Não use quando |
 |---------|-----------|------------|----------|-------|----------------|
-| **Blob Storage** | Datasets, artefatos, checkpoints | Até 60 Gbps/conta | Moderada (ms) | Baixo (~$0.018/GB/mês) | Precisa de POSIX nativo sem mount |
-| **Data Lake Gen2** | Pipelines analíticos, datasets versionados | Até 60 Gbps/conta | Moderada (ms) | Baixo | Workload simples que não precisa de ACLs granulares |
-| **NVMe local** | Scratch de treinamento, cache do data loader | 3-7 GB/s por disco | Ultra-baixa (μs) | Incluído na VM | Precisa de persistência: dados perdidos na desalocação |
-| **Azure Files (NFS)** | Datasets compartilhados entre nós | Até 10 Gbps (premium) | Baixa-moderada | Moderado | Workload single-node onde NVMe local basta |
-| **Azure Files (SMB)** | Compatibilidade legacy, Windows | Até 4 Gbps (premium) | Moderada | Moderado | Treinamento em Linux de alta performance |
-| **Cosmos DB** | Feature stores, inferência real-time | N/A (baseado em request) | Single-digit ms | Mais alto | Armazenar datasets brutos de treinamento |
+| **Blob Storage** | Datasets, artefatos, checkpoints | Até 60 Gbps por conta | Moderada (ms) | Baixo (~$0.018/GB/mês) | Precisa de POSIX nativo sem mount |
+| **Data Lake Gen2** | Pipelines analíticos, datasets versionados | Até 60 Gbps por conta | Moderada (ms) | Baixo | Workload simples que não precisa de ACLs granulares |
+| **NVMe local** | Scratch de treinamento, cache do data loader | 3 a 7 GB/s por disco | Ultra-baixa (μs) | Incluído na VM | Precisa de persistência: dados somem na desalocação |
+| **Azure Files (NFS)** | Datasets compartilhados entre nós | Até 10 Gbps (premium) | Baixa a moderada | Moderado | Workload single-node onde NVMe local basta |
+| **Azure Files (SMB)** | Compatibilidade legacy, Windows | Até 4 Gbps (premium) | Moderada | Moderado | Treinamento Linux de alta performance |
+| **Cosmos DB** | Feature stores, inferência em tempo real | N/A (baseado em request) | Single-digit ms | Mais alto | Armazenar datasets brutos de treinamento |
 
-O padrão de produção mais comum é uma **abordagem de duas camadas**: armazene datasets brutos em Blob Storage ou Data Lake Gen2 pra durabilidade e custo, depois faça staging dos dados ativos pra NVMe local pra performance.
+O padrão de produção mais comum é uma **abordagem de duas camadas**: dados brutos em Blob Storage ou Data Lake Gen2 pela durabilidade e pelo custo, depois staging dos dados quentes em NVMe local pela performance.
 
 **Blob é seu warehouse. NVMe é sua bancada de trabalho.**
 
-> ⚠️ **Nunca use Standard HDD pra treino.** Os limites de IOPS e throughput são ordens de magnitude abaixo do que GPUs precisam. Uma única A100 pode consumir dados mais rápido do que uma storage account com Standard HDD consegue servir.
+> **Nunca use o hot path do treino em Standard HDD.** Os limites de IOPS e throughput ficam muito abaixo do que GPUs modernas pedem. Uma A100 consegue consumir dados mais rápido do que um share Standard ou um disco Standard HDD entrega.
 
 ## O padrão recomendado: Blob + NVMe + BlobFuse2
 
-A maioria dos frameworks de ML (PyTorch, TensorFlow) espera dados de treinamento acessíveis por um caminho de filesystem. **BlobFuse2** é o driver de filesystem virtual que monta containers do Azure Blob Storage como um diretório local em Linux.
+A maioria dos frameworks de ML, como PyTorch e TensorFlow, espera dados de treinamento acessíveis por um caminho de filesystem. **BlobFuse2** é o driver que monta containers do Azure Blob Storage como diretório local em Linux.
 
-O BlobFuse2 tem dois modos de cache, e escolher o certo importa:
+O BlobFuse2 tem dois modos de cache, e aqui vale escolher com cuidado:
 
-- **File cache**: Baixa arquivos inteiros pra um cache local antes de servir leituras. **Use pra treinamento**: datasets são lidos repetidamente em múltiplos epochs.
-- **Block cache (streaming)**: Faz stream em chunks sem baixar o arquivo completo. Use pra preprocessing ou inferência em arquivos grandes de mídia.
+- **File cache**: baixa o arquivo inteiro pro cache local antes de atender leituras. É o modo que faz mais sentido pra treinamento, porque o dataset costuma ser relido em múltiplos epochs.
+- **Block cache (streaming)**: lê em blocos sem baixar o arquivo completo. Faz mais sentido pra preprocessing ou inferência em arquivos grandes.
 
 ### Montar com file cache pra treinamento
 
@@ -152,11 +152,13 @@ sudo blobfuse2 mount /mnt/training-data \
   --preload
 ```
 
-> 💡 **Sempre** aponte `--tmp-path` pro disco NVMe local da VM (`/mnt/resource` em VMs Azure), não pro disco do OS. Isso dá ao cache do BlobFuse2 a menor latência possível. Em GPU VMs da série ND, o temp disk local entrega 3-7 GB/s de throughput de leitura.
+> **Atenção**: `--preload` deixa o mount read-only. Pra dataset de treino isso costuma ser ótimo. Só não use esse mesmo mount no caminho onde você precisa escrever checkpoints.
+
+> **Dica**: aponte `--tmp-path` pro disco NVMe local da VM, normalmente `/mnt/resource` em VMs Azure com waagent, e não pro disco do sistema operacional. É ali que você consegue a menor latência possível. Em VMs da série ND, o temp disk local costuma entregar alguns GB/s de leitura.
 
 ### AzCopy pra ingestão de dados em massa
 
-Quando você precisa mover datasets grandes pro Azure (ou entre storage accounts), AzCopy é a opção mais rápida. Suporta transfers paralelas, retries automáticos e retoma uploads interrompidos.
+Quando você precisa mover datasets grandes pro Azure, ou entre storage accounts, AzCopy costuma ser o caminho mais rápido. Ele paraleliza transferências, faz retry automático e retoma uploads interrompidos.
 
 ```bash
 # Login com Microsoft Entra ID
@@ -174,37 +176,38 @@ azcopy copy \
   --recursive
 ```
 
-> 💡 Use `--cap-mbps` pra limitar throughput durante horário comercial e liberar velocidade total à noite.
+> **Dica**: use `--cap-mbps` quando quiser limitar throughput no horário comercial e liberar tudo à noite.
 
-## Segurança: embutida, não adicionada depois
+## Segurança: embutida, não colada depois
 
-Workloads de AI lidam com alguns dos dados mais sensíveis da organização: registros de clientes, imagens médicas, transações financeiras, corpora de texto proprietário.
+Workloads de AI mexem com alguns dos dados mais sensíveis da organização: registros de clientes, imagens médicas, transações financeiras, corpora de texto proprietário.
 
-Três regras inegociáveis:
+Três regras eu trato como inegociáveis:
 
 **1. Managed identities + RBAC, sempre.**
 
-Esqueça storage account keys. São estáticas, compartilháveis e difíceis de rotacionar. Managed identities são vinculadas a recursos específicos, rotacionadas automaticamente e auditáveis.
+Esqueça storage account keys. São estáticas, compartilháveis e chatas de rotacionar. Managed identities ficam presas a recursos específicos, rotacionam sozinhas e ainda deixam trilha de auditoria.
 
 ```bash
 # Atribui Storage Blob Data Reader pra managed identity de uma VM
 az role assignment create \
   --role "Storage Blob Data Reader" \
-  --assignee <managed-identity-principal-id> \
+  --assignee-object-id <managed-identity-principal-id> \
+  --assignee-principal-type ServicePrincipal \
   --scope "/subscriptions/<sub-id>/resourceGroups/<rg>/providers/Microsoft.Storage/storageAccounts/<account>"
 ```
 
 **2. Classifique antes de ingerir.**
 
-Antes de qualquer dado entrar num pipeline de treinamento: é público, interno, confidencial ou restrito? Sua arquitetura de storage precisa enforçar essas classificações com isolamento de rede, criptografia e controles de acesso.
+Antes de qualquer dado entrar no pipeline de treinamento, responda a pergunta chata: é público, interno, confidencial ou restrito? Sua arquitetura de storage precisa refletir isso com isolamento de rede, criptografia e controles de acesso.
 
 **3. Combata shadow data sprawl.**
 
-Data scientists frequentemente copiam dados pra máquinas locais, drives compartilhados ou storage accounts não gerenciadas pra "experimentos rápidos". Use Azure Policy pra restringir criação de storage accounts e Microsoft Purview pra escanear cópias fora dos locais aprovados.
+Data scientist adora copiar dado pra máquina local, drive compartilhado ou storage account paralela pra um "teste rápido". Use Azure Policy pra restringir criação de storage accounts e Microsoft Purview pra localizar cópias fora dos lugares aprovados.
 
 ## Mãos na massa: storage otimizado pra AI de ponta a ponta
 
-Vamos montar um fluxo completo: provisionar, transferir, montar e validar. Todos os comandos usam `--auth-mode login`: sem storage keys.
+Vamos montar um fluxo completo: provisionar, transferir, montar e validar. Todos os comandos usam `--auth-mode login`. Nada de storage key largada em script.
 
 ### 1. Cria a storage account com Data Lake Gen2
 
@@ -228,16 +231,19 @@ az storage account create \
   --allow-blob-public-access false
 ```
 
-### 2. Configura RBAC (sem keys!)
+### 2. Configura RBAC (sem keys)
 
 ```bash
-az ad signed-in-user show --query id -o tsv | az role assignment create \
+USER_OBJECT_ID=$(az ad signed-in-user show --query id -o tsv)
+
+az role assignment create \
   --role "Storage Blob Data Contributor" \
-  --assignee @- \
+  --assignee-object-id $USER_OBJECT_ID \
+  --assignee-principal-type User \
   --scope "/subscriptions/$(az account show --query id -o tsv)/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.Storage/storageAccounts/$STORAGE_ACCOUNT"
 ```
 
-> Role assignments levam 1-2 minutos pra propagar. Espere antes de prosseguir.
+> Role assignments levam um ou dois minutos pra propagar. Espere isso antes de seguir.
 
 ### 3. Cria container e transfere dados
 
@@ -278,23 +284,23 @@ nvidia-smi dmon -s u -d 5 &
 iostat -x 1 5
 ```
 
-Se `nvidia-smi` mostrar GPU util acima de 80% e `iostat` não estiver a 100%, seu pipeline de dados está saudável.
+Se `nvidia-smi` mostrar GPU util acima de 80% e `iostat` não estiver batendo 100% o tempo todo, seu pipeline de dados está no caminho certo.
 
 ## Checklist de saída
 
 Antes de entregar storage pra um workload de AI:
 
-- [ ] Storage é **Premium SSD ou NVMe** (nunca Standard HDD pra treinamento)
-- [ ] BlobFuse2 cache aponta pro **NVMe local** (`/mnt/resource`), não pro disco do OS
-- [ ] Acesso via **managed identity + RBAC**, sem storage keys
-- [ ] Dados classificados **antes** de entrar no pipeline
-- [ ] Storage dimensionado pra **10× o tamanho atual** (datasets multiplicam com augmentation e versionamento)
-- [ ] Alertas de **throughput e IOPS** configurados
-- [ ] Checkpoints escrevendo de volta pro **Blob Storage** pra durabilidade
+- [ ] A camada quente do treino usa **NVMe local, Premium SSD ou cache local bem dimensionado**
+- [ ] O cache do BlobFuse2 aponta pro **NVMe local** (`/mnt/resource`), não pro disco do sistema operacional
+- [ ] O acesso usa **managed identity + RBAC**, sem storage keys
+- [ ] Os dados foram classificados **antes** de entrar no pipeline
+- [ ] O storage foi pensado pra **10x o tamanho atual** do dataset
+- [ ] Existem alertas de **throughput e IOPS** configurados
+- [ ] Os checkpoints voltam pro **Blob Storage** pra garantir durabilidade
 
 ## No próximo post
 
-Agora que você entende como dados fluem por sistemas de AI e por que suas decisões de storage determinam diretamente a performance de treinamento, é hora de olhar pro compute que consome todos esses dados. Vou falar sobre **GPUs, famílias de VMs e arquitetura de cluster**, e por que a camada de storage bem afinada é só metade da equação.
+Agora que você entende como os dados fluem por um sistema de AI, e como suas decisões de storage mudam direto a performance do treinamento, faz sentido olhar pro compute que consome tudo isso. No próximo post eu vou falar sobre **GPUs, famílias de VMs e arquitetura de cluster**, e por que storage bem resolvido é só metade da história.
 
 O livro completo está disponível de graça em [ai4infra.com](https://ai4infra.com).
 

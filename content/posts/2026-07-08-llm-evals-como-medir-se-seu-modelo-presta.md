@@ -139,12 +139,15 @@ Métricas específicas pro tipo de tarefa:
 
 | Tarefa | Métrica | Como medir |
 |--------|---------|-----------|
-| Q&A factual | Accuracy | Resposta contém o fato correto |
-| Classificação | F1 score | Precision + recall da classe |
-| Summarization | ROUGE score | Overlap de n-grams com referência |
-| Code generation | Pass@k | Código gerado passa nos testes |
+| Q&A factual | Accuracy / exact match | Resposta contém o fato correto |
+| Classificação | Precision, recall e F1 | F1 = média harmônica entre precision e recall |
+| Summarization | ROUGE | Overlap de n-grams ou subsequências com a referência |
+| Tradução / captioning | BLEU | Overlap de n-grams. Útil como baseline, fraco sozinho pra julgar qualidade |
+| Code generation | Pass@k | Probabilidade de pelo menos uma entre k amostras passar nos testes |
 | RAG | Faithfulness | Resposta é suportada pelo contexto |
-| RAG | Relevance | Chunks recuperados são relevantes |
+| RAG | Relevance | Chunks recuperados e resposta final atacam a pergunta |
+
+BLEU e ROUGE continuam úteis quando existe uma resposta de referência boa e estável. Pra resposta aberta de LLM, eu trato os dois como sinal auxiliar, não como veredito final.
 
 ## Montando um eval pipeline
 
@@ -193,7 +196,7 @@ def run_eval_suite(eval_dataset, rag_pipeline, client, output_file):
         })
     
     # Salvar resultados
-    with open(output_file, "w") as f:
+    with open(output_file, "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2)
     
     # Calcular agregados
@@ -249,7 +252,7 @@ Quando avalia um sistema RAG, separe as métricas em duas camadas:
 |---------|-----------|--------------|
 | **Recall@K** | % de docs relevantes nos top K | Docs relevantes em K / total relevantes |
 | **Precision@K** | % dos top K que são relevantes | Docs relevantes em K / K |
-| **MRR** | Posição média do primeiro resultado correto | 1/posição do primeiro correto |
+| **MRR** | Quão cedo aparece o primeiro resultado relevante | Média de 1/rank do primeiro relevante em cada query |
 
 ### Generation metrics (o modelo está respondendo bem?)
 
@@ -292,7 +295,7 @@ Retorne JSON: {{"afirmacoes": [...], "score_faithfulness": 0.0-1.0}}
 ## Eval anti-patterns
 
 **Eval dataset pequeno demais**
-- 10 exemplos não é estatisticamente significativo. Mínimo 50 pra detectar regressões.
+- Com 10 exemplos você percebe um desastre, não uma regressão sutil. Pra começar, 50-100 casos já dão um sinal bem melhor.
 
 **Eval dataset viesado**
 - Só testar perguntas fáceis dá falsa confiança. Inclua edge cases, perguntas ambíguas, perguntas que o sistema não deveria responder.
@@ -360,12 +363,12 @@ promptfoo view  # abre dashboard com resultados
 ## O que levar pra segunda-feira
 
 - **Evals são o test suite do AI.** Sem eles, você não sabe se suas mudanças melhoraram ou pioraram.
-- **Comece simples.** 50 examples + contains + LLM-judge já dá visibilidade enorme.
+- **Comece simples.** 50 exemplos + contains + LLM-as-judge já dão um raio-X bem útil.
 - **Meça retrieval e generation separadamente.** Se o modelo erra, primeiro descubra se o problema é no search ou na geração.
 - **Integre no CI/CD.** Mudanças em prompts devem passar por evals antes de ir pra produção, igual código passa por tests.
-- **Trate evals como métricas de SLA.** Defina thresholds (accuracy > 85%), alerte quando cair, investigue root cause.
+- **Trate evals como métricas de SLA.** Defina thresholds por categoria, alerte quando cair e investigue root cause.
 
-No próximo post, vamos falar de **Machine Learning System Design**: como projetar sistemas de ML completos, da ingestão de dados ao serving em produção.
+O próximo post é sobre **Machine Learning System Design**: como projetar sistemas de ML completos, da ingestão de dados ao serving em produção.
 
 ## Leitura complementar
 

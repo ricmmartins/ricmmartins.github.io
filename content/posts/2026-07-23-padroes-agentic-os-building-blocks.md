@@ -17,9 +17,9 @@ series:
   - "AI por dentro: de tokens a agents"
 ---
 
-Se agents são controllers (LLM + tools + loop), padrões agentic são os **design patterns** que esses controllers usam. Assim como em software tradicional você tem Observer, Strategy, Chain of Responsibility, em AI agents existem patterns recorrentes que resolvem problemas específicos.
+Se agents são controllers (LLM + tools + loop), padrões agentic são os **design patterns** que esses controllers usam. Assim como em software tradicional você tem Observer, Strategy e Chain of Responsibility, em AI agents também existem padrões que aparecem o tempo todo.
 
-Conhecer esses patterns poupa tempo. Em vez de inventar arquitetura pra cada caso, você combina blocos testados.
+Saber reconhecer esses patterns encurta bastante o caminho. Em vez de desenhar tudo do zero a cada caso, você monta a solução com blocos que já provaram valor.
 
 ## O mapa pro profissional de infra
 
@@ -168,9 +168,9 @@ Tools disponíveis: {[t['function']['name'] for t in tools]}
     return summarize(task, plan, results)
 ```
 
-**Vantagem sobre ReAct**: mais previsível, mais fácil de auditar ("veja, ele planejou 4 steps antes de executar").
+**Vantagem sobre ReAct**: fica mais previsível e mais fácil de auditar. Você consegue olhar o plano e entender a linha de raciocínio antes da execução.
 
-**Desvantagem**: plano pode ficar outdated se step 2 muda o contexto de forma inesperada. Precisa de re-planning.
+**Desvantagem**: o plano envelhece rápido se o passo 2 muda o contexto de forma inesperada. Aí não tem milagre, precisa replanejar.
 
 ## Pattern 4: Routing
 
@@ -239,7 +239,7 @@ Responda APENAS com a categoria."""},
     return agent.run(task)
 ```
 
-**Quando usar**: quando você tem domínios distintos com tools diferentes. Reduz confusão do modelo (menos tools por agent = melhor accuracy de seleção).
+**Quando usar**: quando você tem domínios distintos com tools diferentes. Menos tools por agent costuma melhorar a chance de o modelo escolher a ação certa.
 
 ## Pattern 5: Parallelization
 
@@ -388,7 +388,7 @@ Na prática, agents sofisticados combinam múltiplos patterns:
 </g>
 </svg>
 
-Mas começa simples. Um agent com Tool Use + Planning já resolve 80% dos cases. Adicione Reflection quando erros forem caros. Adicione Routing quando tiver domínios distintos.
+Mas eu começaria simples. Um agent com Tool Use + Planning já resolve a maioria dos casos. Adicione Reflection quando o erro custar caro. Adicione Routing quando os domínios realmente se separarem.
 
 ## Custo comparativo dos patterns
 
@@ -404,12 +404,12 @@ Mas começa simples. Um agent com Tool Use + Planning já resolve 80% dos cases.
 
 ## O que levar pra segunda-feira
 
-- **Patterns são building blocks.** Não precisa inventar arquitetura from scratch. Combine patterns testados.
-- **Comece com Tool Use + Planning.** Adicione complexidade só quando precisar.
-- **Reflection é o melhor custo-benefício** pra melhorar qualidade sem mudar infra.
-- **Routing reduz complexidade** dando menos tools pra cada agent especializado.
-- **Parallelization é obvious win** quando tem N tasks independentes. Mas respeite rate limits.
-- **Cada pattern multiplicar o custo.** Reflection triplica tokens. Orchestrator quintuplica. Faça as contas.
+- **Patterns são blocos de construção.** Não precisa inventar arquitetura do zero toda vez.
+- **Comece com Tool Use + Planning.** Complexidade entra depois, quando houver motivo.
+- **Reflection costuma ter ótimo custo-benefício** quando você precisa subir a qualidade sem mexer no resto da infra.
+- **Routing reduz confusão** porque cada agent trabalha com menos tools e menos contexto inútil.
+- **Parallelization vale muito a pena** quando as tarefas são independentes, mas continue respeitando rate limits.
+- **Cada pattern multiplica o custo.** Reflection pode triplicar tokens. Orchestrator pode multiplicar várias chamadas. Faça a conta antes.
 
 No próximo post, vamos escalar: **arquitetura multi-agent**, onde múltiplos agents colaboram em sistemas complexos.
 

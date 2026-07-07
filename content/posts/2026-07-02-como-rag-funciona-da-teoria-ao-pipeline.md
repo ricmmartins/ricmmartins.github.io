@@ -22,7 +22,7 @@ O VP de produto chega na daily: "Quero que o chatbot responda perguntas sobre no
 
 O time de ML responde: "Vamos implementar RAG."
 
-Todo mundo concorda. Você fica com a tarefa de provisionar a infra. Mas antes de subir recursos, vale entender o que RAG realmente faz por dentro.
+Todo mundo faz que sim com a cabeça. Você fica com a tarefa de provisionar a infra. Antes de subir recurso, vale entender o que RAG realmente faz por dentro.
 
 ## O mapa pro profissional de infra
 
@@ -227,7 +227,9 @@ az rest --method PUT \
 
 ```python
 import os
+import tiktoken
 from azure.search.documents import SearchClient
+from azure.search.documents.models import VectorizedQuery, VectorSearchQueryKind
 from azure.core.credentials import AzureKeyCredential
 from openai import AzureOpenAI
 
@@ -244,16 +246,24 @@ openai_client = AzureOpenAI(
     api_version="2024-06-01"
 )
 
+TOKENIZER = tiktoken.get_encoding("cl100k_base")
+
 def chunk_text(text, chunk_size=800, overlap=200):
-    """Divide texto em chunks com overlap."""
-    words = text.split()
+    """Divide texto em chunks aproximados por token."""
+    if overlap >= chunk_size:
+        raise ValueError("overlap precisa ser menor que chunk_size")
+
+    token_ids = TOKENIZER.encode(text)
     chunks = []
     start = 0
-    while start < len(words):
+    step = chunk_size - overlap
+
+    while start < len(token_ids):
         end = start + chunk_size
-        chunk = " ".join(words[start:end])
+        chunk = TOKENIZER.decode(token_ids[start:end])
         chunks.append(chunk)
-        start = end - overlap
+        start += step
+
     return chunks
 
 def get_embedding(text):
@@ -266,23 +276,24 @@ def get_embedding(text):
 
 def index_document(file_path, title):
     """Processa e indexa um documento."""
-    with open(file_path, "r") as f:
+    with open(file_path, "r", encoding="utf-8") as f:
         content = f.read()
-    
+
     chunks = chunk_text(content)
     documents = []
-    
+
     for i, chunk in enumerate(chunks):
-        doc = {
-            "id": f"{os.path.basename(file_path)}-{i}",
-            "title": title,
-            "content": chunk,
-            "source_file": file_path,
-            "chunk_index": i,
-            "embedding": get_embedding(chunk)
-        }
-        documents.append(doc)
-    
+        documents.append(
+            {
+                "id": f"{os.path.basename(file_path)}-{i}",
+                "title": title,
+                "content": chunk,
+                "source_file": file_path,
+                "chunk_index": i,
+                "embedding": get_embedding(chunk),
+            }
+        )
+
     search_client.upload_documents(documents=documents)
     print(f"Indexado: {title} ({len(chunks)} chunks)")
 ```
@@ -290,47 +301,48 @@ def index_document(file_path, title):
 ### Passo 4: Query com hybrid search
 
 ```python
-from azure.search.documents.models import VectorizedQuery
-
 def rag_query(question, top_k=5):
     """Busca documentos relevantes e gera resposta."""
-    
+
     question_vector = get_embedding(question)
+
+    vector_query = VectorizedQuery(
+        vector=question_vector,
+        kind=VectorSearchQueryKind.KNN,
+        fields="embedding",
+        k_nearest_neighbors=top_k,
+    )
 
     # Hybrid search: vector + keyword
     results = search_client.search(
-        search_text=question,  # keyword search
-        vector_queries=[
-            VectorizedQuery(
-                vector=question_vector,
-                k_nearest_neighbors=top_k,
-                fields="embedding",
-                kind="vector"
-            )
-        ],
-        top=top_k
+        search_text=question,
+        vector_queries=[vector_query],
+        top=top_k,
     )
-    
+
     # Montar contexto com os chunks encontrados
     context_parts = []
     for result in results:
         context_parts.append(f"[{result['title']}]\n{result['content']}")
-    
+
     context = "\n\n---\n\n".join(context_parts)
-    
+
     # Gerar resposta com o LLM
     response = openai_client.chat.completions.create(
         model="gpt-4o",
         messages=[
-            {"role": "system", "content": 
-             "Responda a pergunta usando APENAS o contexto fornecido. "
-             "Se a informação não estiver no contexto, diga que não encontrou."},
-            {"role": "user", "content": 
-             f"Contexto:\n{context}\n\nPergunta: {question}"}
+            {
+                "role": "system",
+                "content": (
+                    "Responda a pergunta usando APENAS o contexto fornecido. "
+                    "Se a informação não estiver no contexto, diga que não encontrou."
+                ),
+            },
+            {"role": "user", "content": f"Contexto:\n{context}\n\nPergunta: {question}"},
         ],
-        temperature=0.1
+        temperature=0.1,
     )
-    
+
     return response.choices[0].message.content
 ```
 
@@ -346,7 +358,7 @@ Chunking parece simples ("divide o texto em pedaços"), mas a estratégia de chu
 | **Document structure** | Usa headers/sections do doc | Respeita estrutura original | Depende de docs bem formatados |
 | **Overlap** | Chunks compartilham N tokens nas bordas | Não perde contexto na fronteira | Mais storage, mais tokens indexados |
 
-Regra prática: comece com fixed size (800 tokens) + overlap (200 tokens). Refine depois baseado nos resultados.
+Regra prática: comece com fixed size (800 tokens) + overlap (200 tokens). Refine depois com base nos resultados.
 
 ## Hybrid search: por que keyword + vector é melhor que vector sozinho
 
@@ -358,17 +370,19 @@ Hybrid search combina:
 
 Azure AI Search faz isso nativamente e combina os scores com **Reciprocal Rank Fusion (RRF)**.
 
+Em pipeline mais caprichado, o top-K inicial ainda passa por reranking. Pode ser o semantic ranker do Azure AI Search ou um cross-encoder separado. A busca vetorial abre o leque. O reranker decide quais chunks realmente merecem entrar no prompt.
+
 ## Custos em produção
 
-| Componente | Custo aproximado | Escala com |
-|-----------|-----------------|-----------|
-| Azure AI Search (Standard S1) | ~$250/mês por search unit | Número de documentos e queries |
-| Embedding generation (indexação) | ~$0.02 por 1M tokens de input | Volume de documentos |
-| Embedding generation (query) | Negligível | Queries são curtas |
-| LLM (GPT-4o Global Standard) | ~$2.50/1M input, ~$7.50/1M output | Número de queries |
-| Storage (embeddings) | Incluído no Search | Dimensão × quantidade |
+| Componente | Como costuma pesar | Escala com |
+|-----------|--------------------|-----------|
+| Azure AI Search (Standard S1) | Custo fixo por search unit | Número de documentos e queries |
+| Embedding generation (indexação) | Custo pontual, normalmente baixo | Volume de documentos |
+| Embedding generation (query) | Custo baixo por request | Número de queries |
+| LLM | Geralmente domina a conta | Tokens de input e output |
+| Storage (embeddings) | Cresce com o corpus, mas raro ser o vilão | Dimensão × quantidade |
 
-Pra 10.000 documentos (~50MB de texto), indexar custa ~$5 em embeddings. Servir 1000 queries/dia com 5 chunks cada, ~$15/dia em tokens de LLM.
+Em muito projeto, indexar é a parte barata. A conta que cresce de verdade costuma ser o LLM respondendo consulta o dia inteiro.
 
 ## Problemas comuns e como resolver
 
@@ -383,19 +397,19 @@ Pra 10.000 documentos (~50MB de texto), indexar custa ~$5 em embeddings. Servir 
 - Falta de metadata filtering (não está filtrando por categoria/data)
 
 **"Indexação demora muito"**
-- Batch as chamadas de embedding (Azure OpenAI aceita até 2048 inputs por request)
-- Paralelizar com cuidado no rate limit
-- Considere embedding models menores pra prototipação (text-embedding-3-small vs large)
+- Agrupe as chamadas de embedding (o limite costuma ser 2.048 inputs por request, além do teto total de tokens)
+- Paralelize com cuidado por causa do rate limit
+- Considere modelos menores pra prototipação (text-embedding-3-small vs large)
 
 ## O que levar pra segunda-feira
 
 - **RAG não é mágica.** É search + LLM. Se o search retorna lixo, o LLM responde com lixo contextualizado.
 - **Chunking importa mais do que parece.** Invista tempo testando estratégias diferentes pro seu tipo de documento.
-- **Hybrid search > vector-only.** Sempre. Especialmente com documentação técnica cheia de termos específicos.
-- **Monitore retrieval separado de generation.** Se o modelo erra, primeiro verifique se os chunks corretos estão sendo recuperados.
-- **Custo escala com queries, não com documentos.** Indexar é barato. Servir milhares de requests com GPT-4o é onde o custo vive.
+- **Hybrid search quase sempre ganha de vector-only.** Especialmente com documentação técnica cheia de termos específicos.
+- **Monitore retrieval separado de generation.** Se o modelo erra, primeiro veja se os chunks certos estão sendo recuperados.
+- **Custo escala com queries, não com documentos.** Indexar costuma ser barato. Servir milhares de requests com GPT-4o é onde a conta cresce.
 
-No próximo post, vamos falar de **Context Engineering**. Agora que você sabe como buscar informação (RAG), vamos aprender como montar o prompt ideal pra extrair o melhor do modelo.
+Se retrieval, reranking e prompt estão bem encaixados, RAG deixa de ser buzzword e vira pipeline operável.
 
 ## Leitura complementar
 

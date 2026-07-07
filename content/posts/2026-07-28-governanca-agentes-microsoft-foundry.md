@@ -20,11 +20,11 @@ series:
 
 Os quatro posts anteriores construíram agents desenhados por mim, em que eu sei exatamente o que cada tool faz e lembro de cabeça qual flag restringe o quê. Isso funciona até o momento em que outro time, sem ter lido esta série, sobe o próprio agent na mesma plataforma. A partir daí, a pergunta deixa de ser "essa tool é segura?" e passa a ser "como eu sei, no nível organizacional, o que está rodando e com quais permissões?". É nesse momento que governança deixa de ser boa prática e vira pré-requisito.
 
-A plataforma da Microsoft para isso, agora chamada **Microsoft Foundry** (o nome que veio depois de "Azure AI Foundry"; vale conferir qual dos dois ainda aparece na sua subscription, porque o rename ainda está em rollout em alguns lugares), já cobre uma parte importante do que eu apliquei manualmente nos posts anteriores. Este post é sobre onde a plataforma resolve isso por você e onde ela não resolve, porque as duas coisas importam para quem vai assinar embaixo dessa governança.
+A plataforma da Microsoft para isso hoje aparece em muitos lugares como **Microsoft Foundry**. Em parte da documentação você ainda vai ver Azure AI Foundry, e em parte vai encontrar o modelo clássico de hub/project ao lado do modelo mais novo baseado em recurso Foundry + project. O nome mudou e a superfície ainda está se ajeitando; a ideia operacional continua a mesma: separar identidade, catálogo de tools, observabilidade e policy em uma camada de plataforma. Este post é sobre o que essa camada resolve por você e o que continua sendo problema seu.
 
 ## Hubs e projects como unidade de isolamento
 
-A estrutura do Foundry tem duas camadas: o hub é um workspace compartilhado com compute, storage, Key Vault e Container Registry centralizados; o project é a unidade isolada dentro dele, normalmente por time. Dados, como arquivos, histórico de conversa e índices de busca, não vazam de um project para outro, mesmo quando os dois vivem sob o mesmo hub.
+No desenho clássico, o hub é o workspace compartilhado com compute, storage, Key Vault e outras dependências centrais; o project é a unidade isolada dentro dele, normalmente por time. Na API mais nova do AzureRM você vê isso refletido como um recurso Foundry com projects. Em ambos os casos, a ideia importante é isolamento por projeto: arquivos, índices, histórico e configuração não deveriam vazar de um project para outro só porque dividem a mesma fundação.
 
 Aplicando isso aos agents da série: o watchdog de tokens e o diagnosticador de AKS poderiam perfeitamente morar no mesmo project, porque pertencem ao mesmo time de SRE. Mas, se o time de dados decidir construir o próprio agent em cima do mesmo hub, ele cai em um project separado por default, sem que alguém precise lembrar de configurar isolamento manualmente toda vez.
 
@@ -38,11 +38,11 @@ Este é o ponto que resolve mais diretamente uma dor que eu carreguei ao longo d
 
 ## Um catálogo governado de tools/MCP, não flags costuradas
 
-O Foundry tem um catálogo "Add Tools" onde você registra MCP servers, incluindo remotos, como o servidor de Azure DevOps já disponível no catálogo, e escolhe explicitamente qual subconjunto de tools cada agent pode usar daquele servidor. É a aplicação, em nível de plataforma, do mesmo princípio que eu apliquei com `--access-level readonly` no `aks-mcp` lá no post 1; só que agora de forma centralizada e auditável em catálogo, não por uma flag de linha de comando que só quem fez o deploy original sabe que existe. Se alguém perguntar daqui a seis meses "esse agent pode escalar um deployment?", a resposta está no catálogo, não na memória de quem configurou.
+O Foundry tem um catálogo "Add tools" para registrar conexões e MCP servers e escolher explicitamente qual subconjunto de tools cada agent pode usar. É a aplicação, em nível de plataforma, do mesmo princípio que eu apliquei com `--access-level readonly` no `aks-mcp` lá no post 1, só que agora de forma centralizada e auditável em catálogo, não por uma flag de linha de comando que só quem fez o deploy original sabe que existe. Se alguém perguntar daqui a seis meses "esse agent pode escalar um deployment?", a resposta está no catálogo, não na memória de quem configurou.
 
 ## Policy como gate de deploy, não revisão manual
 
-Azure Policy pode bloquear automaticamente o deploy de um agent que viole uma regra de acesso a modelo, tratamento de dados ou content safety, antes mesmo de o agent começar a rodar, e não como auditoria posterior. Isso muda bastante a postura: nos posts anteriores, todo guardrail que eu construí era código meu, revisável só por mim. Policy é enforcement de plataforma, aplicado a qualquer agent publicado por qualquer time, tenha ele lido esta série de blog ou não.
+Policy e controles de recurso podem barrar automaticamente a criação ou publicação de um agent que viole uma regra de acesso a modelo, tratamento de dados ou content safety, antes mesmo de ele começar a rodar. Isso muda bastante a postura: nos posts anteriores, todo guardrail que eu construí era código meu, revisável só por mim. Aqui o enforcement passa a ser de plataforma, aplicado a qualquer agent publicado por qualquer time, tenha ele lido esta série de blog ou não.
 
 ## Observabilidade nativa em vez de logging artesanal
 
@@ -50,29 +50,31 @@ No post 3, o guardrail que eu propus para o watchdog era registrar manualmente o
 
 ## CI/CD com versionamento de verdade
 
-RBAC por ambiente (dev, test, production), somente um service principal de pipeline com token OIDC auditado promovendo entre eles, e rollback que é só apontar o ponteiro de versão ativa para trás, sem redeploy. Isso fecha uma pergunta que nenhum dos posts anteriores tratou: quem mudou este agent, quando, e como eu volto para a versão anterior sem reconstruir nada na unha?
+RBAC por ambiente, pipeline com identidade própria e promoção versionada. Com isso, rollback deixa de ser "rebuild correndo na unha" e vira voltar para uma versão publicada conhecida. Isso fecha uma pergunta que nenhum dos posts anteriores tratou: quem mudou este agent, quando, e como eu volto para a versão anterior sem improviso?
 
 ## Provisionando hub e project via Terraform
 
-Hub e project do Foundry têm recursos nativos no provider `azurerm`: `azurerm_ai_foundry` (o hub) e `azurerm_ai_foundry_project` (o project), confirmados no Terraform Registry:
+Hoje o caminho mais atual no provider `azurerm` é tratar o Foundry como um `azurerm_cognitive_account` com `project_management_enabled = true` e criar cada project com `azurerm_cognitive_account_project`. Os recursos `azurerm_ai_foundry` e `azurerm_ai_foundry_project` ainda aparecem no modelo clássico de hub/project, mas eu prefiro mostrar o caminho novo porque é o que a documentação atual recomenda:
 
 ```hcl
-resource "azurerm_ai_foundry" "hub" {
-  name                = "hub-sre-ai"
-  location            = azurerm_resource_group.ai.location
-  resource_group_name = azurerm_resource_group.ai.name
-  storage_account_id  = azurerm_storage_account.ai.id
-  key_vault_id        = azurerm_key_vault.ai.id
+resource "azurerm_cognitive_account" "foundry" {
+  name                       = "foundry-sre-ai"
+  location                   = azurerm_resource_group.ai.location
+  resource_group_name        = azurerm_resource_group.ai.name
+  kind                       = "AIServices"
+  sku_name                   = "S0"
+  custom_subdomain_name      = "foundry-sre-ai"
+  project_management_enabled = true
 
   identity {
     type = "SystemAssigned"
   }
 }
 
-resource "azurerm_ai_foundry_project" "watchdog" {
-  name               = "project-watchdog-429"
-  location           = azurerm_ai_foundry.hub.location
-  ai_services_hub_id = azurerm_ai_foundry.hub.id
+resource "azurerm_cognitive_account_project" "watchdog" {
+  name                 = "project-watchdog-429"
+  cognitive_account_id = azurerm_cognitive_account.foundry.id
+  location             = azurerm_resource_group.ai.location
 
   identity {
     type = "SystemAssigned"
@@ -90,10 +92,10 @@ Para fechar com algo prático: você pode monitorar mudanças em content safety 
 
 ```kql
 AzureActivity
-| where OperationNameValue contains "contentFilters" or OperationNameValue contains "raiPolicies"
-| where ResourceId contains "MachineLearningServices"
-| where ActivityStatus == "Succeeded"
-| project TimeGenerated, Caller, OperationNameValue, ResourceId, ActivityStatus
+| where ResourceProviderValue =~ "MICROSOFT.COGNITIVESERVICES"
+| where OperationNameValue has_any ("contentFilters", "raiPolicies")
+| where ActivityStatusValue == "Succeeded"
+| project TimeGenerated, Caller, OperationNameValue, ResourceId, ActivityStatusValue
 | order by TimeGenerated desc
 ```
 

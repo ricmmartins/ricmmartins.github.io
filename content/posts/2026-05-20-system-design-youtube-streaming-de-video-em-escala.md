@@ -20,7 +20,7 @@ series:
 
 "Design a video-sharing platform like YouTube."
 
-Essa é possivelmente a pergunta de system design mais clássica que existe. E o motivo é simples: um sistema de vídeo toca em **quase todo conceito importante**: upload de arquivos grandes, processamento assíncrono, storage massivo, CDN global, adaptive streaming, e leitura pesada com caching agressivo.
+Essa é uma das perguntas mais clássicas de system design porque um sistema de vídeo encosta em quase tudo que costuma cair na entrevista: upload grande, processamento assíncrono, storage massivo, CDN global, adaptive streaming e leitura pesada com cache.
 
 Nesse artigo, vamos aplicar o [framework do post anterior](/posts/system-design-na-pratica-como-pensar-sistemas-em-escala/) pra projetar uma plataforma de vídeo do zero. Não vou fingir que estamos inventando o YouTube. Vou explicar **por que** cada decisão arquitetural faz sentido no contexto de escala real.
 
@@ -78,15 +78,19 @@ Storage bruto/ano: 500 TB × 365 = ~180 PB/ano
 ```
 DAU: 100.000.000
 Vídeos assistidos/dia por usuário: ~5
-Total de streams/dia: 500.000.000
-Streams/segundo: 500M / 86.400 ≈ 5.800/s (média)
-Pico: ~15.000-20.000 streams/s
+Playbacks iniciados/dia: 500.000.000
+Starts/segundo: 500M / 86.400 ≈ 5.800/s (média)
+Pico de starts: ~15.000-20.000/s
 
-Bitrate médio (720p): ~2.5 Mbps
-Bandwidth de pico: 20.000 × 2.5 Mbps = 50 Tbps
+Tempo médio assistido: ~15 minutos
+Streams simultâneos médios: 500M × 900 / 86.400 ≈ 5.200.000
+Pico simultâneo: ~10-15 milhões
+
+Bitrate médio entregue: ~2.5 Mbps
+Bandwidth de pico: 10M × 2.5 Mbps = ~25 Tbps
 ```
 
-50 terabits por segundo. Nenhum servidor único aguenta isso. Esse número sozinho justifica **CDN global obrigatória**.
+É essa conta de concorrência, não a de "starts por segundo", que mostra o tamanho do problema. Sem CDN global, a conta nem fecha.
 
 ### Storage total com transcoding
 
@@ -419,7 +423,7 @@ Um vídeo de 1 hora em 6 resoluções com segmentos de 4 segundos = **900 segmen
 <line x1="430" y1="660" x2="430" y2="683" stroke="#555" stroke-width="2" marker-end="url(#arr-pipe)"/>
 <!-- Push CDN -->
 <rect x="310" y="685" width="240" height="50" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
-<text x="430" y="715" text-anchor="middle" font-size="13" font-weight="bold" fill="#4a235a">Push pra CDN</text>
+<text x="430" y="715" text-anchor="middle" font-size="13" font-weight="bold" fill="#4a235a">Origin pronto pro CDN</text>
 </svg>
 
 ### Por que usar Message Queue aqui?
@@ -443,7 +447,7 @@ Você está em São Paulo e quer ver um vídeo. O blob storage está em Virginia
 
 Sem CDN: cada segmento precisa percorrer 120ms de latência + tempo de download. Buffering constante.
 
-Com CDN: o segmento está cacheado num edge server em São Paulo. Latência: <10ms. Download instantâneo.
+Com CDN: o segmento está cacheado num edge server em São Paulo. Latência: <10ms. O primeiro byte chega muito mais rápido e o player precisa de menos buffer.
 
 ### Como CDN funciona pra vídeo
 
@@ -512,7 +516,7 @@ Com CDN: o segmento está cacheado num edge server em São Paulo. Latência: <10
 4. Se o segmento anterior demorou pra baixar → próximo segmento em resolução menor
 5. Se está baixando rápido → aumenta resolução gradualmente
 
-**O resultado:** zero buffering na maioria das condições. O player se adapta em tempo real. O usuário nem percebe a troca (os segmentos são curtos o suficiente pra transição ser suave).
+**O resultado:** muito menos buffering e quedas de qualidade mais suaves. O player se adapta em tempo real, e como os segmentos são curtos a troca costuma passar despercebida.
 
 ### HLS vs DASH
 
@@ -524,38 +528,36 @@ Com CDN: o segmento está cacheado num edge server em São Paulo. Latência: <10
 | DRM | FairPlay | Widevine, PlayReady |
 | Segmentos | .ts ou .fmp4 | .m4s (fragmentos MP4) |
 
-Na prática, YouTube usa DASH no browser e suporta ambos. Netflix usa DASH exclusivamente.
+Na prática, players grandes suportam os dois. Browser e Android costumam funcionar muito bem com DASH; no ecossistema Apple, HLS continua forte. Netflix e outras plataformas misturam protocolos conforme o device.
 
 ## Deep Dive 3: Database design
 
 ### Metadata DB (PostgreSQL / MySQL - relacional)
 
 ```sql
--- Tabela principal de vídeos
 CREATE TABLE videos (
-    id          UUID PRIMARY KEY,
-    user_id     UUID NOT NULL,
-    title       VARCHAR(500) NOT NULL,
-    description TEXT,
-    status      ENUM('uploading', 'processing', 'ready', 'failed'),
-    duration_ms BIGINT,
-    file_size   BIGINT,
+    id           UUID PRIMARY KEY,
+    user_id      UUID NOT NULL,
+    title        VARCHAR(500) NOT NULL,
+    description  TEXT,
+    status       TEXT NOT NULL CHECK (status IN ('uploading', 'processing', 'ready', 'failed')),
+    duration_ms  BIGINT,
+    file_size    BIGINT,
     manifest_url VARCHAR(1000),
-    created_at  TIMESTAMP DEFAULT NOW(),
-    updated_at  TIMESTAMP DEFAULT NOW(),
-    
-    INDEX idx_user_id (user_id),
-    INDEX idx_status (status),
-    INDEX idx_created_at (created_at)
+    created_at   TIMESTAMP DEFAULT NOW(),
+    updated_at   TIMESTAMP DEFAULT NOW()
 );
 
--- Resoluções disponíveis por vídeo
+CREATE INDEX idx_videos_user_id ON videos(user_id);
+CREATE INDEX idx_videos_status ON videos(status);
+CREATE INDEX idx_videos_created_at ON videos(created_at);
+
 CREATE TABLE video_renditions (
-    video_id    UUID REFERENCES videos(id),
-    resolution  VARCHAR(10),  -- '720p', '1080p', etc
-    bitrate_kbps INT,
+    video_id      UUID REFERENCES videos(id),
+    resolution    VARCHAR(10),  -- '720p', '1080p', etc
+    bitrate_kbps  INT,
     segment_count INT,
-    storage_url VARCHAR(1000),
+    storage_url   VARCHAR(1000),
     PRIMARY KEY (video_id, resolution)
 );
 ```

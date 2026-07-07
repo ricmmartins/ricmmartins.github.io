@@ -36,7 +36,7 @@ O problema? **Model drift**. Um fine-tuning recente introduziu regressão na qua
 
 ## As 6 dimensões de observabilidade AI
 
-Monitoramento tradicional cobre compute, rede e storage. Necessário mas insuficiente pra AI.
+Monitoramento tradicional cobre compute, rede e storage. Isso continua necessário, mas em AI não basta.
 
 | # | Dimensão | O que monitorar | Prioridade |
 |---|----------|----------------|-----------|
@@ -47,7 +47,7 @@ Monitoramento tradicional cobre compute, rede e storage. Necessário mas insufic
 | 5 | **Rede** | InfiniBand health, cross-node latency, throughput | P2 |
 | 6 | **Data** | Pipeline freshness, qualidade, falhas de ingestão | P2 |
 
-**Tradução infra ↔ AI:** Monitorar um web server é acompanhar CPU, memória, disco e rede. Monitorar um workload de AI é como monitorar um web server, um banco de dados, um sistema de billing e um departamento de QA simultaneamente. O modelo não apenas consome recursos; ele produz outputs que têm uma dimensão de **corretude** que infra tradicional não tem.
+**Tradução infra ↔ AI:** Monitorar um web server é acompanhar CPU, memória, disco e rede. Monitorar um workload de AI parece juntar web server, banco de dados, billing e QA no mesmo painel. O modelo consome recurso, mas também produz saída que pode estar certa ou errada. Infra tradicional quase nunca mede isso.
 
 ## GPU monitoring: o fundamento
 
@@ -64,7 +64,8 @@ helm repo update
 helm install dcgm-exporter nvidia/dcgm-exporter \
   --namespace gpu-monitoring \
   --create-namespace \
-  --set nodeSelector."agentpool"="gpu"
+  --set nodeSelector.agentpool=gpu \
+  --set serviceMonitor.enabled=true
 ```
 
 ### Azure Managed Prometheus
@@ -85,7 +86,7 @@ az aks show \
   --query "azureMonitorProfile.metrics.enabled"
 ```
 
-Managed Prometheus descobre e scrapa DCGM Exporter pods automaticamente via Kubernetes service discovery. Não precisa configurar scrape targets manualmente.
+Com Azure Managed Prometheus, o caminho mais previsível é expor o exporter via ServiceMonitor ou annotations compatíveis com o scraper. Não conte com descoberta automática só porque o pod apareceu no cluster.
 
 ### Métricas GPU e thresholds de alerta
 
@@ -109,7 +110,7 @@ Managed Prometheus descobre e scrapa DCGM Exporter pods automaticamente via Kube
 | **TTFT** (Time to First Token) | Latência percebida pra streaming | > 2 segundos (sente lento pro usuário) |
 | **HTTP 429 Rate** | Sinal de throttling | > 1% sustentado |
 
-**Tradução infra ↔ AI:** TPM limits são como bandwidth throttling. RPM limits são como connection-rate limiting. Token budgets são equivalente AI de data transfer quotas.
+**Tradução infra ↔ AI:** TPM limits são como bandwidth throttling. RPM limits são como connection-rate limiting. Token budgets são o equivalente em AI das quotas de transferência.
 
 ### Habilitar diagnostic logging
 
@@ -122,13 +123,13 @@ az monitor diagnostic-settings create \
   --metrics '[{"category":"AllMetrics","enabled":true}]'
 ```
 
-> **Cuidado com volume:** Um deployment processando 1.000 RPM gera ~1.4 milhão de log entries por dia. Configure retention policies no Log Analytics: 30 dias pra debugging operacional, mais pra compliance.
+> **Cuidado com volume:** Um deployment processando 1.000 RPM gera ~1,44 milhão de log entries por dia. Configure retention no Log Analytics: 30 dias pra debugging operacional e mais tempo só quando houver requisito de compliance.
 
 ## Observabilidade na aplicação
 
 ### OpenTelemetry pra distributed tracing
 
-Aplicações AI modernas envolvem múltiplos serviços: API gateway, preprocessing, embedding, vector search, LLM inference, post-processing. OpenTelemetry segue um request por todo o pipeline:
+Aplicações AI modernas envolvem vários serviços: API gateway, preprocessing, embedding, vector search, LLM inference, post-processing. OpenTelemetry acompanha um request pelo pipeline inteiro:
 
 ```python
 from azure.monitor.opentelemetry import configure_azure_monitor
@@ -180,7 +181,7 @@ class StructuredFormatter(logging.Formatter):
         return json.dumps(log_entry)
 ```
 
-Sempre logue model version e deployment name com toda trace e métrica. Quando deploar nova versão e latência subir 40%, você precisa correlacionar.
+Sempre logue model version e deployment name junto com trace e métrica. Quando você fizer deploy de uma versão nova e a latência subir 40%, precisa ligar os pontos rápido.
 
 ## No próximo post
 

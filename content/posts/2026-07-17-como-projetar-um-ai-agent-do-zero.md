@@ -17,13 +17,13 @@ series:
   - "AI por dentro: de tokens a agents"
 ---
 
-No post anterior, vimos como agents funcionam (LLM + tools + loop). Agora vamos um nível acima: como **projetar** um agent que funciona de verdade em produção. Não o demo de 5 minutos, mas o agent que opera 24/7 sem supervisão constante.
+No post anterior, eu destrinchei como agents funcionam: LLM, tools e loop. Agora a conversa muda de nível. O problema não é fazer um demo de 5 minutos. É projetar um agent que aguente produção, rode 24/7 e não precise de babá.
 
-É design de sistema, com as mesmas perguntas de sempre: quais são os requisitos? Quais os failure modes? Como escala? Como monitora?
+Continua sendo design de sistema, com as perguntas de sempre: quais são os requisitos, quais os failure modes, como escala e como monitora?
 
 ## As 5 decisões de design
 
-Projetar um agent é tomar 5 decisões fundamentais:
+Projetar um agent normalmente vira 5 decisões:
 
 1. **Qual tarefa** o agent resolve?
 2. **Quais tools** ele precisa?
@@ -31,7 +31,7 @@ Projetar um agent é tomar 5 decisões fundamentais:
 4. **Qual estratégia de planning?**
 5. **Como garantir reliability?**
 
-Vamos uma por uma.
+Dá pra quebrar assim.
 
 ## Decisão 1: Escopo da tarefa
 
@@ -145,10 +145,10 @@ def restart_service(service_name):
 
 | Número de tools | Comportamento típico |
 |----------------|---------------------|
-| 1-5 | Modelo escolhe bem, quase sem erros |
-| 6-15 | Funciona bem com descriptions claras |
-| 16-30 | Começa a confundir tools similares |
-| 30+ | Accuracy de tool selection cai significativamente |
+| 1-5 | Modelo costuma escolher bem |
+| 6-15 | Ainda funciona bem com descriptions claras |
+| 16-30 | Tools parecidas começam a colidir |
+| 30+ | Vale separar por domínio ou fazer routing antes |
 
 Se precisa de 30+ tools, considere **tool routing**: um primeiro passo que classifica a tarefa e seleciona um subset de tools relevantes.
 
@@ -156,10 +156,10 @@ Se precisa de 30+ tools, considere **tool routing**: um primeiro passo que class
 
 | Critério | Modelo maior (GPT-4o, Claude 3.5) | Modelo menor (GPT-4o-mini, Haiku) |
 |----------|-----------------------------------|-----------------------------------|
-| Tool selection accuracy | 95%+ | 85-90% |
-| Raciocínio complexo | Excelente | Adequado pra tasks simples |
-| Custo por iteração | $0.005-0.02 | $0.0005-0.002 |
-| Latência por iteração | 2-5s | 0.5-2s |
+| Tool selection | Mais margem em tarefas ambíguas | Boa quando a task é simples e o catálogo é pequeno |
+| Raciocínio complexo | Melhor | Adequado pra tasks simples |
+| Custo por iteração | Mais caro | Mais barato |
+| Latência por iteração | Mais alta | Mais baixa |
 | Quando usar | Tasks complexas, multi-step | Classificação, routing, tasks simples |
 
 ### Pattern: cascata de modelos
@@ -303,6 +303,8 @@ Agents falham. LLMs alucinam, tools retornam erros, tasks levam mais steps que o
 ### Retry com backoff
 
 ```python
+import time
+
 def execute_tool_with_retry(tool_name, args, max_retries=3):
     for attempt in range(max_retries):
         try:
@@ -405,13 +407,13 @@ GUARDRAILS = {
 
 ## O que levar pra segunda-feira
 
-- **Comece com escopo pequeno.** Um agent que faz uma coisa bem > um agent que tenta fazer tudo e falha em metade.
-- **Tool design é 60% do sucesso.** Tools idempotentes, com retornos informativos e descriptions claras.
+- **Comece com escopo pequeno.** Um agent que faz uma coisa bem vale mais do que um agent que tenta fazer tudo e erra metade.
+- **Tool design pesa mais do que parece.** Tools idempotentes, com retornos informativos e descriptions claras.
 - **Modelo maior não é sempre melhor.** GPT-4o-mini pra tasks simples, GPT-4o pra tasks que requerem raciocínio.
 - **Planning strategy depende da complexidade.** ReAct pra 1-3 steps, plan-then-execute pra 4-8, hierarchical pra 10+.
 - **Design pra falha desde o dia 1.** Retries, fallback humano, limits de iteração, observabilidade.
 
-No próximo post, vamos mergulhar num aspecto específico que faz agents inteligentes de verdade: **memória, estado e consistência**.
+O próximo post entra num ponto que separa demo de sistema útil: **memória, estado e consistência**.
 
 ## Leitura complementar
 

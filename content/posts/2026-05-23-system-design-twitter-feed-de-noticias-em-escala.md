@@ -23,7 +23,7 @@ series:
 
 Se YouTube é sobre **arquivos grandes**, WhatsApp sobre **entrega garantida**, e Uber sobre **dados em movimento**, Twitter é sobre o problema mais traiçoeiro de todos: **fan-out**. Um único tweet de alguém com 50 milhões de followers precisa aparecer na timeline de cada um deles, em segundos.
 
-O que parece simples ("mostrar posts de quem eu sigo em ordem cronológica") se torna um monstro de engenharia quando a escala é:
+No papel parece simples: "me mostra os posts de quem eu sigo em ordem cronológica". Em produção vira outro bicho quando a escala é:
 - 500 milhões de tweets por dia
 - Usuários com 1 a 100+ milhões de followers
 - Timeline refresh a cada poucos segundos
@@ -67,7 +67,7 @@ Vamos aplicar o [framework](/posts/system-design-na-pratica-como-pensar-sistemas
 
 ### O número que assusta
 
-Elon Musk tem ~190 milhões de followers. Quando ele tweeta, o sistema precisa fazer essa mensagem **aparecer na timeline de 190 milhões de pessoas**. Se levar 1μs por timeline write, são 190 segundos só pra um tweet. Claramente, approach naive não funciona.
+Elon Musk tem ~190 milhões de followers. Quando ele posta, o sistema precisa fazer essa mensagem aparecer na timeline de 190 milhões de pessoas. Mesmo assumindo um custo absurdamente otimista de 1μs por timeline write, você ainda gastaria 190 segundos. Não dá.
 
 ## Fase 2: Estimativas
 
@@ -379,7 +379,7 @@ for batch in batches:
   pipeline.execute()  // 1 round-trip pro Redis pra 1000 ops
 ```
 
-Redis pipeline: 1000 operações em 1 round-trip em vez de 1000 round-trips. Reduz latência de fan-out de segundos pra milissegundos.
+Redis pipeline: 1000 operações no mesmo round-trip em vez de 1000 round-trips separados. Isso derruba bastante a latência do fan-out e reduz chatter de rede.
 
 **2. Filtrar followers inativos:**
 
@@ -387,7 +387,7 @@ Não faz sentido escrever na timeline de alguém que não logou há 6 meses:
 
 ```
 followers = get_followers(author_id)
-active_followers = filter(followers, last_active < 30_days_ago)
+active_followers = filter(followers, last_active >= now() - 30_days)
 // 50.000 followers → talvez 20.000 realmente ativos
 ```
 
@@ -477,7 +477,7 @@ Exemplo:
 4. Response ao client
 ```
 
-**Latência total:** ~5-15ms. Redis é absurdamente rápido pra esse tipo de workload.
+**Latência de backend:** algo como 5-15ms quando os caches batem. Com rede, auth e serialização, ainda sobra folga pra ficar abaixo do orçamento de 200ms.
 
 ### Cache warming pra novos usuários
 
@@ -742,7 +742,7 @@ score = text_relevance (BM25)
 
 ### O problema
 
-Tweet viral: 1 milhão de likes em 1 hora = ~280 likes/segundo **pra um único tweet**. Se fizer `UPDATE tweets SET likes = likes + 1 WHERE id = X` pra cada like, o row fica permanentemente locked.
+Tweet viral: 1 milhão de likes em 1 hora = ~280 likes/segundo **pra um único tweet**. Se fizer `UPDATE tweets SET likes = likes + 1 WHERE id = X` pra cada like, esse row vira um hotspot de contenção.
 
 ### Solução: write-behind counters
 
@@ -795,10 +795,10 @@ CREATE TABLE tweets (
     like_count INT DEFAULT 0,
     retweet_count INT DEFAULT 0,
     reply_count INT DEFAULT 0,
-    created_at TIMESTAMP,
-    
-    INDEX idx_author (author_id, created_at DESC)
+    created_at TIMESTAMP
 );
+
+CREATE INDEX idx_tweets_author_created_at ON tweets (author_id, created_at DESC);
 ```
 
 **Snowflake ID:** IDs únicos gerados com timestamp embutido. Permite:
@@ -838,7 +838,7 @@ Tweet Cache:
   Hot tweets (últimas 24h): ~500M × 1 KB = 500 GB
 ```
 
-Total Redis footprint: ~3 TB. Distribuído em cluster de ~100 nodes (32 GB cada com overhead).
+Total Redis footprint: algo na casa de 3 TB. Na prática isso vira um cluster com mais de 100 nodes quando você coloca réplica, overhead e folga operacional na conta.
 
 ## Handling de cenários edge
 
@@ -913,7 +913,7 @@ Alice (1M followers) começa a seguir Elon (190M followers). A timeline dela pre
 ## Como escalar além
 
 1. **Algorithmic timeline:** ML ranking em vez de cronológico puro. Mostra tweets "relevantes" primeiro baseado em engajamento predito. (O que Twitter/X faz hoje com o "For You")
-2. **Edge caching:** CDN pra timelines de celebridades (são as mesmas pra todos os followers)
+2. **Edge caching:** CDN pra mídia e payloads de tweets quentes. A timeline em si continua sendo personalizada demais pra tratar como conteúdo igual pra todo mundo.
 3. **Tweet embedding:** vector search pra "tweets parecidos", recommendations
 4. **Real-time ML pra spam:** classificar tweets como spam em <100ms antes de indexar
 5. **Multi-media transcoding:** como YouTube, mas pra vídeos curtos no feed

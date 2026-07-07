@@ -17,9 +17,9 @@ series:
   - "AI por dentro: de tokens a agents"
 ---
 
-Último post da série. Nos 14 anteriores, entendemos como AI funciona por dentro. Agora o ângulo é prático: como usar essas ferramentas no dia a dia pra ser mais produtivo sem perder a capacidade de pensar por conta própria.
+Último post da série. Depois de 14 textos olhando pra dentro da AI, eu queria fechar com o uso prático. Como essas ferramentas entram no trabalho de infra sem virar bengala.
 
-Esse post é opinativo. Baseado na minha experiência usando AI coding tools diariamente desde 2023. Vou compartilhar o que funciona, o que não funciona, e os anti-patterns que vejo times caindo.
+É um post bem opinativo. Estou escrevendo do lugar de quem usa Copilot, Claude e chat com LLM todo dia desde 2023. Tem coisa que acelera muito. Tem coisa que atrapalha. E tem anti-pattern que eu já vi time repetir até cansar.
 
 ## O que muda no workflow de infra com AI
 
@@ -31,7 +31,7 @@ Esse post é opinativo. Baseado na minha experiência usando AI coding tools dia
 | Documentar runbook | 1-2h escrevendo do zero | 15-30min: AI gera draft, eu reviso e customizo |
 | Code review em IaC | 15-30min lendo + comentando | 5min AI-assisted + meus 5min pra decisões de design |
 
-O ganho real não é "código grátis". É **comprimir o ciclo de feedback**. Testar hipóteses mais rápido. Explorar mais alternativas antes de decidir.
+Pra mim, o ganho real não é "código grátis". É **encurtar o ciclo de feedback**. Você testa hipótese mais rápido, compara mais opções e chega melhor preparado na hora de decidir.
 
 ## Os 3 modos de usar AI
 
@@ -50,7 +50,7 @@ GitHub Copilot no editor, sugerindo completions enquanto você digita.
 - Debugging complexo (Copilot não vê seus logs)
 - Security-sensitive code (revise SEMPRE)
 
-**Tip prático**: escreva um comentário descritivo antes de deixar o Copilot completar. Quanto mais contexto no comentário, melhor o suggestion.
+**Dica prática**: escreva um comentário descritivo antes de deixar o Copilot completar. Quanto mais contexto no comentário, melhor tende a ficar a sugestão.
 
 ```terraform
 # Azure Container App with auto-scaling based on HTTP requests,
@@ -70,7 +70,7 @@ Conversa com AI que tem acesso ao seu codebase.
 - "Encontra todos os places onde usamos esse SKU deprecated"
 - "Gera testes pra esse módulo"
 
-**Dica**: reference specific files. Em vez de "como funciona o auth?", pergunte "@workspace explica o fluxo de auth em src/middleware/auth.py".
+**Dica**: cite arquivos específicos. Em vez de "como funciona o auth?", pergunte "@workspace explica o fluxo de auth em src/middleware/auth.py".
 
 ### Modo 3: Agent (Copilot CLI, Claude Code, task-based)
 
@@ -213,19 +213,19 @@ AI coding tools estão evoluindo rápido. O que funciona hoje pode ser diferente
 
 ### AI amplifica, não substitui
 
-Se você é um engenheiro mediano, AI te torna um engenheiro mediano mais rápido. Se você é excelente, AI multiplica seu output por 3-5x (na minha experiência, medida em PRs/semana e tempo de resolução de incidentes). A base de conhecimento ainda é sua.
+Se você já é bom, AI tira bastante trabalho mecânico do caminho. Se você ainda não domina o básico, ela mascara buraco de conhecimento por um tempo e depois a conta chega. A base continua sendo sua.
 
 ### O valor migrou pra cima
 
-Escrever código ficou comoditizado. O valor está em: saber o que construir, como estruturar, quais trade-offs aceitar. Design > implementation.
+Escrever código ficou mais barato. O valor subiu um nível: decidir o que construir, como estruturar, quais trade-offs aceitar e o que vale automatizar.
 
 ### Prompting é uma skill temporária
 
-Hoje, saber promptar bem é diferencial. Em 2 anos, modelos vão ser bons o suficiente pra entender qualquer input. O que não vai mudar: saber avaliar se o output está correto.
+Hoje saber pedir bem ainda ajuda. Só não aposto que isso vai ser o grande diferencial por muito tempo. O que continua raro é gente que olha o output e sabe dizer se aquilo presta.
 
 ### Review é a skill permanente
 
-Quanto mais AI gera código, mais importante fica saber revisar código. Security review, performance review, design review. Essas skills valorizam.
+Quanto mais AI gera código, mais importante fica saber revisar. Security review, performance review, design review. É aí que o engenheiro experiente continua fazendo diferença.
 
 ## Exercício: comece amanhã
 
@@ -256,9 +256,9 @@ Em 15 posts, cobrimos:
 14. Design de um assistente pessoal (projeto prático)
 15. AI coding workflow (este post)
 
-O objetivo nunca foi te transformar em ML engineer. Foi te dar o **vocabulário e o mapa mental** pra entender o que está acontecendo quando o time de ML pede algo, quando um bug envolve AI, ou quando você precisa projetar infra pra esses workloads.
+O objetivo nunca foi te transformar em ML engineer. Foi te dar **vocabulário e mapa mental** pra entender o que está acontecendo quando o time de ML pede algo, quando um bug envolve AI, ou quando você precisa projetar infra pra esses workloads.
 
-Se algum post da série te ajudou a entender algo que antes parecia black box, valeu o tempo de escrever.
+Se algum post da série fez uma dessas peças sair da categoria "black box", já valeu o tempo de escrever.
 
 ## Leitura complementar
 

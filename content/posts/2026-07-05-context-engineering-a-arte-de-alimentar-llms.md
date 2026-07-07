@@ -17,9 +17,9 @@ series:
   - "AI por dentro: de tokens a agents"
 ---
 
-Você monta um RAG pipeline, conecta ao Azure OpenAI, e as respostas ficam... meh. Genéricas. Às vezes ignora o contexto que você enviou. Às vezes inventa coisas. O modelo é potente, mas o input que você manda determina 80% da qualidade do output.
+Você monta um pipeline de RAG, conecta no Azure OpenAI, e as respostas saem meia-boca. Genéricas. Às vezes o modelo ignora o contexto. Às vezes inventa. O modelo pode ser ótimo, mas a forma como você monta o input pesa muito no resultado.
 
-Context engineering é a disciplina de montar esse input de forma que o modelo entregue exatamente o que você precisa. Não é "prompt engineering" (que virou buzzword). É engenharia de verdade: estrutura, constraints, trade-offs.
+Context engineering é a disciplina de montar esse input de forma que o modelo entregue o que você precisa. Não é só "prompt engineering" com nome bonito. É trabalho de estrutura, constraints e trade-offs.
 
 ## O mapa pro profissional de infra
 
@@ -84,7 +84,7 @@ A divisão típica:
 </g>
 </svg>
 
-Na prática, a maioria das aplicações usa 5-15% do context window. Usar mais que isso fica caro e a qualidade não melhora proporcionalmente (o modelo pode "se perder" em contextos muito grandes).
+Na prática, muita aplicação séria roda bem abaixo do teto. Quando você tenta ocupar a janela inteira, custo e latência sobem rápido e o ganho de qualidade nem sempre acompanha.
 
 ### Fazendo capacity planning
 
@@ -183,7 +183,7 @@ Três exemplos é geralmente suficiente. Mais que cinco raramente melhora o resu
 
 ## Retrieval context: o que mandar e como
 
-Quando você implementa RAG (post anterior), os chunks recuperados viram parte do context. A forma como você formata esses chunks importa.
+Quando você implementa RAG, os chunks recuperados viram parte do context. A forma como você formata esses chunks importa.
 
 ### Formato ruim
 
@@ -261,14 +261,16 @@ Cada tool definition consome tokens do context window. Uma definição típica u
 
 ## Técnicas avançadas
 
-### Chain of Thought (CoT)
+### Decomposição explícita
 
-Instruir o modelo a "pensar passo a passo" antes de responder. Melhora accuracy em problemas que requerem raciocínio.
+Pra tarefa difícil, peça etapas observáveis, checklist ou diagnóstico estruturado. Melhor isso do que pedir o "raciocínio interno" do modelo. Você ganha respostas mais auditáveis e costuma melhorar a consistência.
 
 ```
 System prompt:
-"Ao analisar problemas de infraestrutura, primeiro liste as possíveis causas,
-depois elimine uma a uma com base nos sintomas, e só então dê a recomendação."
+"Ao analisar problemas de infraestrutura, responda em três blocos:
+1. hipóteses prováveis
+2. evidências que confirmam ou derrubam cada hipótese
+3. recomendação final"
 ```
 
 ### Output structured (JSON mode)
@@ -299,16 +301,18 @@ Resposta:
 }
 ```
 
+Se você precisa garantir campos e tipos exatos, prefira structured outputs com `json_schema`. O `json_object` resolve boa parte dos casos, mas não valida schema sozinho.
+
 ### Prompt caching
 
-Modelos recentes suportam caching do prefix do prompt. Se o system prompt + tool definitions são iguais entre requests, o modelo reutiliza o processamento. Isso reduz latência e custo.
+Modelos recentes suportam caching do prefixo do prompt. Se system prompt, tool definitions e o começo do histórico ficam iguais entre requests, o serviço reaproveita parte do trabalho. Isso reduz latência e custo.
 
 ```
 Request 1: [system_prompt + tools + user_msg_1] → cache miss (processa tudo)
 Request 2: [system_prompt + tools + user_msg_2] → cache hit no prefix (só processa user_msg_2)
 ```
 
-Azure OpenAI aplica isso automaticamente. Quanto mais estável for o começo do seu prompt, mais cache hits você tem.
+No Azure OpenAI isso já vem ligado nos modelos compatíveis. O ganho aparece quando você mantém os primeiros 1.024 tokens estáveis o bastante pra virar cache.
 
 ## Anti-patterns: o que não fazer
 
@@ -344,17 +348,17 @@ Depois de colocar em produção, monitore:
 - **Context utilization**: % do context window usado por request (se muito baixo, pode estar subaproveitando; se muito alto, pode truncar)
 - **RAG retrieval score**: relevância dos chunks recuperados (sample manual periodicamente)
 - **Hallucination rate**: respostas que contêm informação não presente no contexto
-- **Token cost per query**: tendência de crescimento (historico de conversa cresce)
+- **Token cost per query**: tendência de crescimento (histórico de conversa cresce)
 
 ## O que levar pra segunda-feira
 
-- **Context engineering é o maior alavanca de qualidade** que você tem sem retreinar o modelo. Antes de trocar pra modelo maior ou mais caro, otimize o input.
-- **System prompt é configuração, não código**. Versione, teste, faça A/B. Mudanças no system prompt mudam o comportamento tanto quanto mudanças no código.
-- **Token budget é capacity planning.** Trate o context window como RAM: finito, caro, e precisa de gerenciamento.
-- **Few-shot > descrição.** Mostrar exemplos funciona melhor que explicar em palavras o que você quer.
+- **Context engineering é uma das maiores alavancas de qualidade** que você tem sem retreinar o modelo. Antes de trocar pra modelo maior ou mais caro, arrume o input.
+- **System prompt é configuração, não código**. Versione, teste, faça A/B. Mudança no system prompt muda comportamento tanto quanto mudança no código.
+- **Token budget é capacity planning.** Trate o context window como RAM: finito, caro e sujeito a gerenciamento.
+- **Few-shot costuma funcionar melhor que descrição abstrata.** Mostrar exemplo economiza muita ambiguidade.
 - **Ferramentas custam tokens.** Cada tool definition ocupa espaço. Só exponha as tools relevantes pro contexto atual.
 
-No próximo post, vamos falar de **LLM Evals**: como medir se o modelo está respondendo bem. Porque sem métricas, context engineering é achismo.
+Sem medir resultado, você só troca prompt no escuro.
 
 ## Leitura complementar
 

@@ -26,15 +26,15 @@ Décimo post da série. No [anterior](/cost-engineering-para-ai-quando-gpu-idle-
 
 ## O canal do Slack que comeu sua agenda
 
-Seis meses atrás, você provisionou um único VM GPU pro time de ML. Configurou drivers, montou storage, fechou o ticket. Pareceu qualquer outro request de infraestrutura.
+Seis meses atrás, você provisionou uma VM GPU pro time de ML. Configurou drivers, montou storage, fechou o ticket. Pareceu mais um request normal de infraestrutura.
 
 Hoje, você tem quatro times, três clusters AKS, dezenas de GPU node pools e uma coleção crescente de endpoints Azure OpenAI. Cada time quer seus recursos, suas quotas e seus SLAs. Seus DMs viraram help desk: "Dá pra dar mais GPUs?" "Por que meu training job está Pending?" "Quem tá usando todas as A100s?"
 
-Esse é o ponto de inflexão. Você saiu de "suportar projetos de AI" pra "ser o gargalo de uma plataforma AI". A solução não é trabalhar mais; é construir os sistemas, políticas e automação que deixam os times se auto-servirem enquanto você mantém controle.
+Esse é o ponto de inflexão. Você saiu de "suportar projetos de AI" pra "ser o gargalo de uma plataforma AI". Trabalhar mais horas não resolve. O que resolve é montar os sistemas, políticas e automação que deixam os times se auto-servirem sem você perder o controle.
 
 ## De projeto AI pra plataforma AI
 
-Platform engineering não é novo. Você já faz há anos com web apps, bancos de dados e CI/CD. O core: infraestrutura reutilizável e self-service que times consomem sem abrir tickets. Golden paths, workflows opinados e testados, do código à produção.
+Platform engineering não é novo. Você já faz isso há anos com web apps, bancos de dados e CI/CD. A ideia é infraestrutura reutilizável e self-service que os times consomem sem abrir ticket. Golden paths e workflows opinados, do código à produção.
 
 AI infra segue o mesmo princípio. Em vez de provisionar GPU VMs ad hoc, você constrói templates. Em vez de criar namespaces manualmente, oferece portal self-service. Em vez de responder "como faço deploy de modelo?", oferece um pipeline que faz.
 
@@ -87,7 +87,7 @@ rules:
     verbs: ["get", "list", "create", "update", "delete"]
 ```
 
-Bind essa role ao grupo Entra ID do time. Eles deployam workloads no namespace deles, mas não tocam em recursos de outros times nem em objetos cluster-level.
+Associe essa role ao grupo Entra ID do time. Eles deployam workloads no namespace deles, mas não tocam em recursos de outros times nem em objetos cluster-level.
 
 ### Resource quotas (sem isso, um time come todas as GPUs)
 
@@ -105,13 +105,12 @@ spec:
     requests.nvidia.com/gpu: "8"
     limits.cpu: "128"
     limits.memory: 512Gi
-    limits.nvidia.com/gpu: "8"
     pods: "50"
 ```
 
-Isso limita o time a 8 GPUs, 64 CPU cores e 256 GiB de memória. Podem distribuir entre pods como quiserem (um job com 8 GPUs ou oito jobs com 1 GPU cada), mas não excedem o total.
+Isso limita o time a 8 GPUs, 64 CPU cores e 256 GiB de memória. Podem distribuir entre pods como quiserem, um job com 8 GPUs ou oito jobs com 1 GPU cada, mas não passam do total.
 
-> **Cuidado:** ResourceQuotas só enforcam no scheduling. Se você abaixar uma quota abaixo do uso atual, pods existentes não são evicted. Novos pods é que serão rejeitados. Planeje mudanças de quota em maintenance windows.
+> **Cuidado:** ResourceQuota atua na admissão, não no scheduler. Se você abaixar uma quota abaixo do uso atual, os pods existentes continuam rodando. Os próximos creates é que passam a falhar. Planeje mudanças de quota em maintenance windows.
 
 ### Network isolation entre namespaces
 
@@ -135,9 +134,9 @@ Pods dentro do namespace conversam entre si; tráfego de outros namespaces é bl
 
 ## GPU scheduling e filas
 
-### O problema fundamental
+### O problema de sempre
 
-GPU é finito e caro. Um nó A100 custa ~$3/hora. Com 20 nós e 4 times, scheduling first-come-first-served cria atrito constante. Training jobs monopolizam GPUs por horas. Inference fica starved. Scientists submetem 10 jobs de uma vez e se perguntam por que só 2 rodam.
+GPU é finito e caro. Um nó Standard_NC24ads_A100_v4 custa algo perto de $3,67 por hora em pay-as-you-go no East US. Com 20 nós e 4 times, scheduling first-come-first-served vira atrito constante. Training monopoliza GPU por horas. Inference fica sem espaço. Data scientist manda 10 jobs de uma vez e depois pergunta por que só 2 rodam.
 
 ### Priority classes
 
@@ -150,7 +149,7 @@ metadata:
 value: 1000000
 globalDefault: false
 preemptionPolicy: PreemptLowerPriority
-description: "Produção inference - nunca preempted por training."
+description: "Inference de produção. Nunca sofre preemption de training."
 ---
 apiVersion: scheduling.k8s.io/v1
 kind: PriorityClass
@@ -168,7 +167,7 @@ metadata:
 value: 1000
 globalDefault: true
 preemptionPolicy: Never
-description: "Notebooks, experimentos - podem ser preempted."
+description: "Notebooks e experimentos. Podem sofrer preemption."
 ```
 
 Com essa hierarquia: inference em produção preempta training se GPUs estão escassas. Training preempta notebooks exploratórios. Mas exploratórios nunca preemptam nada; esperam na fila.
@@ -219,11 +218,11 @@ spec:
   clusterQueue: gpu-cluster-queue
 ```
 
-Times submetem jobs pra sua LocalQueue; o ClusterQueue enforça capacidade global. Jobs ficam queued (não scheduled) até ter espaço. Elimina o problema dos "100 pods pendentes".
+Times submetem jobs pra sua LocalQueue e o ClusterQueue enforça a capacidade global. Os jobs ficam na fila até ter espaço de verdade. Isso elimina o festival de "100 pods pendentes".
 
 ### Volcano: gang scheduling pra distributed training
 
-Training distribuído precisa de múltiplos GPUs em múltiplos nós iniciando simultaneamente. Scheduling padrão do Kubernetes pode schedulear 3 de 4 pods requeridos, deixando todos esperando pelo quarto.
+Training distribuído precisa de múltiplas GPUs em múltiplos nós iniciando ao mesmo tempo. O scheduler padrão do Kubernetes pode agendar 3 dos 4 pods necessários e deixar todo mundo esperando pelo quarto.
 
 Volcano garante: todos os pods de um job começam juntos, ou nenhum começa.
 
@@ -246,16 +245,14 @@ spec:
             - name: trainer
               image: myregistry.azurecr.io/llm-trainer:v1.0
               resources:
-                requests:
-                  nvidia.com/gpu: "4"
                 limits:
                   nvidia.com/gpu: "4"
           restartPolicy: OnFailure
 ```
 
-`minAvailable: 4` diz ao Volcano: não schedule nenhum worker a menos que consiga schedulear todos quatro. Previne alocação parcial, a fonte mais comum de GPU-hours desperdiçadas em training distribuído.
+`minAvailable: 4` diz ao Volcano pra não agendar nenhum worker até conseguir subir os quatro. Isso evita alocação parcial, que costuma virar GPU-hour queimada em training distribuído.
 
-> **GPU requests = limits, sempre.** Diferente de CPU e memória, GPUs não podem ser overcommitted. Um pod requesting 1 GPU vai exclusivamente possuir aquela GPU independente do limit value. Valores diferentes só criam confusão.
+> **GPU em Kubernetes pede um valor só.** Para recursos estendidos como `nvidia.com/gpu`, o valor normalmente vai em `limits` e o scheduler trata isso como reserva exclusiva. Se você também declarar em `requests`, os dois precisam ser iguais.
 
 ## Quota e capacity management
 
@@ -286,7 +283,7 @@ az capacity reservation create \
   --capacity 4
 ```
 
-Você paga pela capacidade reservada esteja usando ou não, mas garante que os VMs existem quando precisar. Pra inference em produção servindo tráfego real-time, esse tradeoff quase sempre vale.
+Você paga pela capacidade reservada usando ou não, mas garante que os VMs existem quando precisar. Pra inference em produção servindo tráfego em tempo real, esse tradeoff quase sempre vale.
 
 ### Monitoramento de quota
 
@@ -294,10 +291,10 @@ Você paga pela capacidade reservada esteja usando ou não, mas garante que os V
 # Verificar uso de quota GPU na região
 az vm list-usage \
   --location eastus \
-  --query "[?contains(localName, 'NCv') || contains(localName, 'NDv')].{Name:localName, Used:currentValue, Limit:limit}" \
+  --query "[?contains(localName, 'NC') || contains(localName, 'ND')].{Name:localName, Used:currentValue, Limit:limit}" \
   --output table
 ```
 
 ## No próximo post
 
-Plataforma operando com self-service, quotas e scheduling inteligente. No próximo, mergulhamos no **Azure OpenAI em produção**: deployments, rate limiting, failover multi-região, content filtering e patterns de production readiness.
+Plataforma operando com self-service, quotas e scheduling inteligente. No próximo post, o foco é **Azure OpenAI em produção**: deployments, rate limiting, failover multi-região, content filtering e patterns de production readiness.

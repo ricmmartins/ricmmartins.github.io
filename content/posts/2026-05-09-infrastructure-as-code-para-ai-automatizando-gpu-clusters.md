@@ -22,47 +22,47 @@ series:
   - "AI para Engenheiros de Infraestrutura"
 ---
 
-Quinto post da série. No [anterior](/gpu-deep-dive-o-que-acontece-dentro-do-silicio/), mergulhamos dentro da GPU. Agora vamos automatizar tudo ao redor dela. Porque entender GPUs é metade da batalha; provisionar elas de forma consistente e em escala é onde engenharia de infraestrutura realmente encontra AI.
+Quinto post da série. No [anterior](/gpu-deep-dive-o-que-acontece-dentro-do-silicio/), entramos no detalhe da GPU. Agora é hora de automatizar o que fica ao redor dela. Entender GPU é metade do trabalho. Provisionar tudo isso de forma consistente, repetível e auditável é a outra metade.
 
 ## O typo de $4.000
 
 Imagina o cenário: você provisiona um cluster GPU manualmente em East US 2 pra um experimento de ML. AKS com node pool `Standard_NC6s_v3`, accelerated networking, drivers NVIDIA, taints corretos. Leva quase um dia, mas funciona.
 
-Três semanas depois, o mesmo time precisa do setup idêntico em West US 3. Sem problema. Abre o portal, referenciando um Slack thread pro SKU, uma wiki pra config de rede, e memória pro resto.
+Três semanas depois, o mesmo time precisa do setup idêntico em West US 3. Você abre o portal, volta em thread de Slack, consulta uma wiki e tenta completar o resto de cabeça.
 
-Alguém digita errado o SKU. Ao invés de `Standard_NC6s_v3` (VM GPU a ~$3.80/hr), o node pool fica rodando `Standard_D16s_v5`, uma VM CPU sem GPU nenhuma. O training job lança, não acha CUDA device, faz fallback pra CPU. Ninguém percebe por três dias porque o job não falha, só roda devagar. Quando alguém checa, o cluster queimou **$4.000** em compute que nem conseguia fazer o que precisava.
+Alguém digita o SKU errado. No lugar de `Standard_NC6s_v3`, o pool sobe com **18 nós `Standard_D64s_v5`**. O job tenta rodar, não acha CUDA e cai pra CPU. Como nada falha de forma óbvia, o time percebe tarde. Três dias depois, a conta passa de **$4.000** em compute CPU que nem servia pro workload.
 
-Esse tipo de cenário é mais comum do que parece. E é exatamente o que IaC previne.
+Esse tipo de cena é mais comum do que parece. E é exatamente o tipo de prejuízo que IaC evita.
 
 ## Por que IaC é não-negociável pra AI
 
-Infra de aplicações web tradicionais é tolerante. Um App Service mal configurado custa uns $50/mês extra. Um cluster GPU mal configurado custa **milhares por dia**.
+Infra de aplicação web tradicional tolera erro barato. Infra de AI, não. Uma configuração ruim num App Service machuca pouco. Um cluster GPU ou um pool CPU superdimensionado no lugar errado machuca rápido.
 
 | Razão | Por que importa pra AI |
-|-------|----------------------|
-| **Complexidade** | Quotas GPU por região, driver versions, taints, InfiniBand, NVMe ephemeral, private endpoints. Nenhum humano segura tudo na cabeça |
-| **Custo** | ND A100 4-nodes = ~$350/dia. Cada minuto de misconfiguration é dinheiro queimando |
-| **Reprodutibilidade** | ML experiments precisam ser repetíveis. Mesmo SKU, driver, topologia de rede |
-| **Compliance** | Quem mudou o que, quando, por quê. Git dá audit trail de graça |
+|-------|------------------------|
+| **Complexidade** | Quotas GPU por região, versões de driver, taints, InfiniBand, NVMe ephemeral, private endpoints. Ninguém segura isso tudo na cabeça |
+| **Custo** | 4 nós `NC24ads_A100_v4` passam de ~$350 por dia. 4 nós `ND96asr_v4` passam de $2.600 por dia |
+| **Reprodutibilidade** | ML experiments precisam ser repetíveis. Mesmo SKU, driver e topologia de rede |
+| **Compliance** | Quem mudou o quê, quando e por quê. Git já entrega esse trilho de auditoria |
 
-**Tradução infra ↔ AI:** Quando o ML engineer diz "preciso do mesmo ambiente da semana passada", ele quer reprodutibilidade de infra. Quando compliance pergunta "o que mudou", quer audit trail. IaC responde ambos com o mesmo artefato: um arquivo de configuração versionado.
+**Tradução infra ↔ AI:** quando o ML engineer diz "preciso do mesmo ambiente da semana passada", ele está pedindo reprodutibilidade de infra. Quando compliance pergunta "o que mudou", está pedindo audit trail. IaC responde os dois com o mesmo artefato: código versionado.
 
 ## Landscape de IaC pra AI
 
 | Critério | Terraform | Bicep | Azure CLI | Pulumi |
 |----------|-----------|-------|-----------|--------|
 | **Paradigma** | Declarativo | Declarativo | Imperativo | Declarativo (code) |
-| **Multi-cloud** | ✅ | ❌ Azure only | ❌ Azure only | ✅ |
+| **Multi-cloud** | Sim | Não, só Azure | Não, só Azure | Sim |
 | **State management** | Remote state file | Nenhum (ARM gerencia) | Nenhum | Remote state file |
 | **Linguagem** | HCL | Bicep DSL | Bash/PowerShell | Python, TS, Go, C# |
-| **Learning curve** | Moderada | Baixa (Azure users) | Baixa | Moderada-Alta |
-| **Melhor pra** | Plataformas multi-cloud | Times Azure-native | Automação rápida, glue | Times developer-first |
+| **Learning curve** | Moderada | Baixa (times Azure-native) | Baixa | Moderada-Alta |
+| **Melhor pra** | Plataformas multi-cloud | Times 100% Azure | Automação rápida, glue | Times developer-first |
 
-**Quando usar cada:** Terraform quando precisa multi-cloud ou platform engineering em escala. Bicep quando é 100% Azure e quer o caminho mais simples. Azure CLI pra glue, prototyping e operações ad-hoc. Muitos times usam mais de um: Terraform/Bicep pra provisioning, Azure CLI pra operações, GitHub Actions pra orquestrar tudo.
+**Quando usar cada um:** Terraform quando você precisa de multi-cloud ou platform engineering em escala. Bicep quando é 100% Azure e você quer o caminho mais curto. Azure CLI pra glue, prototipagem e operação ad-hoc. Em muita empresa, tudo isso convive bem: Terraform ou Bicep pro provisioning, Azure CLI pra operações e GitHub Actions pra orquestrar.
 
 ## Terraform pra infra de AI
 
-### Variables com validação (previne typos)
+### Variables com validação (previne typo)
 
 ```hcl
 variable "gpu_vm_size" {
@@ -83,7 +83,7 @@ variable "gpu_max_nodes" {
 }
 ```
 
-Aquela `validation` não é decorativa. Ela previne exatamente o erro da história de abertura. Pego no `terraform plan`, não na fatura.
+Essa `validation` não está ali de enfeite. Ela pega o erro no `terraform plan`, quando ainda é barato corrigir.
 
 ### AKS com GPU node pool
 
@@ -138,11 +138,11 @@ resource "azurerm_kubernetes_cluster_node_pool" "gpu" {
 }
 ```
 
-O taint `sku=gpu:NoSchedule` é essencial. Sem ele, Kubernetes coloca monitoring DaemonSets e log collectors nos seus nós GPU de $3.80/hr.
+O taint `sku=gpu:NoSchedule` é o tipo de detalhe que salva dinheiro. Sem ele, DaemonSet de monitoramento, agente de log e workload sem GPU acabam pousando nos nós mais caros do cluster.
 
 ### Remote state (obrigatório)
 
-Nunca guarde state de Terraform localmente pra infra GPU. State corrompido ou perdido = Terraform não consegue rastrear ou destruir recursos que custam dinheiro real a cada hora.
+Nunca guarde state de Terraform localmente quando está lidando com infra cara. Se você perder o state, perde também o mapa do que precisa destruir ou reconciliar.
 
 ```hcl
 terraform {
@@ -155,7 +155,7 @@ terraform {
 }
 ```
 
-Setup do storage (uma vez):
+Setup do storage, uma vez:
 
 ```bash
 az group create --name rg-terraform-state --location eastus2
@@ -168,14 +168,17 @@ az storage account create \
 
 az storage container create \
   --name tfstate \
-  --account-name stterraformstate
+  --account-name stterraformstate \
+  --auth-mode login
 ```
 
 ## Bicep pra infra de AI
 
-Vantagem do Bicep: sem state file, sem backend, sem locking. ARM gerencia tudo. Pra times 100% Azure, remove uma categoria inteira de complexidade operacional.
+A grande vantagem do Bicep é simples: sem state file, sem backend, sem locking. O ARM cuida disso. Pra time 100% Azure, isso tira uma categoria inteira de preocupação operacional.
 
 ### GPU VM com NVIDIA Driver Extension
+
+No exemplo abaixo, eu assumo que VNet, subnet e NIC já vieram de um módulo de rede e que a NIC existe quando esse arquivo roda.
 
 ```bicep
 @allowed([
@@ -189,27 +192,34 @@ Vantagem do Bicep: sem state file, sem backend, sem locking. ARM gerencia tudo. 
 param vmSize string = 'Standard_NC6s_v3'
 
 param vmName string = 'vm-gpu-ai'
+param nicName string = 'nic-gpu-ai'
 param location string = resourceGroup().location
 param adminUsername string = 'azureuser'
-
-@secure()
 param sshPublicKey string
+
+resource nic 'Microsoft.Network/networkInterfaces@2024-05-01' existing = {
+  name: nicName
+}
 
 resource vm 'Microsoft.Compute/virtualMachines@2024-07-01' = {
   name: vmName
   location: location
   properties: {
-    hardwareProfile: { vmSize: vmSize }
+    hardwareProfile: {
+      vmSize: vmSize
+    }
     osProfile: {
       computerName: vmName
       adminUsername: adminUsername
       linuxConfiguration: {
         disablePasswordAuthentication: true
         ssh: {
-          publicKeys: [{
-            path: '/home/${adminUsername}/.ssh/authorized_keys'
-            keyData: sshPublicKey
-          }]
+          publicKeys: [
+            {
+              path: '/home/${adminUsername}/.ssh/authorized_keys'
+              keyData: sshPublicKey
+            }
+          ]
         }
       }
     }
@@ -222,12 +232,18 @@ resource vm 'Microsoft.Compute/virtualMachines@2024-07-01' = {
       }
       osDisk: {
         createOption: 'FromImage'
-        managedDisk: { storageAccountType: 'Premium_LRS' }
+        managedDisk: {
+          storageAccountType: 'Premium_LRS'
+        }
         diskSizeGB: 256
       }
     }
     networkProfile: {
-      networkInterfaces: [{ id: nic.id }]
+      networkInterfaces: [
+        {
+          id: nic.id
+        }
+      ]
     }
   }
 }
@@ -245,7 +261,7 @@ resource nvidiaExtension 'Microsoft.Compute/virtualMachines/extensions@2024-07-0
 }
 ```
 
-O decorator `@allowed` serve o mesmo propósito da `validation` do Terraform: previne SKUs não-GPU no deploy.
+O decorator `@allowed` cumpre o mesmo papel da `validation` do Terraform: barra SKU errado antes de você descobrir o erro no faturamento.
 
 ### Estrutura modular pra produção
 
@@ -311,11 +327,11 @@ O decorator `@allowed` serve o mesmo propósito da `validation` do Terraform: pr
 </g>
 </svg>
 
-Um time novo sobe um ambiente completo e compliant criando um único arquivo de parâmetros.
+Um time novo consegue subir um ambiente inteiro, com padrão e compliance, mexendo só num arquivo de parâmetros.
 
-## CI/CD: plan → approve → apply
+## CI/CD: plan -> approve -> apply
 
-Mudanças de infra de AI nunca devem ser aplicadas de um laptop. A pipeline dá gates de review, validação automatizada e audit trail.
+Mudança de infra de AI não deveria sair do laptop de ninguém direto pra produção. Pipeline serve justamente pra pôr validação, revisão e trilha de auditoria no caminho.
 
 ### GitHub Actions com OIDC
 
@@ -359,6 +375,10 @@ jobs:
         working-directory: infra
       - run: terraform plan -out=tfplan -input=false
         working-directory: infra
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tfplan
+          path: infra/tfplan
 
   apply:
     name: "Terraform Apply"
@@ -377,19 +397,23 @@ jobs:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: tfplan
+          path: infra
       - run: terraform init
         working-directory: infra
-      - run: terraform apply -auto-approve tfplan
+      - run: terraform apply -input=false -auto-approve tfplan
         working-directory: infra
 ```
 
-O fluxo: PR = `plan` only (mostra o que vai mudar). Merge em main = `apply` com environment protection rule (reviewer precisa aprovar). Artefato do plan é o que executa, sem drift entre review e execução.
+O fluxo é simples: PR gera `plan`. Merge em `main` dispara `apply`, mas só depois da proteção de environment e do artifact do plan atravessarem o pipeline. Assim o que foi revisado é exatamente o que será aplicado.
 
-**Sempre fixe versões de actions.** `@v4`, `@v3`, `@v2`. Usar `@latest` em pipelines de produção significa que uma breaking change upstream pode derrubar seu deploy quando você mais precisa.
+**Sempre fixe versões de actions.** `@v4`, `@v3`, `@v2`. Usar `@latest` em pipeline de produção é pedir surpresa ruim no pior dia possível.
 
 ## Governance: guardrails pra GPU
 
-Azure Policy pode enforçar regras no nível de subscription. Pra infra de AI, a policy mais impactante: bloquear provisionamento de VMs GPU sem tag `cost-center`:
+Azure Policy pode enforçar regra no nível da subscription. Pra infra de AI, uma policy simples e útil é barrar VM GPU sem tag `cost-center`:
 
 ```json
 {
@@ -402,7 +426,7 @@ Azure Policy pode enforçar regras no nível de subscription. Pra infra de AI, a
           "equals": "Microsoft.Compute/virtualMachines"
         },
         {
-          "field": "Microsoft.Compute/virtualMachines/sku.name",
+          "field": "Microsoft.Compute/virtualMachines/hardwareProfile.vmSize",
           "in": [
             "Standard_NC24ads_A100_v4",
             "Standard_NC48ads_A100_v4",
@@ -422,8 +446,8 @@ Azure Policy pode enforçar regras no nível de subscription. Pra infra de AI, a
 }
 ```
 
-Sem tag de cost center = sem GPU. Simples e efetivo.
+Sem tag de cost center, sem GPU. Parece rígido. Na prática, é o tipo de rigidez que evita o cluster esquecido de sexta-feira.
 
 ## No próximo post
 
-Agora que a infra está automatizada e governada, vamos falar do ciclo de vida do modelo: **MLOps**. Como um modelo vai de "funciona no meu notebook" pra "roda em produção com SLA". O que muda pra quem é de infra, e o que o time de ML espera de você nesse processo.
+Agora que a infra está automatizada e governada, o próximo passo é falar do ciclo de vida do modelo: **MLOps**. Como um modelo sai de "funciona no meu notebook" pra "roda em produção com SLA". O que muda pra quem é de infra, e o que o time de ML espera de você nesse processo.

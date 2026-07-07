@@ -17,9 +17,9 @@ series:
   - "AI por dentro: de tokens a agents"
 ---
 
-Um agent sozinho é como um microserviço monolítico. Resolve tudo, mas fica complexo demais. Quando a tarefa cresce, você precisa de especialização. Múltiplos agents, cada um expert no seu domínio, colaborando.
+Um agent sozinho é como aquele microserviço que nasceu pequeno e, de repente, quer resolver tudo. Funciona até certo ponto. Depois vira confusão. Quando a tarefa cresce, especialização ajuda.
 
-Se você já migrou de monolito pra microservices, o raciocínio é o mesmo. As perguntas são as mesmas. Como se comunicam? Quem coordena? O que acontece quando um falha? Qual o overhead de coordenação?
+Se você já migrou de monolito pra microservices, o raciocínio aqui vai soar familiar. As perguntas são quase as mesmas. Como eles se comunicam? Quem coordena? O que acontece quando um falha? Quanto custa essa coordenação?
 
 ## O mapa pro profissional de infra
 
@@ -43,7 +43,7 @@ Se você já migrou de monolito pra microservices, o raciocínio é o mesmo. As 
 | Task onde precisas de "second opinion" | Possível (reflection) | Mais robusto |
 | Task com trabalho paralelizável | Limitado | Escala melhor |
 
-Regra prática: se você precisa de mais de 15 tools num único agent, provavelmente precisa de multi-agent.
+Regra prática: se um agent já está carregando tools demais e você precisa explicar o mapa inteiro do mundo pra ele funcionar, provavelmente chegou a hora de quebrar em mais de um.
 
 ## Topologias de multi-agent
 
@@ -206,7 +206,7 @@ def pipeline_agents(alert):
 
 ### 3. Debate / Consensus
 
-Múltiplos agents analisam o mesmo problema e chegam a um consenso. Reduz hallucination.
+Múltiplos agents analisam o mesmo problema e comparam conclusões. Isso não elimina alucinação, mas ajuda a expor discordâncias antes de alguém agir.
 
 ```python
 import json
@@ -360,8 +360,8 @@ class Blackboard:
 
 | Failure mode | Causa | Mitigação |
 |-------------|-------|-----------|
-| Infinite delegation | Orchestrator delega de volta pro mesmo agent | Limit de delegation depth |
-| Contradictory outputs | Workers discordam | Consensus pattern ou supervisor tiebreaker |
+| Infinite delegation | Orchestrator delega de volta pro mesmo agent | Limite de profundidade na delegação |
+| Contradictory outputs | Workers discordam | Consensus pattern ou supervisor como desempate |
 | Context loss in handoff | Info se perde entre agents | Structured messages com contexto completo |
 | Cascading failures | Worker falha, orchestrator falha ao lidar | Circuit breaker, timeout por agent |
 | Cost explosion | Muitos agents × muitas iterações | Budget cap por task, early termination |
@@ -414,16 +414,16 @@ class AgentCircuitBreaker:
 | Debate 3 agents | 7-10x | 3x (rounds sequenciais) |
 | Supervisor + worker | 2-3x | 1.5-2x |
 
-Multi-agent é caro. Use quando a qualidade e confiabilidade justificam o overhead. Pra task simples de 3 steps, single agent com boas tools é melhor e mais barato.
+Multi-agent custa caro. Vale quando a qualidade e a confiabilidade pagam a conta. Pra tarefa simples de 3 passos, um single agent com boas tools quase sempre ganha no custo e na latência.
 
 ## O que levar pra segunda-feira
 
-- **Multi-agent = microservices pra AI.** Mesmos trade-offs: mais flexível, mais complexo, mais overhead de coordenação.
-- **Orchestrator-Workers é o pattern mais comum** e mais fácil de implementar. Comece por aí.
-- **Pipeline é ideal quando stages são claras** e o output de um é input do próximo.
-- **Debate/Consensus justifica o custo** apenas pra decisões de alto impacto.
-- **Failure modes são reais.** Circuit breakers, timeouts, budgets. Trate agents como serviços distribuídos.
-- **Custo escala multiplicativamente.** 3 agents × 5 iterações cada = 15x o custo de uma chamada simples.
+- **Multi-agent lembra microservices pra AI.** Os trade-offs também lembram: mais flexibilidade, mais coordenação, mais pontos de falha.
+- **Orchestrator-Workers é o ponto de partida mais natural** porque dá controle e ainda fica auditável.
+- **Pipeline funciona bem quando as etapas são claras** e cada saída vira a entrada da próxima.
+- **Debate ou consensus só vale o custo** quando a decisão tem impacto alto mesmo.
+- **Failure modes são concretos.** Circuit breakers, timeouts e budgets não são detalhe.
+- **O custo sobe rápido.** 3 agents com 5 iterações cada já viram 15 chamadas antes de você perceber.
 
 No próximo post, vamos falar de **MCP (Model Context Protocol)**: o protocolo que padroniza como agents se conectam a ferramentas e dados externos.
 

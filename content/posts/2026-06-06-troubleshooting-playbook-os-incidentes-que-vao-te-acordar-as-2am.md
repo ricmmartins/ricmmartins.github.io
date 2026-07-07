@@ -22,15 +22,15 @@ series:
   - "AI para Engenheiros de Infraestrutura"
 ---
 
-Décimo segundo post da série. No [anterior](/azure-openai-em-producao-tokens-throughput-e-alta-disponibilidade/), operamos Azure OpenAI com HA e retry correto. Agora: quando as coisas quebram (e vão quebrar).
+Décimo segundo post da série. No [anterior](/azure-openai-em-producao-tokens-throughput-e-alta-disponibilidade/), operamos Azure OpenAI com HA e retry decente. Agora vem a parte menos charmosa: quando o diagrama bonito encosta na vida real.
 
-Este post é organizado como cenários reais de falha. Cada um segue: **Sintomas → Diagnóstico → Root Cause → Resolução → Prevenção**. Leia uma vez pra reconhecimento de padrões. Depois deixe bookmarkado; você vai voltar aqui.
+Este post está organizado em cenários reais de falha. Cada um segue: **Sintomas → Diagnóstico → Root cause → Resolução → Prevenção**. Leia uma vez pra formar repertório. Depois deixa salvo. Você ainda vai voltar aqui.
 
 ## Cenário 1: NVIDIA driver crash após kernel update
 
 ### Sintomas
 
-Segunda de manhã. Time de ML reporta que todos os workloads GPU falharam no fim de semana. Ninguém deployou nada. Você faz SSH:
+Segunda de manhã. O time de ML avisa que todos os workloads com GPU falharam no fim de semana. Ninguém fez deploy. Você entra por SSH:
 
 ```bash
 $ nvidia-smi
@@ -38,36 +38,36 @@ NVIDIA-SMI has failed because it couldn't communicate with the NVIDIA driver.
 Make sure that the latest NVIDIA driver is installed and running.
 ```
 
-Containers GPU não sobem. Training jobs mortos. O VM em si está normal, CPU workloads rodam.
+Container com GPU não sobe. Job de treino morreu. A VM parece saudável, e carga de CPU continua rodando normalmente.
 
 ### Diagnóstico
 
 ```bash
-# Verificar mensagens do kernel
-dmesg | grep -i nvidia
-# [    4.212] NIST: module nvidia not found in modules.dep
+# Verificar se o módulo do driver existe para o kernel atual
+modinfo nvidia
+# modinfo: ERROR: Module nvidia not found.
 
 # Kernel atual
 uname -r
 # 6.5.0-44-generic
 
-# Driver instalado
-dpkg -l | grep nvidia-driver
-# nvidia-driver-535    535.183.01
+# Verificar o estado do DKMS
+dkms status | grep nvidia
+# nvidia/535.183.01: added
 
 # O que aconteceu
-cat /var/log/apt/history.log | grep -A 5 "linux-image"
-# unattended-upgrade instalou novo kernel
+grep -A 5 "linux-image" /var/log/apt/history.log
+# unattended-upgrade instalou um kernel novo
 ```
 
 ### Root cause
 
-`unattended-upgrades` do Ubuntu instalou novo kernel automaticamente. O NVIDIA kernel module é compilado contra uma versão específica. Quando o VM rebootou no novo kernel, não havia módulo NVIDIA correspondente.
+O `unattended-upgrades` do Ubuntu instalou um kernel novo sozinho. O módulo do driver NVIDIA precisa existir para a versão do kernel que está em execução. Se o DKMS ou a extensão de driver não recompilar direito, a VM volta com o kernel novo e sem um módulo NVIDIA compatível.
 
 ### Resolução
 
 ```bash
-# Opção A: reinstalar driver extension (VMs Azure)
+# Opção A: reinstalar a extensão de driver (VMs Azure)
 az vm extension set \
   --resource-group myRG \
   --vm-name myGPUVM \
@@ -75,7 +75,7 @@ az vm extension set \
   --publisher Microsoft.HpcCompute \
   --version 1.9
 
-# Opção B: pinar versão do kernel e reinstalar driver
+# Opção B: segurar a versão do kernel e reinstalar o driver
 sudo apt-mark hold linux-image-$(uname -r) linux-headers-$(uname -r)
 sudo apt install --reinstall nvidia-driver-535
 sudo reboot
@@ -83,7 +83,7 @@ sudo reboot
 
 ### Prevenção
 
-Desabilitar upgrades automáticos de kernel em todos os VMs GPU. Adicionar em `/etc/apt/apt.conf.d/50unattended-upgrades`:
+Desabilite upgrade automático de kernel nas VMs com GPU. Adicione isto em `/etc/apt/apt.conf.d/50unattended-upgrades`:
 
 ```
 Unattended-Upgrade::Package-Blacklist {
@@ -93,15 +93,15 @@ Unattended-Upgrade::Package-Blacklist {
 };
 ```
 
-Usar a Azure NVIDIA GPU Driver Extension pro lifecycle de drivers. Tratar kernel upgrades como planned maintenance.
+Use a Azure NVIDIA GPU Driver Extension pra gerenciar o ciclo de vida do driver e trate upgrade de kernel como manutenção planejada.
 
-> **Essa falha é silenciosa.** O VM boota normal, passa health checks, responde a SSH. Só workloads GPU falham. Se você não monitora output do `nvidia-smi`, só descobre quando usuários reclamam.
+> **Essa falha é silenciosa.** A VM sobe, responde a SSH e passa health check. Só a parte de GPU morre. Se você não monitora `nvidia-smi`, descobre quando alguém começa a reclamar.
 
 ## Cenário 2: CUDA Out of Memory durante fine-tuning
 
 ### Sintomas
 
-Job de fine-tuning começa bem, roda 10-30 minutos, então crasheia:
+O job de fine-tuning começa bem, roda de 10 a 30 minutos e cai:
 
 ```
 RuntimeError: CUDA out of memory. Tried to allocate 2.00 GiB
@@ -114,41 +114,41 @@ RuntimeError: CUDA out of memory. Tried to allocate 2.00 GiB
 ### Diagnóstico
 
 ```bash
-# Monitoramento contínuo de memória GPU
+# Monitoramento contínuo de memória da GPU
 watch -n 1 nvidia-smi
 
-# Log de memória pra análise
+# Log de memória para análise
 nvidia-smi --query-gpu=timestamp,memory.used,memory.free,utilization.gpu \
   --format=csv -l 5 > gpu_memory.csv
 ```
 
-Calcular memória esperada (modelo 7B com Adam em BF16):
+Calcule a memória esperada para um modelo 7B com Adam em BF16:
 
 | Componente | Memória |
 |-----------|---------|
-| Parameters (BF16) | ~14 GB |
-| Gradients (BF16) | ~14 GB |
-| Optimizer States (FP32, Adam) | ~56 GB |
-| Activations (varia com batch) | Variável |
-| **Mínimo total** | **~84 GB + activations** |
+| Parâmetros (BF16) | ~14 GB |
+| Gradientes (BF16) | ~14 GB |
+| Estados do otimizador (FP32, Adam) | ~56 GB |
+| Ativações | Varia com o batch |
+| **Mínimo total** | **~84 GB + ativações** |
 
 ### Root cause
 
-Batch size = 8. No início do training, sequências curtas no dataset produziram tensors de activation pequenos. Conforme o data loader alcançou sequências mais longas, memória de activation cresceu até exceder o que sobrava na GPU. OOM não aconteceu no step 1 porque os primeiros batches cabiam.
+O batch size estava em 8. No começo do treino, as sequências curtas do dataset geravam ativações menores. Quando o data loader chegou nas sequências longas, a memória de ativação cresceu até bater no limite. O OOM não apareceu no step 1 porque os primeiros batches cabiam.
 
 ### Resolução
 
 ```python
-# Fix imediato: reduzir batch size, manter effective batch com accumulation
+# Correção imediata: reduzir batch size e manter batch efetivo com acumulação
 training_args = TrainingArguments(
-    per_device_train_batch_size=2,       # Reduzido de 8
-    gradient_accumulation_steps=4,        # Mantém effective batch = 8
+    per_device_train_batch_size=2,
+    gradient_accumulation_steps=4,
 )
 
-# Fix melhor: gradient checkpointing (troca 20-30% velocidade por 60-80% menos memória)
+# Correção melhor: gradient checkpointing troca mais compute por menos memória
 model.gradient_checkpointing_enable()
 
-# Pra modelos maiores: LoRA (treina <1% dos parâmetros)
+# Para modelos maiores: LoRA treina uma fração pequena dos parâmetros
 from peft import LoraConfig, get_peft_model
 
 lora_config = LoraConfig(
@@ -164,13 +164,13 @@ model.print_trainable_parameters()
 
 ### Prevenção
 
-- Sempre calcular memória requerida antes de iniciar
-- Setar `max_seq_length` explicitamente pra limitar activation memory
-- Usar `gradient_accumulation_steps` pra manter effective batch com per-GPU batch pequeno
+- Calcule a memória antes de começar
+- Defina `max_seq_length` explicitamente pra segurar o tamanho das ativações
+- Use `gradient_accumulation_steps` pra manter batch efetivo alto com batch por GPU menor
 
-> Se OOM acontece em steps aleatórios (não consistentemente no step N), suspeite de sequências de comprimento variável. Sete `max_seq_length` e pad/truncate.
+> Se o OOM aparece em steps aleatórios, e não sempre no mesmo step, desconfie de sequência com tamanho variável. `max_seq_length`, padding e truncation costumam resolver boa parte da novela.
 
-## Cenário 3: AKS GPU pods stuck em Pending
+## Cenário 3: AKS GPU pods presos em Pending
 
 ### Sintomas
 
@@ -190,24 +190,24 @@ Events:
     9 node(s) didn't match Pod's node affinity/selector.
 ```
 
-A mensagem de taint é a chave. AKS GPU node pools aplicam `sku=gpu:NoSchedule` por default. Pod precisa toleration correspondente.
+A mensagem de taint costuma entregar o problema. Node pools de GPU no AKS normalmente usam `sku=gpu:NoSchedule`. O pod precisa da toleration correspondente.
 
 ```bash
-# Verificar se é problema de quota
+# Verificar se também existe problema de quota
 az vm list-usage --location eastus -o table | grep -i "Standard NC\|Standard ND"
 
-# Verificar limites de scaling do node pool
+# Verificar limites de scale do node pool
 az aks nodepool show --cluster-name myAKS --resource-group myRG \
   --name gpunp --query '{min:minCount, max:maxCount, current:count}'
 ```
 
 ### Root cause
 
-Pod spec sem a toleration necessária. Scheduler vê GPU nodes como ineligíveis.
+O pod estava sem a toleration necessária. Para o scheduler, os nodes de GPU eram inelegíveis.
 
 Outras causas comuns:
-- GPU quota esgotada (cluster autoscaler não consegue provisionar novos nós)
-- Node pool no `maxCount` (autoscaler quer escalar mas não pode)
+- Quota de GPU esgotada, então o cluster autoscaler não consegue subir novos nós
+- Node pool já no `maxCount`, então o autoscaler até quer escalar, mas não pode
 
 ### Resolução
 
@@ -226,28 +226,38 @@ spec:
           nvidia.com/gpu: 1
 ```
 
-Se quota é o problema:
+Se o problema for quota, descubra primeiro o nome exato da família na região:
 
 ```bash
-az quota create \
-  --resource-name "StandardNDSv2Family" \
+az quota list \
   --scope "/subscriptions/{sub-id}/providers/Microsoft.Compute/locations/eastus" \
-  --limit-object value=48 limit-object-type=LimitValue
+  --query "[].{family:name.value,limit:properties.limit.value}" \
+  -o table
+```
+
+Depois atualize a família certa. Exemplo:
+
+```bash
+az quota update \
+  --resource-name "standardNDSv2Family" \
+  --resource-type dedicated \
+  --scope "/subscriptions/{sub-id}/providers/Microsoft.Compute/locations/eastus" \
+  --limit-object value=48
 ```
 
 ### Prevenção
 
-- Template todos os pod specs GPU com toleration pré-configurada
-- Alertas em 80% do uso de GPU quota
-- Configurar cluster autoscaler com headroom no `maxCount`
+- Template todos os pods de GPU com a toleration já embutida
+- Crie alerta quando a quota de GPU passar de 80%
+- Deixe folga no `maxCount` do autoscaler
 
-> Pod stuck em Pending não produz logs, porque não existe container. Sempre cheque `kubectl describe pod` pra events, não `kubectl logs`.
+> Pod preso em `Pending` não gera log, porque o container nem chegou a existir. Vá em `kubectl describe pod` e leia os eventos. `kubectl logs` não vai te salvar nessa hora.
 
 ## Cenário 4: Azure OpenAI 429 storm
 
 ### Sintomas
 
-30%+ dos requests retornando HTTP 429. Usuários reportam lentidão ou timeouts.
+Mais de 30% dos requests começam a voltar com HTTP 429. Usuário reclama de lentidão ou timeout.
 
 ```json
 {
@@ -260,14 +270,16 @@ az quota create \
 
 ### Diagnóstico
 
-Verifique o header `Retry-After`:
-- `Retry-After: 1` = excedeu por pouco
-- `Retry-After: 30` = dramaticamente acima do limite
+Olhe o header `Retry-After`:
+- `Retry-After: 1` normalmente indica que você passou pouco do limite
+- `Retry-After: 30` normalmente indica que você atropelou feio
+
+Alguns SDKs expõem o mesmo sinal como `retry-after-ms`. O recado é o mesmo: recue.
 
 ```bash
 az monitor metrics list \
   --resource "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.CognitiveServices/accounts/{account}" \
-  --metric "TokenTransaction" \
+  --metrics "TokenTransaction" \
   --interval PT1M \
   --aggregation Total \
   --filter "ModelDeploymentName eq 'gpt-4o-prod'"
@@ -275,66 +287,68 @@ az monitor metrics list \
 
 ### Root cause
 
-Deployment Standard com 80K TPM. Product launch gerou burst de 200K+ TPM. Standard enforça hard rate limits; todo request acima recebe 429.
+Deployment Standard com 80K TPM. O lançamento do produto gerou burst acima de 200K TPM. Deployment Standard aplica hard limit. O que passa do limite volta com 429.
 
 ### Resolução
 
-1. **Imediato:** Implementar exponential backoff com jitter (código no post anterior)
-2. **Curto prazo:** Segundo deployment em outra região pra overflow
-3. **Longo prazo:** Avaliar PTU pra workloads previsíveis e de alto volume
+1. **Imediato:** implementar exponential backoff com jitter
+2. **Curto prazo:** criar um segundo deployment em outra região pra overflow
+3. **Longo prazo:** avaliar PTU para carga previsível e alta
 
 ### Prevenção
 
-- Arquitetura multi-deployment com APIM fazendo load balancing
-- Alertas em 80% do TPM provisionado
-- Token-aware queue no client (estimar tokens antes de enviar)
-- Logging de token count por request pra forecast antes de launches
+- Arquitetura com múltiplos deployments e lógica explícita de roteamento no APIM
+- Alertas em 80% do TPM contratado
+- Fila no cliente com noção de tokens antes do envio
+- Log de token por request pra prever pico antes de lançamento
 
-## Cenário 5: Inference latency spike
+## Cenário 5: P99 de inferência disparou
 
 ### Sintomas
 
-P99 latência pula de 200ms pra 3 segundos. Nenhum deployment, nenhuma mudança de config. "A AI tá lenta."
+A latência P99 salta de 200 ms pra 3 segundos. Ninguém fez deploy, ninguém mexeu em config. A frase da vez vira: "a AI tá lenta".
 
 ### Diagnóstico
 
 ```bash
-# GPU occupada?
+# GPU ocupada?
 nvidia-smi --query-gpu=utilization.gpu,utilization.memory,temperature.gpu \
   --format=csv -l 2
 
-# Container restartou?
+# Container reiniciou?
 kubectl get pods -n inference -w
 kubectl describe pod model-serve-abc -n inference | grep -A 5 "Last State"
 
-# Cold start? (modelo sendo recarregado)
+# Cold start? Modelo sendo recarregado?
 kubectl logs model-serve-abc -n inference | grep -i "model loaded\|loading model"
 # [2024-07-15 08:14:47] Model loaded in 164.2 seconds
 ```
 
-164 segundos de model load = quase 3 minutos de latency hole a cada restart.
+164 segundos pra carregar modelo não é um detalhe. É restart disfarçado de latência.
 
-### Root cause (geralmente uma combinação)
+Se `Last State` mostrar `OOMKilled`, você já tem um suspeito forte. Se o pod entrou em `CrashLoopBackOff`, o Kubernetes está avisando que o processo morre mais rápido do que a plataforma consegue estabilizar.
 
-1. **Container cold start:** Pod evicted (OOM, node drain, spot reclaim), modelo recarregando de Blob Storage (14+ GB over network)
-2. **GPU thermal throttling:** 100% utilização sustentada → temperatura > 83°C → clock reduction automático
-3. **Noisy neighbor:** Outro pod no mesmo nó consumindo CPU/memória/rede necessária pra pre/post-processing
+### Root cause
+
+1. **Cold start de container:** o pod foi evicted, sofreu node drain ou perdeu spot, então o modelo precisou ser recarregado do Blob Storage
+2. **Thermal throttling de GPU:** uso sustentado encosta no limite térmico, o clock cai e a latência sobe junto
+3. **Noisy neighbor:** outro pod no mesmo nó está consumindo CPU, memória ou rede que o pipeline de inferência precisava
 
 ### Resolução
 
-**Pra cold starts:** init container que baixa model weights pra NVMe local antes do serving container iniciar. Readiness probe que só marca ready após modelo carregado.
+**Pra cold start:** use init container pra baixar os pesos pra NVMe local antes do serving container subir. Configure readiness probe que só marca `Ready` depois do modelo carregado.
 
-**Pra thermal throttling:** monitorar `DCGM_FI_DEV_GPU_TEMP` e alertar acima de 78°C. Reduzir batch size pra diminuir utilização sustentada.
+**Pra thermal throttling:** monitore `DCGM_FI_DEV_GPU_TEMP` e alerte antes da temperatura virar problema. Reduzir batch size costuma baixar a pressão sustentada na placa.
 
-**Pra noisy neighbor:** usar `nodeSelector` ou taints dedicados pra isolar inference pods em nós exclusivos.
+**Pra noisy neighbor:** use `nodeSelector` ou taints dedicados pra isolar pods de inferência em nós exclusivos.
 
 ### Prevenção
 
-- Readiness probe que verifica model loaded (não apenas container up)
-- Cache de modelo em local NVMe (não download do Blob a cada start)
-- Monitoring de temperatura GPU com alertas proativos
-- Pods de inference em nós dedicados sem sharing
+- Readiness probe que verifica modelo carregado, e não só container vivo
+- Cache de modelo em NVMe local em vez de baixar do Blob a cada restart
+- Monitoramento de temperatura de GPU com alerta proativo
+- Pods de inferência em nós dedicados, sem compartilhamento desnecessário
 
 ## No próximo post
 
-Troubleshooting coberto. No próximo, saímos do operacional pra algo mais amplo: **AI use cases pra infra teams**. Como usar AI pra melhorar o seu próprio trabalho de infraestrutura, desde AIOps até análise de logs e capacity planning preditivo.
+Troubleshooting coberto. No próximo, a conversa muda de lado: **AI use cases pra infra teams**. Não é AI como workload. É AI como ferramenta pro seu próprio operacional, de AIOps até análise de logs e capacity planning.

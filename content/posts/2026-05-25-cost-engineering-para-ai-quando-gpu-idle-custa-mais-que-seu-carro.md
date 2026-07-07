@@ -28,7 +28,7 @@ Nono post da série. No [anterior](/seguranca-para-ai-ameacas-que-seu-firewall-n
 
 Segunda de manhã. Café na mão, e-mail do financeiro no subject line: "URGENTE: fatura Azure $127.000, explicar." Forecast era $42.000. Dois VMs ND96isr_H100_v5, provisionados três semanas atrás pra um "experimento rápido", nunca desligados. A ~$98/hora cada, rodando 24/7 por três semanas: $33.000 em GPU parada. Ninguém usando. Ninguém lembrava que existiam.
 
-Não é hipotético. Variações dessa história acontecem todo mês em organizações ao redor do mundo. O ML engineer que provisionou não era negligente; ele estava iterando rápido (que é exatamente o que você quer). A falha foi sistêmica: sem política de auto-shutdown, sem alertas de budget, sem tags ligando os VMs a um projeto ou dono.
+Não é hipotético. Variações dessa história acontecem todo mês em organizações ao redor do mundo. O ML engineer que provisionou não era negligente. Ele estava iterando rápido, que é exatamente o que você quer. A falha foi sistêmica: faltavam políticas de auto-shutdown, alertas de budget e tags ligando os VMs a um projeto ou dono.
 
 ## Por que cost engineering pra AI é diferente
 
@@ -67,7 +67,7 @@ Training Cost = (GPU count × Horas × Preço/GPU-hora) + Storage + Networking
 | Storage | 10 TB × 72h | ~$85 |
 | **Total** | | **~$56.533** |
 
-A diferença ilustra por que right-sizing importa. Provisionar H100s pra um job que roda bem em A100s não desperdiça dinheiro; desperdiça 3-4x o dinheiro.
+A conta mostra por que right-sizing não é detalhe. Colocar H100 num job que roda bem em A100 não aumenta um pouco o custo. Pode multiplicar por 3 ou 4.
 
 ### Inference (Azure OpenAI, pay-per-token)
 
@@ -107,7 +107,7 @@ Redução de 94%. Pra muitos cenários de suporte ao cliente, GPT-4o-mini entreg
 
 ## Spot VMs: 60-90% de desconto com um porém
 
-Azure Spot VMs oferecem o mesmo hardware GPU com desconto brutal, mas Azure pode reclamar com 30 segundos de aviso. Funciona quando seu framework suporta **checkpoint-and-resume**.
+Azure Spot VMs oferecem o mesmo hardware GPU com desconto grande, mas Azure pode desalocar a VM com 30 segundos de aviso. Funciona quando seu framework suporta **checkpoint-and-resume**.
 
 ### Quando Spot é seguro
 
@@ -126,7 +126,7 @@ Azure Spot VMs oferecem o mesmo hardware GPU com desconto brutal, mas Azure pode
 
 | Cenário | Pay-as-you-go | Spot (70% desc.) | Economia |
 |---------|--------------|------------------|----------|
-| 8× A100, 72 horas | $1.958 | $587 | $1.371 |
+| 8× A100, 72 horas | $2.114 | $634 | $1.480 |
 | 8× H100, 72 horas | $7.056 | $2.117 | $4.939 |
 
 > **Checkpoint frequency:** Se training custa $50/hora, checkpoint a cada 15 minutos limita re-work a $12.50 por eviction. E o checkpoint precisa ir pra Blob Storage, não disco local (que é perdido na eviction).
@@ -144,7 +144,7 @@ Azure Spot VMs oferecem o mesmo hardware GPU com desconto brutal, mas Azure pode
 ### Auto-shutdown pra dev/test (obrigatório)
 
 ```bash
-# Verificar VMs GPU sem auto-shutdown em subscriptions de dev
+# Verificar configuração de auto-shutdown de uma VM GPU
 az vm auto-shutdown show \
   --resource-group rg-ai-dev \
   --name gpu-vm-experiment-01
@@ -156,7 +156,7 @@ az vm auto-shutdown \
   --time 1900
 ```
 
-Um ND96isr_H100_v5 rodando de sexta à noite até segunda de manhã: ~$4.700. Auto-shutdown elimina isso completamente.
+Um ND96isr_H100_v5 parado durante um fim de semana de 48 horas: ~$4.700. Auto-shutdown corta isso por inteiro.
 
 ## Azure OpenAI: Standard vs PTU
 
@@ -194,14 +194,14 @@ Todo recurso AI precisa no mínimo:
 # Encontrar VMs GPU sem tag obrigatória
 az resource list \
   --resource-type Microsoft.Compute/virtualMachines \
-  --query "[?contains(properties.hardwareProfile.vmSize, 'Standard_N') && !contains(keys(tags), 'owner')].[name, resourceGroup]" \
+  --query "[?contains(properties.hardwareProfile.vmSize, 'Standard_N') && tags.owner == null].[name, resourceGroup]" \
   --output table
 ```
 
 ### Budget alerts (configure antes de provisionar)
 
 ```bash
-# Criar budget com alerta em 80% e 100%
+# Criar budget mensal no resource group
 az consumption budget create \
   --budget-name "ai-gpu-monthly" \
   --amount 50000 \
@@ -211,6 +211,8 @@ az consumption budget create \
   --end-date 2026-12-31 \
   --resource-group rg-ai-prod
 ```
+
+Se quiser alertas de 80% e 100% via CLI, complemente com `--notifications` ou use a configuração equivalente no portal.
 
 ## No próximo post
 

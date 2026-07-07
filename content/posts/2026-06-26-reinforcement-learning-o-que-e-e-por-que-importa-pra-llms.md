@@ -83,7 +83,7 @@ Custo de infra: dezenas de GPUs por dias. Centenas de milhares de dólares.
 
 ### Fase 3: RLHF (Reinforcement Learning from Human Feedback)
 
-Aqui é onde a mágica acontece. O processo:
+É aqui que o comportamento muda de verdade. O processo:
 
 1. O modelo gera múltiplas respostas pra mesma pergunta
 2. Humanos ranqueiam as respostas (qual é melhor, qual é pior)
@@ -137,9 +137,9 @@ O resultado é um modelo que aprende preferências humanas sem que ninguém prec
 </g>
 </svg>
 
-**PPO (Proximal Policy Optimization)** é o algoritmo de RL mais usado no pipeline clássico de RLHF. Ele atualiza a policy do modelo de forma conservadora, pra não divergir demais do comportamento base. Pensa num deployment blue-green onde a nova versão não pode ser radicalmente diferente da anterior.
+**PPO (Proximal Policy Optimization)** é o algoritmo mais associado ao pipeline clássico de RLHF. Ele atualiza a policy em passos pequenos, usando clipping e, no setup tradicional de RLHF, uma penalidade de KL pra não deixar o modelo se afastar demais do comportamento de referência. Pensa num rollout controlado, não num deploy que troca tudo de uma vez.
 
-**DPO (Direct Preference Optimization)** é uma alternativa mais recente e simples. Em vez de treinar um reward model separado, otimiza direto nas preferências. Menos infra necessária, resultados comparáveis.
+**DPO (Direct Preference Optimization)** simplifica esse desenho. Em vez de treinar um reward model explícito e depois rodar PPO, ele aprende direto a partir de pares de preferência. Menos moving parts, menos infra, e na prática funciona bem em muita coisa.
 
 ## Reward hacking: quando RL dá errado
 
@@ -165,32 +165,33 @@ RL aparece em vários lugares que um profissional de infra pode encontrar:
 | Detecção de anomalia | Monitor agent | Séries temporais | Alertas corretos (precision + recall) |
 | Cache eviction | Cache manager | Working set | Hit rate alto |
 
-O Azure Autoscale, por exemplo, não usa RL puro. Usa regras determinísticas. Mas sistemas mais avançados como o [Autopilot do Google](https://research.google/pubs/autopilot-workload-autoscaling-at-google-scale/) usam RL pra decidir limites de recursos de containers.
+O Azure Autoscale do dia a dia não usa RL puro. Usa regras determinísticas. Ainda assim, RL aparece em pesquisa de autoscaling, scheduling e alocação de recursos. O conceito encaixa bem nesse tipo de problema, mesmo quando o produto comercial acaba usando heurística em vez de policy learning.
 
 ## O custo de RL em infra
 
-Se seu time decide fazer RLHF em um modelo custom, aqui está o que eles vão precisar:
+Se seu time decide fazer alinhamento por preferências em um modelo custom, espere algo nessa ordem de grandeza:
 
 ```
-# Recurso estimado pra RLHF de um modelo 7B
-- 4-8x A100 80GB (ou equivalente)
-- 2-4 semanas de training
-- ~5000-50000 comparações humanas (ou sintéticas)
-- Storage: ~500GB pra checkpoints intermediários
-- Network: alta bandwidth entre GPUs (NVLink ou InfiniBand)
+# Ordem de grandeza pra alinhar um modelo 7B
+- 4-8x GPUs grandes pra SFT ou DPO
+- Mais GPU ou mais tempo se entrar PPO completo
+- Dias ou semanas de treino, dependendo de batch e contexto
+- Milhares a dezenas de milhares de comparações humanas ou sintéticas
+- Algumas centenas de GB pra checkpoints e dataset processado
+- Rede rápida entre GPUs se o treino for distribuído
 ```
 
-Na prática, a maioria dos times não faz RLHF from scratch. Eles usam modelos já alinhados e, quando precisam customização, combinam prompt engineering, RAG e fine-tuning só nos modelos e providers que suportam isso. Mas entender o pipeline ajuda a dimensionar infra quando o pedido chegar.
+Dá pra gastar menos com LoRA, QLoRA ou datasets menores. Dá pra gastar muito mais se você fizer full fine-tuning, usar contexto longo ou insistir em PPO completo. O ponto é: esse pedido mexe com GPU, storage e rede de verdade.
 
 ## DPO vs PPO: o trade-off prático
 
 | Aspecto | PPO | DPO |
 |---------|-----|-----|
-| Complexidade | Alta (reward model + RL loop) | Baixa (otimização direta) |
-| Compute necessário | 2x-4x do SFT | ~1.5x do SFT |
-| Estabilidade de training | Instável, requer tuning | Mais estável |
-| Qualidade final | Ligeiramente melhor em scale | Comparável em modelos menores |
-| Quando usar | Modelos grandes (>70B), budget alto | Modelos menores, iteração rápida |
+| Complexidade | Alta (reward model + RL loop) | Menor (otimização direta) |
+| Compute necessário | Maior | Menor |
+| Estabilidade de training | Mais sensível a tuning | Mais previsível |
+| Qualidade final | Muito boa quando bem ajustado | Muito boa na maioria dos cenários práticos |
+| Quando usar | Quando você quer reproduzir RLHF clássico e tem budget | Quando quer simplificar a pilha e iterar mais rápido |
 
 ## O que levar pra segunda-feira
 
@@ -199,7 +200,7 @@ Na prática, a maioria dos times não faz RLHF from scratch. Eles usam modelos j
 - RL em infra já existe. Autoscalers inteligentes, cache policies, scheduling. O conceito é o mesmo: agent observa, age, recebe feedback, melhora.
 - DPO simplificou muito o pipeline. Times pequenos podem alinhar modelos sem a complexidade toda de PPO.
 
-No próximo post: **vector databases**. Agora que você sabe o que são embeddings (do post anterior) e como modelos aprendem (esse post), falta ver onde e como esses vetores são armazenados e buscados em produção.
+Se o modelo responde como um professor paciente ou como um estagiário confiante demais, muita coisa aí vem desse pipeline de alinhamento. Entender RLHF já explica uma parte enorme desse comportamento.
 
 ## Leitura complementar
 

@@ -117,26 +117,28 @@ A ideia:
 </g>
 </svg>
 
-Cada nível é um grafo com conexões entre vetores. Níveis superiores são mais "sparse" (poucos nós, conexões longas). Níveis inferiores são densos (todos os nós, conexões curtas).
+Cada nível é um grafo com conexões entre vetores. Níveis superiores têm poucos nós e conexões longas. Níveis inferiores concentram mais nós e vizinhos próximos.
 
-**Busca**: começa no topo (poucos saltos longos pra chegar na região certa), desce nível por nível refinando. Como usar uma estrada principal pra chegar na cidade, depois ruas locais pra chegar no endereço.
+**Busca**: começa no topo (poucos saltos longos pra chegar na região certa), desce nível por nível refinando. É como pegar a via expressa até o bairro e depois entrar nas ruas locais.
 
 **Performance**:
-- Tempo de busca: O(log n) 
-- Memória: O(n × M × d) onde M é número de conexões e d é dimensão
-- Build time: O(n × log n)
+- Tempo de busca: em muitos workloads, perto de O(log n)
+- Memória: aproximadamente O(n × d) pros vetores + O(n × M) pro grafo
+- Build time: cresce algo como O(n × log n)
 
 ### HNSW em números reais
 
 | Vetores | Dimensão | Memória (HNSW) | Latência p99 | Recall@10 |
 |---------|----------|----------------|--------------|-----------|
-| 1M | 1536 | ~8 GB | < 5ms | 98% |
-| 10M | 1536 | ~80 GB | < 10ms | 97% |
-| 100M | 1536 | ~800 GB | < 20ms | 95% |
+| 1M | 1536 | ~8 GB | poucos ms | 98% |
+| 10M | 1536 | ~80 GB | dezenas baixas de ms | 97% |
+| 100M | 1536 | ~800 GB | dezenas de ms | 95% |
 
-Percebe o padrão? HNSW mora em memória. 100M vetores de 1536 dimensões precisam de ~800GB de RAM. É por isso que vector databases em escala ficam caros rápido.
+Isso é ordem de grandeza com float32 e sem compressão agressiva. O número exato depende de M, efSearch, hardware e de o índice caber ou não em memória.
 
-## IVF: a alternativa disk-friendly
+Percebe o padrão? HNSW gosta de RAM. 100M vetores de 1536 dimensões podem passar fácil de centenas de GB. É por isso que vector databases em escala ficam caros rápido.
+
+## IVF: a alternativa mais amigável pra disco
 
 **Inverted File Index (IVF)** usa uma abordagem diferente. Em vez de grafo, ele particiona o espaço em clusters.
 
@@ -257,7 +259,7 @@ O bloco `rescoringOptions` é importante. Busca primeiro com vetores quantizados
 | Solução | Tipo | Melhor pra | Cuidado com |
 |---------|------|-----------|-------------|
 | **Azure AI Search** | Managed, hybrid (vector + text) | RAG com docs, busca semântica | Custo em escala alta |
-| **pgvector (PostgreSQL)** | Extension em DB existente | Times pequenos, já usam PostgreSQL | Performance > 5M vetores |
+| **pgvector (PostgreSQL)** | Extension em DB existente | Times pequenos, já usam PostgreSQL | Escala de alguns milhões pra cima exige cuidado |
 | **Qdrant** | Dedicado, open-source | Alta performance, self-hosted | Ops overhead |
 | **Pinecone** | Managed, serverless | Escala sem ops | Vendor lock-in, custo |
 | **Azure Cosmos DB (vector)** | Multi-model managed | Já usa Cosmos, quer adicionar vectors | Feature mais recente |
@@ -292,7 +294,7 @@ ORDER BY embedding <=> $1::vector
 LIMIT 5;
 ```
 
-Limitação: pgvector funciona bem até ~5 milhões de vetores. Depois disso, performance degrada. Se precisa de mais, considere uma solução dedicada.
+Limitação: pgvector vai bem em muitos cenários com alguns milhões de vetores. Depois disso, RAM, SSD e padrão de consulta começam a mandar mais que a extensão em si. Se a carga subir demais, considere uma solução dedicada.
 
 ## Métricas de distância: qual usar
 
@@ -300,11 +302,11 @@ Três opções principais. A escolha depende do modelo de embedding que gerou os
 
 | Métrica | Fórmula (simplificada) | Quando usar | Modelos que usam |
 |---------|----------------------|-------------|-----------------|
-| **Cosine** | Ângulo entre vetores | Mais comum, normaliza magnitude | OpenAI, Cohere |
-| **Euclidean (L2)** | Distância geométrica | Quando magnitude importa | Sentence-BERT |
-| **Dot Product** | Multiplicação direta | Vetores já normalizados, mais rápido | Quando pre-normalizado |
+| **Cosine** | Ângulo entre vetores | Default seguro, especialmente com embeddings normalizados | OpenAI, Azure OpenAI, Cohere |
+| **Euclidean (L2)** | Distância geométrica | Quando o modelo ou benchmark foi calibrado pra L2 | Alguns pipelines com embeddings não normalizados |
+| **Dot Product** | Multiplicação direta | Quando o modelo foi treinado pra inner product ou os vetores já estão normalizados | Recomendadores e embeddings pré-normalizados |
 
-Na dúvida, use cosine. OpenAI e Azure OpenAI normalizam seus embeddings, então cosine e dot product dão o mesmo resultado. Mas cosine é mais seguro como default.
+Na dúvida, use cosine. Nos embeddings da OpenAI e do Azure OpenAI, os vetores já saem normalizados, então cosine e dot product geram o mesmo ranking. Ainda assim, cosine costuma ser o default mais legível.
 
 ## Operações do dia a dia
 
@@ -360,11 +362,11 @@ az rest --method GET \
 
 - Vector DB é um search engine especializado, não um banco relacional. Otimizado pra busca por similaridade, não pra queries complexas.
 - HNSW domina mas come RAM. Quantização (int8) reduz 4x com perda mínima.
-- Escolha de solução: se já tem PostgreSQL e < 5M vetores, pgvector. Se precisa de escala e features de busca, Azure AI Search. Se precisa de controle total, Qdrant self-hosted.
-- Backup é importante mesmo sendo dados derivados. Re-gerar embeddings custa dinheiro e tempo.
-- A métrica que importa é recall, não só latência. Uma busca rápida que retorna resultados irrelevantes é inútil.
+- Escolha de solução: se já tem PostgreSQL e está falando de alguns milhões de vetores, pgvector pode bastar. Se precisa de escala e features de busca, Azure AI Search é mais confortável. Se precisa de controle total, Qdrant self-hosted entra forte.
+- Backup é importante mesmo sendo dado derivado. Re-gerar embeddings custa dinheiro e tempo.
+- A métrica que importa é recall, não só latência. Busca rápida que devolve coisa irrelevante não ajuda ninguém.
 
-No próximo post: embeddings + vector database + LLM juntos no padrão que todo mundo está implementando, **RAG (Retrieval-Augmented Generation)**.
+Se você entendeu onde mora o custo, como o índice encontra vizinhos e o que precisa monitorar, já está bem menos propenso a tratar vector DB como caixa preta.
 
 ## Leitura complementar
 

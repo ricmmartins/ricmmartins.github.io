@@ -21,7 +21,7 @@ Terça-feira, 14h. Seu colega mostra um demo: ele pede pro "agent" verificar o s
 
 Seu primeiro pensamento: "Isso é só um LLM chamando APIs, certo?"
 
-Sim. E não. O conceito é simples. A engenharia pra fazer funcionar de forma confiável em produção é onde mora a complexidade. Vamos abrir.
+Sim. E não. O conceito é simples. A parte trabalhosa é fazer isso funcionar com segurança e previsibilidade em produção. É aí que mora a engenharia de verdade.
 
 ## O mapa pro profissional de infra
 
@@ -31,7 +31,7 @@ Sim. E não. O conceito é simples. A engenharia pra fazer funcionar de forma co
 | **Tool** | Função que o agent pode chamar | API endpoint, CLI command |
 | **Observation** | Resultado de uma ação | Output do comando, response da API |
 | **Reasoning** | LLM decidindo próximo passo | Logic no controller loop |
-| **Agent loop** | Cycle: pensar → agir → observar → repeat | Control loop (reconcile loop no K8s) |
+| **Agent loop** | Ciclo: observar → pensar → agir → repetir | Control loop (reconcile loop no K8s) |
 | **Planning** | Decompor tarefa em steps | Pipeline de CI/CD com stages |
 | **Guardrails** | Limites do que o agent pode fazer | RBAC, policies |
 
@@ -219,7 +219,9 @@ def run_agent(user_request, max_iterations=10):
 
 ## ReAct: o pattern mais comum
 
-**ReAct (Reasoning + Acting)** é o padrão onde o agent alterna entre raciocinar (em texto) e agir (chamando tools). O "raciocínio" é visível no output do modelo.
+**ReAct (Reasoning + Acting)** é o padrão em que o agent alterna entre decidir o próximo passo e chamar tools. No paper original, esse raciocínio aparece em texto. Em produção, muita gente não expõe esse texto inteiro ao usuário. Guarda um scratchpad interno, logs estruturados ou só a sequência de tool calls.
+
+Exemplo didático:
 
 ```
 User: "Qual servidor da pool web-prod está com mais CPU?"
@@ -231,8 +233,8 @@ Agent (ação): get_server_metrics("web-prod-01") → {"cpu": 45.2, ...}
 Agent (ação): get_server_metrics("web-prod-02") → {"cpu": 87.5, ...}
 Agent (ação): get_server_metrics("web-prod-03") → {"cpu": 23.1, ...}
 
-Agent (pensando): "web-prod-02 está com 87.5% de CPU, significativamente 
-                   acima dos outros. Devo criar um ticket."
+Agent (pensando): "web-prod-02 está com 87.5% de CPU, acima dos outros. 
+                   Vale abrir um ticket."
 
 Agent (ação): create_ticket(title="CPU alta em web-prod-02", 
                             severity="medium", ...)
@@ -241,7 +243,7 @@ Agent (resposta final): "web-prod-02 está com 87.5% de CPU.
                          Criei o ticket INC-2024-4521 pra investigação."
 ```
 
-Cada iteração do loop consome tokens. Um agent que precisa de 5 tool calls gasta tokens do LLM 6 vezes (5 raciocínios + 1 resposta final). Isso impacta latência e custo.
+Cada iteração do loop consome tokens. Um agent que precisa de 5 tool calls volta ao modelo pelo menos 6 vezes: uma pra cada decisão e outra pra fechar a resposta. Isso bate direto em latência e custo.
 
 ## Tools: o vocabulário do agent
 
@@ -282,20 +284,18 @@ Bom:   "Retorna métricas atuais (CPU %, memória %, disco %) de um servidor
 
 ## Quanto custa um agent em produção?
 
-Vamos fazer as contas pra um agent de operações simples:
+Dá pra estimar sem chute. Conte tokens por chamada e multiplique pelo preço do modelo.
 
-| Componente | Tokens por iteração | Custo (GPT-4o) |
-|-----------|--------------------|----|
-| System prompt | ~200 tokens | $0.0005 |
-| Tool definitions (5 tools) | ~1000 tokens | $0.0025 |
-| Histórico (acumula) | ~500-3000 tokens | $0.00125-$0.0075 |
-| Raciocínio do modelo | ~100-500 output tokens | $0.001-$0.005 |
+| Componente | Tokens típicos por chamada | Observação |
+|-----------|----------------------------|------------|
+| System prompt | ~200 input tokens | Reaparece em toda iteração |
+| Tool definitions (5 tools) | ~1000 input tokens | Schema grande pesa |
+| Histórico | ~500-3000 input tokens | Cresce a cada volta do loop |
+| Resposta / decisão do modelo | ~100-500 output tokens | Tool call ou resposta final |
 
-Um task típico com 5 iterações: ~8000 input tokens + ~1500 output tokens = ~$0.035 por tarefa.
+Se você assumir um modelo na faixa de US$5 por milhão de input tokens e US$15 por milhão de output tokens, um fluxo com 5 iterações e algo perto de 8000 input + 1500 output tokens sai por volta de **US$0.0625 por tarefa**.
 
-Se o agent roda 1000 vezes/dia: ~$35/dia, ~$1050/mês.
-
-Compare com o custo de um engenheiro fazendo a mesma tarefa manualmente: 10 minutos × 1000 = 166 horas/mês. O agent paga a si mesmo rapidamente.
+Em 1000 execuções por dia, isso dá algo perto de US$62.50/dia. Prompt caching, respostas mais curtas e menos iterações derrubam esse número. Tool schema inchado e histórico longo fazem o contrário.
 
 ## Guardrails: quando o agent pode matar produção
 
@@ -306,8 +306,8 @@ Um agent com acesso a `kubectl delete` ou `az vm deallocate` pode causar desastr
 **1. Tool-level permissions**
 ```python
 # Classificar tools por risco
-SAFE_TOOLS = ["get_server_metrics", "list_pods", "get_logs"]
-APPROVAL_REQUIRED = ["create_ticket", "restart_service"]
+SAFE_TOOLS = ["get_server_metrics", "list_pods", "get_logs", "create_ticket"]
+APPROVAL_REQUIRED = ["restart_service", "scale_resource"]
 FORBIDDEN = ["delete_namespace", "deallocate_vm"]
 
 def execute_with_guardrails(tool_name, args, user_role):
@@ -352,17 +352,17 @@ def validate_tool_call(tool_name, args):
 | Custo importa muito | Mais caro (tokens) | Barato |
 | Confiabilidade 99.99% | Ainda não | Possível |
 
-Regra prática: se você consegue escrever um script que cobre 95%+ dos casos, escreva o script. Agents brilham quando o espaço de decisão é grande demais pra cobrir com if/else.
+Regra prática: se você consegue cobrir quase tudo com script, escreva o script. Agent faz mais sentido quando o espaço de decisão é grande demais pra modelar com if/else sem virar um monstro.
 
 ## O que levar pra segunda-feira
 
 - **Agent = LLM + tools + loop.** É um controller pattern que você já conhece, com um LLM no lugar da lógica hardcoded.
 - **Tools são o que definem o poder do agent.** Um agent é tão bom quanto as ferramentas que tem acesso.
 - **Guardrails não são opcionais em produção.** Classifique tools por risco, implemente aprovação humana pra ações destrutivas, limite iterações.
-- **Custo escala com complexidade da tarefa.** Cada iteração do loop custa tokens. Tasks simples: $0.01-0.05. Tasks complexas: $0.10-0.50.
+- **Custo escala com complexidade da tarefa.** Cada iteração do loop custa tokens. Poucas voltas ficam baratas. Histórico longo e muitas tools fazem a conta subir rápido.
 - **Não use agents onde um script resolve.** Agents adicionam incerteza. Use-os onde a flexibilidade justifica o trade-off.
 
-No próximo post, vamos falar de **como projetar um AI agent do zero**: escolhas de arquitetura, tool design, e estratégias de planning.
+O próximo post entra em **como projetar um AI agent do zero**: escolhas de arquitetura, tool design e estratégias de planning.
 
 ## Leitura complementar
 
