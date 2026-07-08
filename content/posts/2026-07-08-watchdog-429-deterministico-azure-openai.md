@@ -84,22 +84,7 @@ Ainda assim, vale a pena construir o MCP server por cima disso porque esse alert
 
 O servidor expõe um conjunto deliberadamente pequeno de tools, dividido em dois grupos que não se misturam: leitura de telemetria e notificação. Nada com poder de agir sobre o próprio recurso: nenhuma tool que aumente quota ou redistribua tráfego sozinha. Isso é intencional, e eu explico por quê mais adiante.
 
-```
- ┌─────────────────────────────┐
- │            HOST              │   Claude / agent runtime / simple cron
- └──────────────┬────────────────┘
-                 │ MCP (stdio ou Streamable HTTP)
-                 ▼
- ┌─────────────────────────────┐
- │     MCP SERVER: watchdog429   │
- │  get_token_usage_trend        │
- │  get_token_usage_history      │
- │  send_slack_alert             │
- │  send_priority_alert          │
- └──────────────┬────────────────┘
-                 ▼
-   Azure Monitor (TokenTransaction, AzureOpenAIRequests)
-```
+![arquitetura watchdog429](/img/watchdog429-architecture.svg)
 
 A tool central é `get_token_usage_trend`. Ela consulta a API de métricas do Azure Monitor para o recurso do Azure OpenAI via o pacote oficial `azure-monitor-query` (`MetricsQueryClient`), lê `TokenTransaction` em uma janela curta, com buckets de 1 minuto e filtro por `ModelDeploymentName`, e devolve dois sinais: quanto o bucket mais recente representa do TPM configurado e se a curva está subindo, estabilizando ou caindo. Não é só "quanto". É "quanto agora" e "em que direção".
 
