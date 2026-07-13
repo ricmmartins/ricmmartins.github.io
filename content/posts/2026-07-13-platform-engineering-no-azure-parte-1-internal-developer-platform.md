@@ -186,7 +186,7 @@ az devcenter admin catalog create \
 
 ### Passo 4: Criar templates Bicep para o catálogo
 
-Aqui está a peça central da plataforma. Cada template define um ambiente completo. Vou usar um exemplo de microserviço que precisa de namespace no AKS, banco de dados e cache:
+Aqui está a peça central da plataforma. Cada template define um ambiente completo. Vou usar um exemplo de microserviço que precisa de banco de dados, cache e observabilidade; o namespace no AKS aparece como módulo opcional mais adiante:
 
 **Estrutura do catálogo no Git:**
 
@@ -208,7 +208,7 @@ Aqui está a peça central da plataforma. Cada template define um ambiente compl
 name: microservice-standard
 version: 1.0.0
 summary: "Ambiente padrão para microserviço com banco, cache e observabilidade"
-description: "Provisiona namespace no AKS compartilhado, PostgreSQL Flexible Server, Redis Cache e configura dashboards no Grafana"
+description: "Provisiona PostgreSQL Flexible Server, Redis Cache e configura dashboards no Grafana; o namespace no AKS pode ser combinado via módulo opcional"
 runner: Bicep
 templatePath: main.bicep
 parameters:
@@ -222,7 +222,7 @@ parameters:
     description: "Tier de recursos (dev = básico, prod = alta disponibilidade)"
     type: string
     required: true
-    allowed:
+    allowedValues:
       - dev
       - staging
       - prod
@@ -249,6 +249,7 @@ param tier string
 param enableRedis bool = true
 
 param location string = resourceGroup().location
+param dateTag string = utcNow('yyyy-MM-dd')
 
 // Tags padrão da plataforma
 var commonTags = {
@@ -256,7 +257,7 @@ var commonTags = {
   service: serviceName
   tier: tier
   managedBy: 'deployment-environments'
-  createdAt: utcNow('yyyy-MM-dd')
+  createdAt: dateTag
 }
 
 // Configurações por tier
@@ -331,7 +332,6 @@ output databaseHost string = database.outputs.fqdn
 output databaseName string = database.outputs.databaseName
 output redisHost string = enableRedis ? cache.outputs.hostname : 'N/A'
 output grafanaDashboardUrl string = observability.outputs.dashboardUrl
-output keyVaultName string = 'kv-${serviceName}-${tier}'
 ```
 
 **modules/database.bicep:**
@@ -347,7 +347,7 @@ param tags object
 param administratorLogin string = 'platformadmin'
 
 @secure()
-param administratorPassword string = newGuid()
+param administratorPassword string
 
 resource postgresServer 'Microsoft.DBforPostgreSQL/flexibleServers@2023-12-01-preview' = {
   name: serverName
@@ -429,7 +429,7 @@ Na prática, para o desenvolvedor, fica assim:
 az login
 
 # Listar templates disponíveis
-az devcenter dev catalog-item list \
+az devcenter dev environment-definition list \
   --project-name "proj-payments-team" \
   --dev-center-name $DEVCENTER_NAME
 
@@ -439,11 +439,12 @@ az devcenter dev environment create \
   --project-name "proj-payments-team" \
   --dev-center-name $DEVCENTER_NAME \
   --environment-type "dev" \
-  --catalog-item-name "microservice-standard" \
+  --catalog-name "infra-templates" \
+  --environment-definition-name "microservice-standard" \
   --parameters '{"serviceName": "payment-svc", "tier": "dev", "enableRedis": true}'
 ```
 
-Em poucos minutos, o desenvolvedor recebe um ambiente completo com banco de dados, cache, observabilidade configurada e os controles de segurança aplicados automaticamente.
+Em poucos minutos, o desenvolvedor recebe um ambiente completo com banco de dados, cache, observabilidade configurada e os controles de segurança aplicados automaticamente. Se quiser isolar workloads no AKS compartilhado, adicione também o módulo de namespace mostrado na seção seguinte.
 
 ---
 
@@ -483,16 +484,25 @@ param teamName string
 param cpuLimit string = '4'
 param memoryLimit string = '8Gi'
 param maxPods int = 20
+param managedIdentityId string
 
 // Esse módulo seria executado via deployment script ou AKS extension
+// A identidade atribuída ao script precisa ter permissão para obter credenciais do AKS e aplicar manifests no cluster
 resource deploymentScript 'Microsoft.Resources/deploymentScripts@2023-08-01' = {
   name: 'configure-namespace-${namespaceName}'
   location: resourceGroup().location
   kind: 'AzureCLI'
+  identity: {
+    type: 'UserAssigned'
+    userAssignedIdentities: {
+      '${managedIdentityId}': {}
+    }
+  }
   properties: {
     azCliVersion: '2.60.0'
     retentionInterval: 'P1D'
-    scriptContent: '''
+    scriptContent: $'''
+      az aks install-cli
       az aks get-credentials --resource-group ${RG} --name ${AKS}
       
       # Criar namespace

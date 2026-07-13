@@ -317,9 +317,7 @@ let changes = AzureActivity
 | extend EventType = "EnvironmentChange", 
          Detail = strcat(Caller, " executou ", OperationNameValue, " em ", tostring(split(_ResourceId, "/")[-1]));
 //
-// 4. Alertas disparados
-let alerts = AlertsManagementResources
-| extend EventType = "AlertFired", Detail = "Alerta disparado";
+// Alert data requires Azure Resource Graph - query separately if needed
 //
 // Unificação
 requestFailures
@@ -349,7 +347,8 @@ az monitor action-group create \
   --short-name postmortem \
   --action logicapp "PostmortemGenerator" \
     "/subscriptions/{sub-id}/resourceGroups/rg-automation/providers/Microsoft.Logic/workflows/postmortem-generator" \
-    "https://prod-XX.brazilsouth.logic.azure.com:443/workflows/{workflow-id}/triggers/manual/paths/invoke"
+    "https://prod-XX.brazilsouth.logic.azure.com:443/workflows/{workflow-id}/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig={signature}" \
+  --use-common-alert-schema true
 ```
 
 ### Criando a Logic App para geração automática
@@ -402,7 +401,10 @@ A Logic App executa queries KQL via API do Log Analytics e monta o rascunho:
           "path": "/queryData",
           "body": {
             "query": "AppRequests | where TimeGenerated between (datetime('@{triggerBody()?['data']?['essentials']?['firedDateTime']}') .. datetime('@{triggerBody()?['data']?['essentials']?['resolvedDateTime']}')) | where Success == false | summarize failedCount=count(), avgDuration=avg(DurationMs) by bin(TimeGenerated, 5m), Name | order by TimeGenerated asc",
-            "timerange": {
+            "workspaces": [
+              "<workspace-id>"
+            ],
+            "timeRange": {
               "start": "@triggerBody()?['data']?['essentials']?['firedDateTime']",
               "end": "@triggerBody()?['data']?['essentials']?['resolvedDateTime']"
             }
@@ -418,13 +420,20 @@ A Logic App executa queries KQL via API do Log Analytics e monta o rascunho:
               "name": "@parameters('$connections')['visualstudioteamservices']['connectionId']"
             }
           },
-          "method": "patch",
+          "method": "post",
           "path": "/{project}/_apis/wit/workitems/$Bug",
-          "body": {
-            "title": "Postmortem: @{triggerBody()?['data']?['essentials']?['alertRule']}",
-            "description": "Postmortem gerado automaticamente...",
-            "tags": "postmortem;incident-review"
-          }
+          "body": [
+            {
+              "op": "add",
+              "path": "/fields/System.Title",
+              "value": "Postmortem: @{triggerBody()?['data']?['essentials']?['alertRule']}"
+            },
+            {
+              "op": "add",
+              "path": "/fields/System.Tags",
+              "value": "postmortem;incident-review"
+            }
+          ]
         }
       }
     }

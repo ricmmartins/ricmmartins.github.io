@@ -57,6 +57,7 @@ az policy assignment create \
 
 Um problema clássico de plataformas é o acúmulo de ambientes abandonados. Vamos criar uma policy que marca ambientes dev criados há mais de 14 dias para exclusão:
 
+// Nota: utcNow() não é suportado em policyRule. Use uma Azure Function ou Automation Account com schedule para implementar expiração baseada em tempo.
 ```json
 {
   "mode": "All",
@@ -116,9 +117,11 @@ param serviceName string
 param tier string
 param location string
 param tags object
+param grafanaEndpoint string
 
 // Workspace compartilhado (referência)
 var sharedWorkspaceId = resourceId('rg-platform-shared', 'Microsoft.OperationalInsights/workspaces', 'law-platform-shared')
+// A retenção do Application Insights workspace-based é controlada no Log Analytics workspace compartilhado
 
 // Application Insights para o serviço
 resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
@@ -129,7 +132,6 @@ resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
   properties: {
     Application_Type: 'web'
     WorkspaceResourceId: sharedWorkspaceId
-    RetentionInDays: tier == 'prod' ? 90 : 30
   }
 }
 
@@ -150,6 +152,8 @@ resource latencyAlert 'Microsoft.Insights/metricAlerts@2018-03-01' = {
         {
           name: 'high-latency'
           metricName: 'requests/duration'
+          metricNamespace: 'microsoft.insights/components'
+          criterionType: 'StaticThresholdCriterion'
           operator: 'GreaterThan'
           threshold: tier == 'prod' ? 500 : 2000
           timeAggregation: 'Average'
@@ -159,7 +163,7 @@ resource latencyAlert 'Microsoft.Insights/metricAlerts@2018-03-01' = {
   }
 }
 
-// Alert: taxa de erro acima de 5%
+// Alert: taxa de erros acima do threshold
 resource errorAlert 'Microsoft.Insights/metricAlerts@2018-03-01' = {
   name: 'alert-errors-${serviceName}-${tier}'
   location: 'global'
@@ -176,9 +180,11 @@ resource errorAlert 'Microsoft.Insights/metricAlerts@2018-03-01' = {
         {
           name: 'high-error-rate'
           metricName: 'requests/failed'
+          metricNamespace: 'microsoft.insights/components'
+          criterionType: 'StaticThresholdCriterion'
           operator: 'GreaterThan'
           threshold: 5
-          timeAggregation: 'Average'
+          timeAggregation: 'Total'
         }
       ]
     }
@@ -187,7 +193,8 @@ resource errorAlert 'Microsoft.Insights/metricAlerts@2018-03-01' = {
 
 output instrumentationKey string = appInsights.properties.InstrumentationKey
 output connectionString string = appInsights.properties.ConnectionString
-output dashboardUrl string = 'https://grafana-platform.brazilsouth.grafana.azure.com/d/${serviceName}'
+// URL real depende do endpoint do Managed Grafana e do UID do dashboard importado
+output dashboardUrl string = 'https://${grafanaEndpoint}/dashboards'
 ```
 
 ### Dashboard já provisionado com Grafana
@@ -221,7 +228,7 @@ Um IDP completo não termina no provisionamento de infra. O golden path também 
 1. Um repositório com estrutura padrão
 2. Pipeline de CI/CD pré-configurado
 3. Ambientes de dev, staging e prod já vinculados
-4. Secrets do Key Vault injetados automaticamente
+4. Integração padronizada com Key Vault para secrets, quando aplicável
 
 ### GitHub Actions template para deploy no AKS
 
@@ -304,11 +311,20 @@ az identity federated-credential create \
   --subject "system:serviceaccount:payment-svc:payment-svc-sa" \
   --audiences "api://AzureADTokenExchange"
 
-# Dar acesso ao PostgreSQL
-az role assignment create \
-  --assignee "$(az identity show -n id-payment-svc -g $RESOURCE_GROUP --query principalId -o tsv)" \
-  --role "Contributor" \
-  --scope "/subscriptions/<sub-id>/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.DBforPostgreSQL/flexibleServers/psql-payment-svc-dev"
+# Dar acesso ao PostgreSQL via Entra Authentication
+# 1. Habilitar Entra auth no PostgreSQL Flexible Server
+az postgres flexible-server update \
+  --name "psql-payment-svc-dev" \
+  --resource-group $RESOURCE_GROUP \
+  --active-directory-auth Enabled
+
+# 2. Adicionar a Managed Identity como administrador Entra
+az postgres flexible-server ad-admin create \
+  --server-name "psql-payment-svc-dev" \
+  --resource-group $RESOURCE_GROUP \
+  --display-name "id-payment-svc" \
+  --object-id "$(az identity show -n id-payment-svc -g $RESOURCE_GROUP --query principalId -o tsv)" \
+  --type ServicePrincipal
 ```
 
 O ServiceAccount no Kubernetes fica assim:
@@ -321,8 +337,11 @@ metadata:
   namespace: payment-svc
   annotations:
     azure.workload.identity/client-id: "<managed-identity-client-id>"
-  labels:
-    azure.workload.identity/use: "true"
+---
+# No Deployment, adicionar ao pod template:
+# spec.template.metadata.labels:
+#   azure.workload.identity/use: "true"
+# spec.template.spec.serviceAccountName: payment-svc-sa
 ```
 
 O pod recebe automaticamente um token federado que permite acessar banco de dados, Key Vault e outros recursos Azure sem guardar secret no código ou no cluster.
@@ -400,11 +419,10 @@ AzureActivity
 Combine com o Azure Cost Management para identificar quais ambientes são os maiores ofensores:
 
 ```bash
-az costmanagement query \
-  --type ActualCost \
-  --timeframe MonthToDate \
-  --dataset-filter "{\"tags\": {\"name\": \"tier\", \"values\": [\"dev\"]}}" \
-  --scope "/subscriptions/<dev-sub-id>"
+# Consultar custos via REST API
+az rest --method post \
+  --url "https://management.azure.com/subscriptions/<dev-sub-id>/providers/Microsoft.CostManagement/query?api-version=2023-11-01" \
+  --body '{"type":"ActualCost","timeframe":"MonthToDate","dataset":{"granularity":"None","filter":{"tags":{"name":"tier","operator":"In","values":["dev"]}}}}'
 ```
 
 ---

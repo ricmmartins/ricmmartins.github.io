@@ -29,7 +29,7 @@ Na [Parte 1](/postmortems-no-azure-analise-pos-incidente-blameless-parte-1/), fa
 
 O Azure DevOps é o lugar natural para rastrear action items de postmortems. A chave é conectar os insights do postmortem diretamente ao backlog de engenharia.
 
-### Criando um tipo de Work Item personalizado para postmortems
+### Criando um work item para registrar postmortems
 
 Você pode usar tipos existentes como Bug ou criar um Work Item personalizado com campos específicos:
 
@@ -63,7 +63,7 @@ Crie uma query salva para acompanhar action items pendentes:
 
 ```wiql
 SELECT [System.Id], [System.Title], [System.State], 
-       [System.AssignedTo], [Microsoft.VSTS.Scheduling.DueDate],
+       [System.AssignedTo], [Microsoft.VSTS.Scheduling.TargetDate],
        [System.Tags]
 FROM WorkItems
 WHERE [System.TeamProject] = @project
@@ -71,7 +71,7 @@ WHERE [System.TeamProject] = @project
   AND [System.State] <> "Closed"
   AND [System.State] <> "Done"
 ORDER BY [Microsoft.VSTS.Common.Priority] ASC,
-         [Microsoft.VSTS.Scheduling.DueDate] ASC
+         [Microsoft.VSTS.Scheduling.TargetDate] ASC
 ```
 
 ### Dashboard de acompanhamento no Azure DevOps
@@ -161,7 +161,10 @@ AppExceptions
 
 Use Azure Workbooks para dashboards interativos de métricas. Estrutura recomendada:
 
+Estrutura simplificada para referência. O formato real do Azure Workbooks usa um schema ARM mais complexo:
+
 ```json
+// Pseudocódigo - adaptar ao schema real do Workbook
 {
   "version": "Notebook/1.0",
   "items": [
@@ -274,11 +277,11 @@ az monitor metrics alert create \
   --resource-group rg-monitoring \
   --name "error-budget-critical" \
   --scopes "/subscriptions/{sub}/resourceGroups/rg-app/providers/Microsoft.Insights/components/app-production" \
-  --condition "avg requests/failed > 15" \
+  --condition "total requests/failed > 50" \
   --window-size 1h \
   --evaluation-frequency 5m \
   --action ag-postmortem-trigger \
-  --description "Error Budget abaixo de 20% - revisão de postmortems pendentes obrigatória" \
+  --description "Taxa de falhas acima do threshold - investigar impacto no Error Budget" \
   --severity 1
 ```
 
