@@ -44,7 +44,7 @@
   </div>
   {{- end }}
 
-  {{- partial "ads/ad-post-bottom.html" . }}
+  {{- partial "ads/ad-post-middle.html" . }}
 
   {{- /* Series Box */ -}}
   {{- with .Params.series }}
@@ -87,6 +87,8 @@
   </nav>
   {{- end }}
 
+  {{- partial "ads/ad-post-bottom.html" . }}
+
   <footer class="post-footer">
     {{- $tags := .Language.Params.Taxonomies.tag | default "tags" }}
     <ul class="post-tags">
@@ -106,5 +108,7 @@
   {{- partial "comments.html" . }}
   {{- end }}
 </article>
+
+{{- partial "ads/ad-auto-inject.html" . }}
 
 {{- end }}{{/* end main */}}
