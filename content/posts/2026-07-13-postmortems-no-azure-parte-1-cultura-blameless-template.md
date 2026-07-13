@@ -21,11 +21,11 @@ series:
   - "SRE no Azure"
 ---
 
-Você já automatizou alertas e runbooks, definiu SLIs, SLOs e Error Budgets e validou resiliência com Engenharia de Caos. Mas quando o incidente termina, o que acontece? Na maioria das organizações: **nada**. O alerta é resolvido e todos seguem em frente — até o mesmo problema acontecer de novo.
+Você já automatizou alertas e runbooks, definiu SLIs, SLOs e Error Budgets e validou resiliência com Engenharia de Caos. Mas quando o incidente termina, o que acontece? Na maioria das organizações, nada. O alerta é resolvido e todo mundo segue a vida. Até o mesmo problema voltar.
 
-Sem análise pós-incidente estruturada, sua organização repete os mesmos erros. O postmortem blameless transforma falhas em aprendizado sistêmico e impede que incidentes recorrentes corroam seu Error Budget.
+Sem uma análise pós-incidente decente, a organização repete os mesmos erros. O postmortem blameless transforma falhas em aprendizado e evita que incidentes recorrentes continuem corroendo seu Error Budget.
 
-Neste artigo, construímos um processo completo de postmortem no Azure: coleta automatizada com KQL, templates estruturados, automação com Logic Apps e integração com Azure DevOps.
+Aqui, o foco é montar um processo completo de postmortem no Azure: coleta automatizada com KQL, templates estruturados, automação com Logic Apps e integração com Azure DevOps.
 
 ---
 
@@ -45,9 +45,9 @@ O Google SRE Book define postmortem como "um registro escrito de um incidente, s
 
 ---
 
-## O que é cultura blameless e por que ela é essencial
+## O que é cultura blameless e por que isso importa
 
-Cultura blameless não significa ausência de responsabilidade — significa que o foco é o **sistema**, não o indivíduo. Se uma pessoa cometeu um erro, o sistema permitiu que esse erro se propagasse até causar impacto.
+Cultura blameless não significa ausência de responsabilidade. Significa que o foco está no sistema, não no indivíduo. Se uma pessoa cometeu um erro, o sistema deixou esse erro avançar até virar impacto.
 
 ### Comparação: abordagem tradicional vs. blameless
 
@@ -61,13 +61,13 @@ Cultura blameless não significa ausência de responsabilidade — significa que
 | **Probabilidade de recorrência** | Alta (causa raiz não endereçada) | Baixa (fatores sistêmicos corrigidos) |
 | **Aprendizado organizacional** | Mínimo | Máximo |
 
-A segurança psicológica é o alicerce. Quando engenheiros sabem que não serão punidos, compartilham informações cruciais — inclusive decisões que pareciam razoáveis no momento mas se mostraram problemáticas. Essas informações são essenciais para prevenir incidentes futuros.
+A segurança psicológica é o alicerce. Quando engenheiros sabem que não serão punidos, contam coisas que normalmente ficariam de fora, inclusive decisões que pareciam razoáveis na hora e depois se mostraram problemáticas. Esse contexto ajuda a evitar novos incidentes.
 
 ### Os cinco princípios de um postmortem blameless
 
 1. **Assumir boa-fé**: ninguém acorda querendo derrubar a produção.
 2. **Falhas são aprendizado**: cada incidente revela lacunas não visíveis antes.
-3. **Foco em fatores contribuintes**: incidentes raramente têm causa raiz isolada — são múltiplos fatores convergindo.
+3. **Foco em fatores contribuintes**: incidentes raramente têm uma causa raiz isolada. Normalmente existe uma combinação de fatores.
 4. **Ações corretivas sistêmicas**: melhorias tornam o sistema mais resiliente, não apenas impedem a repetição exata.
 5. **Transparência total**: conclusões acessíveis a toda a organização.
 
@@ -168,7 +168,7 @@ Regra: **todo incidente SEV-1 e SEV-2 deve gerar postmortem**. SEV-3/SEV-4 são 
 
 ## Coletando dados para o postmortem com Azure Monitor e KQL
 
-Reconstruir a timeline é a parte mais trabalhosa do postmortem. Com Azure Monitor configurado, os dados já estão disponíveis — o segredo é extraí-los com KQL.
+Reconstruir a timeline é a parte mais trabalhosa do postmortem. Com Azure Monitor configurado, os dados já estão lá. O trabalho é puxar isso com KQL.
 
 ### Reconstruindo a timeline de falhas com Application Insights
 
@@ -248,7 +248,7 @@ AppDependencies
 
 ### Verificando alterações no ambiente (Activity Log)
 
-"Algo mudou antes do incidente?" — o Activity Log registra todas as operações de gerenciamento:
+"Algo mudou antes do incidente?" O Activity Log registra todas as operações de gerenciamento:
 
 ```kql
 // Alterações no ambiente nas 6 horas anteriores ao incidente
@@ -514,6 +514,6 @@ az monitor log-analytics query \
 
 ## Conclusão da Parte 1
 
-Construímos os alicerces para postmortems blameless: filosofia sem culpa, template estruturado, coleta automatizada com KQL e geração de rascunhos com Logic Apps. Com isso, você já consegue reconstruir a timeline de qualquer incidente com precisão.
+Até aqui, você já tem a base para rodar postmortems blameless: filosofia sem culpa, template estruturado, coleta automatizada com KQL e rascunhos gerados com Logic Apps. Isso já basta para reconstruir a timeline de um incidente sem depender só de memória.
 
-Na [Parte 2](/postmortems-no-azure-automacao-devops-metricas-parte-2/), integramos os postmortems ao Azure DevOps para rastrear action items, definimos métricas de eficácia e exploramos cenários avançados como postmortems cross-cloud.
+Na [Parte 2](/postmortems-no-azure-automacao-devops-metricas-parte-2/), o foco passa para Azure DevOps, métricas de eficácia e cenários avançados, incluindo postmortems cross-cloud.

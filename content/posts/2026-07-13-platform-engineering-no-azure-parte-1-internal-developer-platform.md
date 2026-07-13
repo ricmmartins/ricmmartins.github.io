@@ -23,9 +23,9 @@ series:
 
 Você já implementou SLIs, SLOs e Error Budgets, automatizou resposta a incidentes, validou resiliência com Engenharia de Caos e até conduziu investigações cross-cloud. Mas quando um novo desenvolvedor entra no time e precisa provisionar um ambiente completo para começar a codar, quanto tempo leva? Dias? Semanas? Se a resposta for mais que minutos, você tem um problema de plataforma.
 
-Esse é o ponto central de **Platform Engineering**: criar uma camada de abstração que permite que desenvolvedores sejam autônomos sem precisar ser especialistas em infraestrutura. Em vez de abrir tickets para o time de DevOps pedindo "um cluster com banco e fila", o desenvolvedor acessa um portal self-service, escolhe um template, e em minutos tem um ambiente completo, seguro, observável e dentro dos padrões da organização.
+Platform Engineering é isso: criar uma camada de abstração para que desenvolvedores trabalhem com autonomia sem virar especialistas em infraestrutura. Em vez de abrir ticket para o time de DevOps pedindo "um cluster com banco e fila", o desenvolvedor entra num portal self-service, escolhe um template e, em minutos, tem um ambiente completo dentro dos padrões da organização.
 
-Neste artigo, vamos construir do zero um Internal Developer Platform (IDP) no Azure usando Azure Deployment Environments, Microsoft Dev Center, AKS, Bicep e práticas de governança que escalam para dezenas de times.
+Aqui, a ideia é montar um Internal Developer Platform (IDP) no Azure usando Azure Deployment Environments, Microsoft Dev Center, AKS, Bicep e práticas de governança que aguentam vários times.
 
 ---
 
@@ -72,7 +72,7 @@ O Azure oferece um conjunto de serviços que, combinados, formam a base de um ID
 | **Identidade** | Autenticação e autorização | Microsoft Entra ID |
 | **Secrets** | Gerenciamento de credenciais | Azure Key Vault |
 
-### Azure Deployment Environments: o coração do self-service
+### Azure Deployment Environments: a base do self-service
 
 Azure Deployment Environments (ADE) é o serviço que permite criar catálogos de templates de infraestrutura que desenvolvedores podem instanciar sob demanda. Funciona assim:
 
@@ -88,7 +88,7 @@ O Dev Center é o plano de controle que conecta tudo. Nele você define:
 - **Projetos**: agrupamento lógico por time ou produto
 - **Catálogos**: repositórios Git com templates de infra
 - **Environment Types**: dev, staging, production (cada um com policies diferentes)
-- **Dev Box definitions**: máquinas de desenvolvimento pré-configuradas (não é foco deste artigo, mas vale mencionar)
+- **Dev Box definitions**: máquinas de desenvolvimento pré-configuradas (não é o foco aqui, mas faz parte do ecossistema)
 
 ---
 
@@ -131,7 +131,7 @@ O fluxo é simples: o desenvolvedor interage com a camada de experiência (porta
 
 ### Passo 1: Configurar o Dev Center
 
-Primeiro, criamos o Dev Center que será o ponto central de gerenciamento:
+Primeiro, vamos criar o Dev Center, que centraliza o gerenciamento:
 
 ```bash
 # Variáveis
@@ -186,7 +186,7 @@ az devcenter admin catalog create \
 
 ### Passo 4: Criar templates Bicep para o catálogo
 
-Aqui está o coração da plataforma. Cada template define um ambiente completo. Vamos criar um template para um microserviço típico que precisa de AKS namespace, banco de dados e cache:
+Aqui está a peça central da plataforma. Cada template define um ambiente completo. Vou usar um exemplo de microserviço que precisa de namespace no AKS, banco de dados e cache:
 
 **Estrutura do catálogo no Git:**
 
@@ -422,7 +422,7 @@ az devcenter admin project-environment-type create \
 
 ### Passo 6: O desenvolvedor cria um ambiente
 
-Agora vem a mágica. O desenvolvedor, sem saber nada de Bicep ou ARM, executa:
+Na prática, para o desenvolvedor, fica assim:
 
 ```bash
 # Login como desenvolvedor
@@ -443,7 +443,7 @@ az devcenter dev environment create \
   --parameters '{"serviceName": "payment-svc", "tier": "dev", "enableRedis": true}'
 ```
 
-Em poucos minutos, o desenvolvedor tem um ambiente completo com banco de dados, cache, observabilidade configurada e todos os padrões de segurança da organização aplicados automaticamente.
+Em poucos minutos, o desenvolvedor recebe um ambiente completo com banco de dados, cache, observabilidade configurada e os controles de segurança aplicados automaticamente.
 
 ---
 
@@ -547,6 +547,6 @@ resource deploymentScript 'Microsoft.Resources/deploymentScripts@2023-08-01' = {
 
 ## Conclusão da Parte 1
 
-Neste artigo, construímos a base de um Internal Developer Platform no Azure: configuramos o Dev Center, criamos templates Bicep para provisionamento self-service, integramos o AKS como runtime compartilhado com multi-tenancy e isolamento por namespace. Com essa fundação, desenvolvedores já conseguem provisionar ambientes completos em minutos, sem tickets.
+Até aqui, você montou a base de um Internal Developer Platform no Azure: Dev Center, templates Bicep para provisionamento self-service e AKS como runtime compartilhado com multi-tenancy e isolamento por namespace. Com isso, já dá para provisionar ambientes completos em minutos, sem abrir ticket.
 
-Na [Parte 2](/platform-engineering-azure-governanca-observabilidade-seguranca-parte-2/), veremos governança com Azure Policy, observabilidade, segurança com Workload Identity e golden paths com GitHub Actions.
+Na [Parte 2](/platform-engineering-azure-governanca-observabilidade-seguranca-parte-2/), eu entro em governança com Azure Policy, observabilidade, segurança com Workload Identity e golden paths com GitHub Actions.

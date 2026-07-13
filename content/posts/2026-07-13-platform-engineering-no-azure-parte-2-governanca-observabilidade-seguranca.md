@@ -21,7 +21,7 @@ series:
   - "SRE no Azure"
 ---
 
-Na [Parte 1](/platform-engineering-azure-internal-developer-platform-parte-1/), construímos a base do Internal Developer Platform: Dev Center, templates Bicep para provisionamento self-service e AKS como runtime compartilhado com multi-tenancy. Agora, vamos adicionar as camadas que tornam a plataforma segura, observável e governada.
+Na [Parte 1](/platform-engineering-azure-internal-developer-platform-parte-1/), montamos a base do Internal Developer Platform: Dev Center, templates Bicep para provisionamento self-service e AKS como runtime compartilhado com multi-tenancy. Aqui entram as camadas que deixam a plataforma segura, observável e governada.
 
 ---
 
@@ -100,9 +100,9 @@ Combinado com uma Azure Function que roda diariamente, ambientes marcados são d
 
 ---
 
-## Observabilidade out-of-the-box
+## Observabilidade pronta desde o início
 
-Um dos maiores diferenciais de um IDP maduro é que o desenvolvedor nunca precisa configurar observabilidade. Cada ambiente já nasce com:
+Num IDP maduro, o desenvolvedor não deveria perder tempo configurando observabilidade. O ambiente já nasce com:
 
 - Log Analytics workspace (ou workspace compartilhado)
 - Dashboards no Azure Managed Grafana
@@ -190,7 +190,7 @@ output connectionString string = appInsights.properties.ConnectionString
 output dashboardUrl string = 'https://grafana-platform.brazilsouth.grafana.azure.com/d/${serviceName}'
 ```
 
-### Dashboard pré-configurado com Grafana
+### Dashboard já provisionado com Grafana
 
 Usando Azure Managed Grafana, podemos provisionar dashboards automaticamente via API:
 
@@ -216,7 +216,7 @@ O dashboard padrão monitora os **Four Golden Signals** (latência, tráfego, er
 
 ## Cenário avançado: Golden Path com GitHub Actions
 
-Um IDP completo não para no provisionamento de infra. O golden path inclui o pipeline de CI/CD. Quando o desenvolvedor cria um novo serviço, ele recebe:
+Um IDP completo não termina no provisionamento de infra. O golden path também inclui o pipeline de CI/CD. Quando o desenvolvedor cria um novo serviço, ele já recebe:
 
 1. Um repositório com estrutura padrão
 2. Pipeline de CI/CD pré-configurado
@@ -325,7 +325,7 @@ metadata:
     azure.workload.identity/use: "true"
 ```
 
-O pod automaticamente recebe um token federado que permite acessar banco de dados, Key Vault e outros recursos Azure sem nenhuma secret no código ou no cluster.
+O pod recebe automaticamente um token federado que permite acessar banco de dados, Key Vault e outros recursos Azure sem guardar secret no código ou no cluster.
 
 ---
 
@@ -427,7 +427,7 @@ Como saber se sua plataforma está funcionando? Acompanhe estas métricas:
 
 ## Anti-patterns: o que evitar ao construir um IDP
 
-Antes de falar em evolução, vale registrar os erros mais comuns que vejo em organizações tentando implementar Platform Engineering:
+Antes de falar de evolução, segue uma lista de erros comuns que vejo em organizações tentando implementar Platform Engineering:
 
 | Anti-pattern | O que acontece | Como evitar |
 |-------------|---------------|-------------|
@@ -438,13 +438,13 @@ Antes de falar em evolução, vale registrar os erros mais comuns que vejo em or
 | **Ignorar Developer Experience** | Portal confuso, CLI com 20 flags obrigatórias, erros genéricos | Investir em UX como se fosse um produto externo. Mensagens de erro claras, defaults inteligentes |
 | **Copiar o Spotify/Netflix** | Adotar Backstage completo antes de ter 10 serviços | Complexidade da plataforma deve ser proporcional à complexidade da organização |
 
-A regra de ouro: **se o caminho via plataforma for mais difícil que fazer na mão, os desenvolvedores vão fazer na mão**. Seu trabalho é garantir que a plataforma seja sempre o caminho de menor resistência.
+A regra aqui é simples: se usar a plataforma der mais trabalho do que fazer na mão, o time vai fazer na mão. Seu trabalho é garantir que a plataforma seja o caminho de menor resistência.
 
 ---
 
 ## Evolução: o que vem depois
 
-Um IDP não é um projeto com data de entrega. É um produto interno que evolui continuamente. Após implementar a base descrita neste artigo, os próximos passos típicos são:
+Um IDP não tem linha de chegada. É um produto interno que vai sendo ajustado com uso. Depois dessa base, os próximos passos mais comuns são:
 
 **Fase 2: Developer Portal com Backstage**
 
@@ -466,16 +466,16 @@ Integrar o Azure SRE Agent (que exploramos no artigo anterior) para que desenvol
 
 ## Conclusão
 
-Platform Engineering não é sobre tirar autonomia dos desenvolvedores. É sobre dar autonomia com segurança. Com Azure Deployment Environments, Dev Center, AKS multi-tenant e Bicep como base, você constrói uma plataforma que:
+Platform Engineering não é sobre tirar autonomia dos desenvolvedores. É sobre tirar atrito sem abrir mão de controle. Com Azure Deployment Environments, Dev Center, AKS multi-tenant e Bicep como base, você monta uma plataforma que:
 
 - Permite provisionamento em minutos, não dias
 - Garante compliance e segurança por design
 - Reduz carga cognitiva sem limitar flexibilidade
 - Escala para dezenas de times sem aumentar o time de plataforma proporcionalmente
 
-O investimento inicial é significativo (construir templates, configurar policies, integrar observabilidade), mas o retorno composto é enorme: cada novo time que entra na organização herda toda a maturidade operacional da plataforma desde o dia zero.
+Dá trabalho no começo: montar templates, configurar policies e integrar observabilidade. Só que esse esforço se paga toda vez que um novo time entra e já começa usando os padrões certos desde o dia zero.
 
-Se você já implementou as práticas de SRE que discutimos ao longo desta série, Platform Engineering é o próximo nível: transformar essas práticas em um produto interno que se multiplica sozinho.
+Se você já amadureceu as práticas de SRE da série, o passo seguinte faz sentido: empacotar esse conhecimento numa plataforma que o time realmente queira usar.
 
 ---
 

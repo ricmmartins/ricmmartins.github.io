@@ -21,7 +21,7 @@ series:
   - "SRE no Azure"
 ---
 
-Na [Parte 1](/postmortems-no-azure-analise-pos-incidente-blameless-parte-1/), cobrimos cultura blameless, template de postmortem, queries KQL e automação com Logic Apps. Agora, conectamos o postmortem ao fluxo de engenharia: integração com Azure DevOps, métricas de eficácia, cenários avançados e reuniões de revisão.
+Na [Parte 1](/postmortems-no-azure-analise-pos-incidente-blameless-parte-1/), falamos de cultura blameless, template de postmortem, queries KQL e automação com Logic Apps. Aqui, o foco é ligar o postmortem ao fluxo de engenharia: Azure DevOps, métricas de eficácia, cenários avançados e reuniões de revisão.
 
 ---
 
@@ -90,7 +90,7 @@ Widgets recomendados para o dashboard:
 
 ## Métricas de postmortem: medindo a eficácia da cultura de aprendizado
 
-Métricas de postmortem revelam se sua organização está aprendendo com incidentes ou apenas cumprindo um ritual burocrático.
+Essas métricas mostram se a organização está realmente aprendendo com incidentes ou só cumprindo tabela.
 
 ### Métricas essenciais
 
@@ -139,7 +139,7 @@ incidents
 
 #### Identificando incidentes recorrentes
 
-Detecte padrões de incidentes recorrentes — sinal de que action items anteriores não foram eficazes:
+Detecte padrões de incidentes recorrentes. Isso costuma indicar que action items anteriores não resolveram o problema:
 
 ```kql
 // Identificar padrões de incidentes recorrentes
@@ -195,7 +195,7 @@ Use Azure Workbooks para dashboards interativos de métricas. Estrutura recomend
 
 ## Conectando postmortems ao ciclo SRE completo
 
-O postmortem fecha o ciclo SRE e alimenta todos os outros processos. Veja como cada output se conecta com as práticas dos artigos anteriores:
+O postmortem fecha o ciclo SRE e alimenta todos os outros processos. Na prática, cada output se conecta com as práticas dos artigos anteriores:
 
 ### Do postmortem para os SLOs
 
@@ -248,7 +248,7 @@ Se você configurou o [Azure SRE Agent](https://aka.ms/sreagent/ga), ele acelera
 3. **Sugerir action items**: com base nos padrões identificados e na documentação oficial.
 4. **Gerar rascunho do postmortem**: preenchendo automaticamente o template.
 
-Use o SRE Agent para o rascunho inicial e refine manualmente durante a reunião de revisão — reduzindo o tempo de preparação de horas para minutos.
+Use o SRE Agent para gerar o rascunho inicial e refine manualmente na reunião de revisão. Isso corta a preparação de horas para minutos.
 
 ### Postmortems para incidentes cross-cloud
 
@@ -337,7 +337,7 @@ Action item: Implementar code review obrigatório para migrations
 - **Se alguém se defender**: reconheça que a situação era complexa e redirecione para o sistema.
 - **Mantenha o foco**: se a discussão divergir para problemas não relacionados, anote como "para investigar depois" e volte ao tópico.
 - **Garanta diversidade de perspectivas**: se alguém não falou, pergunte diretamente: "Você observou algo diferente durante o incidente?"
-- **Termine no horário**: respeitar o tempo demonstra que o processo é eficiente e vale a pena.
+- **Termine no horário**: quando a reunião respeita o tempo combinado, o time leva o processo a sério.
 
 ---
 
@@ -358,22 +358,22 @@ Action item: Implementar code review obrigatório para migrations
 
 ## Conclusão e próximos passos
 
-O postmortem blameless transforma incidentes em oportunidades reais de aprendizado. Sem ele, os outros pilares de SRE  --  alertas, SLOs, Error Budgets, Engenharia de Caos  --  operam em ciclo aberto, sem feedback para evoluir.
+O postmortem blameless fecha o ciclo de aprendizado. Sem ele, alertas, SLOs, Error Budgets e Engenharia de Caos ficam soltos, sem feedback real para melhorar.
 
 ### Checklist de implementação
 
 Para começar a implementar postmortems blameless na sua organização:
 
-1. **Adote o template** apresentado neste artigo e adapte-o ao seu contexto.
-2. **Configure as queries KQL** no Log Analytics para facilitar a coleta de dados.
-3. **Crie o Action Group** no Azure Monitor para disparar a automação quando alertas forem resolvidos.
-4. **Configure a Logic App** para gerar rascunhos automáticos de postmortem.
-5. **Crie a estrutura no Azure DevOps** para rastrear action items.
-6. **Monte o dashboard de métricas** com Azure Workbooks.
-7. **Conduza o primeiro postmortem** usando o guia de facilitação deste artigo.
-8. **Revise trimestralmente** as tendências across postmortems para identificar padrões sistêmicos.
+1. Adote o template apresentado aqui e adapte-o ao seu contexto.
+2. Configure as queries KQL no Log Analytics para facilitar a coleta de dados.
+3. Crie o Action Group no Azure Monitor para disparar a automação quando alertas forem resolvidos.
+4. Configure a Logic App para gerar rascunhos automáticos de postmortem.
+5. Crie a estrutura no Azure DevOps para rastrear action items.
+6. Monte o dashboard de métricas com Azure Workbooks.
+7. Conduza o primeiro postmortem usando o guia de facilitação acima.
+8. Revise trimestralmente as tendências across postmortems para identificar padrões sistêmicos.
 
-Com essa série  --  resposta a incidentes, SLIs e SLOs, Engenharia de Caos, e postmortems  --  você tem o ciclo SRE completo no Azure. O próximo passo é medir a maturidade SRE da organização e criar um roadmap de evolução.
+Com essa série, cobrindo resposta a incidentes, SLIs e SLOs, Engenharia de Caos e postmortems, você fecha o ciclo SRE no Azure. Daqui em diante, faz sentido medir a maturidade do time e decidir onde atacar primeiro.
 
 ---
 
