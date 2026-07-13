@@ -94,34 +94,9 @@ O Dev Center é o plano de controle que conecta tudo. Nele você define:
 
 ## Arquitetura de referência: IDP no Azure
 
-Antes de partir para a implementação, vamos visualizar a arquitetura completa:
+Arquitetura completa antes de partir para a implementação:
 
-```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                        DEVELOPER EXPERIENCE                              │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────────────────┐      │
-│  │  Dev Portal  │  │   az CLI     │  │  IDE Extensions (VS Code) │      │
-│  └──────┬───────┘  └──────┬───────┘  └──────────────┬───────────┘      │
-│         │                  │                          │                   │
-├─────────┴──────────────────┴──────────────────────────┴──────────────────┤
-│                         PLATFORM LAYER                                    │
-│  ┌────────────────┐  ┌─────────────────┐  ┌────────────────────────┐    │
-│  │   Dev Center   │  │  Deployment Env  │  │   Azure Policy Engine  │    │
-│  │  (Control Plane)│  │  (Provisioning)  │  │   (Guardrails)         │    │
-│  └────────┬───────┘  └────────┬────────┘  └────────────┬───────────┘    │
-│           │                    │                         │                │
-├───────────┴────────────────────┴─────────────────────────┴───────────────┤
-│                        INFRASTRUCTURE LAYER                               │
-│  ┌──────────┐  ┌──────────────┐  ┌──────────┐  ┌───────────────────┐   │
-│  │   AKS    │  │  PostgreSQL  │  │  Redis   │  │  Service Bus      │   │
-│  │ Clusters │  │  Flexible    │  │  Cache   │  │  / Event Hubs     │   │
-│  └──────────┘  └──────────────┘  └──────────┘  └───────────────────┘   │
-│  ┌──────────┐  ┌──────────────┐  ┌──────────┐  ┌───────────────────┐   │
-│  │Key Vault │  │  Managed     │  │ Container│  │   Log Analytics   │   │
-│  │          │  │  Identity    │  │ Registry │  │   + Grafana       │   │
-│  └──────────┘  └──────────────┘  └──────────┘  └───────────────────┘   │
-└─────────────────────────────────────────────────────────────────────────┘
-```
+![Arquitetura de referência: IDP no Azure](/img/idp-architecture.svg)
 
 O fluxo é simples: o desenvolvedor interage com a camada de experiência (portal, CLI ou IDE), a camada de plataforma orquestra o provisionamento com guardrails, e a camada de infraestrutura é criada automaticamente.
 
