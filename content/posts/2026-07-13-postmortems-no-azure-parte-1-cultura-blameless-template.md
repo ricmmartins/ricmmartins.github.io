@@ -2,7 +2,7 @@
 slug: "postmortems-no-azure-analise-pos-incidente-blameless-parte-1"
 aliases:
   - "/posts/postmortems-no-azure-analise-pos-incidente-blameless-parte-1/"
-title: "Postmortems no Azure: análise pós-incidente blameless com Azure Monitor — Parte 1"
+title: "Postmortems no Azure: análise pós-incidente blameless com Azure Monitor (Parte 1)"
 description: "Aprenda a implementar postmortems blameless no Azure: template completo, queries KQL para reconstruir timelines e automação com Logic Apps para coleta de dados."
 date: 2026-07-13T10:00:00-04:00
 categories:

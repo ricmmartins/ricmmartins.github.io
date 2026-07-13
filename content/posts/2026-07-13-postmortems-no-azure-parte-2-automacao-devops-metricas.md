@@ -2,7 +2,7 @@
 slug: "postmortems-no-azure-automacao-devops-metricas-parte-2"
 aliases:
   - "/posts/postmortems-no-azure-automacao-devops-metricas-parte-2/"
-title: "Postmortems no Azure: automação com Azure DevOps e métricas de aprendizado — Parte 2"
+title: "Postmortems no Azure: automação com Azure DevOps e métricas de aprendizado (Parte 2)"
 description: "Integre postmortems ao Azure DevOps, acompanhe MTTD e MTTR, implemente dashboards interativos com Azure Workbooks e conecte o aprendizado ao ciclo SRE completo."
 date: 2026-07-13T10:30:00-04:00
 categories:
