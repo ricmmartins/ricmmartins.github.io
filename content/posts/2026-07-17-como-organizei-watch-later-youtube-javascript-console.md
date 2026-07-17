@@ -131,7 +131,7 @@ Agora quando quero ver algo sobre Kubernetes, abro a playlist de Programação. 
 
 ## Se quiser reproduzir
 
-Os 3 scripts completos estão neste [Gist no GitHub](https://gist.github.com/ricmmartins/a154e680e42f1eb75d55de0e2edbd619). O que mostrei acima são trechos simplificados pra explicar a lógica. Pro script funcionar de verdade, você precisa da versão completa do Gist, que inclui autenticação via SAPISID, extração dos videoIds, mapeamento de categorias e controle de rate limit.
+Os 3 scripts completos estão neste [Gist no GitHub](https://gist.github.com/ricmmartins/31471972cd7dcb44aaf22a6bf2a3a79c). O que mostrei acima são trechos simplificados pra explicar a lógica. Pro script funcionar de verdade, você precisa da versão completa do Gist, que inclui autenticação via SAPISID, extração dos videoIds, mapeamento de categorias e controle de rate limit.
 
 O script tem uma flag `DRY_RUN` que mostra o que seria feito sem criar nada de fato. Recomendo rodar assim primeiro. Também precisa rolar a página inteira antes de executar, senão o script não pega todos os vídeos. As categorias que usei refletem o que eu assisto, então adapte pro que faz sentido pra você. E salve a lista original antes de esvaziar o Watch Later, por garantia.
 
