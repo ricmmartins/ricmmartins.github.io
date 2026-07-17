@@ -23,6 +23,8 @@ Seu primeiro pensamento: "Isso é só um LLM chamando APIs, certo?"
 
 Sim. E não. O conceito é simples. A parte trabalhosa é fazer isso funcionar com segurança e previsibilidade em produção. É aí que mora a engenharia de verdade.
 
+**tl;dr:** Agent = LLM + tools + loop. É o mesmo controller pattern do Kubernetes, com um LLM decidindo os próximos passos em vez de lógica hardcoded. Esse post desmonta o loop, mostra código funcional com Azure OpenAI, e cobre custos e guardrails pra quem vai colocar isso em produção.
+
 ## O mapa pro profissional de infra
 
 | Conceito Agent | O que faz | Equivalente em infra |
@@ -121,7 +123,7 @@ deployment_name = os.environ["AZURE_OPENAI_DEPLOYMENT"]
 client = AzureOpenAI(
     azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
     api_key=os.environ["AZURE_OPENAI_KEY"],
-    api_version="2024-06-01"
+    api_version="2024-10-21"
 )
 
 # Definir tools disponíveis
@@ -161,10 +163,15 @@ tools = [
 # Implementação das tools (a parte que executa de verdade)
 def execute_tool(name, arguments):
     if name == "get_server_metrics":
-        # Na vida real: query Azure Monitor, Prometheus, etc.
+        # Na vida real:
+        # az monitor metrics list --resource /subscriptions/.../servers/{hostname} \
+        #   --metrics "Percentage CPU" "Available Memory Bytes" --interval PT1M
+        # ou PromQL: 100 - (avg(rate(node_cpu_seconds_total{mode="idle",instance=hostname}[5m])) * 100)
         return {"cpu": 87.5, "memory": 62.0, "disk": 45.0}
     elif name == "create_ticket":
-        # Na vida real: POST pro ServiceNow, Jira, etc.
+        # Na vida real:
+        # POST https://{instance}.service-now.com/api/now/table/incident
+        # com payload {"short_description": title, "urgency": severity, ...}
         return {"ticket_id": "INC-2024-4521", "status": "created"}
 
 def run_agent(user_request, max_iterations=10):
@@ -189,30 +196,24 @@ def run_agent(user_request, max_iterations=10):
         choice = response.choices[0]
         message = choice.message
         
-        # Se o modelo decidiu responder (tarefa completa)
-        if choice.finish_reason == "stop":
-            return message.content
-        
-        # Se o modelo quer chamar uma tool
-        if choice.finish_reason == "tool_calls" and message.tool_calls:
-            # Adicionar a decisão do modelo ao histórico
+        # Checar tool_calls direto é mais confiável do que
+        # depender do valor exato de finish_reason entre versões da API
+        if message.tool_calls:
             messages.append(message)
             
-            # Executar cada tool chamada
             for tool_call in message.tool_calls:
                 args = json.loads(tool_call.function.arguments)
                 result = execute_tool(tool_call.function.name, args)
                 
-                # Adicionar resultado ao histórico
                 messages.append({
                     "role": "tool",
                     "tool_call_id": tool_call.id,
-                    "name": tool_call.function.name,
                     "content": json.dumps(result)
                 })
             continue
-
-        raise RuntimeError(f"finish_reason inesperado: {choice.finish_reason}")
+        
+        # Sem tool calls = tarefa completa
+        return message.content
     
     return "Limite de iterações atingido sem completar a tarefa."
 ```
@@ -248,6 +249,8 @@ Cada iteração do loop consome tokens. Um agent que precisa de 5 tool calls vol
 ## Tools: o vocabulário do agent
 
 Tools são o que dão poder ao agent. Sem tools, é só um chatbot. Com tools, vira automação inteligente.
+
+Pense em tools como Custom Resource Definitions no Kubernetes: elas definem o vocabulário de ações que o sistema entende. Um controller que não tem CRD pra `Certificate` não sabe gerenciar certificados. Um agent que não tem tool pra `create_ticket` não sabe abrir tickets.
 
 ### Princípios de boas tool definitions
 
@@ -297,9 +300,13 @@ Se você assumir um modelo na faixa de US$5 por milhão de input tokens e US$15 
 
 Em 1000 execuções por dia, isso dá algo perto de US$62.50/dia. Prompt caching, respostas mais curtas e menos iterações derrubam esse número. Tool schema inchado e histórico longo fazem o contrário.
 
+(Preços de referência do GPT-4o na data de publicação. Consulte a [página de preços do Azure OpenAI](https://azure.microsoft.com/pricing/details/azure-openai/) pra valores atualizados.)
+
 ## Guardrails: quando o agent pode matar produção
 
-Um agent com acesso a `kubectl delete` ou `az vm deallocate` pode causar desastre. Guardrails são essenciais.
+Um agent com acesso a `kubectl delete` ou `az vm deallocate` pode causar desastre. Guardrails não são opcionais.
+
+Se você usa Kubernetes, já conhece essa ideia: RBAC controla quem faz o quê, admission controllers validam requests antes de executar, resource quotas limitam consumo. Guardrails de agent seguem a mesma lógica.
 
 ### Tipos de guardrails
 
@@ -362,10 +369,13 @@ Regra prática: se você consegue cobrir quase tudo com script, escreva o script
 - **Custo escala com complexidade da tarefa.** Cada iteração do loop custa tokens. Poucas voltas ficam baratas. Histórico longo e muitas tools fazem a conta subir rápido.
 - **Não use agents onde um script resolve.** Agents adicionam incerteza. Use-os onde a flexibilidade justifica o trade-off.
 
-O próximo post entra em **como projetar um AI agent do zero**: escolhas de arquitetura, tool design e estratégias de planning.
+Aquele demo do seu colega na terça-feira? Agora você sabe o que roda por trás: um loop que chama `get_server_metrics` cinco vezes, compara os resultados, e chama `create_ticket` pro servidor com mais CPU. Nenhuma mágica. Só um controller loop com um LLM decidindo o próximo passo.
+
+O próximo post entra em **como projetar um AI agent do zero**: como escolher entre ReAct e plan-then-execute, quando usar multi-agent vs single-agent, e como testar agents sem gastar uma fortuna em tokens.
 
 ## Leitura complementar
 
 - [How AI Agents Work](https://lnkd.in/dU8CK7-b) (Neo Kim, System Design Newsletter)
-- [Azure OpenAI function calling](https://learn.microsoft.com/azure/ai-services/openai/how-to/function-calling)
+- [Azure OpenAI function calling](https://learn.microsoft.com/azure/foundry/openai/how-to/function-calling)
 - [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629)
+- [LLM Powered Autonomous Agents](https://lilianweng.github.io/posts/2023-06-23-agent/) (Lilian Weng)
