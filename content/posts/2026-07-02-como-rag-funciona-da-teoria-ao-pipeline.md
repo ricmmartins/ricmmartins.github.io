@@ -24,6 +24,8 @@ O time de ML responde: "Vamos implementar RAG."
 
 Todo mundo faz que sim com a cabeça. Você fica com a tarefa de provisionar a infra. Antes de subir recurso, vale entender o que RAG realmente faz por dentro.
 
+**tl;dr:** RAG é pipeline de indexação + retrieval + prompt. O que mais quebra em produção é chunk ruim, busca ruim e custo do LLM, não falta de fine-tuning.
+
 ## O mapa pro profissional de infra
 
 | Conceito RAG | O que faz | Equivalente em infra |
@@ -202,6 +204,7 @@ az cognitiveservices account deployment create \
 # Criar índice via REST API
 az rest --method PUT \
   --url "https://rag-demo-search.search.windows.net/indexes/runbooks?api-version=2024-07-01" \
+  --skip-authorization-header \
   --headers "Content-Type=application/json" "api-key=<admin-key>" \
   --body '{
     "name": "runbooks",
@@ -229,7 +232,7 @@ az rest --method PUT \
 import os
 import tiktoken
 from azure.search.documents import SearchClient
-from azure.search.documents.models import VectorizedQuery, VectorSearchQueryKind
+from azure.search.documents.models import VectorizedQuery
 from azure.core.credentials import AzureKeyCredential
 from openai import AzureOpenAI
 
@@ -243,7 +246,7 @@ search_client = SearchClient(
 openai_client = AzureOpenAI(
     azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
     api_key=os.environ["AZURE_OPENAI_KEY"],
-    api_version="2024-06-01"
+    api_version="2024-10-21"
 )
 
 TOKENIZER = tiktoken.get_encoding("cl100k_base")
@@ -308,7 +311,7 @@ def rag_query(question, top_k=5):
 
     vector_query = VectorizedQuery(
         vector=question_vector,
-        kind=VectorSearchQueryKind.KNN,
+        kind="vector",
         fields="embedding",
         k_nearest_neighbors=top_k,
     )
@@ -409,7 +412,7 @@ Em muito projeto, indexar é a parte barata. A conta que cresce de verdade costu
 - **Monitore retrieval separado de generation.** Se o modelo erra, primeiro veja se os chunks certos estão sendo recuperados.
 - **Custo escala com queries, não com documentos.** Indexar costuma ser barato. Servir milhares de requests com GPT-4o é onde a conta cresce.
 
-Se retrieval, reranking e prompt estão bem encaixados, RAG deixa de ser buzzword e vira pipeline operável.
+Se retrieval, reranking e prompt estão bem encaixados, você volta pra daily com um plano claro: indexar os runbooks, recuperar só o que importa e responder sem inventar. A buzzword some. Fica um pipeline operável.
 
 ## Leitura complementar
 

@@ -17,9 +17,11 @@ series:
   - "AI por dentro: de tokens a agents"
 ---
 
-Você já se perguntou por que o ChatGPT responde educadamente em vez de cuspir texto incoerente? Um modelo base sem alignment gera texto estatisticamente provável. Ele completa frases. Não "quer" ajudar ninguém.
+Segunda-feira, 9h. Você pede pro chatbot um resumo do incidente da madrugada. Ele responde com educação, parece confiante e ainda improvisa quando não sabe. Esse comportamento não aparece por acaso: um modelo base sem alignment só completa texto estatisticamente provável.
 
-O que transforma um gerador de texto num assistente útil é **Reinforcement Learning from Human Feedback (RLHF)**. E entender isso explica muito do comportamento que você observa nos modelos em produção.
+**tl;dr:** Reward, policy, RLHF e DPO ajudam a explicar por que um LLM ajustado parece prestativo, verboso ou confiante demais. Se você entende esse pipeline, entende melhor o comportamento do modelo em produção.
+
+Uma parte grande dessa virada vem de **supervised fine-tuning** e depois de **otimização por preferências**, como RLHF e DPO. É isso que empurra o modelo na direção de respostas mais úteis e alinhadas ao que humanos preferem.
 
 ## O mapa pro profissional de infra
 
@@ -73,13 +75,13 @@ O treinamento moderno de um LLM costuma ter três fases. A primeira é **self-su
 
 O modelo lê trilhões de tokens da internet e aprende a prever o próximo token. Resultado: um modelo que sabe completar frases, mas não sabe conversar. Se você perguntar "Qual a capital da França?", ele pode responder "Qual a capital da Alemanha? Qual a capital da Itália?" porque aprendeu que perguntas vêm em sequência.
 
-Custo de infra: milhares de GPUs por semanas. Centenas de milhões de dólares. Você não vai fazer isso.
+Custo de infra: milhares de GPUs por semanas. É treino de frontier model, com conta enorme e dependente de hardware, eficiência e energia. Você não vai fazer isso.
 
 ### Fase 2: Supervised Fine-Tuning (SFT)
 
 Humanos escrevem exemplos de conversas corretas. "Pergunta: X. Resposta ideal: Y." O modelo aprende o formato de assistente.
 
-Custo de infra: dezenas de GPUs por dias. Centenas de milhares de dólares.
+Custo de infra: dezenas de GPUs por dias. Ainda é caro o bastante pra virar projeto, não experimento, e a conta varia bastante com batch, contexto e se você usa LoRA ou QLoRA.
 
 ### Fase 3: RLHF (Reinforcement Learning from Human Feedback)
 

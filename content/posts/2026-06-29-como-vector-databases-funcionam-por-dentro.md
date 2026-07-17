@@ -22,6 +22,8 @@ O time de ML acabou de te pedir um "vector database" em produção. Você sabe o
 
 Aqui dentro: o que é, como funciona por dentro, e como operar em produção.
 
+**tl;dr:** vector database, na prática, é um motor de busca por similaridade com índice ANN. O custo mora em RAM, recall, rebuild de índice e operação de busca, não só em "guardar vetores".
+
 ## O mapa pro profissional de infra
 
 | Conceito Vector DB | O que faz | Equivalente em infra |
@@ -39,7 +41,7 @@ Num banco relacional, buscar é comparar valores exatos ou ranges. `WHERE status
 
 Com vetores, o problema é diferente. Você tem um vetor de query (1536 floats) e precisa encontrar os K vetores mais similares entre milhões. A busca "exata" (comparar com todos) é O(n). Com 10 milhões de documentos, cada busca compara 10 milhões de vetores. Inaceitável.
 
-A solução? **Approximate Nearest Neighbor (ANN)**. Aceitar 95-99% de accuracy em troca de velocidade 1000x maior. É o mesmo trade-off que caching: você abre mão de "sempre correto" em troca de "rápido o suficiente".
+A solução? **Approximate Nearest Neighbor (ANN)**. Aceitar 95-99% de recall em troca de velocidade 1000x maior. É o mesmo trade-off que caching: você abre mão da busca exata em troca de resultado rápido o suficiente.
 
 ## HNSW: o algoritmo que você vai encontrar em todo lugar
 
@@ -183,7 +185,7 @@ Percebe o padrão? HNSW gosta de RAM. 100M vetores de 1536 dimensões podem pass
 </g>
 </svg>
 
-**Trade-off**: IVF é mais eficiente em disco, mas o parâmetro `nprobe` (quantos clusters buscar) controla o trade-off accuracy vs velocidade. Menos probes = mais rápido, menos preciso.
+**Trade-off**: IVF é mais eficiente em disco, mas o parâmetro `nprobe` (quantos clusters buscar) controla o trade-off recall vs velocidade. Menos probes = mais rápido, menos preciso.
 
 ## Quantização: comprimindo vetores
 
@@ -366,7 +368,7 @@ az rest --method GET \
 - Backup é importante mesmo sendo dado derivado. Re-gerar embeddings custa dinheiro e tempo.
 - A métrica que importa é recall, não só latência. Busca rápida que devolve coisa irrelevante não ajuda ninguém.
 
-Se você entendeu onde mora o custo, como o índice encontra vizinhos e o que precisa monitorar, já está bem menos propenso a tratar vector DB como caixa preta.
+Quando o time de ML te pedir um "vector database", você já consegue devolver as perguntas certas: quantos vetores, qual recall aceitável, quanto cabe em RAM e como esse índice vai ser refeito. A partir daí, deixa de ser caixa preta e vira sistema operável.
 
 ## Leitura complementar
 

@@ -24,6 +24,8 @@ Você olha pro ticket. Context window? Aumentar como? Isso é configuração de 
 
 Se você já passou por isso, esse post é pra você. Aqui dentro: o que cada peça de um Large Language Model faz, explicado pra quem entende de sistemas. Não pra virar ML engineer, mas pra ter vocabulário e contexto pra resolver problemas reais no dia a dia.
 
+**tl;dr:** LLM não é caixa preta mística. Se você entender token, context window, embedding, attention, temperature e inference, já consegue diagnosticar custo, latência e limite de contexto sem chutar.
+
 ## De infra pra AI: o mapa mental
 
 Antes de entrar nos conceitos, vale ancorar o vocabulário novo em coisas que você já conhece.
@@ -92,7 +94,7 @@ Na prática, embeddings são a base de busca semântica. Quando alguém fala "RA
 
 ```bash
 # Gerar embedding usando Azure OpenAI
-curl -X POST "https://SEU_RECURSO.openai.azure.com/openai/deployments/meu-deployment-embedding/embeddings?api-version=2025-04-01-preview" \
+curl -X POST "https://SEU_RECURSO.openai.azure.com/openai/deployments/meu-deployment-embedding/embeddings?api-version=2024-10-21" \
   -H "Content-Type: application/json" \
   -H "api-key: $AZURE_OPENAI_KEY" \
   -d '{
@@ -211,10 +213,10 @@ Quando o time de data science falar algo que parece grego, agora você tem o map
 - "Preciso de fine-tuning" → Eles vão precisar de GPU pra training e um endpoint dedicado pra servir o modelo. Não é só "configuração".
 - "Tokens estão caros" → Otimizar prompts pra usar menos tokens, implementar caching semântico, ou trocar pra modelo menor em queries simples.
 
-Já dá pra conversar com o time de ML sem tratar tudo como mágica. Se falarem de janela, tokens, attention ou fine-tuning, pelo menos a conversa começa no nível certo.
+Já dá pra responder aquele ticket das 17h sem chute: "não, context window não aumenta por configuração; a saída é reduzir input, trocar de modelo ou buscar só o que importa". Se falarem de janela, tokens, attention ou fine-tuning, a conversa já começa no nível certo.
 
 ## Leitura complementar
 
 - [LLM Concepts - A Deep Dive](https://lnkd.in/eSd6fS7n) (Neo Kim, System Design Newsletter)
 - [Attention Is All You Need](https://arxiv.org/abs/1706.03762) (paper original dos Transformers)
-- [Azure OpenAI Service documentation](https://learn.microsoft.com/azure/ai-services/openai/)
+- [Azure OpenAI documentation](https://learn.microsoft.com/azure/foundry/openai/)

@@ -23,6 +23,8 @@ O time de ML treinou um modelo que funciona no notebook. Accuracy de 94%. Todo m
 
 É aqui que system design de ML cai no colo de infra. A boa notícia é que a maior parte do problema parece familiar. Serving, rollout, observabilidade e capacity planning continuam sendo trabalho de sistema distribuído. O pedaço realmente diferente existe, mas é menor do que o hype sugere.
 
+**tl;dr:** Sistema de ML em produção é pipeline, serving, observabilidade, rollout e drift. O modelo é só uma peça. Se você já opera APIs e sistemas distribuídos, boa parte do mapa aqui vai parecer conhecida.
+
 ## O mapa pro profissional de infra
 
 | Conceito ML System | O que faz | Equivalente em infra |
@@ -174,7 +176,8 @@ Na prática, muita arquitetura usa um par: Delta/Parquet/SQL no offline store e 
 ```bash
 # Azure ML managed feature store ou Redis como feature store
 
-# Opção 1: Redis pra features online
+# Opção 1: Azure Cache for Redis pra features online
+# Observação: esse serviço está em retirement. Em produção nova, prefira Azure Managed Redis.
 az redis create \
   --name ml-feature-store \
   --resource-group rg-ml-prod \
@@ -377,8 +380,8 @@ def detect_drift(training_distribution, production_distribution, threshold=0.05)
     }
 
 # Exemplo: feature "transaction_amount" 
-training_amounts = [50, 75, 100, 45, 200, ...]  # distribuição no treinamento
-production_amounts = [500, 750, 1000, 450, ...]  # distribuição atual (inflação?)
+training_amounts = [50, 75, 100, 45, 200, 80, 120, 95]  # distribuição no treinamento
+production_amounts = [500, 750, 1000, 450, 620, 810, 930, 540]  # distribuição atual (inflação?)
 
 result = detect_drift(training_amounts, production_amounts)
 # {"drifted": True, "statistic": 0.82, "p_value": 0.0001}
@@ -451,17 +454,19 @@ Cada versão tem metadata: quem treinou, com quais dados, quais métricas obteve
 
 ## O que levar pra segunda-feira
 
-- **ML em produção é 90% infra, 10% ML.** Feature stores, APIs, monitoring, CI/CD. Tudo que você já sabe.
+- **ML em produção tem muito trabalho de infra, dados e operação.** Feature stores, APIs, monitoring e CI/CD continuam no centro. O ponto é que boa parte da dor é sistema distribuído, não matemática de modelo.
 - **Quando há features caras no request path, feature store vira o cache layer mais importante.** Sem ele, a latência de inference sobe rápido.
 - **Model serving segue os mesmos patterns** de qualquer API: health checks, autoscaling, blue-green deploys. A diferença é cold start mais longo e uso de GPU.
 - **A/B testing é canary deployment.** Mesma lógica, métricas diferentes (accuracy vs latência).
 - **Data drift é silent killer.** Monitore as distribuições de input, não só métricas de infra.
+
+Volta pra pergunta do começo: sair de 94% no notebook para uma API com SLA é menos sobre treinar melhor e mais sobre operar melhor. Quando serving, rollout, feature freshness e monitoramento entram no jogo, o problema vira arquitetura.
 
 O próximo post entra em **como AI Agents funcionam por dentro**: loop, tools, custo e guardrails.
 
 ## Leitura complementar
 
 - [Machine Learning System Design 101](https://lnkd.in/dFGuMknJ) (Neo Kim, System Design Newsletter)
-- [Azure ML endpoints documentation](https://learn.microsoft.com/azure/machine-learning/concept-endpoints)
+- [Azure ML endpoints documentation](https://learn.microsoft.com/azure/machine-learning/concept-endpoints?view=azureml-api-2)
 - [Designing Machine Learning Systems](https://www.oreilly.com/library/view/designing-machine-learning/9781098107956/) (Chip Huyen, O'Reilly)
 

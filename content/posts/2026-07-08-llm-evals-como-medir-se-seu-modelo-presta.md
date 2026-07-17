@@ -22,6 +22,8 @@ Você mudou o system prompt. O time de ML acha que ficou melhor. Mas "achar" nã
 
 LLM Evals são testes automatizados que medem a qualidade das respostas do modelo. É o seu test suite pro AI. Sem evals, toda mudança no pipeline (prompt, modelo, RAG, chunking) é um deploy no escuro.
 
+**tl;dr:** Evals são o baseline que separa melhoria real de opinião. Monte um golden dataset pequeno, rode métricas simples primeiro e compare toda mudança de prompt, modelo ou RAG antes de subir pra produção.
+
 ## O mapa pro profissional de infra
 
 | Conceito Evals | O que faz | Equivalente em infra |
@@ -331,7 +333,7 @@ providers:
     apiKey: $AZURE_OPENAI_API_KEY
     apiHost: https://meu-endpoint.openai.azure.com
     deployment: gpt-4o
-    apiVersion: "2024-06-01"
+    apiVersion: "2024-10-21"
     model: gpt-4o
 
 prompts:
@@ -368,10 +370,12 @@ promptfoo view  # abre dashboard com resultados
 - **Integre no CI/CD.** Mudanças em prompts devem passar por evals antes de ir pra produção, igual código passa por tests.
 - **Trate evals como métricas de SLA.** Defina thresholds por categoria, alerte quando cair e investigue root cause.
 
+Se você mudou prompt, chunking ou modelo e quer saber se melhorou, esse é o fluxo: rode o baseline, compare por categoria e leia os casos que pioraram. Sem isso, "ficou melhor" continua sendo opinião de corredor.
+
 O próximo post é sobre **Machine Learning System Design**: como projetar sistemas de ML completos, da ingestão de dados ao serving em produção.
 
 ## Leitura complementar
 
 - [LLM Evals Explained](https://lnkd.in/diU4hic8) (Neo Kim, System Design Newsletter)
-- [Azure AI Evaluation SDK](https://learn.microsoft.com/azure/ai-studio/how-to/evaluate-generative-ai-app)
+- [Azure AI Evaluation SDK](https://learn.microsoft.com/azure/foundry/how-to/evaluate-generative-ai-app)
 - [promptfoo documentation](https://promptfoo.dev/)

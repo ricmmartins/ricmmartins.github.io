@@ -21,6 +21,8 @@ Você monta um pipeline de RAG, conecta no Azure OpenAI, e as respostas saem mei
 
 Context engineering é a disciplina de montar esse input de forma que o modelo entregue o que você precisa. Não é só "prompt engineering" com nome bonito. É trabalho de estrutura, constraints e trade-offs.
 
+**tl;dr:** Context engineering é montar o payload do LLM com disciplina: system prompt claro, few-shot enxuto, RAG bem formatado e orçamento de tokens controlado. Se o input é ruim, modelo bom também responde mal.
+
 ## O mapa pro profissional de infra
 
 | Conceito | O que faz | Equivalente em infra |
@@ -278,7 +280,7 @@ System prompt:
 Quando precisa parsear a resposta programaticamente:
 
 ```bash
-curl -X POST "$AZURE_OPENAI_ENDPOINT/openai/deployments/gpt-4o/chat/completions?api-version=2024-06-01" \
+curl -X POST "$AZURE_OPENAI_ENDPOINT/openai/deployments/gpt-4o/chat/completions?api-version=2024-10-21" \
   -H "Content-Type: application/json" \
   -H "api-key: $AZURE_OPENAI_KEY" \
   -d '{
@@ -312,7 +314,7 @@ Request 1: [system_prompt + tools + user_msg_1] → cache miss (processa tudo)
 Request 2: [system_prompt + tools + user_msg_2] → cache hit no prefix (só processa user_msg_2)
 ```
 
-No Azure OpenAI isso já vem ligado nos modelos compatíveis. O ganho aparece quando você mantém os primeiros 1.024 tokens estáveis o bastante pra virar cache.
+No Azure OpenAI, prompt caching depende do modelo e da API usados. Se você for contar com esse ganho, confirme a tabela de suporte na documentação e meça cache hit, latência e custo no seu workload.
 
 ## Anti-patterns: o que não fazer
 
@@ -360,8 +362,10 @@ Depois de colocar em produção, monitore:
 
 Sem medir resultado, você só troca prompt no escuro.
 
+Volta pro cenário do começo: se o seu RAG responde mal, não comece trocando de modelo. Primeiro arrume o payload. Em muita aplicação, o ganho vem mais de contexto bem montado do que de mais parâmetros.
+
 ## Leitura complementar
 
 - [Context Engineering 101](https://lnkd.in/d4WNwfqY) (Neo Kim, System Design Newsletter)
-- [Azure OpenAI prompt engineering best practices](https://learn.microsoft.com/azure/ai-services/openai/concepts/prompt-engineering)
+- [Azure OpenAI prompt engineering best practices](https://learn.microsoft.com/azure/foundry/openai/concepts/prompt-engineering)
 - [Anthropic: Prompt engineering guide](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering)
