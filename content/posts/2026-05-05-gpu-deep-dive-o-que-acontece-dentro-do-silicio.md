@@ -22,7 +22,9 @@ series:
   - "AI para Engenheiros de Infraestrutura"
 ---
 
-Quarto post da série. No [anterior](/compute-para-ai-escolhendo-o-hardware-certo/), você viu quais VMs GPU provisionar e como conectar elas. Agora a ideia é olhar **dentro** da GPU pra entender o que acontece no silício. Não pra escrever CUDA kernel, mas pra ser um troubleshooter melhor e conversar com o time de ML sem ficar no modo adivinhação.
+Quarto post da série. No [anterior](/posts/compute-para-ai-escolhendo-o-hardware-certo/), você viu quais VMs GPU provisionar e como conectar elas. Agora a ideia é olhar **dentro** da GPU pra entender o que acontece no silício. Não pra escrever CUDA kernel, mas pra ser um troubleshooter melhor e conversar com o time de ML sem ficar no modo adivinhação.
+
+**tl;dr:** O tamanho do checkpoint não diz quanta VRAM o treino vai consumir. Em GPU, pesos são só o começo. Gradientes, ativações e estado do otimizador é que costumam explodir a conta.
 
 ## O ticket das 2 da manhã
 
@@ -352,6 +354,16 @@ GPU-Util abaixo de 50% durante training ativo quase sempre aponta pra **data sta
 | Blackwell (2024) | B200 / GB200 | Novas famílias chegando ao Azure, confirme a região | até 192 GB | até 1.8 TB/s | 400 Gb/s |
 
 Cada geração trouxe mais bandwidth de memória e novos formatos de precisão. Ampere colocou TF32 no jogo. Hopper trouxe FP8 e Transformer Engine. Blackwell empurra isso ainda mais, com mais memória por GPU e foco claro em modelos gigantes.
+
+## Fechando o loop
+
+Quando o próximo ticket de OOM aparecer às 2 da manhã, a conta já fica mais simples: você não vai olhar só pro tamanho do modelo. Vai olhar pro batch size, pras ativações, pro otimizador e pra estratégia de paralelismo.
+
+## Leitura complementar
+
+- [NVIDIA GPU Driver Extension para Linux](https://learn.microsoft.com/azure/virtual-machines/extensions/hpccompute-gpu-linux)
+- [ND A100 v4 size series](https://learn.microsoft.com/azure/virtual-machines/sizes/gpu-accelerated/ndasra100v4-series)
+- [ND H100 v5 size series](https://learn.microsoft.com/azure/virtual-machines/sizes/gpu-accelerated/ndh100v5-series)
 
 ## No próximo post
 

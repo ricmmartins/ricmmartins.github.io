@@ -23,6 +23,8 @@ series:
 
 Décimo terceiro post da série. No [anterior](/troubleshooting-playbook-os-incidentes-que-vao-te-acordar-as-2am/), a gente falou dos incidentes que arrancam você da cama. Agora a pergunta é outra: como usar AI pra melhorar o próprio trabalho de infraestrutura.
 
+**tl;dr:** AI ajuda muito em análise de logs, detecção de anomalia, capacity planning, rascunho de IaC e apoio em incidente. Não substitui monitoramento, compliance nem execução determinística.
+
 ## Invertendo a lente
 
 Nos últimos 12 posts, você montou infra pra AI: GPU, cluster, pipeline, segurança, monitoramento, custo. Beleza. Mas e usar AI no **seu** dia a dia? Análise de logs, detecção de anomalia, capacity planning, geração de IaC, apoio em incidentes. AIOps não é mágica e também não nasceu ontem. É só aplicar modelos e inferência em problemas operacionais que já consomem boa parte do seu tempo.
@@ -43,7 +45,7 @@ from openai import AzureOpenAI
 
 client = AzureOpenAI(
     azure_endpoint="https://aoai-prod.openai.azure.com/",
-    api_version="2024-06-01",
+    api_version="2024-10-21",
     api_key=os.environ["AZURE_OPENAI_API_KEY"],
 )
 
@@ -129,6 +131,7 @@ Use histórico de consumo e forecasting de série temporal pra prever quando a q
 let forecast_window = 28d;
 AzureMetrics
 | where ResourceProvider == "MICROSOFT.COGNITIVESERVICES"
+| where Resource == "aoai-prod"
 | where MetricName == "TokenTransaction"
 | where TimeGenerated > ago(90d)
 | summarize DailyTokens = sum(Total) by bin(TimeGenerated, 1d)
@@ -197,6 +200,13 @@ Não troca o engenheiro. Encurta o caminho entre o susto e a hipótese útil.
 | Detecção de anomalia | ✅ | ✅ |
 
 A regra é simples: AI ajuda muito quando o trabalho envolve texto bagunçado, correlação de padrões ou rascunho. Ferramenta tradicional continua ganhando quando o requisito é enforcement, auditoria ou execução determinística.
+
+## Leitura complementar
+
+- [Azure OpenAI API lifecycle](https://learn.microsoft.com/azure/foundry/openai/api-version-lifecycle)
+- [Monitoring data reference for Azure OpenAI](https://learn.microsoft.com/azure/foundry/openai/monitor-openai-reference)
+- [Azure Monitor dynamic thresholds](https://learn.microsoft.com/azure/azure-monitor/alerts/alerts-dynamic-thresholds)
+- [Azure OpenAI pricing](https://azure.microsoft.com/pricing/details/azure-openai/)
 
 ## No próximo post
 

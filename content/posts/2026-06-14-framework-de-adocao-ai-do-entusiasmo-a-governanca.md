@@ -23,6 +23,8 @@ series:
 
 Décimo quarto post da série. No [anterior](/ai-use-cases-pra-infra-teams-aiops-e-alem/), a gente usou AI no próprio trabalho de infra. Agora o escopo aumenta: como levar uma organização inteira do "vamos usar AI" pra uma plataforma governada e escalável.
 
+**tl;dr:** Adoção de AI sem framework vira custo espalhado, segurança frouxa e GPU ociosa. As 6 fases (assessment, foundation, pilot, scale, govern, optimize) evitam repetir os mesmos erros de cloud adoption.
+
 ## As melhores intenções, os piores resultados
 
 Seu CTO entra no all-hands e manda: "vamos com tudo em AI". A sala anima. Antes do fim da reunião já tem thread no Slack sobre GPU, copiloto, agente e orçamento que ninguém pediu.
@@ -184,6 +186,13 @@ Classifique ferramenta e serviço assim:
 
 Esses anti-patterns quase nunca aparecem sozinhos. Big Bang empurra o pessoal pra Shadow AI. Shadow AI corta revisão. Quando finanças percebe, o trabalho já virou limpeza.
 
+## Leitura complementar
+
+- [Cloud Adoption Framework](https://learn.microsoft.com/azure/cloud-adoption-framework/)
+- [Azure landing zones](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/)
+- [Azure OpenAI quotas and limits](https://learn.microsoft.com/azure/foundry/openai/quotas-limits)
+- [Foundry model lifecycle and retirements](https://learn.microsoft.com/azure/foundry/openai/concepts/model-retirements)
+
 ## No próximo post
 
-Framework pronto. No último post da série vem o **glossário visual**: uma tradução direta entre os termos de AI e os conceitos de infraestrutura que você já domina.
+Se o seu CTO abrir o próximo all-hands com "vamos com tudo em AI", você já tem um jeito prático de evitar a bagunça que abriu este post. Framework pronto. No último post da série vem o **glossário visual**: uma tradução direta entre os termos de AI e os conceitos de infraestrutura que você já domina.

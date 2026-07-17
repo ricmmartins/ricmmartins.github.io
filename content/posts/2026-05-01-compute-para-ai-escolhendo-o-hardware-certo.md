@@ -22,9 +22,11 @@ series:
   - "AI para Engenheiros de Infraestrutura"
 ---
 
-Terceiro post da série onde traduzo AI pra linguagem de quem vive infraestrutura. No [post anterior](/dados-e-storage-para-workloads-de-ai/), falamos do gargalo escondido de storage. Hoje a conversa é sobre **compute**.
+Terceiro post da série onde traduzo AI pra linguagem de quem vive infraestrutura. No [post anterior](/posts/dados-e-storage-para-workloads-de-ai/), falamos do gargalo escondido de storage. Hoje a conversa é sobre **compute**.
 
 A diferença não está em comprar a GPU mais cara da prateleira. Está em escolher a GPU certa e ligar tudo do jeito certo.
+
+**tl;dr:** Em AI, escolher compute é escolher workload, memória e interconexão. GPU errada ou rede errada faz você pagar caro pra terminar mais devagar.
 
 ## A história que você não quer viver
 
@@ -332,6 +334,16 @@ GPU infrastructure pede observabilidade própria. Métricas tradicionais de CPU 
 | Token throughput (tokens/sec) | Application logs, métricas da aplicação | Eficiência do model serving |
 
 **Setup recomendado:** rode **NVIDIA DCGM Exporter** nos pools GPU e mande isso pra Prometheus ou Azure Managed Prometheus. Daí é Grafana, dashboard e correlação com o resto do ambiente, como qualquer outro serviço sério.
+
+## Fechando o loop
+
+Se o time pedir "um cluster GPU" amanhã cedo, você já sabe a primeira resposta: depende do workload, do tamanho do modelo e de como essas GPUs vão conversar. Foi isso que separou as 47 horas dos 90 minutos.
+
+## Leitura complementar
+
+- [Use GPUs on Azure Kubernetes Service (AKS)](https://learn.microsoft.com/azure/aks/gpu-cluster)
+- [Create a proximity placement group using the Azure CLI](https://learn.microsoft.com/azure/virtual-machines/linux/proximity-placement-groups)
+- [NVIDIA GPU Driver Extension para Linux](https://learn.microsoft.com/azure/virtual-machines/extensions/hpccompute-gpu-linux)
 
 ## No próximo post
 

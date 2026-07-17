@@ -22,6 +22,8 @@ series:
 
 Você já fala infraestrutura com fluência. AI não é idioma alienígena. É um dialeto com nome ruim e sigla demais. Este glossário faz a ponte entre os termos de AI e os conceitos de infra que você já usa todo dia.
 
+**tl;dr:** Use este post como tabela de tradução rápida. Se um termo de AI travar a conversa, volte aqui e mapeie para o equivalente de infra antes de discutir ferramenta ou arquitetura.
+
 ## Como usar
 
 Cada entrada tem o **termo de AI**, a **analogia de infra**, uma **definição curta** e **onde isso aparece na prática**. Organizei em 6 blocos pra ficar fácil achar o que interessa sem fingir que você lembra tudo de cabeça.
@@ -124,6 +126,13 @@ Guarda esse quadro. Ele poupa tempo.
 | 18 | **MLOps** | DevOps aplicado ao ciclo de vida do modelo |
 | 19 | **Data Drift** | Dado de produção mudou e o modelo piorou |
 | 20 | **Quantization** | Compressão do modelo pra gastar menos memória |
+
+## Leitura complementar
+
+- [Azure OpenAI API lifecycle](https://learn.microsoft.com/azure/foundry/openai/api-version-lifecycle)
+- [Foundry model lifecycle and retirements](https://learn.microsoft.com/azure/foundry/openai/concepts/model-retirements)
+- [Azure OpenAI quotas and limits](https://learn.microsoft.com/azure/foundry/openai/quotas-limits)
+- [Use GPUs on AKS](https://learn.microsoft.com/azure/aks/use-nvidia-gpu)
 
 ## Encerramento da série
 

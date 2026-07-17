@@ -2,7 +2,7 @@
 slug: "mcp-e-agentes-101-para-engenheiros-de-infra"
 translationKey: "2026/07/01/mcp-and-agents-101-for-infra-engineers"
 title: "MCP e Agentes de IA 101 para Engenheiros de Infraestrutura"
-description: "O que é MCP, como agentes de IA funcionam e o que muda operacionalmente — explicado para profissionais de infra/SRE com um exemplo real no AKS."
+description: "O que é MCP, como agentes de IA funcionam e o que muda operacionalmente, explicado para profissionais de infra/SRE com um exemplo real no AKS."
 date: 2026-07-01T10:00:00-04:00
 categories:
   - AI
@@ -19,6 +19,8 @@ series:
 ---
 
 Em algum momento nos últimos meses, alguém do seu time apareceu falando sobre um "AI agent" ou um "MCP server" e pediu acesso, um deploy ou uma explicação para o CISO sobre por que agora existe um processo não determinístico com permissão para encostar no cluster de produção. Este post é o modelo mental que eu gostaria de ter tido antes de tocar nisso pela primeira vez. Sem hype e com um exemplo real rodando no Azure ao longo do caminho.
+
+**tl;dr:** Agent = modelo + tools + loop + guardrails. MCP padroniza esse acoplamento, e o exemplo no AKS mostra por que readonly, least privilege e auditoria não são opcionais.
 
 ## O que um agent realmente é
 
@@ -170,7 +172,7 @@ Acima de tudo isso está o próprio loop de execução: o orquestrador que envia
 
 ## Construindo um servidor MCP
 
-Construir um servidor é mais simples do que parece e, na prática, você raramente vai começar do zero. Hoje existem SDKs oficiais em Python, TypeScript, Java, Kotlin, C# e Swift (além de implementações da comunidade em Rust e Go), e um ecossistema com mais de 500 servidores públicos já prontos: bancos de dados, GitHub, Slack e, no seu caso específico, todo o Azure por meio de servidores como o `aks-mcp`. Antes de escrever uma linha de código, vale checar se o que você precisa já existe.
+Construir um servidor é mais simples do que parece e, na prática, você raramente vai começar do zero. Hoje existem SDKs oficiais em Python, TypeScript, Java, Kotlin, C# e Swift (além de implementações da comunidade em Rust e Go), e um ecossistema com centenas de servidores públicos já prontos: bancos de dados, GitHub, Slack e, no seu caso específico, todo o Azure por meio de servidores como o `aks-mcp`. Antes de escrever uma linha de código, vale checar se o que você precisa já existe.
 
 Quando realmente faz sentido construir o seu, o coração de um servidor se parece bastante com isto:
 

@@ -2,7 +2,7 @@
 slug: "watchdog-429-deterministico-azure-openai"
 translationKey: "2026/07/08/deterministic-429-watchdog-azure-openai"
 title: "Construindo um Watchdog 429 Determinístico para Azure OpenAI"
-description: "Um servidor MCP que detecta tendências de consumo de tokens antes do 429 acontecer — sem LLM, só métricas e um cron job."
+description: "Um servidor MCP que detecta tendências de consumo de tokens antes do 429 acontecer, sem LLM, só métricas e um cron job."
 date: 2026-07-08T10:00:00-04:00
 categories:
   - AI
@@ -19,6 +19,8 @@ series:
 ---
 
 No post anterior eu expliquei o que é MCP e como um agent decide sozinho a sequência de chamadas a partir das tools que tem disponíveis. Agora vamos construir um caso de uso real, pequeno o bastante para terminar em um fim de semana: um MCP server que observa o consumo de tokens do seu deployment de Azure OpenAI / AI Foundry e avisa no Slack ou por email **antes** do 429 acontecer. Não depois, quando o cliente já engoliu o erro em produção.
+
+**tl;dr:** Use Azure Monitor + TokenTransaction + um poller simples para detectar subida de TPM antes do 429. Mantenha o servidor só com leitura de telemetria e notificação.
 
 ## Por que isso é mais sutil do que parece
 
@@ -54,7 +56,7 @@ resource "azurerm_monitor_metric_alert" "tpm_80pct" {
   description         = "TokenTransaction crossed 80% of configured TPM on the gpt-4o-prod deployment"
   severity            = 2
   frequency           = "PT1M"
-  window_size         = "PT5M"
+  window_size         = "PT1M"
 
   criteria {
     metric_namespace = "Microsoft.CognitiveServices/accounts"

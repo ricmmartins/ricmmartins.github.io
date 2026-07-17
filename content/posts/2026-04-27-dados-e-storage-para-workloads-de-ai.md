@@ -25,6 +25,8 @@ Esse é o segundo post da série onde traduzo o mundo de AI pra linguagem de eng
 
 Agora é hora de falar do gargalo que quase todo mundo descobre tarde demais: **storage**.
 
+**tl;dr:** GPU cara parada quase sempre significa dado chegando devagar. Pra treino de AI, storage e cache local decidem a utilização da GPU tanto quanto a placa que você comprou.
+
 ## A ligação de meia-noite
 
 Você fez tudo certo. O time de ML pediu um cluster GPU e você entregou: oito NVIDIA A100 em dois nós, rede de alta banda, drivers CUDA atualizados. Deploy impecável. O time começou o primeiro job de treinamento sexta às 18h e você foi pra casa tranquilo.
@@ -104,7 +106,7 @@ Essa é a decisão de maior impacto na performance de um workload de AI. O mapa,
 
 | Storage | Melhor pra | Throughput | Latência | Custo | Não use quando |
 |---------|-----------|------------|----------|-------|----------------|
-| **Blob Storage** | Datasets, artefatos, checkpoints | Até 60 Gbps por conta | Moderada (ms) | Baixo (~$0.018/GB/mês) | Precisa de POSIX nativo sem mount |
+| **Blob Storage** | Datasets, artefatos, checkpoints | Até 60 Gbps por conta | Moderada (ms) | Baixo (~$0.018/GB/mês em Hot LRS, East US, sujeito a mudança) | Precisa de POSIX nativo sem mount |
 | **Data Lake Gen2** | Pipelines analíticos, datasets versionados | Até 60 Gbps por conta | Moderada (ms) | Baixo | Workload simples que não precisa de ACLs granulares |
 | **NVMe local** | Scratch de treinamento, cache do data loader | 3 a 7 GB/s por disco | Ultra-baixa (μs) | Incluído na VM | Precisa de persistência: dados somem na desalocação |
 | **Azure Files (NFS)** | Datasets compartilhados entre nós | Até 10 Gbps (premium) | Baixa a moderada | Moderado | Workload single-node onde NVMe local basta |
@@ -297,6 +299,16 @@ Antes de entregar storage pra um workload de AI:
 - [ ] O storage foi pensado pra **10x o tamanho atual** do dataset
 - [ ] Existem alertas de **throughput e IOPS** configurados
 - [ ] Os checkpoints voltam pro **Blob Storage** pra garantir durabilidade
+
+## Fechando o loop
+
+Na próxima ligação de meia-noite, antes de culpar a GPU, você vai olhar pro throughput, pro cache local e pro tipo de storage. Se o disco estiver arrastando e a GPU em 12%, o problema já tem cara e sobrenome.
+
+## Leitura complementar
+
+- [Scalability and performance targets for standard storage accounts](https://learn.microsoft.com/azure/storage/common/scalability-targets-standard-account)
+- [Blob Storage scalability and performance targets](https://learn.microsoft.com/azure/storage/blobs/scalability-targets)
+- [Blobfuse2 Preload](https://github.com/Azure/azure-storage-fuse/wiki/Blobfuse2%E2%80%90Preload)
 
 ## No próximo post
 

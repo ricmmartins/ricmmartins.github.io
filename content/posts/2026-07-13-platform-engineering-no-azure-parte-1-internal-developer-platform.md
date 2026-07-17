@@ -27,6 +27,8 @@ Platform Engineering é isso: criar uma camada de abstração para que desenvolv
 
 Aqui, a ideia é montar um Internal Developer Platform (IDP) no Azure usando Azure Deployment Environments, Microsoft Dev Center, AKS, Bicep e práticas de governança que aguentam vários times.
 
+**tl;dr:** IDP é portal self-service + templates + governança. O Dev Center e o AKS fazem o trabalho pesado; Bicep e Policy garantem que o desenvolvedor tenha autonomia sem sair dos trilhos.
+
 ---
 
 ## O que é Platform Engineering e por que importa agora?
@@ -41,7 +43,7 @@ O conceito ganhou força porque o modelo "you build it, you run it" do DevOps, q
 | **DevOps puro** | Cada dev team | Cada dev team | Carga cognitiva alta, inconsistência |
 | **Platform Engineering** | Plataforma self-service | Time de plataforma + automação | Autonomia com guardrails |
 
-Segundo o relatório State of DevOps 2024 da Puppet, organizações com plataformas internas maduras têm **tempo de onboarding 60% menor** e **frequência de deploy 4x maior** que organizações sem plataforma definida.
+Segundo relatórios de mercado como o State of DevOps, organizações com plataformas internas maduras tendem a ter tempo de onboarding menor e frequência de deploy bem mais alta que organizações sem plataforma definida.
 
 ### Os quatro pilares de um IDP
 

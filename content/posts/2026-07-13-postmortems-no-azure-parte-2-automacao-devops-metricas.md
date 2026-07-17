@@ -23,6 +23,8 @@ series:
 
 Na [Parte 1](/postmortems-no-azure-analise-pos-incidente-blameless-parte-1/), falamos de cultura blameless, template de postmortem, queries KQL e automação com Logic Apps. Aqui, o foco é ligar o postmortem ao fluxo de engenharia: Azure DevOps, métricas de eficácia, cenários avançados e reuniões de revisão.
 
+**tl;dr:** O postmortem sem rastreamento vira documento esquecido. Ligue ao Azure DevOps para action items, use Workbooks para métricas de eficácia e vincule ao Error Budget para decidir congelamento de deploys.
+
 ---
 
 ## Integrando postmortems com Azure DevOps
@@ -272,7 +274,7 @@ Seções adicionais recomendadas:
 Vincule o consumo de Error Budget ao ciclo de postmortem. Quando o budget cai abaixo de um threshold crítico:
 
 ```bash
-# Exemplo de alerta baseado em Error Budget que dispara revisão
+# Exemplo de alerta simples de taxa de falhas que dispara revisão
 az monitor metrics alert create \
   --resource-group rg-monitoring \
   --name "error-budget-critical" \
@@ -380,7 +382,7 @@ Com essa série, cobrindo resposta a incidentes, SLIs e SLOs, Engenharia de Caos
 
 ---
 
-## Referências
+## Leitura complementar
 
 - [Arquitetura de processo de gestão de incidentes - Azure Well-Architected Framework](https://learn.microsoft.com/azure/well-architected/operational-excellence/incident-response)
 - [Azure Monitor - Visão geral](https://learn.microsoft.com/azure/azure-monitor/overview)

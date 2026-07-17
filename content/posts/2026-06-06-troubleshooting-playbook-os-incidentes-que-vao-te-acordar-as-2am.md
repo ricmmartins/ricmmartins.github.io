@@ -26,6 +26,8 @@ Décimo segundo post da série. No [anterior](/azure-openai-em-producao-tokens-t
 
 Este post está organizado em cenários reais de falha. Cada um segue: **Sintomas → Diagnóstico → Root cause → Resolução → Prevenção**. Leia uma vez pra formar repertório. Depois deixa salvo. Você ainda vai voltar aqui.
 
+**tl;dr:** Este playbook cobre cinco falhas comuns em workloads de AI: driver, CUDA OOM, pod Pending, 429 e latência. A meta é reduzir o tempo entre sintoma, hipótese e ação segura.
+
 ## Cenário 1: NVIDIA driver crash após kernel update
 
 ### Sintomas
@@ -349,6 +351,12 @@ Se `Last State` mostrar `OOMKilled`, você já tem um suspeito forte. Se o pod e
 - Monitoramento de temperatura de GPU com alerta proativo
 - Pods de inferência em nós dedicados, sem compartilhamento desnecessário
 
+## Leitura complementar
+
+- [NVIDIA GPU Driver Extension for Linux](https://learn.microsoft.com/azure/virtual-machines/extensions/hpccompute-gpu-linux)
+- [Azure N-series GPU driver setup for Linux](https://learn.microsoft.com/azure/virtual-machines/linux/n-series-driver-setup)
+- [Use GPUs on AKS](https://learn.microsoft.com/azure/aks/use-nvidia-gpu)
+
 ## No próximo post
 
-Troubleshooting coberto. No próximo, a conversa muda de lado: **AI use cases pra infra teams**. Não é AI como workload. É AI como ferramenta pro seu próprio operacional, de AIOps até análise de logs e capacity planning.
+Se esse playbook estiver pronto antes do pager tocar, 2AM vira checklist em vez de caça ao fantasma. Troubleshooting coberto. No próximo, a conversa muda de lado: **AI use cases pra infra teams**. Não é AI como workload. É AI como ferramenta pro seu próprio operacional, de AIOps até análise de logs e capacity planning.

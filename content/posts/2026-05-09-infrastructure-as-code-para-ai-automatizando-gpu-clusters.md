@@ -22,7 +22,9 @@ series:
   - "AI para Engenheiros de Infraestrutura"
 ---
 
-Quinto post da série. No [anterior](/gpu-deep-dive-o-que-acontece-dentro-do-silicio/), entramos no detalhe da GPU. Agora é hora de automatizar o que fica ao redor dela. Entender GPU é metade do trabalho. Provisionar tudo isso de forma consistente, repetível e auditável é a outra metade.
+Quinto post da série. No [anterior](/posts/gpu-deep-dive-o-que-acontece-dentro-do-silicio/), entramos no detalhe da GPU. Agora é hora de automatizar o que fica ao redor dela. Entender GPU é metade do trabalho. Provisionar tudo isso de forma consistente, repetível e auditável é a outra metade.
+
+**tl;dr:** IaC em AI não é capricho. É o que evita SKU errado, drift, cluster caro esquecido e pipeline sem trilha de auditoria.
 
 ## O typo de $4.000
 
@@ -151,6 +153,7 @@ terraform {
     storage_account_name = "stterraformstate"
     container_name       = "tfstate"
     key                  = "ai-platform.terraform.tfstate"
+    use_oidc             = true
   }
 }
 ```
@@ -352,6 +355,7 @@ permissions:
   pull-requests: write
 
 env:
+  ARM_USE_OIDC: true
   ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
   ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
   ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
@@ -447,6 +451,16 @@ Azure Policy pode enforçar regra no nível da subscription. Pra infra de AI, um
 ```
 
 Sem tag de cost center, sem GPU. Parece rígido. Na prática, é o tipo de rigidez que evita o cluster esquecido de sexta-feira.
+
+## Fechando o loop
+
+Da próxima vez que alguém pedir "o mesmo ambiente da semana passada", você não precisa catar SKU em thread de Slack. Você aponta pro repositório, roda o pipeline e evita outro typo de $4.000.
+
+## Leitura complementar
+
+- [Terraform backend azurerm](https://developer.hashicorp.com/terraform/language/backend/azurerm)
+- [AzureRM OIDC guide](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/service_principal_oidc)
+- [Azure Policy overview](https://learn.microsoft.com/azure/governance/policy/overview)
 
 ## No próximo post
 

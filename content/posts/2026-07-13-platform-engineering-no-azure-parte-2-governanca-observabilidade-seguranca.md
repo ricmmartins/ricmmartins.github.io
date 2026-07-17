@@ -23,6 +23,8 @@ series:
 
 Na [Parte 1](/platform-engineering-azure-internal-developer-platform-parte-1/), montamos a base do Internal Developer Platform: Dev Center, templates Bicep para provisionamento self-service e AKS como runtime compartilhado com multi-tenancy. Aqui entram as camadas que deixam a plataforma segura, observável e governada.
 
+**tl;dr:** Governança com Azure Policy, observabilidade com App Insights + Grafana, e segurança com Workload Identity e Entra ID. Sem essas camadas, o IDP vira self-service sem controle.
+
 ---
 
 ## Governança: Azure Policy como guardrail
@@ -191,7 +193,6 @@ resource errorAlert 'Microsoft.Insights/metricAlerts@2018-03-01' = {
   }
 }
 
-output instrumentationKey string = appInsights.properties.InstrumentationKey
 output connectionString string = appInsights.properties.ConnectionString
 // URL real depende do endpoint do Managed Grafana e do UID do dashboard importado
 output dashboardUrl string = 'https://${grafanaEndpoint}/dashboards'
@@ -318,7 +319,7 @@ az postgres flexible-server update \
   --resource-group $RESOURCE_GROUP \
   --active-directory-auth Enabled
 
-# 2. Adicionar a Managed Identity como administrador Entra
+# 2. Criar role no PostgreSQL para a managed identity (use um admin separado para bootstrap)
 az postgres flexible-server ad-admin create \
   --server-name "psql-payment-svc-dev" \
   --resource-group $RESOURCE_GROUP \
@@ -497,7 +498,7 @@ Se você já amadureceu as práticas de SRE da série, o passo seguinte faz sent
 
 ---
 
-## Referências
+## Leitura complementar
 
 - [Microsoft Dev Center documentation](https://learn.microsoft.com/en-us/azure/deployment-environments/)
 - [Azure Deployment Environments](https://learn.microsoft.com/en-us/azure/deployment-environments/overview-what-is-azure-deployment-environments)

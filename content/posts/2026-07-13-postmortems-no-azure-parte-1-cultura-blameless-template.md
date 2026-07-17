@@ -27,6 +27,8 @@ Sem uma análise pós-incidente decente, a organização repete os mesmos erros.
 
 Aqui, o foco é montar um processo completo de postmortem no Azure: coleta automatizada com KQL, templates estruturados, automação com Logic Apps e integração com Azure DevOps.
 
+**tl;dr:** Postmortem blameless + automação com Logic Apps + KQL para coleta de evidência + integração com Azure DevOps. Sem isso, incidentes se repetem e o Error Budget vira ficção.
+
 ---
 
 ## Por que postmortems falham na maioria das organizações
@@ -346,7 +348,7 @@ az monitor action-group create \
   --name ag-postmortem-trigger \
   --short-name postmortem \
   --action logicapp "PostmortemGenerator" \
-    "/subscriptions/{sub-id}/resourceGroups/rg-automation/providers/Microsoft.Logic/workflows/postmortem-generator" \
+    "/subscriptions/{sub-id}/resourceGroups/rg-automation/providers/Microsoft.Logic/workflows/postmortem-generator/triggers/manual" \
     "https://prod-XX.brazilsouth.logic.azure.com:443/workflows/{workflow-id}/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig={signature}" \
   --use-common-alert-schema true
 ```

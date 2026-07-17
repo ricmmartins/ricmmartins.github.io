@@ -25,6 +25,8 @@ Esse é o primeiro post de uma série onde vou traduzir o mundo de AI pra lingua
 
 A série é baseada no meu livro open-source [AI for Infrastructure Professionals](https://ai4infra.com), adaptada e expandida aqui em português.
 
+**tl;dr:** AI não pede que você vire data scientist. Pede que você aplique o que já sabe de compute, rede, segurança, observabilidade e custos num workload novo. O jargão muda. Os fundamentos continuam.
+
 ## A mensagem de segunda-feira de manhã
 
 São 8:47 da manhã de uma segunda-feira. Você está no meio do seu café, revisando um plano de Terraform pra um redesign de rede, quando uma mensagem no Slack acende sua tela. É do líder do time de data science:
@@ -103,13 +105,13 @@ A indústria de AI tem um problema de pessoal, e não é o que muita gente imagi
 
 Na minha experiência trabalhando com startups e enterprises na Microsoft, eu vejo esse padrão o tempo todo:
 
-**GPU sprawl desgovernado.** Um data scientist pede 4 VMs `Standard_NC96ads_A100_v4` pra um experimento de treinamento. Sem resource locks, sem alertas de orçamento, sem tagging. Três semanas depois, as VMs ainda estão rodando. Ninguém lembra quem provisionou ou se o experimento terminou. Custo mensal: **$42.000+**.
+**GPU sprawl desgovernado.** Um data scientist pede 4 VMs `Standard_NC96ads_A100_v4` pra um experimento de treinamento. Sem resource locks, sem alertas de orçamento, sem tagging. Três semanas depois, as VMs ainda estão rodando. Ninguém lembra quem provisionou ou se o experimento terminou. Custo mensal: **dezenas de milhares de dólares, dependendo da região e do tipo de contrato**.
 
 **Endpoints de inferência expostos.** O time de ML publica um modelo num managed endpoint com IP público. Sem private endpoint, sem WAF, sem API Management. O modelo acaba respondendo com lógica proprietária de negócio pra quem não deveria nem chegar perto dele.
 
 **Observabilidade cega.** O time monitora acurácia do modelo, mas não a saúde da infraestrutura. Quando a latência de inferência sobe de 200 ms pra 8 segundos, ninguém consegue dizer se é o modelo, o compute, a rede ou um noisy neighbor.
 
-> **O fim de semana de quase $50K em GPU**: um time provisionou 8 VMs `Standard_ND96isr_H100_v5` numa sexta à tarde pra um training run que deveria terminar no sábado de manhã. O job caiu às 3 da manhã por erro de configuração no storage de checkpoints, mas as VMs continuaram rodando. Ninguém tinha configurado auto-shutdown nem alerta de budget. Surpresa na segunda: **$47.000+ em compute** por 60 horas de cluster ocioso. Um engenheiro de infraestrutura teria colocado auto-shutdown, alerta de budget e uma política simples pros checkpoints. Quinze minutos de trabalho de infra teriam evitado quase todo o prejuízo.
+> **O fim de semana de quase $50K em GPU**: um time provisionou 8 VMs `Standard_ND96isr_H100_v5` numa sexta à tarde pra um training run que deveria terminar no sábado de manhã. O job caiu às 3 da manhã por erro de configuração no storage de checkpoints, mas as VMs continuaram rodando. Ninguém tinha configurado auto-shutdown nem alerta de budget. Surpresa na segunda: **$47.000+ em compute** (8 × preço-hora da VM × 60 horas de cluster ocioso). Um engenheiro de infraestrutura teria colocado auto-shutdown, alerta de budget e uma política simples pros checkpoints. Quinze minutos de trabalho de infra teriam evitado quase todo o prejuízo.
 
 ## Mãos na massa: seu primeiro reconhecimento de AI
 
@@ -140,6 +142,16 @@ az vm list-usage --location eastus2 --output table | grep -E "NC|ND|NV"
 > No Windows/PowerShell, troque `grep -E "NC|ND|NV"` por `Select-String -Pattern "NC|ND|NV"`.
 
 Se sua quota é zero pra tudo, você vai precisar solicitar aumento antes de qualquer provisionamento. Esse é exatamente o tipo de trabalho de infra que o time de data science não sabe, e nem quer saber, fazer.
+
+## Fechando o loop
+
+Quando aquela mensagem chegar na segunda-feira de manhã, você não precisa fingir que virou cientista de dados no fim de semana. Você só precisa traduzir o pedido: GPU é compute, private endpoint é rede, TPM é observabilidade e custo. O workload é novo. O trabalho de infra continua sendo o mesmo.
+
+## Leitura complementar
+
+- [Use GPUs on Azure Kubernetes Service (AKS)](https://learn.microsoft.com/azure/aks/gpu-cluster)
+- [NVIDIA GPU Driver Extension para Linux](https://learn.microsoft.com/azure/virtual-machines/extensions/hpccompute-gpu-linux)
+- [Cost management alerts no Azure](https://learn.microsoft.com/azure/cost-management-billing/costs/cost-mgt-alerts-monitor-usage-spending)
 
 ## No próximo post
 

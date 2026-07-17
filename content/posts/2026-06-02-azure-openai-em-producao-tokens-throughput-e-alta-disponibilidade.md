@@ -23,6 +23,8 @@ series:
 
 Décimo primeiro post da série. No [anterior](/platform-ops-construindo-uma-plataforma-ai-self-service/), a gente montou a plataforma de AI self-service com multi-tenancy e scheduling. Agora vem o serviço que todo mundo quer usar: Azure OpenAI, e como rodar isso sem tomar 429 na cara.
 
+**tl;dr:** Em produção, Azure OpenAI pede conta de TPM e RPM, retry com jitter e rota de escape entre deployments e regiões. Se você trata 429 como azar, o problema volta no próximo pico.
+
 ## O 429 que mudou tudo
 
 Seu time lançou um chatbot interno com GPT-4o na segunda-feira. No dia 1 foi só demo pra liderança e elogio no Slack. No dia 3 apareceu o primeiro "o bot tá lento". No dia 5, 30% dos requests já estavam voltando com HTTP 429. Você abre o Azure Monitor e dá de cara com o teto de 80K TPM.
@@ -52,7 +54,7 @@ Num chatbot típico, você pode ter 500 tokens de system prompt, 300 de entrada 
 | GPT-4o | 128K tokens |
 | GPT-4o-mini | 128K tokens |
 | GPT-4 Turbo | 128K tokens |
-| GPT-3.5 Turbo | 16K tokens |
+| GPT-3.5 Turbo (legado, não use para planejamento novo) | 16K tokens |
 
 Janela de contexto grande não é convite pra lotar tudo. Um request de 100K tokens consome o mesmo TPM que 62 requests de 1.600 tokens.
 
@@ -214,6 +216,13 @@ Nem todo request precisa do modelo mais capaz, e mais caro.
 
 Um roteador simples, baseado em tamanho de input, intenção ou um classificador barato na frente, já costuma cortar uma parte bem relevante da conta.
 
+## Leitura complementar
+
+- [Azure OpenAI quotas and limits](https://learn.microsoft.com/azure/foundry/openai/quotas-limits)
+- [Manage Azure OpenAI quota](https://learn.microsoft.com/azure/foundry/openai/how-to/quota)
+- [Provisioned throughput](https://learn.microsoft.com/azure/foundry/openai/concepts/provisioned-throughput)
+- [Monitoring data reference for Azure OpenAI](https://learn.microsoft.com/azure/foundry/openai/monitor-openai-reference)
+
 ## No próximo post
 
-Azure OpenAI agora está com HA, retry decente e roteamento entre modelos sem gastar dinheiro por esporte. No próximo vem o **playbook de troubleshooting**: NVIDIA driver quebrado, CUDA OOM, pod preso em Pending e picos de latência que parecem mistério até você abrir os logs.
+Se você voltar ao chatbot da segunda-feira, a diferença agora é simples: ele aguenta o pico sem virar tempestade de 429. Azure OpenAI agora está com HA, retry decente e roteamento entre modelos sem gastar dinheiro por esporte. No próximo vem o **playbook de troubleshooting**: NVIDIA driver quebrado, CUDA OOM, pod preso em Pending e picos de latência que parecem mistério até você abrir os logs.

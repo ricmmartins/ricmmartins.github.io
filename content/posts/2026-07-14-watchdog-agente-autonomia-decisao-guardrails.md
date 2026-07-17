@@ -2,7 +2,7 @@
 slug: "watchdog-agente-autonomia-decisao-guardrails"
 translationKey: "2026/07/14/agentic-watchdog-decision-autonomy-guardrails"
 title: "De Script a Agente: Dando Autonomia de Decisão ao Watchdog"
-description: "Adicionando uma camada de raciocínio ao watchdog 429 para distinguir um spike benigno de batch de um agente descontrolado — com guardrails explícitos."
+description: "Adicionando uma camada de raciocínio ao watchdog 429 para distinguir um spike benigno de batch de um agente descontrolado, com guardrails explícitos."
 date: 2026-07-14T10:00:00-04:00
 categories:
   - AI
@@ -21,6 +21,8 @@ series:
 No post anterior, o watchdog de quota do Azure OpenAI era um script com `if pct_of_tpm > 0.8: alert`. Funciona, mas carrega um problema que qualquer pessoa que já configurou alerta de monitoramento conhece de cor: threshold fixo não entende contexto. Um batch job que sempre consome 90% de TPM por 10 minutos no fechamento do mês e depois volta ao normal é, para o script, o mesmo evento que algum agent solto no ambiente entrando em loop e queimando tokens sem parar. Os dois cruzam o mesmo threshold; só um deles merece acordar alguém.
 
 Este post é sobre fechar essa lacuna: dar ao watchdog uma camada de raciocínio, sem abrir mão de nenhum dos guardrails que já definimos.
+
+**tl;dr:** O poller continua determinístico. O modelo só entra quando o threshold é cruzado e decide apenas a prioridade do alerta usando histórico, sem permissão para agir no recurso.
 
 ## O que muda (e o que não muda)
 
