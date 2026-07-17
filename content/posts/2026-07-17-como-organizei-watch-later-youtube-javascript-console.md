@@ -50,7 +50,11 @@ Isso joga a lista inteira no clipboard. Salva num .txt.
 
 ### 2. Categorizar com IA
 
-Peguei essa lista e joguei no GitHub Copilot pedindo pra agrupar por tema. O Copilot analisou os 302 títulos e devolveu 14 categorias:
+Peguei essa lista e joguei no GitHub Copilot com um prompt simples:
+
+> "Tenho essa lista de vídeos do YouTube. Categorize todos em playlists temáticas organizadas. Agrupe por assunto e me devolva os números de cada vídeo por categoria."
+
+O Copilot analisou os 302 títulos e devolveu 14 categorias:
 
 | Playlist | Qtd |
 |----------|-----|
@@ -126,6 +130,8 @@ Em uns 5 minutos (contando o scroll e a execução), saí de 302 vídeos jogados
 Agora quando quero ver algo sobre Kubernetes, abro a playlist de Programação. Receita? Culinária. Parece óbvio mas antes eu não achava nada.
 
 ## Se quiser reproduzir
+
+Os 3 scripts completos estão neste [Gist no GitHub](https://gist.github.com/ricmmartins/a154e680e42f1eb75d55de0e2edbd619). O que mostrei acima são trechos simplificados pra explicar a lógica. Pro script funcionar de verdade, você precisa da versão completa do Gist, que inclui autenticação via SAPISID, extração dos videoIds, mapeamento de categorias e controle de rate limit.
 
 O script tem uma flag `DRY_RUN` que mostra o que seria feito sem criar nada de fato. Recomendo rodar assim primeiro. Também precisa rolar a página inteira antes de executar, senão o script não pega todos os vídeos. As categorias que usei refletem o que eu assisto, então adapte pro que faz sentido pra você. E salve a lista original antes de esvaziar o Watch Later, por garantia.
 
