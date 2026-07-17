@@ -46,7 +46,7 @@ copy(list.join('\n'));
 console.log(`${list.length} videos copiados para a area de transferencia`);
 ```
 
-Isso joga a lista inteira no clipboard. Salva num .txt.
+Isso joga a lista inteira no clipboard. Salva num .txt. (Script completo no [Gist](https://gist.github.com/ricmmartins/31471972cd7dcb44aaf22a6bf2a3a79c).)
 
 ### 2. Categorizar com IA
 
@@ -91,7 +91,7 @@ async function createPlaylistWithVideos(title, videoIds) {
 }
 ```
 
-O script completo faz o seguinte: extrai os IDs dos vídeos da página, mapeia cada um pra sua categoria pelo índice, cria 14 playlists privadas via API e adiciona os vídeos. Tem um delay de 2 segundos entre cada chamada pra não tomar rate limit do YouTube.
+O script completo faz o seguinte: extrai os IDs dos vídeos da página, mapeia cada um pra sua categoria pelo índice, cria 14 playlists privadas via API e adiciona os vídeos. Tem um delay de 2 segundos entre cada chamada pra não tomar rate limit do YouTube. (Versão completa no [Gist](https://gist.github.com/ricmmartins/31471972cd7dcb44aaf22a6bf2a3a79c).)
 
 ### Extra: esvaziar o Watch Later
 
@@ -107,7 +107,7 @@ await ytApiCall('browse/edit_playlist', {
 });
 ```
 
-Remove em lotes de 50. Se um lote falhar, tenta individualmente. Os vídeos continuam existindo no YouTube, só saem da playlist.
+Remove em lotes de 50. Se um lote falhar, tenta individualmente. Os vídeos continuam existindo no YouTube, só saem da playlist. (Script completo também no [Gist](https://gist.github.com/ricmmartins/31471972cd7dcb44aaf22a6bf2a3a79c).)
 
 ## O que é essa API InnerTube
 
