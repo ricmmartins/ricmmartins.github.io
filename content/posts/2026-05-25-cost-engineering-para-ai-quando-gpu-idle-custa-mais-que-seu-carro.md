@@ -24,6 +24,8 @@ series:
 
 Nono post da série. No [anterior](/seguranca-para-ai-ameacas-que-seu-firewall-nao-pega/), blindamos a plataforma contra prompt injection e data leakage. Agora: como não falir no processo.
 
+**tl;dr:** GPU cara sem controle vira incidente financeiro. Resolva com auto-shutdown, right-sizing, Spot, budgets e escolha certa entre Standard e PTU.
+
 ## A segunda-feira de R$650.000
 
 Segunda de manhã. Café na mão, e-mail do financeiro no subject line: "URGENTE: fatura Azure $127.000, explicar." Forecast era $42.000. Dois VMs ND96isr_H100_v5, provisionados três semanas atrás pra um "experimento rápido", nunca desligados. A ~$98/hora cada, rodando 24/7 por três semanas: $33.000 em GPU parada. Ninguém usando. Ninguém lembrava que existiam.
@@ -70,6 +72,8 @@ Training Cost = (GPU count × Horas × Preço/GPU-hora) + Storage + Networking
 A conta mostra por que right-sizing não é detalhe. Colocar H100 num job que roda bem em A100 não aumenta um pouco o custo. Pode multiplicar por 3 ou 4.
 
 ### Inference (Azure OpenAI, pay-per-token)
+
+Preços mudam por modelo, região e tipo de contrato. Para referência atualizada: [Azure OpenAI pricing](https://azure.microsoft.com/pricing/details/azure-openai/) e [Virtual Machines pricing](https://azure.microsoft.com/pricing/details/virtual-machines/linux/).
 
 ```
 Inference Cost = Requests × Avg Tokens/Request × Preço por 1K Tokens
@@ -144,12 +148,7 @@ Azure Spot VMs oferecem o mesmo hardware GPU com desconto grande, mas Azure pode
 ### Auto-shutdown pra dev/test (obrigatório)
 
 ```bash
-# Verificar configuração de auto-shutdown de uma VM GPU
-az vm auto-shutdown show \
-  --resource-group rg-ai-dev \
-  --name gpu-vm-experiment-01
-
-# Configurar auto-shutdown às 19:00 local
+# Configurar auto-shutdown às 19:00 UTC (ajuste pro seu fuso)
 az vm auto-shutdown \
   --resource-group rg-ai-dev \
   --name gpu-vm-experiment-01 \
@@ -216,4 +215,9 @@ Se quiser alertas de 80% e 100% via CLI, complemente com `--notifications` ou us
 
 ## No próximo post
 
-Dinheiro sob controle. No próximo, vamos falar de **platform ops**: como sair do modo "provisionador de GPU sob demanda" e construir uma plataforma AI self-service com multi-tenancy, quotas, filas de GPU e governança.
+Dinheiro sob controle. E se você não quiser outro e-mail de "URGENTE: fatura Azure", o próximo passo é tirar provisioning manual do caminho. No próximo, vamos falar de **platform ops**: como sair do modo "provisionador de GPU sob demanda" e construir uma plataforma AI self-service com multi-tenancy, quotas, filas de GPU e governança.
+
+## Leitura complementar
+- [Azure Cost Management + Billing](https://learn.microsoft.com/azure/cost-management-billing/)
+- [Azure pricing - Virtual Machines](https://azure.microsoft.com/pricing/details/virtual-machines/linux/)
+- [Azure pricing - Azure OpenAI](https://azure.microsoft.com/pricing/details/azure-openai/)

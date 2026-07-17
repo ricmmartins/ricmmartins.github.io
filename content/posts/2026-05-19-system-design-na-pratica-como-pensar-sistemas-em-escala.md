@@ -25,6 +25,8 @@ System design não é sobre saber a resposta certa. É sobre mostrar como você 
 
 Este é o primeiro artigo da série **System Design na Prática**. Nos próximos posts eu vou aplicar esse framework em sistemas reais como YouTube, WhatsApp, Uber e Twitter. Mas antes precisamos do toolkit mental. Esse artigo é o seu canivete suíço.
 
+**tl;dr:** em system design, você quase sempre acerta o rumo quando faz quatro coisas na ordem certa: esclarece requisitos, calcula ordem de grandeza, separa write/read path e aprofunda nos trade-offs que quebram em produção.
+
 ## Por que system design importa
 
 Se você está mirando vagas em empresas de tecnologia fora do Brasil (FAANG, startups bem financiadas, scale-ups), system design é a etapa que mais reprova candidatos seniores.
@@ -297,6 +299,14 @@ Nos próximos artigos, vamos aplicar esse framework em sistemas reais:
 - **URL Shortener**: hashing, read-heavy optimization, analytics
 
 Cada artigo vai seguir a estrutura que definimos aqui. Requisitos → Estimativas → Design → Deep Dives → Trade-offs.
+
+Se o entrevistador abrir com "Design a video-sharing platform like YouTube.", o roteiro agora é claro: alinhar requisitos, fazer as contas, separar write/read path e escolher onde vale aprofundar.
+
+## Leitura complementar
+
+- [The Tail at Scale](https://research.google/pubs/the-tail-at-scale/)
+- [Designing Data-Intensive Applications](https://dataintensive.net/)
+- [System Design Primer](https://github.com/donnemartin/system-design-primer)
 
 ---
 

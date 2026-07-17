@@ -24,6 +24,8 @@ series:
 
 Sétimo post da série. No [anterior](/mlops-ciclo-de-vida-do-modelo-pra-quem-e-de-infra/), colocamos modelos em produção com pipelines CI/CD. Agora: como saber se estão saudáveis?
 
+**tl;dr:** Dashboard verde não basta. Você precisa observar GPU, custo, modelo, segurança, rede e dados ao mesmo tempo.
+
 ## A falha silenciosa
 
 Seu endpoint Azure OpenAI retorna 200 OK em todo request. Latência normal, P95 abaixo de 800ms. CPU e memória dentro dos thresholds. Kubernetes mostra pods saudáveis, sem restarts. Por toda métrica de infra que você confia, o sistema está perfeito.
@@ -89,6 +91,8 @@ az aks show \
 Com Azure Managed Prometheus, o caminho mais previsível é expor o exporter via ServiceMonitor ou annotations compatíveis com o scraper. Não conte com descoberta automática só porque o pod apareceu no cluster.
 
 ### Métricas GPU e thresholds de alerta
+
+Use esses números como ponto de partida, não como regra universal. Ajuste por SKU, workload, modelo, região e SLO, e valide com baseline do seu ambiente.
 
 | Métrica | DCGM Name | Warning | Critical | Significa |
 |---------|-----------|---------|----------|-----------|
@@ -185,4 +189,9 @@ Sempre logue model version e deployment name junto com trace e métrica. Quando 
 
 ## No próximo post
 
-Com monitoring cobrindo as 6 dimensões, vamos falar de **segurança pra AI**: prompt injection, data leakage, managed identities, private endpoints e as ameaças que seu WAF não vai pegar.
+Com monitoring cobrindo as 6 dimensões, você consegue explicar por que o dashboard estava verde enquanto o chatbot piorava. No próximo post, vamos falar de **segurança pra AI**: prompt injection, data leakage, managed identities, private endpoints e as ameaças que seu WAF não vai pegar.
+
+## Leitura complementar
+- [Azure Monitor](https://learn.microsoft.com/azure/azure-monitor/)
+- [Azure Monitor OpenTelemetry](https://learn.microsoft.com/azure/azure-monitor/app/opentelemetry-enable)
+- [Azure AI services diagnostic logging](https://learn.microsoft.com/azure/ai-services/diagnostic-logging)

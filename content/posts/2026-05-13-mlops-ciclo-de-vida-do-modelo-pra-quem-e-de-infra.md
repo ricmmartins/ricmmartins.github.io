@@ -24,6 +24,8 @@ series:
 
 Sexto post da série. No [anterior](/infrastructure-as-code-para-ai-automatizando-gpu-clusters/), automatizamos provisioning de clusters GPU. Agora entra a parte que começa **depois** do hardware pronto: como um modelo sai do "funciona no meu notebook" e vira algo que roda em produção com SLA.
 
+**tl;dr:** Modelo não é arquivo solto. Registre versão, valide em staging, publique com canary e deixe rollback pronto.
+
 ## O modelo que chegou sem certidão de nascimento
 
 Um data scientist manda uma mensagem no canal do time com um link pra um shared drive: *"Aqui está o modelo. É um checkpoint PyTorch de 15 GB. Precisamos em produção até sexta."*
@@ -101,10 +103,10 @@ mlflow models register \
   --name sentiment-classifier
 
 # Promover pra produção
-mlflow models transition-stage \
+mlflow models set-alias \
   --name sentiment-classifier \
   --version 3 \
-  --stage Production
+  --alias Production
 ```
 
 ### Container Registry pra model serving
@@ -299,12 +301,12 @@ jobs:
 
           az ml online-endpoint update \
             --name sentiment-prod \
-            --traffic "prod-stable=90 prod-${{ inputs.model_version }}=10" \
+            --set traffic.prod-stable=90 traffic.prod-${{ inputs.model_version }}=10 \
             --resource-group ${{ env.AZURE_RG }} \
             --workspace-name ${{ env.AZURE_ML_WS }}
 ```
 
-**Tradução infra ↔ AI:** Isso é seu pipeline blue/green, mas pra model weights ao invés de container images. A flag `--traffic` funciona exatamente como weighted routing no Azure Front Door: você shifta percentual de requests pro novo modelo enquanto o antigo continua servindo.
+**Tradução infra ↔ AI:** Isso é seu pipeline blue/green, mas pra model weights ao invés de container images. O `--set traffic.*` funciona exatamente como weighted routing no Azure Front Door: você shifta percentual de requests pro novo modelo enquanto o antigo continua servindo.
 
 ## Suas responsabilidades em cada stage
 
@@ -330,11 +332,15 @@ Deploy de modelo não é evento binário. Você vai mudando o tráfego aos pouco
 # Promover canary pra 100% após validação
 az ml online-endpoint update \
   --name sentiment-prod \
-  --traffic "prod-v3=100" \
+  --set traffic.prod-v3=100 \
   --resource-group ml-prod-rg \
   --workspace-name ml-prod-ws
 ```
 
 ## No próximo post
 
-Agora que modelos estão deployados e servindo tráfego, como saber se estão saudáveis? No próximo post: **monitoramento e observabilidade pra AI**, incluindo model drift, GPU metrics, e como detectar degradação antes que o usuário perceba.
+Agora que modelos estão deployados e servindo tráfego, como saber se estão saudáveis? Se outro `model_final_v2_FIXED.pt` aparecer na sexta, você já tem registry, validação e rollback pra não entrar em pânico. No próximo post: **monitoramento e observabilidade pra AI**, incluindo model drift, GPU metrics, e como detectar degradação antes que o usuário perceba.
+
+## Leitura complementar
+- [Azure Machine Learning](https://learn.microsoft.com/azure/machine-learning/)
+- [MLflow in Azure Machine Learning](https://learn.microsoft.com/azure/machine-learning/how-to-use-mlflow)

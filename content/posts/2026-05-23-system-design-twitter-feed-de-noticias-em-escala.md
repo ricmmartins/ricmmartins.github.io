@@ -33,6 +33,8 @@ Esse é o sistema onde **a decisão entre push e pull define toda a arquitetura*
 
 Vamos aplicar o [framework](/posts/system-design-na-pratica-como-pensar-sistemas-em-escala/).
 
+**tl;dr:** Twitter é o problema clássico de fan-out. O desenho que escala usa push para a maioria, pull para celebridades e cache pesado de timeline, tweet e social graph.
+
 ## Fase 1: Esclarecer requisitos
 
 ### Requisitos funcionais
@@ -931,6 +933,13 @@ Alice (1M followers) começa a seguir Elon (190M followers). A timeline dela pre
 | Counters (likes) | Redis INCR + async persistence | Handles viral spikes |
 | Media | Blob Storage + CDN | Imagens/vídeos pesados offloaded |
 | ID generation | Snowflake | Distributed, time-ordered, unique |
+
+Se a pergunta vier como "Design a social media feed like Twitter.", o fechamento precisa voltar ao fan-out: push para usuários normais, pull para celebridades e timeline hidratada via cache.
+
+## Leitura complementar
+
+- [Kafka Streams documentation](https://kafka.apache.org/documentation/streams/)
+- [Elasticsearch guide](https://www.elastic.co/guide/)
 
 ---
 

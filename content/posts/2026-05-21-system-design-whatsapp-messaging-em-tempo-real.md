@@ -26,6 +26,8 @@ WhatsApp processa mais de 100 bilhões de mensagens por dia. O que impressiona a
 
 Vamos aplicar o [framework da série](/posts/system-design-na-pratica-como-pensar-sistemas-em-escala/).
 
+**tl;dr:** o núcleo aqui é manter conexão persistente, gravar antes do ACK, rotear por sessão/device e tratar entrega como at-least-once com deduplicação no cliente.
+
 ## Fase 1: Esclarecer requisitos
 
 ### Requisitos funcionais
@@ -678,6 +680,14 @@ Quando reconecta:
 | Criptografia | Signal Protocol (E2E) | Privacidade real, forward secrecy |
 | Media | Blob Storage + CDN | Arquivos grandes, entrega global |
 | Deduplicação | Client-generated UUID | Idempotência sem server-side tracking |
+
+Se a pergunta vier como "Design a messaging system like WhatsApp.", o fechamento certo é esse: WebSocket para conexão persistente, persistência antes do ACK e roteamento por sessão/device para não perder mensagem nem quebrar multi-device.
+
+## Leitura complementar
+
+- [The Signal Protocol](https://signal.org/docs/)
+- [APNs overview](https://developer.apple.com/notifications/)
+- [Firebase Cloud Messaging](https://firebase.google.com/docs/cloud-messaging)
 
 ---
 

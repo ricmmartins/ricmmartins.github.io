@@ -24,6 +24,8 @@ series:
 
 Oitavo post da série. No [anterior](/monitoramento-e-observabilidade-para-ai/), aprendemos que dashboard verde não garante modelo saudável. Agora: as ameaças que seu WAF não vai pegar.
 
+**tl;dr:** Em AI, auth, rede e firewall não bastam. Você precisa controlar identidade, dados acessados pelo modelo e exfiltração na própria resposta.
+
 ## O chatbot que sabia demais
 
 Sua organização deploya um chatbot interno com Azure OpenAI, conectado a uma knowledge base de políticas, documentação e FAQs. Rollout tranquilo, adoção disparou, liderança já planeja versão pra clientes.
@@ -93,10 +95,9 @@ az role assignment create \
 
 ```bash
 # Desabilitar auth por API key
-az cognitiveservices account update \
-  --name aoai-prod \
-  --resource-group rg-ai-prod \
-  --disable-local-auth true
+az rest --method patch \
+  --url "https://management.azure.com/subscriptions/{sub-id}/resourceGroups/rg-ai-prod/providers/Microsoft.CognitiveServices/accounts/aoai-prod?api-version=2024-10-01" \
+  --body '{"properties":{"disableLocalAuth":true}}'
 
 # Verificar
 az cognitiveservices account show \
@@ -205,4 +206,9 @@ Não exponha Azure OpenAI diretamente pras aplicações. Coloque APIM na frente 
 
 ## No próximo post
 
-Agora que a segurança está coberta (identity, rede, secrets, content safety), vamos falar do que mantém o CFO feliz: **cost engineering pra AI**. GPU hours, tokens, reserved instances, spot VMs e como manter o budget sob controle.
+Agora que a segurança está coberta, o próximo passo é impedir que aquele chatbot continue vendo mais do que devia. No próximo post, vamos falar do que mantém o CFO feliz: **cost engineering pra AI**. GPU hours, tokens, reserved instances, spot VMs e como manter o budget sob controle.
+
+## Leitura complementar
+- [AKS Workload Identity overview](https://learn.microsoft.com/azure/aks/workload-identity-overview)
+- [Azure Key Vault RBAC guide](https://learn.microsoft.com/azure/key-vault/general/rbac-guide)
+- [Azure AI Foundry OpenAI](https://learn.microsoft.com/azure/foundry/openai/)

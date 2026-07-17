@@ -32,6 +32,8 @@ Tudo isso com latência perceptível pro usuário de **< 3 segundos** entre aper
 
 Vamos aplicar o [framework](/posts/system-design-na-pratica-como-pensar-sistemas-em-escala/).
 
+**tl;dr:** Uber é três sistemas juntos: ingestão massiva de localização, matching com consistência forte e tracking eventual por streaming. O desenho bom separa essas três pressões logo no começo.
+
 ## Fase 1: Esclarecer requisitos
 
 ### Requisitos funcionais
@@ -882,6 +884,14 @@ Ratio: 25x → surge de 8x? Insustentável.
 | Tracking | WebSocket + dead reckoning | Streaming de posição, animação suave |
 | Pricing | Rule engine + ML demand forecast | Surge dinâmico por cell H3 |
 | Driver communication | WebSocket + Push (FCM/APNs) | Aceitar/recusar em tempo real |
+
+Se a pergunta da entrevista for "Design a ride-sharing platform like Uber.", o fio condutor da resposta é esse: índice geoespacial em memória, ETA rápido, lock atômico no matching e tracking eventual por streaming.
+
+## Leitura complementar
+
+- [H3 documentation](https://h3geo.org/)
+- [OSRM](https://project-osrm.org/)
+- [Valhalla routing engine](https://valhalla.github.io/valhalla/)
 
 ---
 

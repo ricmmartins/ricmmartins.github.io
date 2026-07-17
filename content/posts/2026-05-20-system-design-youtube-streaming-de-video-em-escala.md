@@ -24,6 +24,8 @@ Essa é uma das perguntas mais clássicas de system design porque um sistema de 
 
 Nesse artigo, vamos aplicar o [framework do post anterior](/posts/system-design-na-pratica-como-pensar-sistemas-em-escala/) pra projetar uma plataforma de vídeo do zero. Não vou fingir que estamos inventando o YouTube. Vou explicar **por que** cada decisão arquitetural faz sentido no contexto de escala real.
 
+**tl;dr:** o desenho vencedor separa upload e streaming desde o começo: upload direto no blob, transcoding assíncrono, metadata relacional e entrega via CDN com HLS/DASH.
+
 ## Fase 1: Esclarecer requisitos
 
 Antes de desenhar qualquer coisa, precisamos entender o problema. Numa entrevista, essas são as perguntas que você faria:
@@ -687,6 +689,14 @@ Se a entrevista permitir, mencione:
 | Busca | Elasticsearch | Full-text, relevância |
 | Cache | Redis | Metadata hot, sessões |
 | Streaming | HLS/DASH via CDN | Adaptive bitrate |
+
+Se a pergunta da entrevista for "Design a video-sharing platform like YouTube.", a resposta precisa terminar nesse fio: upload direto no storage, processamento assíncrono, metadata separada e CDN segurando quase todo o read path.
+
+## Leitura complementar
+
+- [HTTP Live Streaming](https://developer.apple.com/streaming/)
+- [MPEG-DASH overview](https://dashif.org/)
+- [How Netflix Works: Content Delivery](https://netflixtechblog.com/)
 
 ---
 

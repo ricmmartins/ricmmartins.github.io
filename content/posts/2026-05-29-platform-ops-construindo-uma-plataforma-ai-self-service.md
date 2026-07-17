@@ -24,6 +24,8 @@ series:
 
 Décimo post da série. No [anterior](/cost-engineering-para-ai-quando-gpu-idle-custa-mais-que-seu-carro/), controlamos custos com Spot VMs, right-sizing e FinOps. Agora: como parar de ser um help desk humano pra GPU.
 
+**tl;dr:** Quando cada time começa a pedir GPU por DM, já passou da hora de virar plataforma. Namespaces, quotas, filas e prioridades resolvem isso.
+
 ## O canal do Slack que comeu sua agenda
 
 Seis meses atrás, você provisionou uma VM GPU pro time de ML. Configurou drivers, montou storage, fechou o ticket. Pareceu mais um request normal de infraestrutura.
@@ -130,7 +132,7 @@ spec:
         - podSelector: {}
 ```
 
-Pods dentro do namespace conversam entre si; tráfego de outros namespaces é bloqueado. Adicione regras explícitas pra serviços compartilhados (model registries, monitoring).
+Pods dentro do namespace conversam entre si; tráfego de entrada vindo de outros namespaces é bloqueado. Se você quer isolamento completo entre namespaces, adicione também políticas de Egress ou aplique a mesma regra de Ingress nos outros namespaces. Adicione regras explícitas pra serviços compartilhados (model registries, monitoring).
 
 ## GPU scheduling e filas
 
@@ -218,7 +220,7 @@ spec:
   clusterQueue: gpu-cluster-queue
 ```
 
-Times submetem jobs pra sua LocalQueue e o ClusterQueue enforça a capacidade global. Os jobs ficam na fila até ter espaço de verdade. Isso elimina o festival de "100 pods pendentes".
+Times submetem jobs pra sua LocalQueue e o ClusterQueue enforça a capacidade global. Os jobs ficam na fila até ter espaço de verdade. Isso elimina o festival de "100 pods pendentes". Antes disso, crie os ResourceFlavor `a100-spot` e `a100-ondemand`; sem eles, esse ClusterQueue fica incompleto.
 
 ### Volcano: gang scheduling pra distributed training
 
@@ -297,4 +299,9 @@ az vm list-usage \
 
 ## No próximo post
 
-Plataforma operando com self-service, quotas e scheduling inteligente. No próximo post, o foco é **Azure OpenAI em produção**: deployments, rate limiting, failover multi-região, content filtering e patterns de production readiness.
+Plataforma operando com self-service, quotas e scheduling inteligente. E, mais importante, seu Slack para de virar fila manual de GPU. No próximo post, o foco é **Azure OpenAI em produção**: deployments, rate limiting, failover multi-região, content filtering e patterns de production readiness.
+
+## Leitura complementar
+- [Kubernetes ResourceQuota](https://kubernetes.io/docs/concepts/policy/resource-quotas/)
+- [Kueue](https://kueue.sigs.k8s.io/)
+- [Kubernetes NetworkPolicy](https://kubernetes.io/docs/concepts/services-networking/network-policies/)

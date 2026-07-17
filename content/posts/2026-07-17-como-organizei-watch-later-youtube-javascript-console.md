@@ -4,7 +4,7 @@ aliases:
   - "/posts/como-organizei-watch-later-youtube-javascript-console/"
 title: "Como organizei 302 vídeos do Watch Later do YouTube com JavaScript no console"
 description: "Watch Later com 302 vídeos virou 14 playlists organizadas. Sem extensão, sem app. Só JavaScript no console do navegador e GitHub Copilot pra categorizar."
-date: 2026-07-17T11:00:00-04:00
+date: 2026-07-17T09:00:00-04:00
 categories:
   - Produtividade
   - Automação
