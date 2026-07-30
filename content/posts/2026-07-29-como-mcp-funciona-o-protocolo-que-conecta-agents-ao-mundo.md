@@ -208,6 +208,16 @@ Resources são URIs que retornam dados. O model (ou host) decide quando acessá-
 
 Similar a: um endpoint GET com resposta structured.
 
+Resources podem ser **estáticos** (listados no `resources/list`) ou **dinâmicos** (templates com parâmetros, via `resources/templates/list`). A diferença prática:
+
+| Tipo | Exemplo de URI | Quando usar |
+|------|---------------|-------------|
+| Estático | `server://web-prod-01/metrics` | Dados de um recurso fixo e conhecido |
+| Template | `server://{hostname}/metrics` | Client preenche o hostname em runtime |
+| Subscriptions | `resources/subscribe` → URI | Client recebe notificação quando o conteúdo muda |
+
+Resources são **read-only** por design. Se o agent precisa modificar algo, isso é uma Tool. Essa separação é intencional: resources são seguros pra expor sem preocupação com side effects.
+
 ### 3. Prompts (templates de interação)
 
 Prompts são templates pré-definidos que o host pode oferecer ao usuário.
@@ -412,7 +422,11 @@ MCP servers expõem ações reais. Um MCP server mal configurado é um vetor de 
 
 ### Autenticação
 
-No stdio, o comum é herdar credenciais do ambiente local. No HTTP, a especificação atual já descreve um fluxo de autorização baseado em OAuth 2.1, metadata do resource server e `WWW-Authenticate`. Mesmo assim, autenticar o client é só metade do trabalho. Você ainda precisa decidir o que cada identidade pode fazer.
+No stdio, o comum é herdar credenciais do ambiente local. No HTTP, a especificação atual descreve um fluxo de autorização baseado em OAuth 2.1, metadata do resource server e `WWW-Authenticate`.
+
+> **Nota:** OAuth 2.1 ainda é um draft (RFC em andamento, não ratificado). Na prática, isso significa que a parte de auth do MCP spec pode mudar conforme o OAuth 2.1 avança para RFC final. Implemente seguindo a spec atual, mas esteja preparado para ajustes.
+
+Mesmo assim, autenticar o client é só metade do trabalho. Você ainda precisa decidir o que cada identidade pode fazer.
 
 ```python
 # Adicionar auth no server HTTP
@@ -492,6 +506,14 @@ A lista cresce rápido. Confira em [modelcontextprotocol.io](https://modelcontex
 
 MCP não substitui tool calling do provider no lado do modelo. Ele substitui a integração ad-hoc entre host e sistemas externos. Muitos clients traduzem tools MCP pro formato de function calling do provider, mas isso é detalhe de implementação do client.
 
+## O que pode dar errado
+
+- **MCP server com tool destrutiva exposta**: expor `restart_service` ou `delete_resource` sem autenticação adequada é equivalente a deixar um endpoint de admin público. Comece com tools read-only e adicione writes com gate de aprovação.
+- **Server crash sem retry no client**: se o MCP server reinicia (deploy, OOM kill), o client precisa reconectar. A spec define retry, mas nem todo client implementa. Teste o cenário de server restart explicitamente.
+- **Input injection via tool arguments**: o agent passa argumentos pra tool que vieram do input do usuário. Se a tool constrói queries ou comandos shell sem sanitização, isso é um vetor de injection clássico. Valide e sanitize sempre.
+- **Resource retornando dado stale**: um resource que cacheia métricas de 5 minutos atrás. O agent decide que "CPU está baixa" baseado em dado velho enquanto o servidor está pegando fogo agora. Documente o freshness do resource e considere subscriptions.
+- **Discovery dinâmico expondo tools inesperadas**: se o server expõe tools baseado em contexto (role do user, por exemplo) e a lógica de filtragem tem bug, o agent pode ver tools que não deveria. Trate `tools/list` como uma superfície de ataque.
+
 ## O que levar pra segunda-feira
 
 - MCP é o "USB-C dos AI agents". Padroniza a conversa entre hosts, clients e sistemas externos.
@@ -499,6 +521,8 @@ MCP não substitui tool calling do provider no lado do modelo. Ele substitui a i
 - Segurança continua sendo trabalho de engenharia. A spec ajuda no fluxo HTTP, mas autorização fina, validação e observabilidade continuam na sua mão.
 - Comece expondo tools read-only. get_metrics, list_resources, get_logs. Ações de escrita entram depois.
 - stdio pra local, Streamable HTTP pra remoto. SSE legado existe, mas hoje é mais compatibilidade do que recomendação.
+
+Se você quer entender como agents usam tools e memória por dentro antes de conectar via MCP, comece pela série "AI por dentro": [como AI agents funcionam por dentro](/como-ai-agents-funcionam-por-dentro/) e [memória, estado e consistência](/ai-agents-memoria-estado-e-consistencia/).
 
 No próximo post: **projetando um assistente AI pessoal** de ponta a ponta.
 

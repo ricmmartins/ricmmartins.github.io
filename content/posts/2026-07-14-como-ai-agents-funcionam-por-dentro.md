@@ -300,6 +300,21 @@ Se você assumir um modelo na faixa de US$5 por milhão de input tokens e US$15 
 
 Em 1000 execuções por dia, isso dá algo perto de US$62.50/dia. Prompt caching, respostas mais curtas e menos iterações derrubam esse número. Tool schema inchado e histórico longo fazem o contrário.
 
+### Conta detalhada: 5 iterações com GPT-4o
+
+Para não ficar abstrato, aqui vai a matemática passo a passo:
+
+| Iteração | Input tokens (acumulado) | Output tokens | Custo input | Custo output |
+|----------|--------------------------|--------------|-------------|-------------|
+| 1 | ~1700 (system + tools + user) | ~150 (tool call) | $0.00425 | $0.00225 |
+| 2 | ~2350 (+ tool result + decision) | ~150 | $0.00588 | $0.00225 |
+| 3 | ~3100 | ~150 | $0.00775 | $0.00225 |
+| 4 | ~3900 | ~150 | $0.00975 | $0.00225 |
+| 5 | ~4700 | ~300 (resposta final) | $0.01175 | $0.00450 |
+| **Total** | | **~900** | **~$0.04** | **~$0.014** |
+
+**Total por tarefa: ~US$0.054.** Isso é o cenário otimista. Se o agent se confundir e precisar de 10 iterações em vez de 5, o custo do histórico acumulado pode triplicar. Monitore `iterations_per_task` como métrica operacional.
+
 (Preços de referência do GPT-4o na data de publicação. Consulte a [página de preços do Azure OpenAI](https://azure.microsoft.com/pricing/details/azure-openai/) pra valores atualizados.)
 
 ## Guardrails: quando o agent pode matar produção
@@ -348,6 +363,14 @@ def validate_tool_call(tool_name, args):
             return {"error": f"Servidor {args['hostname']} não encontrado"}
 ```
 
+## O que pode dar errado
+
+- **Alucinação de tool calls**: o LLM pode inventar nomes de tools que não existem, ou passar parâmetros inválidos (ex: hostnames que não existem no cluster). Sempre valide o nome da tool e os argumentos antes de executar.
+- **Loop infinito**: sem `max_iterations`, um agent que não consegue resolver a tarefa pode ficar rodando indefinidamente, acumulando custo. Defina um teto e monitore.
+- **Tool com side effect inesperado**: uma tool que deveria ser read-only mas faz um write colateral (ex: logging que escreve num banco). Classifique tools por risco e teste os side effects.
+- **Context window overflow**: em tarefas longas, o histórico acumulado estoura o context window. O agent começa a "esquecer" o começo da conversa. Implemente trimming ou summarization (ver [memória e estado](/ai-agents-memoria-estado-e-consistencia/)).
+- **Custo invisível**: cada iteração do loop consome tokens. Se o agent está rodando em resposta a alertas automáticos e o volume de alertas sobe, a conta de API sobe junto sem ninguém perceber. Monitore custo por task.
+
 ## Agent vs automation script: quando usar qual
 
 | Cenário | Agent | Script/Automation |
@@ -371,7 +394,7 @@ Regra prática: se você consegue cobrir quase tudo com script, escreva o script
 
 Aquele demo do seu colega na terça-feira? Agora você sabe o que roda por trás: um loop que chama `get_server_metrics` cinco vezes, compara os resultados, e chama `create_ticket` pro servidor com mais CPU. Nenhuma mágica. Só um controller loop com um LLM decidindo o próximo passo.
 
-O próximo post entra em **como projetar um AI agent do zero**: como escolher entre ReAct e plan-then-execute, quando usar multi-agent vs single-agent, e como testar agents sem gastar uma fortuna em tokens.
+O próximo post entra em **[como projetar um AI agent do zero](/como-projetar-um-ai-agent-do-zero/)**: como escolher entre ReAct e plan-then-execute, quando usar multi-agent vs single-agent, e como testar agents sem gastar uma fortuna em tokens.
 
 ## Leitura complementar
 

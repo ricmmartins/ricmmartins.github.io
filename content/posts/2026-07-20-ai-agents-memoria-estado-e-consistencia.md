@@ -380,7 +380,36 @@ class ConsistentMemory:
             return {"conflict_detected": True, "old": existing["value"], "new": new_observation}
         
         return {"conflict_detected": False}
+
+    def resolve_conflict(self, key, source_a, source_b):
+        """Resolução de conflitos quando duas fontes discordam."""
+        # Hierarquia de fontes: observação direta > API > memória do agent > input do usuário
+        source_priority = {
+            "observation": 4,
+            "api_query": 3,
+            "agent_inference": 2,
+            "told_by_user": 1,
+        }
+        
+        priority_a = source_priority.get(source_a.get("source", ""), 0)
+        priority_b = source_priority.get(source_b.get("source", ""), 0)
+        
+        if priority_a > priority_b:
+            winner = source_a
+        elif priority_b > priority_a:
+            winner = source_b
+        else:
+            # Mesma prioridade: o mais recente ganha
+            winner = source_a if source_a["stored_at"] > source_b["stored_at"] else source_b
+        
+        return {
+            "resolved_value": winner["value"],
+            "reason": f"Fonte '{winner['source']}' tem prioridade ou é mais recente",
+            "discarded": source_b if winner == source_a else source_a,
+        }
 ```
+
+> **Nota:** Este é pseudocódigo simplificado. Em produção, resolução de conflitos envolve decisões mais complexas — por exemplo, quando a observação direta retorna valor inconsistente por causa de um bug de monitoramento. Considere manter um log de todos os conflitos resolvidos para auditoria.
 
 ## Patterns de memória em produção
 
@@ -457,6 +486,14 @@ MEMORY_SCHEMA = {
 }
 ```
 
+## O que pode dar errado
+
+- **Memória envenenada**: o agent grava uma alucinação como fato e usa em decisões futuras. TTL ajuda, mas se a alucinação foi gravada como `source: "observation"`, ela ganha prioridade alta. Valide fatos antes de gravar.
+- **Conflito não detectado**: duas instâncias do agent atualizam a mesma chave de memória simultaneamente. Sem locking ou CAS (compare-and-swap), a última escrita ganha silenciosamente. Em ambientes multi-instância, trate memória como um recurso compartilhado com concorrência.
+- **Summarization com perda crítica**: resumir contexto antigo descarta detalhes que parecem irrelevantes mas são essenciais depois. Use summarization pra reduzir tokens, mas mantenha o histórico completo num store acessível via RAG.
+- **Vector store retornando memória errada**: similarity search nem sempre é equivalência semântica. O agent pergunta "qual o tamanho do disco do server X?" e recebe uma memória sobre "disco" de outro contexto. Combine semantic search com filtros por metadata (server name, timestamp).
+- **State recovery parcial**: o agent retoma de um checkpoint mas o estado do mundo mudou. A ação que era válida antes do crash pode não ser mais. Revalidação pós-recovery é obrigatória pra ações de write.
+
 ## O que levar pra segunda-feira
 
 - **LLMs são stateless.** Toda memória é construída por você. Sem infra de memória, o agent começa do zero toda vez.
@@ -465,7 +502,7 @@ MEMORY_SCHEMA = {
 - **State recovery é essencial pra produção.** Agents que crasham no meio de uma ação precisam retomar com segurança.
 - **Consistência é difícil.** Memórias podem estar erradas ou desatualizadas. Preferir observação recente sobre memória antiga.
 
-O próximo post vai pros **padrões agentic**: os building blocks que se combinam pra criar agents mais sofisticados.
+O próximo post vai pros **[padrões agentic](/padroes-agentic-os-building-blocks/)**: os building blocks que se combinam pra criar agents mais sofisticados. Se você quer ver como a parte de design que antecede a memória funciona, veja [como projetar um AI agent do zero](/como-projetar-um-ai-agent-do-zero/).
 
 ## Leitura complementar
 

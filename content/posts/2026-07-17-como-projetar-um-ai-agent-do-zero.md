@@ -45,6 +45,16 @@ O erro mais comum é escopo amplo demais. "Um agent que resolve qualquer problem
 | "Agent que gerencia toda a infra" | "Agent que faz scaling de AKS node pools baseado em métricas" |
 | "Assistente que responde tudo" | "Agent que classifica e roteia tickets de L1" |
 
+### Sinais de scope creep
+
+Se o seu agent começa a apresentar esses sintomas, o escopo provavelmente escapou:
+
+- **Tool list crescendo sem parar**: se você está adicionando a 15ª tool, provavelmente precisa de dois agents, não de um com 15 tools.
+- **System prompt com mais de 500 palavras**: prompts gigantes são sintoma de que o agent está tentando cobrir muitos cenários.
+- **"E se ele também pudesse..."**: essa frase é o gatilho clássico. Cada "também" é um novo agent em potencial.
+- **Taxa de acerto caindo sem motivo aparente**: mais tools = mais ambiguidade na seleção. O modelo começa a confundir tools parecidas.
+- **Latência subindo sem mudança de modelo**: mais contexto = mais tokens = mais tempo por iteração.
+
 ### Framework pra definir escopo
 
 ```
@@ -161,6 +171,17 @@ Se precisa de 30+ tools, considere **tool routing**: um primeiro passo que class
 | Custo por iteração | Mais caro | Mais barato |
 | Latência por iteração | Mais alta | Mais baixa |
 | Quando usar | Tasks complexas, multi-step | Classificação, routing, tasks simples |
+
+### Referência de preços (julho 2026)
+
+| Modelo | Input (por 1M tokens) | Output (por 1M tokens) | Melhor pra |
+|--------|----------------------|------------------------|-----------|
+| GPT-4o | ~US$2.50 | ~US$10 | Raciocínio multi-step, tool selection ambígua |
+| GPT-4o-mini | ~US$0.15 | ~US$0.60 | Classificação, routing, tasks simples |
+| Claude Sonnet 4 | ~US$3 | ~US$15 | Raciocínio complexo, código |
+| Claude Haiku 3.5 | ~US$0.80 | ~US$4 | Tasks rápidas, alto volume |
+
+> **Nota:** preços aproximados na data de publicação. Consulte as páginas de preços do [Azure OpenAI](https://azure.microsoft.com/pricing/details/azure-openai/) e da [Anthropic](https://docs.anthropic.com/en/docs/about-claude/models) para valores atualizados. Esses valores mudam com frequência e a tendência é cair.
 
 ### Pattern: cascata de modelos
 
@@ -405,6 +426,15 @@ GUARDRAILS = {
 }
 ```
 
+## O que pode dar errado
+
+- **Agent em loop infinito**: sem `max_iterations`, o agent pode ficar chamando a mesma tool eternamente. Sempre defina um teto e monitore quantas iterações cada task consome na média.
+- **Tool schema inchado**: cada tool definition consome tokens de input em toda iteração. 20 tools com descriptions detalhadas podem consumir 3000+ tokens antes do agent fazer qualquer coisa.
+- **Modelo errado pra task**: usar GPT-4o pra classificação simples é desperdício. Usar GPT-4o-mini pra raciocínio multi-step com 10+ tools gera erros de seleção.
+- **Retries sem backoff**: chamadas consecutivas sem delay vão bater em rate limit. Sempre use exponential backoff.
+- **Falta de fallback humano**: em produção, o agent vai encontrar cenários que não estão no design. Se não tem caminho de escalação, ele vai inventar uma resposta ou ficar preso.
+- **Custo inesperado**: uma task que deveria consumir 5 iterações pode consumir 10 se o agent se confundir. Budget caps por task evitam surpresas na fatura.
+
 ## O que levar pra segunda-feira
 
 - **Comece com escopo pequeno.** Um agent que faz uma coisa bem vale mais do que um agent que tenta fazer tudo e erra metade.
@@ -413,7 +443,9 @@ GUARDRAILS = {
 - **Planning strategy depende da complexidade.** ReAct pra 1-3 steps, plan-then-execute pra 4-8, hierarchical pra 10+.
 - **Design pra falha desde o dia 1.** Retries, fallback humano, limits de iteração, observabilidade.
 
-O próximo post entra num ponto que separa demo de sistema útil: **memória, estado e consistência**.
+O próximo post entra num ponto que separa demo de sistema útil: **[memória, estado e consistência](/ai-agents-memoria-estado-e-consistencia/)**.
+
+Se você quer entender como agents funcionam por baixo antes de projetar um, o post anterior cobre isso: [Como AI agents funcionam por dentro](/como-ai-agents-funcionam-por-dentro/). E se já quer ver esses conceitos aplicados como building blocks, o post sobre [padrões agentic](/padroes-agentic-os-building-blocks/) mapeia os design patterns mais comuns.
 
 ## Leitura complementar
 
