@@ -1,47 +1,43 @@
 ---
-slug: "azure-ai-foundry-do-zero-a-producao"
-aliases:
-  - "/posts/azure-ai-foundry-do-zero-a-producao/"
-title: "Azure AI Foundry: Do Zero à Produção — Guia Prático"
-description: "O que eu cubro quando um cliente pergunta 'queremos construir aplicações com IA no Azure, por onde começamos?' — destilado de um workshop recente em um playbook para produção cobrindo seleção de modelo, PTU vs PAYGO, spillover e otimização de custo."
-date: 2026-07-30T10:00:00-04:00
-categories:
-  - AI
-  - Azure
-tags:
-  - azure-ai-foundry
-  - openai
-  - ptu
-  - otimizacao-custo
-  - arquitetura-ai
-  - producao
+title: "Azure AI Foundry: do zero à produção"
+slug: azure-ai-foundry-do-zero-a-producao
+aliases: [/azure-ai-foundry-do-zero-a-producao/]
+description: "O que eu cubro quando um cliente pergunta por onde começar com IA no Azure. Seleção de modelo, PAYGO vs PTU, arquitetura spillover e checklist de produção."
+date: 2026-07-30
+categories: [Azure, AI]
+tags: [azure-ai-foundry, ptu, openai, agentes-ia, otimizacao-custo]
 ---
+# Azure AI Foundry: do zero à produção
 
-*O que eu cubro quando um cliente pergunta "queremos construir aplicações com IA no Azure, por onde começamos?" — destilado de um workshop recente em um playbook para produção.*
+*O que eu cubro quando um cliente pergunta "queremos construir aplicações com IA no Azure, por onde começamos?"*
+
+> **TL;DR:** Azure AI Foundry é a plataforma unificada para aplicações de IA no Azure. Comece com PAYGO, migre para PTU quando utilização sustentada passar de 60-70%, e sempre configure spillover (PTU primário + PAYGO overflow). Use o [ptucalc.com](https://ptucalc.com) ([código no GitHub](https://github.com/ricmmartins/ptucalc)) para modelar custos antes de comprometer.
+
+---
 
 ## O ponto de partida
 
 Algumas semanas atrás, tive uma conversa com um time de engenharia que estava pronto para construir sua primeira aplicação com IA no Azure. Tinham experimentado com ChatGPT, prototipado com a API da OpenAI diretamente, e agora precisavam entender: *como saímos do playground para produção em escala enterprise?*
 
-Essa conversa virou um workshop, o workshop virou material estruturado, e agora estou transformando em este guia — porque as perguntas que eles fizeram são as mesmas que ouço de todo time fazendo essa transição.
+Essa conversa virou um workshop, o workshop virou material estruturado, e agora estou transformando em guia. As perguntas que eles fizeram são as mesmas que ouço de todo time fazendo essa transição.
 
 ## O que é o Azure AI Foundry?
 
 O [Azure AI Foundry](https://ai.azure.com) é a plataforma unificada para construir, deployar e operar aplicações de IA no Azure. Pense nele como o control plane de tudo que é IA no seu ambiente Azure:
 
-- **Catálogo de Modelos** — Acesso a 1.900+ modelos (OpenAI, Meta Llama, Mistral, Cohere, Phi, e mais)
-- **Prompt Engineering** — Playground, prompt flow, ferramentas de avaliação
-- **Opções de Deploy** — Serverless (pay-per-token), Provisioned Throughput (PTU), Global/Data Zone routing
-- **Segurança & Governança** — Filtros de conteúdo, red teaming, monitoramento de modelos
-- **Framework de Agentes** — Construa agentes multi-step com tool-calling, code interpreter, file search
+- Catálogo de Modelos: acesso a 1.900+ modelos (OpenAI, Meta Llama, Mistral, Cohere, Phi, entre outros)
+- Prompt Engineering: playground, prompt flow, ferramentas de avaliação
+- Opções de Deploy: serverless pay-per-token, Provisioned Throughput (PTU), Global/Data Zone routing
+- Segurança e Governança: filtros de conteúdo, red teaming, monitoramento de modelos
+- Framework de Agentes: agentes multi-step com tool-calling, code interpreter, file search
 
-O insight principal: Foundry não é "mais um serviço Azure." É a camada de orquestração que conecta modelos, dados, compute e governança em uma experiência coerente de desenvolvimento.
+Foundry não é "mais um serviço Azure." É a camada que amarra modelos, dados, compute e governança numa superfície de desenvolvimento só.
 
-## A árvore de decisão
+## As decisões que você vai enfrentar
 
-Todo time construindo no Foundry enfrenta as mesmas decisões sequenciais:
+Todo time construindo no Foundry bate nas mesmas perguntas, mais ou menos na mesma ordem.
 
-### 1. Seleção de Modelo
+### 1. Seleção de modelo
 
 O cenário de modelos em meados de 2026:
 
@@ -55,9 +51,11 @@ O cenário de modelos em meados de 2026:
 
 **Minha recomendação para workloads agênticos:** GPT-5.x para o orquestrador (melhor acurácia de tool-calling), GPT-5-mini para sub-tarefas (classificação, extração, formatação), e Phi-4 ou modelos fine-tuned para componentes de domínio específico.
 
-### 2. Tipo de Deploy: PAYGO vs PTU
+### 2. Tipo de deploy: PAYGO vs PTU
 
-Aqui é onde a maioria dos times se confunde. Framework simples:
+A maioria dos times complica isso mais do que precisa. A regra é simples:
+
+![Decision tree PAYGO vs PTU](/img/foundry-paygo-vs-ptu.svg)
 
 **Comece com PAYGO** quando:
 - Está em desenvolvimento/teste
@@ -69,7 +67,7 @@ Aqui é onde a maioria dos times se confunde. Framework simples:
 - Precisa de latência garantida (sem throttling por noisy-neighbor)
 - Workloads de produção com padrões previsíveis
 
-### 3. Como PTU funciona
+### 3. Como PTU funciona na prática
 
 PTU é um modelo de token-bucket. Cada PTU reserva um throughput fixo em tokens por minuto:
 
@@ -77,9 +75,9 @@ PTU é um modelo de token-bucket. Cada PTU reserva um throughput fixo em tokens 
 - **GPT-5**: varia por variante
 - **GPT-4.1**: 3.000 TPM por PTU (deprecating)
 
-Exemplo: 100 PTUs de GPT-5-mini = ~350.000 tokens/minuto garantidos. Se a carga exceder, a API retorna 429 — sem fila, sem espera. Corte seco.
+Ou seja, 100 PTUs de GPT-5-mini dão aproximadamente 350.000 tokens/minuto garantidos. Passou disso, a API devolve 429. Sem fila, sem espera. Corte seco.
 
-### 4. A matemática de custo
+### 4. A matemática de custo (aqui fica interessante)
 
 | Tier | Preço (referência Jul/2026) | Compromisso |
 |------|-----------------------------|-------------|
@@ -91,30 +89,26 @@ O break-even: se a utilização sustentada está acima de 60-70% da sua capacida
 
 > ⚠️ Esses são preços de referência de julho de 2026. Rates negociados em EA/MCA podem diferir. Sempre valide contra seu contrato específico.
 
-**Ferramenta**: Use o [ptucalc.com](https://ptucalc.com) para modelar seu cenário. É open source, com 12.000+ sessões até agora — coloque seus padrões de uso e ele calcula o tier e quantidade de PTU ideal.
+Eu criei o [ptucalc.com](https://ptucalc.com) exatamente para esse cálculo. É open source, 12.000+ sessões até agora. Coloque seus padrões de uso e ele mostra o tier e a quantidade de PTU ideal.
 
-### 5. Arquitetura Spillover (o melhor dos dois mundos)
+### 5. Arquitetura spillover
 
 O padrão que recomendo para produção:
 
-```
-[Tráfego] → [PTU (lida com carga base, latência garantida)]
-                ↓ (overflow quando PTU satura)
-             [PAYGO (absorve picos, sem teto de capacidade)]
-```
+![Arquitetura Spillover](/img/foundry-spillover-architecture.svg)
 
 Configure seu deployment com PTU como primário e PAYGO como spillover:
 - Latência garantida para seu tráfego base (PTU)
 - Sem requests dropados durante picos (PAYGO absorve overflow)
 - Otimização de custo (PTU para steady-state, PAYGO só para picos)
 
-Configurado no nível do deployment no Foundry — sem mudança de código na aplicação.
+Isso se configura no nível do deployment no Foundry. Sem mudança de código na aplicação.
 
 ## Checklist de produção
 
-Antes de ir para produção, valide:
+O que eu verifico antes de qualquer cliente ir para produção:
 
-### Segurança & Rede
+### Segurança e rede
 - [ ] Private endpoints configurados (sem exposição pública)
 - [ ] Managed Identity para autenticação (sem API keys no código)
 - [ ] Filtros de Content Safety ajustados (não só defaults)
@@ -135,43 +129,36 @@ Antes de ir para produção, valide:
 - [ ] Alertas em rates de 429 (indicador de throttling)
 - [ ] Pipeline de avaliação de performance de modelo (drift detection)
 
-### Governança de Custo
+### Governança de custo
 - [ ] Alertas de budget configurados
 - [ ] Tags de chargeback para ambientes multi-time
 - [ ] Monitoramento de utilização PTU (target: 70-85%)
 - [ ] Cadência de revisão regular (mensal) para otimização de tier
 
-## A progressão: de POC a produção
+## A progressão típica
 
-A maioria dos times segue este caminho:
+A maioria dos times que eu acompanho segue este caminho:
 
-```
-Semana 1-2:  Playground → Provar que o conceito funciona
-Semana 3-4:  PAYGO Standard → Construir a lógica da aplicação
-Mês 2:       PAYGO + monitoramento → Entender padrões reais de uso
-Mês 3:       PTU Monthly Reserved → Travar economia de custo
-Mês 6+:      PTU Yearly → Desconto máximo com confiança
-```
+![De POC a Produção](/img/foundry-progression.svg)
 
 Não pule etapas. Cada fase ensina algo sobre seu workload que informa a próxima decisão.
 
-## Próximos passos
+## Por onde começar
 
-Se está construindo aplicações com IA no Azure e navegando essas decisões:
-
-1. **Comece no [Playground do Foundry](https://ai.azure.com)** — teste modelos contra seus use cases reais
-2. **Modele seus custos** com [ptucalc.com](https://ptucalc.com) antes de comprometer com PTU
-3. **Deploy com spillover** desde o dia 1 — não custa nada extra quando o PTU dá conta, mas salva de requests dropados quando picos acontecem
-4. **Configure monitoramento cedo** — não dá pra otimizar o que não se mede
+1. Abra o [Playground do Foundry](https://ai.azure.com) e teste modelos contra seus use cases reais
+2. Modele seus custos com [ptucalc.com](https://ptucalc.com) antes de comprometer com PTU
+3. Deploy com spillover desde o dia 1. Não custa nada extra quando o PTU dá conta, mas salva quando picos acontecem
+4. Configure monitoramento cedo. Não dá pra otimizar o que não se mede
 
 ---
 
 **Links:**
-- 🔗 [Azure AI Foundry](https://ai.azure.com)
-- 📊 [PTU Calculator](https://ptucalc.com)
-- 📖 [Documentação do Foundry](https://learn.microsoft.com/en-us/azure/ai-studio/)
-- 🏗️ [Well-Architected Framework para IA](https://learn.microsoft.com/en-us/azure/well-architected/ai/)
+- [Azure AI Foundry](https://ai.azure.com)
+- [PTU Calculator](https://ptucalc.com)
+- [Documentação do Foundry](https://learn.microsoft.com/en-us/azure/ai-studio/)
+- [Well-Architected Framework para IA](https://learn.microsoft.com/en-us/azure/well-architected/ai/)
 
 ---
 
-*Construindo com Foundry e tem dúvidas sobre estratégia de deploy ou otimização de custo? Comenta aqui embaixo — posso aprofundar em qualquer um desses tópicos.*
+*Dúvidas sobre estratégia de deploy ou otimização de custo? Deixa um comentário.*
+
