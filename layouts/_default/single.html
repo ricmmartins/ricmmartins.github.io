@@ -42,8 +42,6 @@
   </div>
   {{- end }}
 
-  {{- partial "ads/ad-post-middle.html" . }}
-
   {{- /* Series Box */ -}}
   {{- with .Params.series }}
   {{- range . }}
@@ -84,8 +82,6 @@
     </ul>
   </nav>
   {{- end }}
-
-  {{- partial "ads/ad-post-bottom.html" . }}
 
   <footer class="post-footer">
     {{- $tags := .Language.Params.Taxonomies.tag | default "tags" }}
