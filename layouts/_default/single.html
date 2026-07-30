@@ -34,8 +34,6 @@
   {{- partial "toc.html" . }}
   {{- end }}
 
-  {{- partial "ads/ad-post-top.html" . }}
-
   {{- if .Content }}
   <div class="post-content md-content">
     {{- if not (.Param "disableAnchoredHeadings") }}
@@ -108,7 +106,5 @@
   {{- partial "comments.html" . }}
   {{- end }}
 </article>
-
-{{- partial "ads/ad-auto-inject.html" . }}
 
 {{- end }}{{/* end main */}}
