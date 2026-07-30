@@ -38,92 +38,95 @@ Se isso parece com o problema que REST/HTTP resolveu pra APIs web, você está p
 
 Antes de MCP, cada combinação de (AI application × data source) precisava de código custom.
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 272" style="width:100%;height:auto" role="img" aria-label="Problema N por M com quatro aplicações de IA conectadas diretamente a quatro fontes de dados">
-<defs>
-<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-<path d="M 0 0 L 10 5 L 0 10 z" fill="#666666" />
-</marker>
-</defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" style="width:100%;height:auto" role="img" aria-label="Problema N por M com quatro aplicações de IA conectadas diretamente a quatro fontes de dados">
 <g font-family="Segoe UI, Arial, sans-serif">
 <text x="20" y="24" text-anchor="start" font-size="14" font-weight="bold" fill="#111111">Sem padrão (N×M problem):</text>
-<text x="115" y="73.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">AI Apps:</text>
-<text x="730" y="73.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Data Sources:</text>
-<line x1="196" y1="77" x2="626" y2="77" stroke="#999999" stroke-width="1.5" fill="none" />
-<line x1="196" y1="86.2" x2="626" y2="135.2" stroke="#999999" stroke-width="1.5" fill="none" />
-<line x1="196" y1="84.5" x2="876" y2="147.4" stroke="#999999" stroke-width="1.5" fill="none" />
-<line x1="182.3" y1="93.4" x2="674.3" y2="213.4" stroke="#999999" stroke-width="1.5" fill="none" />
-<line x1="375.9" y1="142.1" x2="654.3" y2="90.9" stroke="#999999" stroke-width="1.5" fill="none" />
-<line x1="376" y1="157" x2="876" y2="157" stroke="#999999" stroke-width="1.5" fill="none" />
-<line x1="196" y1="147.9" x2="876" y2="155.8" stroke="#999999" stroke-width="1.5" fill="none" />
-<line x1="195.9" y1="157.5" x2="625.9" y2="213.5" stroke="#999999" stroke-width="1.5" fill="none" />
-<line x1="375.9" y1="142.1" x2="654.3" y2="90.9" stroke="#999999" stroke-width="1.5" fill="none" />
-<line x1="376" y1="155.1" x2="626" y2="149.4" stroke="#999999" stroke-width="1.5" fill="none" />
-<line x1="196" y1="147" x2="626" y2="147" stroke="#999999" stroke-width="1.5" fill="none" />
-<line x1="195.9" y1="157.5" x2="625.9" y2="213.5" stroke="#999999" stroke-width="1.5" fill="none" />
-<line x1="249.8" y1="210.4" x2="681.8" y2="90.4" stroke="#999999" stroke-width="1.5" fill="none" />
-<line x1="297.2" y1="211.1" x2="634.7" y2="161.1" stroke="#999999" stroke-width="1.5" fill="none" />
-<line x1="346" y1="213.2" x2="876" y2="166.2" stroke="#999999" stroke-width="1.5" fill="none" />
-<line x1="346" y1="227" x2="626" y2="227" stroke="#999999" stroke-width="1.5" fill="none" />
-<rect x="40" y="62" width="150" height="30" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
-<text x="115" y="88.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Claude</text>
-<rect x="40" y="132" width="150" height="30" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
-<text x="115" y="151" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">GPT</text>
-<rect x="220" y="142" width="150" height="30" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
-<text x="295" y="161" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Copilot</text>
-<rect x="40" y="212" width="300" height="30" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
-<text x="190" y="223.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Custom</text>
-<rect x="620" y="62" width="220" height="30" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
-<text x="730" y="88.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">GitHub</text>
-<rect x="620" y="132" width="220" height="30" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
-<text x="730" y="151" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Jira</text>
-<rect x="870" y="142" width="220" height="30" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
-<text x="980" y="161" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Azure Monitor</text>
-<rect x="620" y="212" width="220" height="30" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
-<text x="730" y="231" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">PostgreSQL</text>
-<text x="190" y="238.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">4 apps × 4 sources = 16 integrações custom</text>
+<text x="120" y="55" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">AI Apps:</text>
+<text x="640" y="55" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Data Sources:</text>
+<!-- 16 linhas: cada app conecta a cada source (o caos visual é intencional) -->
+<line x1="200" y1="88" x2="540" y2="88" stroke="#b0b0b0" stroke-width="1.2" />
+<line x1="200" y1="88" x2="540" y2="136" stroke="#b0b0b0" stroke-width="1.2" />
+<line x1="200" y1="88" x2="540" y2="184" stroke="#b0b0b0" stroke-width="1.2" />
+<line x1="200" y1="88" x2="540" y2="232" stroke="#b0b0b0" stroke-width="1.2" />
+<line x1="200" y1="136" x2="540" y2="88" stroke="#b0b0b0" stroke-width="1.2" />
+<line x1="200" y1="136" x2="540" y2="136" stroke="#b0b0b0" stroke-width="1.2" />
+<line x1="200" y1="136" x2="540" y2="184" stroke="#b0b0b0" stroke-width="1.2" />
+<line x1="200" y1="136" x2="540" y2="232" stroke="#b0b0b0" stroke-width="1.2" />
+<line x1="200" y1="184" x2="540" y2="88" stroke="#b0b0b0" stroke-width="1.2" />
+<line x1="200" y1="184" x2="540" y2="136" stroke="#b0b0b0" stroke-width="1.2" />
+<line x1="200" y1="184" x2="540" y2="184" stroke="#b0b0b0" stroke-width="1.2" />
+<line x1="200" y1="184" x2="540" y2="232" stroke="#b0b0b0" stroke-width="1.2" />
+<line x1="200" y1="232" x2="540" y2="88" stroke="#b0b0b0" stroke-width="1.2" />
+<line x1="200" y1="232" x2="540" y2="136" stroke="#b0b0b0" stroke-width="1.2" />
+<line x1="200" y1="232" x2="540" y2="184" stroke="#b0b0b0" stroke-width="1.2" />
+<line x1="200" y1="232" x2="540" y2="232" stroke="#b0b0b0" stroke-width="1.2" />
+<!-- AI Apps (coluna esquerda, alinhados) -->
+<rect x="40" y="70" width="160" height="36" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
+<text x="120" y="93" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Claude</text>
+<rect x="40" y="118" width="160" height="36" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
+<text x="120" y="141" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">GPT</text>
+<rect x="40" y="166" width="160" height="36" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
+<text x="120" y="189" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Copilot</text>
+<rect x="40" y="214" width="160" height="36" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
+<text x="120" y="237" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Custom</text>
+<!-- Data Sources (coluna direita, alinhados) -->
+<rect x="540" y="70" width="200" height="36" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
+<text x="640" y="93" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">GitHub</text>
+<rect x="540" y="118" width="200" height="36" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
+<text x="640" y="141" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Jira</text>
+<rect x="540" y="166" width="200" height="36" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
+<text x="640" y="189" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Azure Monitor</text>
+<rect x="540" y="214" width="200" height="36" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
+<text x="640" y="237" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">PostgreSQL</text>
+<text x="400" y="284" text-anchor="middle" font-size="11" fill="#555555">4 apps × 4 sources = 16 integrações custom</text>
 </g>
 </svg>
 
 Com MCP:
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 284" style="width:100%;height:auto" role="img" aria-label="Arquitetura N mais M com aplicações de IA conectadas a servidores MCP por um protocolo comum">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300" style="width:100%;height:auto" role="img" aria-label="Arquitetura N mais M com aplicações de IA conectadas a servidores MCP por um protocolo comum">
 <defs>
-<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+<marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
 <path d="M 0 0 L 10 5 L 0 10 z" fill="#666666" />
 </marker>
 </defs>
 <g font-family="Segoe UI, Arial, sans-serif">
 <text x="20" y="24" text-anchor="start" font-size="14" font-weight="bold" fill="#111111">Com padrão (N+M):</text>
-<text x="40" y="50" text-anchor="start" font-size="12" font-weight="bold" fill="#111111">AI Apps:</text>
-<text x="700" y="50" text-anchor="start" font-size="12" font-weight="bold" fill="#111111">MCP Servers:</text>
-<rect x="400" y="120" width="180" height="60" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
-<text x="490" y="146.5" text-anchor="middle" font-size="14" font-weight="bold" fill="#111111">MCP</text>
-<text x="490" y="161.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">protocolo padrão</text>
-<rect x="40" y="74" width="150" height="30" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
-<text x="115" y="93" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Claude</text>
-<path d="M 196 89 H 280 V 132 H 394" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-<rect x="40" y="144" width="150" height="30" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
-<text x="115" y="163" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">GPT</text>
-<path d="M 196 159 H 300 V 146 H 394" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-<rect x="220" y="144" width="150" height="30" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
-<text x="295" y="163" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Copilot</text>
-<path d="M 376 159 H 394" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-<rect x="40" y="224" width="370" height="30" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
-<text x="225" y="235.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Custom</text>
-<path d="M 416 239 V 174 H 394" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-<rect x="700" y="74" width="220" height="30" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
-<text x="810" y="93" text-anchor="middle" font-size="11" font-weight="bold" fill="#111111">GitHub MCP Server</text>
-<path d="M 586 132 H 640 V 89 H 694" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-<rect x="700" y="144" width="220" height="30" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
-<text x="810" y="163" text-anchor="middle" font-size="11" font-weight="bold" fill="#111111">Jira MCP Server</text>
-<path d="M 586 146 H 640 V 159 H 694" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-<rect x="950" y="144" width="220" height="30" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
-<text x="1060" y="163" text-anchor="middle" font-size="11" font-weight="bold" fill="#111111">Azure Monitor MCP Server</text>
-<path d="M 586 160 H 820 V 159 H 944" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-<rect x="700" y="224" width="220" height="30" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
-<text x="810" y="243" text-anchor="middle" font-size="11" font-weight="bold" fill="#111111">PostgreSQL MCP Server</text>
-<path d="M 586 174 H 640 V 239 H 694" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-<text x="225" y="250.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">4 + 4 = 8 componentes (cada um implementa MCP uma vez)</text>
+<text x="120" y="55" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">AI Apps:</text>
+<text x="750" y="55" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">MCP Servers:</text>
+<!-- Setas: apps → MCP -->
+<path d="M 200 88 L 350 148" stroke="#666666" stroke-width="1.8" fill="none" marker-end="url(#arr2)" />
+<path d="M 200 136 L 350 150" stroke="#666666" stroke-width="1.8" fill="none" marker-end="url(#arr2)" />
+<path d="M 200 184 L 350 160" stroke="#666666" stroke-width="1.8" fill="none" marker-end="url(#arr2)" />
+<path d="M 200 232 L 350 168" stroke="#666666" stroke-width="1.8" fill="none" marker-end="url(#arr2)" />
+<!-- Setas: MCP → servers -->
+<path d="M 530 142 L 640 88" stroke="#666666" stroke-width="1.8" fill="none" marker-end="url(#arr2)" />
+<path d="M 530 150 L 640 136" stroke="#666666" stroke-width="1.8" fill="none" marker-end="url(#arr2)" />
+<path d="M 530 158 L 640 184" stroke="#666666" stroke-width="1.8" fill="none" marker-end="url(#arr2)" />
+<path d="M 530 166 L 640 232" stroke="#666666" stroke-width="1.8" fill="none" marker-end="url(#arr2)" />
+<!-- AI Apps (coluna esquerda) -->
+<rect x="40" y="70" width="160" height="36" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
+<text x="120" y="93" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Claude</text>
+<rect x="40" y="118" width="160" height="36" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
+<text x="120" y="141" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">GPT</text>
+<rect x="40" y="166" width="160" height="36" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
+<text x="120" y="189" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Copilot</text>
+<rect x="40" y="214" width="160" height="36" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
+<text x="120" y="237" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Custom</text>
+<!-- MCP hub (centro) -->
+<rect x="350" y="120" width="180" height="70" rx="10" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
+<text x="440" y="152" text-anchor="middle" font-size="15" font-weight="bold" fill="#111111">MCP</text>
+<text x="440" y="170" text-anchor="middle" font-size="10" fill="#555555">protocolo padrão</text>
+<!-- MCP Servers (coluna direita) -->
+<rect x="640" y="70" width="220" height="36" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
+<text x="750" y="93" text-anchor="middle" font-size="11" font-weight="bold" fill="#111111">GitHub MCP Server</text>
+<rect x="640" y="118" width="220" height="36" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
+<text x="750" y="141" text-anchor="middle" font-size="11" font-weight="bold" fill="#111111">Jira MCP Server</text>
+<rect x="640" y="166" width="220" height="36" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
+<text x="750" y="189" text-anchor="middle" font-size="11" font-weight="bold" fill="#111111">Azure Monitor MCP Server</text>
+<rect x="640" y="214" width="220" height="36" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
+<text x="750" y="237" text-anchor="middle" font-size="11" font-weight="bold" fill="#111111">PostgreSQL MCP Server</text>
+<text x="450" y="284" text-anchor="middle" font-size="11" fill="#555555">4 + 4 = 8 componentes (cada um implementa MCP uma vez)</text>
 </g>
 </svg>
 
@@ -131,36 +134,42 @@ Com MCP:
 
 ## Arquitetura do protocolo
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 910 480" style="width:100%;height:auto" role="img" aria-label="Arquitetura do protocolo MCP com host, cliente, transporte, servidor e capabilities">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 440" style="width:100%;height:auto" role="img" aria-label="Arquitetura do protocolo MCP com host, cliente, transporte, servidor e capabilities">
 <defs>
-<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+<marker id="arr3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
 <path d="M 0 0 L 10 5 L 0 10 z" fill="#666666" />
 </marker>
 </defs>
 <g font-family="Segoe UI, Arial, sans-serif">
-<rect x="20" y="20" width="860" height="180" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
-<text x="450" y="50" text-anchor="middle" font-size="14" font-weight="bold" fill="#111111">HOST</text>
-<text x="450" y="70" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">(VS Code, Claude Desktop, custom app)</text>
-<rect x="120" y="90" width="660" height="80" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
-<text x="450" y="111.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">MCP CLIENT</text>
-<text x="450" y="126.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">- Descobre capabilities do server</text>
-<text x="450" y="141.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">- Invoca tools</text>
-<text x="450" y="156.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">- Acessa resources</text>
-<line x1="450" y1="176" x2="450" y2="341" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-<text x="470" y="220" text-anchor="start" font-size="10" font-weight="normal" fill="#555555">Transport (stdio, Streamable HTTP)</text>
-<rect x="20" y="280" width="860" height="170" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
-<text x="450" y="310" text-anchor="middle" font-size="14" font-weight="bold" fill="#111111">MCP SERVER</text>
-<rect x="120" y="335" width="660" height="70" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
-<text x="450" y="329" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Capabilities</text>
-<line x1="340" y1="365" x2="340" y2="405" stroke="#666666" stroke-width="2" fill="none" />
-<line x1="560" y1="365" x2="560" y2="405" stroke="#666666" stroke-width="2" fill="none" />
-<text x="450" y="344" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Tools</text>
-<text x="450" y="389" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">(ações)</text>
-<text x="450" y="359" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Resources</text>
-<text x="450" y="404" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">(dados)</text>
-<text x="450" y="374" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Prompts</text>
-<text x="450" y="419" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">(templates)</text>
-<text x="50" y="433" text-anchor="start" font-size="10" font-weight="normal" fill="#555555">Backend: GitHub API, Database, File System, etc.</text>
+<!-- HOST container -->
+<rect x="20" y="20" width="660" height="150" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
+<text x="350" y="46" text-anchor="middle" font-size="14" font-weight="bold" fill="#111111">HOST</text>
+<text x="350" y="62" text-anchor="middle" font-size="10" fill="#555555">(VS Code, Claude Desktop, custom app)</text>
+<!-- MCP CLIENT dentro do HOST -->
+<rect x="80" y="78" width="540" height="72" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
+<text x="350" y="102" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">MCP CLIENT</text>
+<text x="350" y="118" text-anchor="middle" font-size="10" fill="#555555">Descobre capabilities · Invoca tools · Acessa resources</text>
+<text x="350" y="136" text-anchor="middle" font-size="10" fill="#555555">Envia prompts</text>
+<!-- Seta Transport -->
+<line x1="350" y1="170" x2="350" y2="240" stroke="#666666" stroke-width="2" marker-end="url(#arr3)" />
+<line x1="360" y1="240" x2="360" y2="170" stroke="#666666" stroke-width="2" marker-end="url(#arr3)" />
+<text x="380" y="210" text-anchor="start" font-size="10" fill="#555555">Transport (stdio, Streamable HTTP)</text>
+<!-- MCP SERVER container -->
+<rect x="20" y="250" width="660" height="170" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
+<text x="350" y="278" text-anchor="middle" font-size="14" font-weight="bold" fill="#111111">MCP SERVER</text>
+<!-- Capabilities: 3 caixas lado a lado -->
+<text x="350" y="300" text-anchor="middle" font-size="11" font-weight="bold" fill="#555555">Capabilities</text>
+<rect x="60" y="312" width="180" height="50" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5" />
+<text x="150" y="335" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Tools</text>
+<text x="150" y="351" text-anchor="middle" font-size="10" fill="#555555">(ações)</text>
+<rect x="260" y="312" width="180" height="50" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5" />
+<text x="350" y="335" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Resources</text>
+<text x="350" y="351" text-anchor="middle" font-size="10" fill="#555555">(dados)</text>
+<rect x="460" y="312" width="180" height="50" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5" />
+<text x="550" y="335" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Prompts</text>
+<text x="550" y="351" text-anchor="middle" font-size="10" fill="#555555">(templates)</text>
+<!-- Backend -->
+<text x="350" y="400" text-anchor="middle" font-size="10" fill="#555555">Backend: GitHub API, Database, File System, etc.</text>
 </g>
 </svg>
 
