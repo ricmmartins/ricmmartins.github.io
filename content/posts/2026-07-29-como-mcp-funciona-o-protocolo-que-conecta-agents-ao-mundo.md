@@ -359,23 +359,30 @@ Na prática, você vai lidar com dois transports padrão: `stdio` localmente e S
 
 O client sobe o server como processo filho. A conversa vai por stdin e stdout.
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 220" style="width:100%;height:auto" role="img" aria-label="Fluxo stdio local com host process, MCP client e MCP server process">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 200" style="width:100%;height:auto" role="img" aria-label="Fluxo stdio local com host process, MCP client e MCP server process">
 <defs>
-<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+<marker id="as" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
 <path d="M 0 0 L 10 5 L 0 10 z" fill="#666666" />
 </marker>
 </defs>
 <g font-family="Segoe UI, Arial, sans-serif">
-<rect x="40" y="30" width="320" height="150" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
-<text x="200" y="58" text-anchor="middle" font-size="14" font-weight="bold" fill="#111111">Host process</text>
-<rect x="90" y="90" width="220" height="50" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
-<text x="200" y="119" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">MCP Client</text>
-<rect x="460" y="90" width="250" height="50" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
-<text x="585" y="119" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">MCP Server process</text>
-<line x1="316" y1="104" x2="466" y2="104" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-<text x="385" y="100" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">spawns</text>
-<line x1="454" y1="126" x2="304" y2="126" stroke="#666666" stroke-width="2" fill="none" marker-start="url(#arrow)" marker-end="url(#arrow)" />
-<text x="385" y="152" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">JSON-RPC via stdin/stdout</text>
+<!-- Host container -->
+<rect x="30" y="20" width="280" height="160" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
+<text x="170" y="46" text-anchor="middle" font-size="13" font-weight="bold" fill="#111111">Host process</text>
+<!-- MCP Client -->
+<rect x="65" y="62" width="210" height="44" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
+<text x="170" y="89" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">MCP Client</text>
+<!-- MCP Server -->
+<rect x="440" y="56" width="240" height="56" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
+<text x="560" y="89" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">MCP Server process</text>
+<!-- Seta spawns -->
+<line x1="281" y1="74" x2="434" y2="74" stroke="#888888" stroke-width="1.5" stroke-dasharray="6 3" marker-end="url(#as)" />
+<text x="358" y="67" text-anchor="middle" font-size="10" font-style="italic" fill="#777777">spawns</text>
+<!-- Seta bidirecional JSON-RPC -->
+<line x1="281" y1="96" x2="434" y2="96" stroke="#666666" stroke-width="2" marker-end="url(#as)" />
+<line x1="434" y1="96" x2="281" y2="96" stroke="#666666" stroke-width="2" marker-end="url(#as)" />
+<rect x="310" y="116" width="190" height="24" rx="4" fill="white" fill-opacity="0.8" stroke="none" />
+<text x="405" y="133" text-anchor="middle" font-size="10" fill="#555555">JSON-RPC via stdin/stdout</text>
 </g>
 </svg>
 
@@ -385,26 +392,37 @@ O client sobe o server como processo filho. A conversa vai por stdin e stdout.
 
 No modo remoto, cada mensagem JSON-RPC vai por HTTP POST no endpoint MCP. O server pode responder com JSON puro ou abrir um stream SSE na mesma rota. Se precisar mandar notificações fora de uma request em andamento, o client pode abrir um GET no mesmo endpoint.
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 220" style="width:100%;height:auto" role="img" aria-label="Fluxo Streamable HTTP em que o MCP client envia requests JSON-RPC e pode abrir stream SSE opcional">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 230" style="width:100%;height:auto" role="img" aria-label="Fluxo Streamable HTTP em que o MCP client envia requests JSON-RPC e pode abrir stream SSE opcional">
 <defs>
-<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+<marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
 <path d="M 0 0 L 10 5 L 0 10 z" fill="#666666" />
 </marker>
 </defs>
 <g font-family="Segoe UI, Arial, sans-serif">
-<rect x="40" y="30" width="320" height="150" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
-<text x="200" y="58" text-anchor="middle" font-size="14" font-weight="bold" fill="#111111">Host (browser, app)</text>
-<rect x="90" y="90" width="220" height="50" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
-<text x="200" y="119" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">MCP Client</text>
-<rect x="470" y="60" width="250" height="90" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
-<text x="595" y="101.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Remote MCP endpoint</text>
-<text x="595" y="116.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">Streamable HTTP + JSON-RPC</text>
-<line x1="316" y1="104" x2="476" y2="96" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-<text x="390" y="80" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">POST /mcp</text>
-<text x="390" y="95" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">request JSON-RPC</text>
-<line x1="316" y1="124" x2="476" y2="124" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-<text x="390" y="145" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">GET /mcp (opcional)</text>
-<text x="390" y="160" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">notifications via SSE</text>
+<!-- Host container -->
+<rect x="30" y="20" width="280" height="190" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
+<text x="170" y="46" text-anchor="middle" font-size="13" font-weight="bold" fill="#111111">Host (browser, app)</text>
+<!-- MCP Client -->
+<rect x="65" y="62" width="210" height="44" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
+<text x="170" y="89" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">MCP Client</text>
+<!-- Remote MCP endpoint -->
+<rect x="440" y="40" width="240" height="76" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
+<text x="560" y="72" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Remote MCP endpoint</text>
+<text x="560" y="90" text-anchor="middle" font-size="10" fill="#555555">Streamable HTTP + JSON-RPC</text>
+<!-- Seta POST /mcp (request) -->
+<line x1="281" y1="74" x2="434" y2="74" stroke="#666666" stroke-width="2" marker-end="url(#ah)" />
+<text x="358" y="67" text-anchor="middle" font-size="10" font-weight="bold" fill="#555555">POST /mcp</text>
+<!-- Seta resposta -->
+<line x1="434" y1="96" x2="281" y2="96" stroke="#666666" stroke-width="2" marker-end="url(#ah)" />
+<text x="358" y="112" text-anchor="middle" font-size="10" fill="#555555">response JSON / SSE stream</text>
+<!-- Seta GET /mcp (notifications) -->
+<line x1="281" y1="150" x2="434" y2="150" stroke="#888888" stroke-width="1.5" stroke-dasharray="6 3" marker-end="url(#ah)" />
+<text x="358" y="143" text-anchor="middle" font-size="10" font-style="italic" fill="#777777">GET /mcp (opcional)</text>
+<line x1="434" y1="168" x2="281" y2="168" stroke="#888888" stroke-width="1.5" stroke-dasharray="6 3" marker-end="url(#ah)" />
+<text x="358" y="186" text-anchor="middle" font-size="10" font-style="italic" fill="#777777">notifications via SSE</text>
+<!-- Remote endpoint para GET -->
+<rect x="440" y="134" width="240" height="52" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5" stroke-dasharray="4 2" fill-opacity="0.5" />
+<text x="560" y="165" text-anchor="middle" font-size="10" fill="#555555">SSE notification channel</text>
 </g>
 </svg>
 
