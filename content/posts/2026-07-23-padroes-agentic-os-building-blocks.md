@@ -112,6 +112,8 @@ def reflection_pattern(task, max_reflections=2):
 
 **Quando usar**: code generation, respostas longas, análise técnica. Sempre que o custo de um erro é alto o suficiente pra justificar 2-3x mais tokens.
 
+**Quando NÃO usar**: tasks rápidas e baratas onde o custo de 2-3x em tokens não se paga (ex: classificação simples, routing). Se a task já tem validação externa (testes automatizados, linter), reflection duplica o trabalho.
+
 **Cuidado**: reflection pode entrar em loop. O critic pode ser mais exigente que necessário e nunca aprovar. Limite as iterações.
 
 ## Pattern 2: Tool use (já cobrimos em posts anteriores)
@@ -241,6 +243,8 @@ Responda APENAS com a categoria."""},
 
 **Quando usar**: quando você tem domínios distintos com tools diferentes. Menos tools por agent costuma melhorar a chance de o modelo escolher a ação certa.
 
+**Quando NÃO usar**: se você tem só um domínio com 5-6 tools, routing adiciona uma chamada de LLM extra sem benefício. O overhead de classificação (~200-500 tokens + latência) só se paga quando reduz confusão de tool selection de forma mensurável.
+
 ## Pattern 5: Parallelization
 
 Executar múltiplas ações independentes ao mesmo tempo. Fan-out e fan-in.
@@ -280,6 +284,8 @@ async def parallelization_pattern(task, servers):
 ```
 
 **Quando usar**: tasks onde múltiplas verificações são independentes. Verificar N servidores, buscar em múltiplas fontes, validar múltiplas condições.
+
+**Quando NÃO usar**: quando as tasks têm dependência entre si (output de uma é input da outra). Nesse caso, pipeline é o pattern certo. Também evite com tasks que fazem writes — paralelizar writes sem coordenação pode causar race conditions.
 
 **Cuidado**: rate limits. Se cada check chama Azure OpenAI, você pode bater no TPM limit com fan-out agressivo.
 
@@ -392,6 +398,8 @@ Mas eu começaria simples. Um agent com Tool Use + Planning já resolve a maiori
 
 ## Custo comparativo dos patterns
 
+Os multiplicadores abaixo são baseados em benchmarks com GPT-4o em tasks de diagnóstico de infra (5-8 tools, 3-5 iterações por task). O baseline é um agent simples com Tool Use.
+
 | Pattern | Overhead de tokens | Quando vale o custo |
 |---------|-------------------|---------------------|
 | Tool use (básico) | 1x (baseline) | Sempre |
@@ -402,6 +410,16 @@ Mas eu começaria simples. Um agent com Tool Use + Planning já resolve a maiori
 | Evaluator-optimizer | 2-4x | Outputs que vão pro cliente/produção |
 | Orchestrator-worker | 3-5x | Tasks complexas, multi-domínio |
 
+> **Exemplo concreto:** um agent de triagem de alertas com Planning + Reflection (1 iteração) custa ~3-4x o baseline. Se o baseline é US$0.05 por task, isso vira US$0.15-0.20. Em 1000 alertas/dia, a diferença é ~US$100-150/dia. Vale a pena? Depende de quanto custa um alerta mal classificado.
+
+## O que pode dar errado
+
+- **Reflection loop infinito**: critic exigente demais que nunca aprova. Sempre defina `max_reflections` e monitore quantas iterações cada task consome.
+- **Routing misclassification**: se o classificador erra o domínio, o agent errado recebe a task e falha sem entender por quê. Implemente fallback para `general` e monitore a taxa de reclassificação.
+- **Parallelization estourando rate limit**: 10 checks simultâneos no Azure OpenAI com 100K TPM limit. Faça a conta: se cada check consome 2K tokens, 10 em paralelo = 20K tokens de uma vez. Com bursts, isso pode bater no teto.
+- **Evaluator concordando com o agent**: quando evaluator e agent usam o mesmo modelo, o viés é similar. Considere usar um modelo diferente pro evaluator, ou critérios determinísticos (regex, schema validation) em vez de avaliação por LLM.
+- **Complexidade acidental**: empilhar patterns sem necessidade. Se Tool Use resolve, não adicione Planning + Reflection + Evaluator "por segurança". Cada camada multiplica custo e latência.
+
 ## O que levar pra segunda-feira
 
 - **Patterns são blocos de construção.** Não precisa inventar arquitetura do zero toda vez.
@@ -411,7 +429,7 @@ Mas eu começaria simples. Um agent com Tool Use + Planning já resolve a maiori
 - **Parallelization vale muito a pena** quando as tarefas são independentes, mas continue respeitando rate limits.
 - **Cada pattern multiplica o custo.** Reflection pode triplicar tokens. Orchestrator pode multiplicar várias chamadas. Faça a conta antes.
 
-No próximo post, vamos escalar: **arquitetura multi-agent**, onde múltiplos agents colaboram em sistemas complexos.
+No próximo post, vamos escalar: **[arquitetura multi-agent](/arquitetura-multi-agent-orquestrando-a-complexidade/)**, onde múltiplos agents colaboram em sistemas complexos. Se você quer ver esses patterns aplicados a um caso real de infra, a série sobre [MCP e Agentes](/mcp-e-agentes-101-para-engenheiros-de-infra/) usa vários deles em produção.
 
 ## Leitura complementar
 

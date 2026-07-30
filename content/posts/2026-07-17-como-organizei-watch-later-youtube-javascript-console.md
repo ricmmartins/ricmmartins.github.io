@@ -119,9 +119,19 @@ O YouTube usa uma API interna chamada InnerTube pra tudo que acontece na interfa
 
 Na prática, o script faz exatamente o que a interface faria se você clicasse em "Adicionar à playlist" 302 vezes. Só que em segundos.
 
+> **Aviso importante (julho 2026):** A InnerTube **não é uma API pública** e o Google pode alterá-la, deprecá-la ou bloqueá-la sem aviso prévio. Endpoints como `playlist/create` e `browse/edit_playlist` já mudaram de payload entre 2024 e 2025. Se o script parar de funcionar, confira o Gist para versões atualizadas e verifique os endpoints no network tab do DevTools antes de abrir issue.
+
 ### Sobre segurança
 
 Não precisa de extensão, não precisa de API key externa, as playlists são criadas como privadas. Mas dois avisos: nunca cole scripts de fontes que você não confia no console do navegador, e a InnerTube não é uma API oficial, então pode mudar sem aviso.
+
+## O que pode dar errado
+
+- **Rate limit do YouTube**: mesmo com delay de 2 segundos, contas com muitas playlists ou chamadas consecutivas podem tomar throttle. O Gist lida com retry, mas se persistir, aumente o intervalo.
+- **Sessão expirada**: se a aba ficar aberta muito tempo, o token SAPISID pode expirar no meio da execução. Recarregue a página e rode novamente.
+- **Categorização imprecisa**: a IA agrupa por título, não por conteúdo. Vídeos com títulos genéricos ("Episódio 47") vão parar na categoria errada. Revise a planilha antes de executar o passo 3.
+- **Vídeos privados ou deletados**: vídeos que foram removidos pelo uploader ainda aparecem na lista mas falham silenciosamente na hora de adicionar à playlist. O script do Gist loga esses casos.
+- **Script desatualizado**: como a InnerTube não é API oficial, qualquer atualização do YouTube pode quebrar os seletores CSS ou os endpoints. Confira o Gist para a versão mais recente.
 
 ## O que mudou
 
@@ -136,3 +146,5 @@ Os 3 scripts completos estão neste [Gist no GitHub](https://gist.github.com/ric
 O script tem uma flag `DRY_RUN` que mostra o que seria feito sem criar nada de fato. Recomendo rodar assim primeiro. Também precisa rolar a página inteira antes de executar, senão o script não pega todos os vídeos. As categorias que usei refletem o que eu assisto, então adapte pro que faz sentido pra você. E salve a lista original antes de esvaziar o Watch Later, por garantia.
 
 A ferramenta certa pro problema não era um app novo. Era um script no console e uma IA pra classificação. Às vezes é só isso.
+
+Se você quer entender como padronizar esse tipo de integração script-com-IA de forma mais robusta, o post sobre [MCP: o protocolo que conecta agents ao mundo](/como-mcp-funciona-o-protocolo-que-conecta-agents-ao-mundo/) explica o protocolo que está substituindo integrações ad-hoc como essa.

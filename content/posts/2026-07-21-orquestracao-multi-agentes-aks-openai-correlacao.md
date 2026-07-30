@@ -20,7 +20,7 @@ series:
 
 Até aqui, a série construiu duas coisas separadas: no post 1, um agent que fala com AKS via `aks-mcp` para diagnosticar o cluster; nos posts 2 e 3, um watchdog que observa o consumo de TPM no Azure OpenAI e decide o quão urgente um alerta deve ser. Os dois funcionam isoladamente, e isolados já entregam valor. Mas, separados, eles também deixam sem resposta a pergunta mais óbvia de todas: quando o consumo de tokens dispara do nada, a primeira coisa que qualquer SRE pergunta é "alguém fez deploy?". Hoje essa resposta ainda é manual, alguém olhando o alerta do watchdog em uma aba e o dashboard do AKS em outra.
 
-Este post é sobre fechar esse último passo manual com um orquestrador.
+Este post é sobre fechar esse último passo manual com um orquestrador. O padrão de orchestrator-worker também aparece na série "AI por dentro" no post sobre [arquitetura multi-agent](/arquitetura-multi-agent-orquestrando-a-complexidade/), com mais variantes e trade-offs de custo.
 
 O padrão aqui é supervisor-worker, ou, se você preferir o nome mais acadêmico, uma arquitetura hierárquica. Não é swarm: os sub-agents não ficam negociando entre si nem descobrindo trabalho dinamicamente. Existe um coordenador claro, com especialistas abaixo dele.
 
@@ -65,6 +65,8 @@ def correlate_incident(token_spike_start: str, window_minutes: int = 15) -> dict
     return rank_candidates(cluster_events)
 ```
 
+> **Nota:** Este é pseudocódigo simplificado para ilustrar o fluxo. A função `rank_candidates()` não é uma chamada de API real — ela representa a lógica de rankeamento que combina proximidade temporal, tipo de evento e heurísticas de correlação. A implementação real depende de como você modela confiança e de quais sinais do cluster você tem disponíveis.
+
 O resultado, em vez de dois alertas soltos chegando em canais diferentes, vira uma mensagem única: "TPM em 91% e subindo. Causa candidata: deploy do serviço `recommendation-api` às 14h01, que escalou de 3 para 12 réplicas via HPA. Cada réplica nova faz uma warmup call para o GPT-4o ao subir, o que coincide com o início do spike." Isso já não é mais "duas métricas cruzaram um threshold". É uma hipótese verificável, com evidência anexada.
 
 ## O novo risco que a correlação introduz
@@ -72,6 +74,14 @@ O resultado, em vez de dois alertas soltos chegando em canais diferentes, vira u
 Este post adiciona uma dimensão nova de risco, porque ela existe: um modelo correlacionando eventos por proximidade temporal pode produzir uma narrativa plausível e errada. Dois eventos próximos no tempo não são necessariamente causa e efeito. Pode ser coincidência. Pode ser um terceiro fator que afetou ambos. É o clássico "correlação não prova causalidade", só que agora dito por um agent com o tom confiante de quem parece saber exatamente do que está falando.
 
 A mitigação não é tentar deixar o modelo "mais certo". É nunca permitir que a saída dele vire uma afirmação categórica. A tool `correlate_incident` foi desenhada deliberadamente para devolver candidatos com nível de confiança, não uma causa única, e a mensagem final no Slack precisa preservar isso: "causa candidata", não "a causa foi". A pessoa que recebe o alerta continua responsável por decidir se a hipótese faz sentido; o agent economizou o trabalho de juntar os dados, não o julgamento final.
+
+## O que pode dar errado
+
+- **Correlação espúria**: dois eventos no mesmo intervalo de 15 minutos não provam causalidade. O orquestrador pode gerar narrativas convincentes e erradas. Por isso a saída é sempre "causa candidata", nunca "a causa foi".
+- **Janela de tempo estreita demais**: se o spike começa antes do deploy (por exemplo, por um batch job que também consome tokens), o deploy aparece como candidato mesmo sem ser responsável. Ajustar a janela ajuda, mas não elimina o risco.
+- **Latência na correlação**: em incidentes reais, segundos importam. A cadeia watchdog → orquestrador → sub-agents → correlação → alerta pode levar 30-60 segundos. Para spikes que resolvem sozinhos em menos que isso, o alerta chega tarde demais pra ser útil.
+- **Sub-agent indisponível**: se o `aks-mcp` estiver fora do ar (ex: cluster unreachable), o orquestrador precisa ter um fallback — nem que seja enviar o alerta do watchdog sem a correlação, em vez de falhar silenciosamente.
+- **Custo acumulado**: a chamada do orquestrador é a mais cara da cadeia inteira. Se o threshold do watchdog estiver calibrado baixo demais, o orquestrador vai disparar com frequência e a conta sobe.
 
 ## O que continua igual (e por que isso importa)
 

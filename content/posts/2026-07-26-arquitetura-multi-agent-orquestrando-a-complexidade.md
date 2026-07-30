@@ -261,6 +261,19 @@ def debate_pattern(question, num_agents=3):
 
 **Quando usar**: decisões de alto risco (vai deletar dados? vai escalar incidente?). O overhead de 3x o custo se justifica quando o erro custa mais.
 
+#### Análise de custo do Debate pattern
+
+O Debate é o pattern mais caro. A conta:
+
+- **Round 1**: 3 agents × (~1700 input + ~500 output tokens) = ~6600 tokens
+- **Round 2**: 3 agents × (~2500 input [pergunta + resposta original + respostas dos outros] + ~500 output) = ~9000 tokens
+- **Round 3**: 1 síntese × (~3000 input [todas as revisões] + ~600 output) = ~3600 tokens
+- **Total**: ~19.200 tokens por questão
+
+Com GPT-4o (US$2.50/1M input, US$10/1M output), isso dá **~US$0.04 por questão** de debate. Compare com ~US$0.006 pra uma chamada direta.
+
+**7x mais caro, 3x mais lento.** Quando vale? Quando o custo de uma decisão errada (deletar recurso de produção, escalar falsamente um P1) é ordens de magnitude maior que US$0.04.
+
 ### 4. Supervisory (com escalação)
 
 Um supervisor monitora workers e intervém quando necessário.
@@ -416,6 +429,14 @@ class AgentCircuitBreaker:
 
 Multi-agent custa caro. Vale quando a qualidade e a confiabilidade pagam a conta. Pra tarefa simples de 3 passos, um single agent com boas tools quase sempre ganha no custo e na latência.
 
+## O que pode dar errado
+
+- **Deadlock entre agents**: agent A espera resultado de agent B que espera resultado de agent A. Em topologias com comunicação bidirecional, defina timeouts e direcionalidade clara.
+- **Custo em cascata**: cada agent que falha e retenta multiplica o custo. Com 3 workers e 2 retries cada, no pior caso são 9 chamadas em vez de 3. Circuit breakers são essenciais.
+- **Degradação silenciosa**: um agent retorna resposta vaga ou genérica em vez de falhar. O orchestrator aceita e continua. Implemente validação de qualidade no resultado de cada worker.
+- **Contexto perdido entre agents**: cada agent vê só o que o orchestrator repassa. Se o orchestrator não passa contexto suficiente, o worker produz resultado incompleto. Projete a interface entre agents com a mesma disciplina que você projetaria uma API.
+- **Consenso falso no debate**: 3 agents concordam com a mesma resposta errada porque usam o mesmo modelo com vieses similares. Considere usar modelos diferentes para cada agent, ou validação determinística do resultado.
+
 ## O que levar pra segunda-feira
 
 - **Multi-agent lembra microservices pra AI.** Os trade-offs também lembram: mais flexibilidade, mais coordenação, mais pontos de falha.
@@ -425,7 +446,7 @@ Multi-agent custa caro. Vale quando a qualidade e a confiabilidade pagam a conta
 - **Failure modes são concretos.** Circuit breakers, timeouts e budgets não são detalhe.
 - **O custo sobe rápido.** 3 agents com 5 iterações cada já viram 15 chamadas antes de você perceber.
 
-No próximo post, vamos falar de **MCP (Model Context Protocol)**: o protocolo que padroniza como agents se conectam a ferramentas e dados externos.
+No próximo post, vamos falar de **[MCP (Model Context Protocol)](/como-mcp-funciona-o-protocolo-que-conecta-agents-ao-mundo/)**: o protocolo que padroniza como agents se conectam a ferramentas e dados externos. Se você quer a base teórica dos patterns usados aqui, veja [padrões agentic — os building blocks](/padroes-agentic-os-building-blocks/).
 
 ## Leitura complementar
 

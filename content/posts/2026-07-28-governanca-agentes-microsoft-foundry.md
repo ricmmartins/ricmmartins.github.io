@@ -54,6 +54,8 @@ RBAC por ambiente, pipeline com identidade própria e promoção versionada. Com
 
 ## Provisionando hub e project via Terraform
 
+> **Nota (julho 2026):** Os recursos de Terraform mencionados abaixo refletem o estado do provider `azurerm` na data de publicação. A superfície do Foundry está em mudança ativa — nomes de recursos, propriedades obrigatórias e até a hierarquia hub/project vs. Foundry/project podem mudar entre releases do provider. Verifique sempre a [documentação do azurerm](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs) e faça `terraform plan` antes de aplicar.
+
 Hoje o caminho mais atual no provider `azurerm` é tratar o Foundry como um `azurerm_cognitive_account` com `project_management_enabled = true` e criar cada project com `azurerm_cognitive_account_project`. Os recursos `azurerm_ai_foundry` e `azurerm_ai_foundry_project` ainda aparecem no modelo clássico de hub/project, mas eu prefiro mostrar o caminho novo porque é o que a documentação atual recomenda:
 
 ```hcl
@@ -99,11 +101,21 @@ AzureActivity
 | order by TimeGenerated desc
 ```
 
+## O que pode dar errado
+
+- **Falsa sensação de segurança**: "a plataforma cuida" é perigoso quando ninguém verifica o que a plataforma realmente está fazendo. RBAC mal configurado com roles amplas demais anula o benefício do isolamento.
+- **Drift entre Terraform e portal**: alguém que cria um agent pelo portal sem passar pelo PR do Terraform cria um recurso invisível pro IaC. Monitore drift com `terraform plan` periódico.
+- **Managed identity com escopo amplo demais**: cada agent ganha identity própria, mas se essa identity tiver role `Contributor` no resource group inteiro, o isolamento é ilusão.
+- **Observabilidade sem ação**: tracing e evaluators geram dados. Se ninguém olha os dashboards ou configura alertas sobre eles, os dados existem mas não protegem nada.
+- **Mudanças na API sem aviso**: como o Foundry ainda está amadurecendo, comportamentos de API, nomes de recurso e até a hierarquia podem mudar entre releases. Pinte o bloco de Terraform pra ser revisitado a cada trimestre.
+
 ## Fechando a série
 
 Cinco posts, do conceito à governança: o que é MCP e como um agent decide sozinho a sequência de chamadas; um watchdog que começou como script determinístico e só depois ganhou raciocínio, com o guardrail de nunca ganhar poder para agir; um orquestrador que correlaciona dois agents sem criar uma nova superfície de ataque; e agora a camada de plataforma que formaliza tudo isso para além do que cabe na memória de quem escreveu o código.
 
 O fio condutor dos cinco posts é sempre o mesmo: autonomia para decidir, sim; autonomia para agir em produção, não. A menos que isso seja uma escolha explícita, auditável e revisada, nunca um acidente de configuração. Isso vale para o `--access-level readonly` em uma flag de linha de comando, e vale para o catálogo de tools de uma plataforma inteira da Microsoft, numa escala completamente diferente.
+
+O desenho claro de escopo, tools e guardrails que fundamenta tudo isso está na série "AI por dentro", especialmente em [como projetar um AI agent do zero](/como-projetar-um-ai-agent-do-zero/) e [padrões agentic](/padroes-agentic-os-building-blocks/).
 
 Se a sua empresa está exatamente nesse ponto, com vários times subindo agents sem coordenação e ninguém ainda sabe como olhar isso centralmente, esse é o tipo de desenho em que eu gosto de ajudar. Fico feliz em conversar se isso for útil.
 
