@@ -1,6 +1,8 @@
-{{- /* Google AdSense (manual units only — auto ads disabled) */ -}}
+{{- /* Google AdSense — only load on post pages (manual units only, auto ads disabled) */ -}}
+{{- if and (eq site.Params.env "production") .IsPage }}
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
      crossorigin="anonymous"></script>
+{{- end }}
 
 {{- /* Hreflang tags for multilingual SEO (PT ↔ EN) */ -}}
 {{- if .IsHome }}
