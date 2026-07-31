@@ -44,6 +44,7 @@ O log completo e sempre atualizado está no [Activity Log](https://github.com/ri
 Artigos publicados no blog oficial [Startups at Microsoft](https://techcommunity.microsoft.com/blog/startupsatmicrosoftblog) no Tech Community:
 
 **AI Infrastructure**
+- [Azure AI Foundry: from zero to production](https://techcommunity.microsoft.com/blog/startupsatmicrosoftblog/azure-ai-foundry-from-zero-to-production/4542960)
 - [Your H100s on Azure won't do distributed training. Here's probably why.](https://techcommunity.microsoft.com/blog/startupsatmicrosoftblog/your-h100s-on-azure-wont-do-distributed-training-heres-probably-why-/4537502)
 - [Production-grade API Gateway patterns for Microsoft Foundry](https://techcommunity.microsoft.com/blog/startupsatmicrosoftblog/production-grade-api-gateway-patterns-for-microsoft-foundry/4490494)
 - [When and why startups add a Gateway in front of Azure AI Foundry](https://techcommunity.microsoft.com/blog/startupsatmicrosoftblog/when-and-why-startups-add-a-gateway-in-front-of-azure-ai-foundry/4489490)
@@ -62,6 +63,7 @@ Artigos publicados no blog oficial [Startups at Microsoft](https://techcommunity
 - [Highlights from KubeCon North America 2024 and Microsoft Ignite 2024](https://techcommunity.microsoft.com/blog/startupsatmicrosoftblog/highlights-from-kubecon-north-america-2024-and-microsoft-ignite-2024/4355189)
 
 **Observabilidade e monitoramento**
+- [From reactive firefighting to proactive operations: custom skills for Azure SRE Agent](https://techcommunity.microsoft.com/blog/startupsatmicrosoftblog/from-reactive-firefighting-to-proactive-operations-custom-skills-for-azure-sre-a/4542961)
 - [Azure Service Health has four alert types. You probably configured one.](https://techcommunity.microsoft.com/blog/startupsatmicrosoftblog/azure-service-health-has-four-alert-types-you-probably-configured-one-/4537501)
 - [Your startup doesn't have an SRE team. Now what?](https://techcommunity.microsoft.com/blog/startupsatmicrosoftblog/your-startup-doesnt-have-an-sre-team-now-what/4540142)
 - [Your Azure VM went down and nobody knew why. Here's how to fix that.](https://techcommunity.microsoft.com/blog/startupsatmicrosoftblog/your-azure-vm-went-down-and-nobody-knew-why-heres-how-to-fix-that-/4513733)
