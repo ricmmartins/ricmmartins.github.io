@@ -1,12 +1,3 @@
----
-title: "Azure AI Foundry: do zero à produção"
-slug: azure-ai-foundry-do-zero-a-producao
-aliases: [/azure-ai-foundry-do-zero-a-producao/]
-description: "O que eu cubro quando um cliente pergunta por onde começar com IA no Azure. Seleção de modelo, PAYGO vs PTU, arquitetura spillover e checklist de produção."
-date: 2026-07-30
-categories: [Azure, AI]
-tags: [azure-ai-foundry, ptu, openai, agentes-ia, otimizacao-custo]
----
 # Azure AI Foundry: do zero à produção
 
 *O que eu cubro quando um cliente pergunta "queremos construir aplicações com IA no Azure, por onde começamos?"*
@@ -51,7 +42,22 @@ O cenário de modelos em meados de 2026:
 
 **Minha recomendação para workloads agênticos:** GPT-5.x para o orquestrador (melhor acurácia de tool-calling), GPT-5-mini para sub-tarefas (classificação, extração, formatação), e Phi-4 ou modelos fine-tuned para componentes de domínio específico.
 
-### 2. Tipo de deploy: PAYGO vs PTU
+### 2. Ciclo de vida dos modelos
+
+Todo modelo no Foundry segue um ciclo de vida: Preview, GA, Legacy, Deprecated, Retired.
+
+O que importa na prática:
+- GA dura cerca de 18 meses. Parece muito, mas passa rápido com sistema em produção.
+- Legacy significa que um substituto está disponível. Comece a planejar migração.
+- Deprecated dá cerca de 90 dias para migrar. Depois disso, a API retorna 410 Gone e seu sistema para.
+
+O detalhe crítico: se você usa Provisioned Throughput (PTU), a migração de modelo NÃO é automática. Você precisa fazer manualmente: planejar janela de manutenção, testar o novo modelo com prompts existentes, validar qualidade, e fazer o swap. Deploys Standard/Global Standard fazem auto-upgrade, mas você não controla quando.
+
+Minha recomendação: crie um processo de model governance. Monitore Azure Updates, mantenha testes automatizados de qualidade por modelo, e comece o planejamento de migração com pelo menos 60 dias de antecedência.
+
+![Ciclo de vida dos modelos no Azure AI Foundry](/img/foundry-model-lifecycle.svg)
+
+### 3. Tipo de deploy: PAYGO vs PTU
 
 A maioria dos times complica isso mais do que precisa. A regra é simples:
 
@@ -67,7 +73,7 @@ A maioria dos times complica isso mais do que precisa. A regra é simples:
 - Precisa de latência garantida (sem throttling por noisy-neighbor)
 - Workloads de produção com padrões previsíveis
 
-### 3. Como PTU funciona na prática
+### 4. Como PTU funciona na prática
 
 PTU é um modelo de token-bucket. Cada PTU reserva um throughput fixo em tokens por minuto:
 
@@ -77,7 +83,7 @@ PTU é um modelo de token-bucket. Cada PTU reserva um throughput fixo em tokens 
 
 Ou seja, 100 PTUs de GPT-5-mini dão aproximadamente 350.000 tokens/minuto garantidos. Passou disso, a API devolve 429. Sem fila, sem espera. Corte seco.
 
-### 4. A matemática de custo (aqui fica interessante)
+### 5. A matemática de custo (aqui fica interessante)
 
 | Tier | Preço (referência Jul/2026) | Compromisso |
 |------|-----------------------------|-------------|
@@ -91,7 +97,7 @@ O break-even: se a utilização sustentada está acima de 60-70% da sua capacida
 
 Eu criei o [ptucalc.com](https://ptucalc.com) exatamente para esse cálculo. É open source, 12.000+ sessões até agora. Coloque seus padrões de uso e ele mostra o tier e a quantidade de PTU ideal.
 
-### 5. Arquitetura spillover
+### 6. Arquitetura spillover
 
 O padrão que recomendo para produção:
 
@@ -103,6 +109,47 @@ Configure seu deployment com PTU como primário e PAYGO como spillover:
 - Otimização de custo (PTU para steady-state, PAYGO só para picos)
 
 Isso se configura no nível do deployment no Foundry. Sem mudança de código na aplicação.
+
+## APIM como AI Gateway
+
+Para qualquer workload de IA em produção, recomendo colocar o Azure API Management (APIM) entre suas aplicações e os modelos. O APIM atua como AI Gateway centralizado com seis capacidades que o Foundry sozinho não oferece:
+
+- Load balancing: distribuição round-robin ou weighted entre múltiplos backends PTU/PAYGO. Habilita DR e distribuição de capacidade entre regiões.
+- Rate limiting por token: diferente do rate limiting tradicional por request, o APIM conta tokens reais consumidos. Um request que usa 10.000 tokens tem peso diferente de um que usa 100. Muito mais justo para controle de consumo.
+- Circuit breaker: quando um backend PTU retorna 429, o APIM automaticamente faz failover para o próximo backend (outro PTU ou PAYGO). Sem retry no lado do cliente.
+- Semantic caching: cache de respostas por similaridade semântica do prompt. Se alguém perguntou algo parecido nos últimos N minutos, retorna do cache. Reduz custo e latência para perguntas recorrentes.
+- Token tracking: métricas de consumo por app, por time, por usuário. Emite para Azure Monitor. Essencial para chargeback quando múltiplos times compartilham os mesmos modelos.
+- Content safety: políticas no gateway que bloqueiam inputs maliciosos antes de chegarem ao modelo. Defesa em profundidade em cima dos filtros de conteúdo do Foundry.
+
+O padrão: suas aplicações e agentes chamam o APIM, não o modelo diretamente. O APIM roteia, controla, monitora e protege.
+
+![APIM como AI Gateway](/img/foundry-apim-gateway.svg)
+
+## Arquitetura de referência para workloads agênticos
+
+Para times construindo sistemas multi-agente, esta é a arquitetura de referência que recomendo:
+
+1. Camada de orquestração: um agente principal (tipicamente usando o modelo com melhor tool-calling disponível, hoje GPT-5.x) que coordena sub-agentes, mantém estado da conversa, e decide a próxima ação.
+2. Camada de agentes especializados: cada agente otimizado para uma tarefa usando o modelo certo. Um agente de extração de dados no Phi-4, um agente de compliance no GPT-4.1, um agente de UX no GPT-5. Modelos diferentes para tarefas diferentes, otimizando custo e qualidade.
+3. Camada de gateway (APIM): fica entre agentes e modelos. Cada agente tem rate limits diferentes, rotas para modelos diferentes, e o circuit breaker protege contra throttling. É onde você centraliza governança.
+4. Camada de modelos (Foundry): múltiplos deployments com PTU para carga base e PAYGO para burst. Multi-região para DR. Spillover acontece automaticamente via routing do APIM.
+
+O ponto chave: agentes nunca chamam modelos diretamente. Sempre passam pelo gateway. Se um agente mal-comportado começa a consumir tokens demais, você corta no gateway sem mexer no código do agente.
+
+## Anti-patterns para evitar
+
+Esses são erros que eu vejo repetidamente em produção. A maioria parece óbvia depois que alguém aponta, mas acontecem o tempo todo:
+
+| Não faça isso | Faça assim | Impacto se ignorar |
+|---|---|---|
+| API keys no código | Managed Identity + Key Vault | Credential leak, billing attack |
+| Um endpoint para tudo | APIM Gateway + routing por app | Noisy neighbor, sem visibilidade |
+| Provisionar para o pico | Spillover (PTU base + PAYGO burst) | 60%+ capacidade ociosa, desperdício |
+| Ignorar model lifecycle | Pipeline de teste + plano de migração | 410 Gone em produção, outage |
+| max_tokens default (4096) | Calcular max_tokens por use case | Utilização PTU inflada, waste de capacidade |
+| Retry sem backoff | Exponential backoff + jitter | Retry storm, 429 cascading |
+
+O max_tokens é sutil: o Azure calcula utilização PTU baseado em tokens de input MAIS max_tokens reservado, mesmo que a resposta real use menos. Se você configura max_tokens em 4096 mas a resposta típica é 200 tokens, está desperdiçando capacidade. O [ptucalc.com](https://ptucalc.com) tem uma ferramenta específica para isso.
 
 ## Checklist de produção
 
@@ -161,4 +208,3 @@ Não pule etapas. Cada fase ensina algo sobre seu workload que informa a próxim
 ---
 
 *Dúvidas sobre estratégia de deploy ou otimização de custo? Deixa um comentário.*
-
