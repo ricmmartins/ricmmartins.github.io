@@ -133,6 +133,14 @@ A resposta da comunidade na primeira semana (dezenas de stars, múltiplos forks 
 
 ---
 
+## Próximos passos
+
+1. **Instale o skills pack** — clone o [repo](https://github.com/ricmmartins/azure-sre-agent-skills/), copie as pastas de skills para a configuração do seu SRE Agent, e habilite o Skill 01 (Auditoria de Governança) como Scheduled Investigation rodando semanalmente.
+2. **Rode uma investigação manualmente** — dispare a auditoria de governança contra uma subscription de não-produção. Revise o output, ajuste thresholds no `SKILL.md` para a tolerância do seu ambiente.
+3. **Encaixe no ritmo de sprints** — agende FinOps (Skill 02) quinzenalmente e Capacity Planning (Skill 05) mensalmente. Após dois ciclos, você terá dados de baseline para provar valor proativo para a liderança.
+
+---
+
 **Links:**
 - [Azure SRE Agent Skills Pack (GitHub)](https://github.com/ricmmartins/azure-sre-agent-skills/)
 - [Documentação do Azure SRE Agent](https://learn.microsoft.com/en-us/azure/sre-agent/)
