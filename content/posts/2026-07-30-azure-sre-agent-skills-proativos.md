@@ -1,3 +1,21 @@
+---
+slug: azure-sre-agent-skills-proativos
+aliases:
+  - /azure-sre-agent-skills-proativos/
+title: "De bombeiro a engenheiro de plataforma: skills customizados para o Azure SRE Agent"
+description: "Como criei um pack open-source com 8 skills customizados que transformam o Azure SRE Agent de resposta reativa para operações proativas."
+date: 2026-07-30
+categories:
+  - Azure
+  - SRE
+  - AI
+tags:
+  - azure-sre-agent
+  - site-reliability-engineering
+  - operacoes-proativas
+  - skills-customizados
+---
+
 # De bombeiro a engenheiro de plataforma: skills customizados para o Azure SRE Agent
 
 **TL;DR:** O Azure SRE Agent é excelente em resposta reativa a incidentes, mas não cobre operações proativas por padrão. Criei um [pack open-source com 8 skills customizados](https://github.com/ricmmartins/azure-sre-agent-skills/) que adicionam auditorias de governança, relatórios FinOps, capacity planning, postmortems, e mais. Combinados com Scheduled Investigations, eles movem suas operações de reativas para proativas.
