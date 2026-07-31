@@ -24,6 +24,8 @@ tags:
 
 > **TL;DR:** Azure AI Foundry é a plataforma unificada para aplicações de IA no Azure. Comece com PAYGO, migre para PTU quando utilização sustentada passar de 60-70%, e sempre configure spillover (PTU primário + PAYGO overflow). Use o [ptucalc.com](https://ptucalc.com) ([código no GitHub](https://github.com/ricmmartins/ptucalc)) para modelar custos antes de comprometer.
 
+*Este guia é para times de engenharia migrando de protótipo para produção no Azure AI Foundry. Se você ainda está avaliando se Foundry é a plataforma certa, comece em [ai.azure.com](https://ai.azure.com).*
+
 ---
 
 ## O ponto de partida
@@ -115,7 +117,7 @@ O break-even: se a utilização sustentada está acima de 60-70% da sua capacida
 
 > ⚠️ Esses são preços de referência de julho de 2026. Rates negociados em EA/MCA podem diferir. Sempre valide contra seu contrato específico.
 
-Eu criei o [ptucalc.com](https://ptucalc.com) exatamente para esse cálculo. É open source, 12.000+ sessões até agora. Coloque seus padrões de uso e ele mostra o tier e a quantidade de PTU ideal.
+Eu criei o [ptucalc.com](https://ptucalc.com) exatamente para esse cálculo. É open source. Coloque seus padrões de uso e ele mostra o tier e a quantidade de PTU ideal.
 
 ### 6. Arquitetura spillover
 
@@ -129,6 +131,10 @@ Configure seu deployment com PTU como primário e PAYGO como spillover:
 - Otimização de custo (PTU para steady-state, PAYGO só para picos)
 
 Isso se configura no nível do deployment no Foundry. Sem mudança de código na aplicação.
+
+## Parte 2: hardening para produção
+
+Tudo acima coloca seu sistema rodando. As seções abaixo colocam rodando com segurança, escala e governança.
 
 ## APIM como AI Gateway
 
@@ -154,7 +160,11 @@ Para times construindo sistemas multi-agente, esta é a arquitetura de referênc
 3. Camada de gateway (APIM): fica entre agentes e modelos. Cada agente tem rate limits diferentes, rotas para modelos diferentes, e o circuit breaker protege contra throttling. É onde você centraliza governança.
 4. Camada de modelos (Foundry): múltiplos deployments com PTU para carga base e PAYGO para burst. Multi-região para DR. Spillover acontece automaticamente via routing do APIM.
 
+![Arquitetura de referência para agentes: 4 camadas](/img/foundry-agentic-architecture.svg)
+
 O ponto chave: agentes nunca chamam modelos diretamente. Sempre passam pelo gateway. Se um agente mal-comportado começa a consumir tokens demais, você corta no gateway sem mexer no código do agente.
+
+> Se você roda Azure SRE Agent junto com seus workloads de IA, o [skill 08 (AI Foundry & OpenAI Posture)](https://github.com/ricmmartins/azure-sre-agent-skills/blob/main/skills/08-ai-foundry-openai-posture/SKILL.md) audita seu deploy do Foundry contra esses padrões de arquitetura de forma agendada. Veja meu post complementar: [Skills customizados para Azure SRE Agent](/azure-sre-agent-skills-proativos/).
 
 ## Anti-patterns para evitar
 
