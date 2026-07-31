@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 320" font-family="Segoe UI, system-ui, sans-serif">
+  <defs>
+    <linearGradient id="arrow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6c8ebf"/>
+      <stop offset="100%" style="stop-color:#82b366"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="320" rx="12" fill="#f8f9fa" stroke="#dee2e6" stroke-width="1"/>
+  <text x="400" y="35" text-anchor="middle" font-size="18" font-weight="600" fill="#2d3436">Progressão de maturidade SRE</text>
+  <rect x="40" y="60" width="160" height="200" rx="8" fill="#f8cecc" stroke="#b85450" stroke-width="1.5"/>
+  <text x="120" y="90" text-anchor="middle" font-size="14" font-weight="600" fill="#b85450">Nível 1</text>
+  <text x="120" y="112" text-anchor="middle" font-size="12" fill="#333">Manual</text>
+  <text x="120" y="135" text-anchor="middle" font-size="11" fill="#666">Apagando incêndios</text>
+  <text x="120" y="155" text-anchor="middle" font-size="11" fill="#666">Sem runbooks</text>
+  <text x="120" y="175" text-anchor="middle" font-size="11" fill="#666">Fadiga de alertas</text>
+  <text x="120" y="195" text-anchor="middle" font-size="11" fill="#666">Conhecimento tribal</text>
+  <rect x="230" y="60" width="160" height="200" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="310" y="90" text-anchor="middle" font-size="14" font-weight="600" fill="#d6b656">Nível 2</text>
+  <text x="310" y="112" text-anchor="middle" font-size="12" fill="#333">Automatizado</text>
+  <text x="310" y="135" text-anchor="middle" font-size="11" fill="#666">Alertas básicos</text>
+  <text x="310" y="155" text-anchor="middle" font-size="11" fill="#666">Runbooks existem</text>
+  <text x="310" y="175" text-anchor="middle" font-size="11" fill="#666">Alguma automação</text>
+  <text x="310" y="195" text-anchor="middle" font-size="11" fill="#666">Processos documentados</text>
+  <rect x="420" y="60" width="160" height="200" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="500" y="90" text-anchor="middle" font-size="14" font-weight="600" fill="#6c8ebf">Nível 3</text>
+  <text x="500" y="112" text-anchor="middle" font-size="12" fill="#333">IA Reativa</text>
+  <text x="500" y="135" text-anchor="middle" font-size="11" fill="#666">SRE Agent core</text>
+  <text x="500" y="155" text-anchor="middle" font-size="11" fill="#666">Causa raiz auto</text>
+  <text x="500" y="175" text-anchor="middle" font-size="11" fill="#666">Memória entre</text>
+  <text x="500" y="195" text-anchor="middle" font-size="11" fill="#666">incidentes</text>
+  <rect x="610" y="60" width="160" height="200" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="690" y="90" text-anchor="middle" font-size="14" font-weight="600" fill="#82b366">Nível 4</text>
+  <text x="690" y="112" text-anchor="middle" font-size="12" fill="#333">IA Proativa</text>
+  <text x="690" y="135" text-anchor="middle" font-size="11" fill="#666">Custom Skills</text>
+  <text x="690" y="155" text-anchor="middle" font-size="11" fill="#666">Auditorias agendadas</text>
+  <text x="690" y="175" text-anchor="middle" font-size="11" fill="#666">Scores de governança</text>
+  <text x="690" y="195" text-anchor="middle" font-size="11" fill="#666">Ops preventivas</text>
+  <polygon points="200,285 600,285 600,275 620,290 600,305 600,295 200,295" fill="url(#arrow)" opacity="0.7"/>
+  <text x="410" y="315" text-anchor="middle" font-size="11" fill="#666">O Skills Pack preenche o gap do Nível 3 para o Nível 4</text>
+</svg>
