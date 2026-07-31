@@ -181,13 +181,15 @@ O que eu verifico antes de qualquer cliente ir para produção:
 - [ ] Filtros de Content Safety ajustados (não só defaults)
 - [ ] VNet integration se necessário por compliance
 - [ ] Residência de dados: região do deployment == requisitos de dados
+- [ ] APIM como AI Gateway (sem acesso direto ao modelo pelas aplicações)
 
 ### Confiabilidade
 - [ ] Deploy multi-região (primary + failover)
-- [ ] Retry logic com exponential backoff
+- [ ] Retry logic com exponential backoff e jitter
 - [ ] Circuit breaker para dependências downstream
 - [ ] Health probes e monitoramento de disponibilidade
-- [ ] Spillover configurado (PTU → PAYGO)
+- [ ] Spillover configurado (PTU primário, PAYGO overflow)
+- [ ] APIM load balancing entre backends PTU
 
 ### Observabilidade
 - [ ] Métricas de consumo de tokens no Azure Monitor
@@ -195,12 +197,21 @@ O que eu verifico antes de qualquer cliente ir para produção:
 - [ ] Tags de alocação de custo em todos os recursos Foundry
 - [ ] Alertas em rates de 429 (indicador de throttling)
 - [ ] Pipeline de avaliação de performance de modelo (drift detection)
+- [ ] Token tracking do APIM habilitado (por app/time/usuário)
 
 ### Governança de custo
 - [ ] Alertas de budget configurados
 - [ ] Tags de chargeback para ambientes multi-time
 - [ ] Monitoramento de utilização PTU (target: 70-85%)
+- [ ] max_tokens ajustado por use case (não default 4096)
 - [ ] Cadência de revisão regular (mensal) para otimização de tier
+
+### Governança de modelo
+- [ ] Monitoramento de lifecycle dos modelos (assinatura Azure Updates)
+- [ ] Testes automatizados de qualidade por versão de modelo
+- [ ] Plano de migração documentado (60+ dias antes da retirement)
+- [ ] Runbook de migração PTU (swap manual necessário)
+- [ ] Semantic caching configurado no APIM para queries recorrentes
 
 ## A progressão típica
 
