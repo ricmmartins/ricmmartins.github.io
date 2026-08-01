@@ -84,7 +84,7 @@ Minha recomendação: crie um processo de model governance. Monitore Azure Updat
 
 A maioria dos times complica isso mais do que precisa. A regra é simples:
 
-![Decision tree PAYGO vs PTU](/img/foundry-paygo-vs-ptu.svg)
+![Árvore de decisão: Standard, Priority Processing ou PTU](/img/foundry-paygo-vs-ptu.svg)
 
 **Comece com PAYGO** quando:
 - Está em desenvolvimento/teste
