@@ -2,8 +2,8 @@
 slug: "projetando-um-assistente-ai-pessoal"
 aliases:
   - "/posts/projetando-um-assistente-ai-pessoal/"
-title: "Projetando um assistente AI pessoal"
-description: "System design completo de um chat assistant com RAG, memória e tools. Do requirement ao deploy, como exercício prático que junta tudo que cobrimos na série."
+title: "Projetando um assistente pessoal com IA"
+description: "Um system design de ponta a ponta para um assistente com RAG, memória e ferramentas: requisitos, arquitetura, código, segurança, custo e deploy no Azure."
 date: 2026-08-01T10:00:00-04:00
 categories:
   - AI
@@ -18,78 +18,105 @@ series:
   - "AI por dentro: de tokens a agents"
 ---
 
-Você leu 13 posts dessa série. Este aqui junta as peças num projeto só: um assistente AI pessoal que responde perguntas sobre sua infraestrutura usando runbooks, documentação interna e ferramentas de monitoramento.
+Depois de 13 posts sobre os componentes de um sistema de IA, faltava colocá-los para trabalhar juntos. O projeto deste artigo é um assistente pessoal que responde perguntas sobre infraestrutura usando runbooks, documentação interna e ferramentas de monitoramento.
 
-Não é toy project. É um system design de verdade, do tipo que caberia numa entrevista ou num design doc interno.
+O desenho é próximo do que eu usaria numa entrevista de system design ou como ponto de partida para um design doc interno. Os exemplos de código são recortes, não uma aplicação pronta para copiar e colocar em produção.
 
-## Requirements
+## Requisitos
 
-**Funcional:**
+### O que o assistente precisa fazer
+
 - Responder perguntas sobre infraestrutura baseado em documentação interna
 - Executar diagnósticos básicos (métricas, logs, status)
 - Manter contexto de conversa (memória de curto prazo)
 - Aprender preferências do usuário ao longo do tempo (memória de longo prazo)
 - Suportar múltiplos usuários simultaneamente
 
-**Não-funcional:**
+### Limites de operação
+
 - Latência < 5s pra respostas simples, < 15s pra diagnósticos
 - Disponibilidade 99.9% (pode degradar pra "sem tools" se backend cair)
 - Custo alvo: ~ $600/mês pra 50 usuários ativos, com espaço pra otimizar
 - Segurança: nunca expor secrets, respeitar RBAC
 
+O custo é uma restrição de projeto, não uma promessa. Ele força escolhas explícitas sobre modelo, retenção de memória, tier do Search e quantidade de chamadas por pergunta.
+
 ## Arquitetura de alto nível
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 556" style="width:100%;height:auto" role="img" aria-label="Arquitetura de alto nível de um assistente pessoal com frontend, backend, RAG, agent core, memória e integrações">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 650" style="width:100%;height:auto" role="img" aria-label="Arquitetura de alto nível de um assistente pessoal com interface, API, núcleo do agente, RAG, memória, ferramentas e integrações">
 <defs>
 <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
 <path d="M 0 0 L 10 5 L 0 10 z" fill="#666666" />
 </marker>
 </defs>
 <g font-family="Segoe UI, Arial, sans-serif">
-<rect x="170" y="20" width="620" height="76" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
-<text x="480" y="54.5" text-anchor="middle" font-size="14" font-weight="bold" fill="#111111">FRONTEND</text>
-<text x="480" y="69.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">Web UI (chat interface) ou Slack/Teams integration</text>
-<line x1="480" y1="102" x2="480" y2="146" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-<text x="480" y="166.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">WebSocket/HTTP</text>
-<rect x="150" y="140" width="660" height="120" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2" />
-<text x="480" y="181.5" text-anchor="middle" font-size="14" font-weight="bold" fill="#111111">BACKEND API</text>
-<text x="480" y="196.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">FastAPI + WebSocket</text>
-<text x="480" y="211.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">- Auth (Entra ID)</text>
-<text x="480" y="226.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">- Session management</text>
-<text x="480" y="241.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">- Rate limiting</text>
-<path d="M 144 200 V 284 H 276 V 368" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-<path d="M 480 266 V 290 H 480 V 314" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-<path d="M 816 200 H 730 V 368 H 644" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-<rect x="50" y="320" width="220" height="96" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
-<text x="160" y="357" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">RAG Engine</text>
-<text x="160" y="372" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">Azure AI Search</text>
-<text x="160" y="387" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">(docs index)</text>
-<rect x="370" y="320" width="220" height="96" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
-<text x="480" y="357" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Agent Core</text>
-<text x="480" y="372" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">LLM + Tools</text>
-<text x="480" y="387" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">(GPT-4o)</text>
-<rect x="650" y="320" width="280" height="96" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
-<text x="790" y="357" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Memory Service</text>
-<text x="790" y="372" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">Short-term: Redis</text>
-<text x="790" y="387" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">Long-term: Cosmos DB</text>
-<path d="M 364 368 V 433 H 256 V 498" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-<path d="M 480 422 V 443 H 480 V 464" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-<path d="M 596 368 V 433 H 694 V 498" stroke="#666666" stroke-width="2" fill="none" marker-end="url(#arrow)" />
-<rect x="80" y="470" width="170" height="56" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
-<text x="165" y="494.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Azure Monitor</text>
-<text x="165" y="509.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">(metrics)</text>
-<rect x="405" y="470" width="150" height="56" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2" />
-<text x="480" y="494.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">K8s API</text>
-<text x="480" y="509.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">(pods)</text>
-<rect x="700" y="470" width="190" height="56" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="2" />
-<text x="795" y="494.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">Ticket System</text>
-<text x="795" y="509.5" text-anchor="middle" font-size="10" font-weight="normal" fill="#555555">(create)</text>
+<rect x="170" y="20" width="640" height="70" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
+<text x="490" y="49" text-anchor="middle" font-size="14" font-weight="bold" fill="#111111">INTERFACE</text>
+<text x="490" y="68" text-anchor="middle" font-size="10" fill="#555555">Web, Slack ou Microsoft Teams</text>
+
+<line x1="490" y1="90" x2="490" y2="120" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+
+<rect x="170" y="120" width="640" height="90" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2" />
+<text x="490" y="148" text-anchor="middle" font-size="14" font-weight="bold" fill="#111111">API BACKEND</text>
+<text x="490" y="167" text-anchor="middle" font-size="10" fill="#555555">FastAPI + WebSocket</text>
+<text x="490" y="184" text-anchor="middle" font-size="10" fill="#555555">Entra ID | Sessões | Rate limiting | Streaming</text>
+
+<line x1="490" y1="210" x2="490" y2="260" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+
+<rect x="30" y="270" width="250" height="90" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="2" />
+<text x="155" y="302" text-anchor="middle" font-size="13" font-weight="bold" fill="#111111">MOTOR RAG</text>
+<text x="155" y="321" text-anchor="middle" font-size="10" fill="#555555">Azure AI Search</text>
+<text x="155" y="338" text-anchor="middle" font-size="10" fill="#555555">Runbooks e documentação</text>
+
+<rect x="340" y="260" width="300" height="100" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2" />
+<text x="490" y="295" text-anchor="middle" font-size="14" font-weight="bold" fill="#111111">NÚCLEO DO AGENTE</text>
+<text x="490" y="316" text-anchor="middle" font-size="10" fill="#555555">LLM + orquestração</text>
+<text x="490" y="334" text-anchor="middle" font-size="10" fill="#555555">Decide quando consultar contexto ou executar ferramentas</text>
+
+<rect x="700" y="270" width="250" height="90" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2" />
+<text x="825" y="302" text-anchor="middle" font-size="13" font-weight="bold" fill="#111111">SERVIÇO DE MEMÓRIA</text>
+<text x="825" y="321" text-anchor="middle" font-size="10" fill="#555555">Curto prazo: Redis</text>
+<text x="825" y="338" text-anchor="middle" font-size="10" fill="#555555">Longo prazo: Cosmos DB</text>
+
+<line x1="280" y1="315" x2="340" y2="315" stroke="#666666" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+<line x1="640" y1="315" x2="700" y2="315" stroke="#666666" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+
+<line x1="490" y1="360" x2="490" y2="420" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+
+<rect x="340" y="420" width="300" height="75" rx="8" fill="#e8f0fe" stroke="#4285f4" stroke-width="2" />
+<text x="490" y="448" text-anchor="middle" font-size="13" font-weight="bold" fill="#111111">CAMADA DE FERRAMENTAS</text>
+<text x="490" y="467" text-anchor="middle" font-size="10" fill="#555555">Leitura automática | Escrita com confirmação</text>
+<text x="490" y="483" text-anchor="middle" font-size="10" fill="#555555">Validação de parâmetros e trilha de auditoria</text>
+
+<line x1="490" y1="495" x2="490" y2="525" stroke="#666666" stroke-width="2" />
+<line x1="155" y1="525" x2="825" y2="525" stroke="#666666" stroke-width="2" />
+<line x1="155" y1="525" x2="155" y2="555" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+<line x1="490" y1="525" x2="490" y2="555" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+<line x1="825" y1="525" x2="825" y2="555" stroke="#666666" stroke-width="2" marker-end="url(#arrow)" />
+
+<rect x="40" y="555" width="230" height="65" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2" />
+<text x="155" y="583" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">AZURE MONITOR</text>
+<text x="155" y="601" text-anchor="middle" font-size="10" fill="#555555">Métricas e logs</text>
+
+<rect x="375" y="555" width="230" height="65" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2" />
+<text x="490" y="583" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">API DO KUBERNETES</text>
+<text x="490" y="601" text-anchor="middle" font-size="10" fill="#555555">Pods e eventos</text>
+
+<rect x="710" y="555" width="230" height="65" rx="8" fill="#f8cecc" stroke="#b85450" stroke-width="2" />
+<text x="825" y="583" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">SISTEMA DE TICKETS</text>
+<text x="825" y="601" text-anchor="middle" font-size="10" fill="#555555">Criação de incidentes</text>
 </g>
 </svg>
 
-## Componente 1: RAG Engine (documentação)
+O backend autentica o usuário e controla a sessão, mas não decide como responder. Essa responsabilidade fica no núcleo do agente. RAG e memória fornecem contexto; a camada de ferramentas é a única parte autorizada a tocar sistemas externos.
 
-Pra responder perguntas sobre runbooks e documentação interna.
+Essa separação evita que uma decisão do modelo vire uma ação sem controle. Consultas de leitura podem rodar automaticamente. Qualquer operação de escrita, como abrir um incidente, precisa de confirmação explícita, validação de parâmetros e registro de auditoria.
+
+> **Sobre os exemplos:** os trechos abaixo mostram as partes relevantes do design. Helpers como `_extract_title()`, `_agent_loop()` e `get_allowed_doc_paths()` foram omitidos para manter o foco na arquitetura.
+
+## Componente 1: motor RAG (documentação)
+
+O RAG recupera os trechos de runbooks e documentação que ajudam a responder cada pergunta. Ele também aplica o filtro de acesso antes de devolver qualquer conteúdo ao modelo.
 
 ### Pipeline de indexação
 
@@ -99,7 +126,6 @@ import os
 from datetime import datetime, timezone
 from pathlib import Path
 
-from azure.core.credentials import AzureKeyCredential
 from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 from azure.search.documents import SearchIndexingBufferedSender
 from openai import AzureOpenAI
@@ -110,7 +136,7 @@ class DocumentIndexer:
         self.search_client = SearchIndexingBufferedSender(
             endpoint=os.environ["SEARCH_ENDPOINT"],
             index_name="infra-docs",
-            credential=AzureKeyCredential(os.environ["SEARCH_KEY"]),
+            credential=DefaultAzureCredential(),
         )
         self.openai = AzureOpenAI(
             azure_endpoint=os.environ["OPENAI_ENDPOINT"],
@@ -181,7 +207,6 @@ class DocumentIndexer:
 ### Query com hybrid search
 
 ```python
-from azure.core.credentials import AzureKeyCredential
 from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 from azure.search.documents import SearchClient
 from azure.search.documents.models import VectorizedQuery
@@ -193,7 +218,7 @@ class RAGEngine:
         self.search_client = SearchClient(
             endpoint=os.environ["SEARCH_ENDPOINT"],
             index_name="infra-docs",
-            credential=AzureKeyCredential(os.environ["SEARCH_KEY"]),
+            credential=DefaultAzureCredential(),
         )
         self.openai = AzureOpenAI(
             azure_endpoint=os.environ["OPENAI_ENDPOINT"],
@@ -247,9 +272,9 @@ class RAGEngine:
         return response.data[0].embedding
 ```
 
-## Componente 2: Agent Core
+## Componente 2: núcleo do agente
 
-O cérebro do assistente. Recebe a pergunta, decide se precisa de RAG, tools, ou ambos.
+O Agent Core recebe a pergunta e coordena o restante do sistema. Ele decide quanto contexto recuperar, quando chamar uma ferramenta e quando responder sem fazer nenhuma das duas coisas.
 
 ```python
 from azure.identity.aio import DefaultAzureCredential, get_bearer_token_provider
@@ -327,7 +352,9 @@ Regras:
         return messages
 ```
 
-## Componente 3: Memory Service
+## Componente 3: serviço de memória
+
+Memória de conversa e memória de longo prazo resolvem problemas diferentes. O Redis guarda o histórico recente da sessão. O Cosmos DB mantém apenas fatos e preferências que podem ser úteis em conversas futuras.
 
 ```python
 import json
@@ -347,8 +374,9 @@ class MemoryService:
             os.environ["AZURE_REDIS_CONNECTIONSTRING"],
             decode_responses=True,
         )
-        self.cosmos_client = CosmosClient.from_connection_string(
-            os.environ["COSMOS_CONNECTION_STRING"]
+        self.cosmos_client = CosmosClient(
+            url=os.environ["COSMOS_ENDPOINT"],
+            credential=DefaultAzureCredential(),
         )
         self.database = self.cosmos_client.get_database_client("assistant")
         self.memories = self.database.get_container_client("user-memory")
@@ -435,7 +463,9 @@ class MemoryService:
         return response.data[0].embedding
 ```
 
-## Componente 4: Tools do assistente
+## Componente 4: ferramentas do assistente
+
+As ferramentas de leitura ficam disponíveis durante a investigação. Ferramentas que alteram estado exigem confirmação do usuário antes da execução, mesmo quando o modelo já tem todos os parâmetros.
 
 ```python
 ASSISTANT_TOOLS = [
@@ -508,7 +538,9 @@ ASSISTANT_TOOLS = [
 ]
 ```
 
-## Infra e deploy
+## Infraestrutura e deploy
+
+Os comandos abaixo montam a base do ambiente. Em produção, atribua à identidade do Container App somente as permissões de data plane necessárias, como `Cognitive Services OpenAI User`, `Search Index Data Reader`, `Cosmos DB Built-in Data Contributor` e `Monitoring Reader`. A identidade que executa a indexação precisa de `Search Index Data Contributor`.
 
 ```bash
 # Infraestrutura necessária
@@ -593,6 +625,8 @@ az containerapp registry set \
 
 ### Estimativa de custo
 
+Esta tabela serve como ordem de grandeza para o cenário descrito. Preço de modelo, região, retenção e volume de tokens mudam a conta; valide os valores no Azure Pricing Calculator antes de aprovar orçamento.
+
 | Componente | SKU | Custo/mês |
 |-----------|-----|-----------|
 | Azure OpenAI (GPT-4o) | Pay-per-token | ~$150 (50 users × 20 queries/dia) |
@@ -609,9 +643,9 @@ Pra otimizar:
 - Azure AI Search Basic em vez de Standard se < 15 indexes ($75 vs $250)
 - Se a meta for ficar abaixo de $500/mês, esse é o primeiro corte que eu faria: modelo menor no caminho feliz + Search Basic quando couber
 
-## Monitoring e observabilidade
+## Monitoramento e observabilidade
 
-Métricas que importam pro assistente (não são as mesmas de um CRUD):
+Eu começaria com estas métricas. Elas mostram custo e qualidade da resposta, além da saúde tradicional da API.
 
 | Métrica | Por que importa | Alerta se |
 |---------|----------------|-----------|
@@ -659,15 +693,14 @@ async def respond_with_telemetry(agent, user_id, message, session_id):
     return response
 ```
 
-## O que levar pra segunda-feira
+## Uma ordem prática de implementação
 
-- O design é composição dos conceitos da série. RAG (post 4), context engineering (post 5), agent loop (post 8), memory (post 10), tools (post 9).
-- Comece simples. RAG + LLM sem tools já entrega 70% do valor. Adicione tools depois.
-- Custo é controlável. Modelo menor pra tasks simples, caching, rate limiting.
-- Memória diferencia um chatbot de um assistente. Short-term pra conversa, long-term pra preferências e fatos.
-- Security from day 1. RBAC nos docs, managed identity em vez de API keys, validação nas tools.
+1. Comece com RAG e respostas somente leitura. Isso já testa ingestão, permissões, qualidade de recuperação e custo por pergunta.
+2. Adicione uma ferramenta de diagnóstico, também somente leitura, e acompanhe erros e latência antes de integrar outros sistemas.
+3. Coloque memória de curto prazo quando a conversa realmente precisar de continuidade. Só grave memória de longo prazo quando houver um caso claro para reutilizar aquele fato.
+4. Deixe ferramentas de escrita por último. Exija confirmação, aplique RBAC e registre quem pediu, o que foi executado e qual foi o resultado.
 
-No próximo e último post da série, vamos falar de **AI Coding Workflow**: como usar AI no seu dia a dia como profissional de infraestrutura.
+No próximo e último post da série, vamos falar de **AI Coding Workflow**: como usar IA no seu dia a dia como profissional de infraestrutura.
 
 ## Leitura complementar
 
