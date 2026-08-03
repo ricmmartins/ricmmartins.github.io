@@ -17,7 +17,7 @@ series:
   - "AI por dentro: de tokens a agents"
 ---
 
-Último post da série. Depois de 14 textos olhando pra dentro da AI, eu queria fechar com o uso prático. Como essas ferramentas entram no trabalho de infra sem virar bengala.
+Último post da série. Depois de 16 textos olhando pra dentro da AI, eu queria fechar com o uso prático. Como essas ferramentas entram no trabalho de infra sem virar bengala.
 
 É um post bem opinativo. Estou escrevendo do lugar de quem usa Copilot, Claude e chat com LLM todo dia desde 2023. Tem coisa que acelera muito. Tem coisa que atrapalha. E tem anti-pattern que eu já vi time repetir até cansar.
 

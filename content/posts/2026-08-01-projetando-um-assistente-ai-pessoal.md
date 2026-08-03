@@ -22,6 +22,8 @@ Depois de 13 posts sobre os componentes de um sistema de IA, faltava colocá-los
 
 O desenho é próximo do que eu usaria numa entrevista de system design ou como ponto de partida para um design doc interno. Os exemplos de código são recortes, não uma aplicação pronta para copiar e colocar em produção.
 
+> **Continuação prática:** a implementação executável está em [Implementando um assistente pessoal com IA no Azure, passo a passo](/implementando-um-assistente-pessoal-com-ia-no-azure/).
+
 ## Requisitos
 
 ### O que o assistente precisa fazer
@@ -700,7 +702,7 @@ async def respond_with_telemetry(agent, user_id, message, session_id):
 3. Coloque memória de curto prazo quando a conversa realmente precisar de continuidade. Só grave memória de longo prazo quando houver um caso claro para reutilizar aquele fato.
 4. Deixe ferramentas de escrita por último. Exija confirmação, aplique RBAC e registre quem pediu, o que foi executado e qual foi o resultado.
 
-No próximo e último post da série, vamos falar de **AI Coding Workflow**: como usar IA no seu dia a dia como profissional de infraestrutura.
+No próximo post, vamos transformar essa arquitetura em uma aplicação executável: [Implementando um assistente pessoal com IA no Azure, passo a passo](/implementando-um-assistente-pessoal-com-ia-no-azure/).
 
 ## Leitura complementar
 
