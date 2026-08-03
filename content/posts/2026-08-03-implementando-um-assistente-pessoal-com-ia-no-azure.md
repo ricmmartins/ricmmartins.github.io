@@ -159,7 +159,7 @@ Os nove testes cobrem o fluxo local e alguns contratos que costumam quebrar só 
 5. confirmações concorrentes criam um único incidente;
 6. repetir a confirmação devolve o mesmo resultado;
 7. argumentos de ferramentas são validados;
-8. o schema do Search usa o analyzer `pt-BR.microsoft`;
+8. o schema do Search usa o analyzer `en.microsoft`, alinhado aos runbooks em inglês;
 9. uma service principal autenticada pode ser resolvida mesmo sem nome de usuário.
 
 O quarto teste parece detalhe até você imaginar dois usuários dividindo o mesmo backend. Um UUID difícil de adivinhar não substitui autorização.
