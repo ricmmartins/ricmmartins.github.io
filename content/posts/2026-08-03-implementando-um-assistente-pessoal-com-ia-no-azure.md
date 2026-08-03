@@ -59,6 +59,10 @@ Também mantive a criação de incidentes em um adapter simulado. O controle de 
 
 Esse escopo menor não é um atalho. Ele evita descobrir cinco problemas de infraestrutura ao mesmo tempo sem saber qual deles quebrou a resposta.
 
+![Assistente respondendo com RAG e citações dos runbooks](/img/personal-assistant-rag-citations.gif)
+
+*A resposta usa Azure AI Search e mostra os runbooks que fundamentaram cada recomendação.*
+
 ## Estrutura do projeto
 
 ```text
@@ -362,6 +366,10 @@ record = pending_action_service.create_incident_request(
 ```
 
 O usuário recebe um `action_id` e uma prévia. Nenhum incidente existe ainda.
+
+![Fluxo de criação de incidente com confirmação explícita](/img/personal-assistant-confirmation-flow.gif)
+
+*O modelo prepara a ação, mas o backend só executa a escrita depois da confirmação explícita do usuário.*
 
 Para confirmar:
 
@@ -693,7 +701,7 @@ Teste primeiro uma pergunta que só usa RAG. Depois, uma pergunta que chama a fe
 5. repetir a confirmação devolve o mesmo `incident_id`;
 6. a auditoria contém solicitação, confirmação e resultado.
 
-No ambiente de validação, o login interativo voltou para a interface, o RAG devolveu três citações e a ferramenta de métricas respondeu. O pedido de incidente exibiu a confirmação na tela e criou `INC-0001` somente depois do clique. O Container App ficou em modo de revisão única, com 100% do tráfego e uma réplica.
+No ambiente de validação, o login interativo voltou para a interface, o RAG devolveu três citações e a ferramenta de métricas respondeu. O pedido de incidente exibiu a confirmação na tela e criou o incidente somente depois do clique. O Container App ficou em modo de revisão única, com 100% do tráfego e uma réplica.
 
 ## E a memória com Redis e Cosmos DB?
 
