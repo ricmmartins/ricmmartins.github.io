@@ -23,7 +23,7 @@ No [post anterior](/projetando-um-assistente-ai-pessoal/), eu desenhei um assist
 
 Este post fecha essa lacuna. Vamos partir de uma aplicação que roda localmente sem Azure e levar a mesma vertical slice para Container Apps, Azure OpenAI e Azure AI Search.
 
-O código está no repositório [agentic-infra-handbook](https://github.com/ricmmartins/agentic-infra-handbook/tree/master/labs/personal-assistant), em `labs/personal-assistant`.
+O código está no repositório [agentic-infra-handbook](https://github.com/ricmmartins/agentic-infra-handbook/tree/master/labs/personal-assistant), em `labs/personal-assistant`. O README do lab também traz um [passo a passo independente para executar o projeto localmente e fazer o deploy no Azure](https://github.com/ricmmartins/agentic-infra-handbook/tree/master/labs/personal-assistant#deploy-to-azure-step-by-step), incluindo App Registration, configuração do AZD, callback de autenticação, validação e limpeza dos recursos.
 
 ## O que vamos entregar
 
