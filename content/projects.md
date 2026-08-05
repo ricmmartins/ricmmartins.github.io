@@ -107,6 +107,7 @@ Artigos publicados no blog oficial [Startups at Microsoft](https://techcommunity
 ## Outros blogs oficiais Microsoft
 
 **All Things Azure**
+- [Building an operations assistant on Azure that waits for approval before it acts](https://devblogs.microsoft.com/all-things-azure/building-an-operations-assistant-on-azure-that-waits-for-approval-before-it-acts/)
 - [Build your own Microsoft Docs AI assistant with Azure Container Apps and Azure OpenAI](https://devblogs.microsoft.com/all-things-azure/build-your-own-microsoft-docs-ai-assistant-with-azure-container-apps-and-azure-openai/)
 
 **FastTrack for Azure**
