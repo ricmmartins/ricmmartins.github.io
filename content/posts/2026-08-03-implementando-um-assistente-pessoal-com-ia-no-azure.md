@@ -25,6 +25,8 @@ Este post fecha essa lacuna. Vamos partir de uma aplicação que roda localmente
 
 O código está no repositório [agentic-infra-handbook](https://github.com/ricmmartins/agentic-infra-handbook/tree/master/labs/personal-assistant), em `labs/personal-assistant`. O README do lab também traz um [passo a passo independente para executar o projeto localmente e fazer o deploy no Azure](https://github.com/ricmmartins/agentic-infra-handbook/tree/master/labs/personal-assistant#deploy-to-azure-step-by-step), incluindo App Registration, configuração do AZD, callback de autenticação, validação e limpeza dos recursos.
 
+O README é a referência operacional deste post. Ele contém os comandos completos, validações de versão, preflight, troubleshooting e cleanup. Aqui eu explico as decisões e mostro o caminho; quando houver diferença, use o README do lab.
+
 ## O que vamos entregar
 
 Ao final, teremos:
@@ -35,7 +37,7 @@ Ao final, teremos:
 - Azure OpenAI autenticado por Microsoft Entra ID;
 - uma ferramenta de leitura;
 - uma ação de escrita que só vira execução depois da confirmação;
-- identidade do usuário vinda do Azure Container Apps;
+- identidade do usuário validada pelo Easy Auth do Azure Container Apps e restrita a usuários ou grupos aprovados;
 - telemetria no Application Insights;
 - uma imagem publicada no Azure Container Registry;
 - uma API rodando no Azure Container Apps.
@@ -43,6 +45,8 @@ Ao final, teremos:
 Eu cortei duas partes da primeira entrega de propósito. A memória curta fica em processo e a memória longa fica atrás de uma interface sem implementação. Isso permite provar o fluxo inteiro antes de pagar por Azure Managed Redis e Cosmos DB.
 
 Também mantive a criação de incidentes em um adapter simulado. O controle de aprovação é real. A mutação em um sistema de ITSM não é. Antes de ligar ServiceNow, Jira ou outro sistema, precisamos testar autorização, idempotência e auditoria com algo que não abra chamados de verdade.
+
+Esta é uma referência didática, não uma baseline pronta para produção. Ela mantém rede pública para OpenAI e Search, um índice compartilhado sem ACL por documento, estado em memória, uma réplica, sem rate limiting, sem expiração de ações pendentes e sem token CSRF explícito na confirmação do navegador.
 
 | Caminho | Implementado nesta etapa |
 |---------|--------------------------|
@@ -69,11 +73,17 @@ Esse escopo menor não é um atalho. Ele evita descobrir cinco problemas de infr
 labs/personal-assistant/
 ├── docs/runbooks/
 ├── infra/
-│   └── main.bicep
+│   ├── app.bicep
+│   ├── main.bicep
+│   └── main.parameters.json
+├── scripts/
+│   ├── preflight.ps1
+│   └── smoke-test.ps1
 ├── src/personal_assistant/
 │   ├── actions.py
 │   ├── agent.py
 │   ├── app.py
+│   ├── audit.py
 │   ├── bootstrap.py
 │   ├── config.py
 │   ├── identity.py
@@ -84,19 +94,32 @@ labs/personal-assistant/
 │   └── tools.py
 ├── tests/
 ├── .env.example
+├── azure.yaml
 ├── Dockerfile
 └── pyproject.toml
 ```
 
-O projeto usa Python 3.12. Para acompanhar o tutorial, você também precisa de:
+O projeto usa Python 3.12 e PowerShell 7.4 ou posterior. Para acompanhar o tutorial, você também precisa de:
 
 - Git;
 - Azure CLI;
 - Azure Developer CLI;
-- permissão para criar recursos e atribuir roles na assinatura;
+- `Contributor` para criar recursos e `User Access Administrator` ou `Role Based Access Control Administrator` para atribuir roles, ou `Owner`;
+- permissão para registrar uma aplicação no Microsoft Entra;
 - quota para dois deployments de modelo na região escolhida.
 
 Docker local é opcional. O `azure.yaml` usa build remoto no Azure Container Registry.
+
+Antes de começar, confirme as versões:
+
+```powershell
+$PSVersionTable.PSVersion
+py -3.12 --version
+az version
+az bicep version
+azd version
+.\scripts\preflight.ps1 -LocalOnly
+```
 
 ## 1. Rode local antes de criar qualquer recurso
 
@@ -104,13 +127,18 @@ Clone o repositório e entre no lab:
 
 ```powershell
 git clone https://github.com/ricmmartins/agentic-infra-handbook.git
-Set-Location agentic-infra-handbook\labs\personal-assistant
+Set-Location .\agentic-infra-handbook\labs\personal-assistant
+
+if (-not (Test-Path .\azure.yaml) -or -not (Test-Path .\pyproject.toml)) {
+  throw "Execute este tutorial a partir de agentic-infra-handbook\labs\personal-assistant."
+}
 
 Copy-Item .env.example .env
 py -3.12 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
-pip install -e ".[dev]"
+python -m pip install -e ".[dev]"
+python -m pytest -q
 ```
 
 O `.env.example` começa assim:
@@ -144,13 +172,7 @@ Invoke-RestMethod `
 
 A resposta inclui texto, citações e, quando houver uma operação sensível, uma `pending_action`.
 
-Rode os testes antes de seguir:
-
-```powershell
-pytest -q
-```
-
-Os nove testes cobrem o fluxo local e alguns contratos que costumam quebrar só depois do deploy:
+Os testes cobrem o fluxo local e contratos que costumam quebrar só depois do deploy:
 
 1. o chat devolve resposta e fonte;
 2. uma ação de escrita fica pendente;
@@ -160,7 +182,9 @@ Os nove testes cobrem o fluxo local e alguns contratos que costumam quebrar só 
 6. repetir a confirmação devolve o mesmo resultado;
 7. argumentos de ferramentas são validados;
 8. o schema do Search usa o analyzer `en.microsoft`, alinhado aos runbooks em inglês;
-9. uma service principal autenticada pode ser resolvida mesmo sem nome de usuário.
+9. uma service principal autenticada pode ser resolvida mesmo sem nome de usuário;
+10. o envelope de identidade do Easy Auth precisa ser íntegro e coerente;
+11. a auditoria enviada à telemetria não expõe nome, object ID, título ou payload da ação.
 
 O quarto teste parece detalhe até você imaginar dois usuários dividindo o mesmo backend. Um UUID difícil de adivinhar não substitui autorização.
 
@@ -422,9 +446,9 @@ if actor_id:
     )
 ```
 
-Tokens app-only podem não ter um nome de usuário. Nesse caso, o código usa o ID do principal como nome de auditoria. O fallback local só existe quando `APP_ENV=development`. Em qualquer outro ambiente, a ausência do ID vira `401`.
+Tokens app-only podem não ter um nome de usuário. Nesse caso, o ID do principal continua sendo o identificador estável para autorização. O fallback local só existe quando `APP_ENV=development`. Em Azure, a aplicação exige o ID e o envelope canônico `X-MS-CLIENT-PRINCIPAL`, verifica o provedor `aad` e rejeita claims inconsistentes com `401`.
 
-Isso depende de configurar o Container App para exigir autenticação. Não publique a API com acesso anônimo e espere que esse código resolva o problema sozinho.
+Isso depende de manter a porta da aplicação acessível somente pelo ingress gerenciado com Easy Auth. Esses headers não têm uma assinatura verificável pela aplicação. Se você introduzir qualquer caminho alternativo até a porta 8000, valide o bearer token dentro da aplicação em vez de confiar nos headers.
 
 ## 8. Entenda o que o template provisiona
 
@@ -452,65 +476,15 @@ Os deployments usados no teste foram:
 | Chat e ferramentas | `assistant-chat` | `gpt-5-mini`, versão `2025-08-07` |
 | Embeddings | `assistant-embedding` | `text-embedding-3-small`, versão `1`, 1536 dimensões |
 
-Modelos e versões mudam. Confirme disponibilidade e quota na sua assinatura antes de executar o Bicep. Se a versão não estiver disponível, altere o template e rode os testes novamente. Não troque apenas o nome no portal e deixe o código contando outra história.
+Modelos e versões mudam. Confirme disponibilidade e quota na sua assinatura antes de executar o Bicep. O lab recebe modelo, versão, SKU, capacidade e dimensão por parâmetros do ambiente AZD; não é necessário editar o Bicep para adaptar esses valores.
 
 O template mantém uma réplica. Como sessão e ações pendentes ainda vivem em memória, duas réplicas poderiam separar a criação da confirmação. Resolva o armazenamento compartilhado antes de aumentar `maxReplicas`.
 
 ## 9. Crie o App Registration
 
-O Bicep configura a autenticação do Container App, mas recebe o client ID de um App Registration existente. Crie o registro no tenant que contém a assinatura:
+O Bicep configura a autenticação do Container App, mas recebe o client ID de um App Registration existente. O script completo e validado está na seção [Create and validate the Microsoft Entra App Registration](https://github.com/ricmmartins/agentic-infra-handbook/tree/master/labs/personal-assistant#create-and-validate-the-microsoft-entra-app-registration) do README.
 
-```powershell
-az login --tenant <tenant-id>
-
-$app = az ad app create `
-  --display-name personal-assistant-reference `
-  --sign-in-audience AzureADMyOrg | ConvertFrom-Json
-
-$clientId = $app.appId
-az ad app update `
-  --id $clientId `
-  --identifier-uris "api://$clientId"
-
-$scopeId = [guid]::NewGuid().Guid
-$body = @{
-  api = @{
-    requestedAccessTokenVersion = 2
-    oauth2PermissionScopes = @(
-      @{
-        adminConsentDescription = "Access the personal assistant API"
-        adminConsentDisplayName = "Access the personal assistant API"
-        id = $scopeId
-        isEnabled = $true
-        type = "User"
-        userConsentDescription = "Access the personal assistant API"
-        userConsentDisplayName = "Access the personal assistant API"
-        value = "user_impersonation"
-      }
-    )
-  }
-  web = @{
-    implicitGrantSettings = @{
-      enableIdTokenIssuance = $true
-      enableAccessTokenIssuance = $false
-    }
-  }
-} | ConvertTo-Json -Depth 6 -Compress
-
-$graphToken = (
-  az account get-access-token --resource-type ms-graph |
-    ConvertFrom-Json
-).accessToken
-
-Invoke-RestMethod `
-  -Method Patch `
-  -Uri "https://graph.microsoft.com/v1.0/applications/$($app.id)" `
-  -Headers @{ Authorization = "Bearer $graphToken" } `
-  -ContentType "application/json" `
-  -Body $body | Out-Null
-```
-
-O escopo delegado é `api://<client-id>/user_impersonation`. A opção `enableIdTokenIssuance` atende ao fluxo híbrido usado pelo Easy Auth. Sem ela, o callback falha com `AADSTS700054`.
+Esse script cria uma aplicação single-tenant, o escopo `api://<client-id>/user_impersonation`, tokens v2, ID tokens para o fluxo do Easy Auth e `groupMembershipClaims = "SecurityGroup"`. A chamada ao Microsoft Graph usa obrigatoriamente `Authorization = "Bearer $graphToken"` e valida o estado resultante antes de continuar. Sem `enableIdTokenIssuance`, o callback pode falhar com `AADSTS700054`.
 
 Crie também um secret para o provedor de autenticação. Respeite o prazo máximo definido pela política do tenant:
 
@@ -524,36 +498,76 @@ $credential = az ad app credential reset `
   --append `
   --display-name container-app-easy-auth `
   --end-date $endDate | ConvertFrom-Json
+
+$clientSecret = $credential.password
+if ([string]::IsNullOrWhiteSpace($clientSecret)) {
+  throw "O Azure CLI não retornou o secret do App Registration."
+}
 ```
 
 Alguns tenants exigem consentimento de administrador. Não contorne essa política com uma conta pessoal ou um tenant diferente. Trate o secret como uma credencial operacional e defina uma rotina de rotação antes do vencimento.
 
-`/healthz` fica fora da autenticação para atender os probes. Navegadores sem sessão são redirecionados para o login. Clientes de API sem uma sessão ou bearer token válido recebem o desafio de autenticação, normalmente como `401`.
+`/healthz` fica fora da autenticação para atender os probes. Com `RedirectToLoginPage`, uma requisição anônima às rotas protegidas recebe `302` para o provedor de login. Um token inválido ou um ator que não pertence às allowlists pode receber `401` ou `403`, dependendo da etapa que rejeitou a requisição.
 
 ## 10. Configure o ambiente do AZD
 
 Entre com a conta correta no Azure CLI e no Azure Developer CLI:
 
 ```powershell
-az login --tenant <tenant-id>
-az account set --subscription <subscription-id>
+az login --tenant $tenantId
+az account set --subscription $subscriptionId
 azd auth login
 ```
 
 Crie um ambiente isolado e grave os parâmetros:
 
+As variáveis `$tenantId`, `$subscriptionId`, regiões, modelos, capacidades e allowlists são definidas e validadas no [passo 5 do README](https://github.com/ricmmartins/agentic-infra-handbook/tree/master/labs/personal-assistant#5-select-the-tenant-subscription-regions-and-models). Mantenha a mesma sessão PowerShell durante a criação do App Registration e a configuração do AZD.
+
 ```powershell
 azd env new personal-assistant-dev
-azd env set AZURE_SUBSCRIPTION_ID <subscription-id>
-azd env set AZURE_LOCATION eastus2
-azd env set AZURE_SEARCH_LOCATION eastus
+azd env set AZURE_SUBSCRIPTION_ID $subscriptionId
+azd env set AZURE_LOCATION $location
+azd env set AZURE_SEARCH_LOCATION $searchLocation
+azd env set AZURE_OPENAI_CHAT_MODEL_NAME $chatModelName
+azd env set AZURE_OPENAI_CHAT_MODEL_VERSION $chatModelVersion
+azd env set AZURE_OPENAI_CHAT_DEPLOYMENT_SKU $chatDeploymentSku
+azd env set AZURE_OPENAI_CHAT_DEPLOYMENT_CAPACITY $chatDeploymentCapacity
+azd env set AZURE_OPENAI_EMBEDDING_MODEL_NAME $embeddingModelName
+azd env set AZURE_OPENAI_EMBEDDING_MODEL_VERSION $embeddingModelVersion
+azd env set AZURE_OPENAI_EMBEDDING_DEPLOYMENT_SKU $embeddingDeploymentSku
+azd env set AZURE_OPENAI_EMBEDDING_DEPLOYMENT_CAPACITY $embeddingDeploymentCapacity
+azd env set AZURE_OPENAI_EMBEDDING_DIMENSIONS $embeddingDimensions
 azd env set AUTH_CLIENT_ID $clientId
-azd env set AUTH_CLIENT_SECRET $credential.password
+azd env set AUTH_CLIENT_SECRET $clientSecret
+azd env set AUTH_ALLOWED_PRINCIPAL_IDS ($authAllowedPrincipalIds -join ",")
+azd env set AUTH_ALLOWED_GROUP_IDS ($authAllowedGroupIds -join ",")
 
-$credential = $null
+$clientSecret = $null
 ```
 
 Use a mesma região para `AZURE_LOCATION` e `AZURE_SEARCH_LOCATION` quando houver capacidade. Separar as duas é uma saída para indisponibilidade regional, não uma recomendação automática.
+
+Antes de criar recursos, registre os providers listados no README e execute o preflight Azure:
+
+```powershell
+.\scripts\preflight.ps1 `
+  -TenantId $tenantId `
+  -SubscriptionId $subscriptionId `
+  -ClientId $clientId `
+  -AllowedPrincipalIds $authAllowedPrincipalIds `
+  -AllowedGroupIds $authAllowedGroupIds `
+  -Location $location `
+  -SearchLocation $searchLocation `
+  -ChatModelName $chatModelName `
+  -ChatModelVersion $chatModelVersion `
+  -ChatDeploymentSku $chatDeploymentSku `
+  -ChatDeploymentCapacity $chatDeploymentCapacity `
+  -EmbeddingModelName $embeddingModelName `
+  -EmbeddingModelVersion $embeddingModelVersion `
+  -EmbeddingDeploymentSku $embeddingDeploymentSku `
+  -EmbeddingDeploymentCapacity $embeddingDeploymentCapacity `
+  -EmbeddingDimensions $embeddingDimensions
+```
 
 O `azure.yaml` usa `remoteBuild: true`. O AZD envia o contexto para o ACR, compila a imagem lá e injeta `SERVICE_API_IMAGE_NAME` no Bicep. Isso evita a dependência de Docker local e impede que um novo `azd provision` restaure uma imagem placeholder.
 
@@ -573,17 +587,17 @@ Compile o Bicep e rode os testes:
 
 ```powershell
 az bicep build --file infra\main.bicep --stdout | Out-Null
-pytest -q
+if ($LASTEXITCODE -ne 0) { throw "Falha ao compilar o Bicep." }
+python -m pytest -q
 ```
 
 Confira o que o Azure pretende criar:
 
 ```powershell
 azd provision --preview --no-prompt
-azd package --no-prompt
 ```
 
-O preview não reserva capacidade. Search e deployments de modelo ainda podem falhar no deploy se a região ficar sem capacidade ou se a quota mudar entre uma etapa e outra.
+Não execute `azd package` neste lab. Para um serviço Docker, esse comando tenta empacotar localmente, enquanto `remoteBuild: true` envia o source ao ACR durante `azd up`. O preview não reserva capacidade; Search e deployments de modelo ainda podem falhar se quota ou capacidade regional mudarem.
 
 ## 12. Faça o deploy
 
@@ -604,6 +618,7 @@ az ad app update `
   --id $clientId `
   --web-redirect-uris "$appUrl/.auth/login/aad/callback"
 
+azd env set AUTH_CLIENT_SECRET ''
 Start-Process $appUrl
 ```
 
@@ -642,7 +657,7 @@ A configuração de Easy Auth redireciona navegadores anônimos para o Microsoft
 api://<client-id>
 ```
 
-Ela também restringe tokens app-only ao client ID autorizado. O secret do provedor fica no secret store do Container App e precisa ser rotacionado. Para usuários, aplique as regras de assignment e consentimento do seu tenant.
+Ela também restringe tokens app-only ao client ID autorizado. Isso não limita usuários interativos. O template usa `allowedPrincipals` com `AUTH_ALLOWED_PRINCIPAL_IDS` e `AUTH_ALLOWED_GROUP_IDS` para permitir somente object IDs aprovados. O secret do provedor fica no secret store do Container App e precisa ser rotacionado.
 
 ## 14. Observe o fluxo no Application Insights
 
@@ -660,7 +675,7 @@ if config.applicationinsights_connection_string:
 
 O código cria spans para chat, RAG e ferramentas. Ele registra contagens, backend usado e presença de ação pendente. Não envia o texto da pergunta como atributo de telemetria.
 
-Esse cuidado evita transformar Application Insights em uma cópia dos prompts. A trilha de auditoria das ações é diferente: ela registra deliberadamente ator, tipo da ação, severidade, título e resultado. Esses campos podem conter nomes de recursos, portanto aplique retenção e controle de acesso compatíveis com os dados operacionais.
+Esse cuidado evita transformar Application Insights em uma cópia dos prompts ou do incidente. A telemetria de auditoria contém apenas o tipo do evento, `action_id` e `actor_ref`, uma referência derivada de SHA-256 truncado. Nome, object ID, session ID, título, detalhes e resultado não são enviados ao Application Insights.
 
 No smoke test, os spans `chat.request`, `rag.search` e `tool.execute` apareceram em `dependencies`. A trilha do incidente registrou `pending_action_created`, `pending_action_confirmed` e `pending_action_result`.
 
@@ -690,16 +705,20 @@ $appUrl = azd env get-value API_URL
 Invoke-RestMethod "$appUrl/healthz"
 ```
 
-Abra `$appUrl` em uma janela sem sessão. O navegador deve pedir login Microsoft e voltar para a interface. Clientes de API sem autenticação recebem um desafio em `/chat`; no teste com `curl`, a resposta foi `401`. Para automação, obtenha um token emitido para o App Registration. Não coloque o secret no repositório nem no histórico do terminal. O estado local do AZD guarda o valor em `.azure/<ambiente>/.env` até você executar `azd env set AUTH_CLIENT_SECRET ''`.
+Abra `$appUrl` em uma janela sem sessão. A resposta anônima esperada nas rotas protegidas é `302`, seguida do login Microsoft. O script `.\scripts\smoke-test.ps1 -AppUrl $appUrl` valida o health endpoint e esse redirect sem precisar de credenciais. Os demais testes usam uma sessão autenticada no navegador.
 
 Teste primeiro uma pergunta que só usa RAG. Depois, uma pergunta que chama a ferramenta de leitura. Por último, peça a criação de um incidente e confirme que:
 
-1. `/chat` retorna uma ação pendente;
-2. a lista de incidentes continua vazia;
-3. outro usuário recebe `403` ao tentar confirmar;
-4. o solicitante consegue confirmar;
-5. repetir a confirmação devolve o mesmo `incident_id`;
-6. a auditoria contém solicitação, confirmação e resultado.
+1. `/healthz` responde e uma rota protegida redireciona com `302`;
+2. `/me` mostra o object ID aprovado;
+3. uma pergunta de runbook devolve citações;
+4. a ferramenta de métricas não cria uma ação pendente;
+5. o pedido de incidente devolve `pending_action`, mas nenhum `incident_id`;
+6. um segundo usuário aprovado acessa o app, mas recebe o `403` de ownership ao confirmar a ação de outra pessoa;
+7. o solicitante confirma duas vezes e recebe o mesmo `incident_id` não vazio;
+8. Application Insights contém os spans e os eventos de auditoria minimizados.
+
+O README traz helpers JavaScript copiáveis para executar esses checks no console do navegador e a consulta KQL correspondente.
 
 No ambiente de validação, o login interativo voltou para a interface, o RAG devolveu três citações e a ferramenta de métricas respondeu. O pedido de incidente exibiu a confirmação na tela e criou o incidente somente depois do clique. O Container App ficou em modo de revisão única, com 100% do tráfego e uma réplica.
 
@@ -755,18 +774,13 @@ O ponto é saber exatamente o que falta. Isso é melhor do que chamar uma demo d
 
 ## Limpeza
 
-Quando terminar:
+Use primeiro o cleanup controlado pelo AZD, que conhece o estado do ambiente:
 
 ```powershell
-$resourceGroup = azd env get-value AZURE_RESOURCE_GROUP
-
-az group delete `
-  --name $resourceGroup `
-  --yes `
-  --no-wait
+azd down --purge --force
 ```
 
-Confirme antes que o resource group não contém nada que você queira manter.
+Depois remova as credenciais `container-app-easy-auth`, o App Registration e qualquer service principal residual, e limpe o diretório `.azure\<ambiente>`. Se você usou `azd env set-secret`, remova também o segredo do Key Vault. O [procedimento completo de cleanup](https://github.com/ricmmartins/agentic-infra-handbook/tree/master/labs/personal-assistant#clean-up) inclui verificações e um fallback manual para estado AZD corrompido; revise o resource group antes de apagar qualquer coisa.
 
 ## Referências
 
