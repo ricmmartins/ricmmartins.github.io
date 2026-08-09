@@ -69,6 +69,8 @@ Esse escopo menor não é um atalho. Ele evita descobrir cinco problemas de infr
 
 ## Estrutura do projeto
 
+**Código existente — não copie/não execute.** Esta árvore mostra os arquivos que já existem no repositório.
+
 ```text
 labs/personal-assistant/
 ├── docs/runbooks/
@@ -106,11 +108,14 @@ O projeto usa Python 3.12 e PowerShell 7.4 ou posterior. Para acompanhar o tutor
 - Azure Developer CLI;
 - `Contributor` para criar recursos e `User Access Administrator` ou `Role Based Access Control Administrator` para atribuir roles, ou `Owner`;
 - permissão para registrar uma aplicação no Microsoft Entra;
-- quota para dois deployments de modelo na região escolhida.
+- quota para dois deployments de modelo na região escolhida;
+- um segundo usuário do Microsoft Entra, com object ID conhecido, para concluir a validação de ownership no Azure.
 
 Docker local é opcional. O `azure.yaml` usa build remoto no Azure Container Registry.
 
 Antes de começar, confirme as versões:
+
+**Execute — PowerShell.**
 
 ```powershell
 $PSVersionTable.PSVersion
@@ -118,12 +123,13 @@ py -3.12 --version
 az version
 az bicep version
 azd version
-.\scripts\preflight.ps1 -LocalOnly
 ```
 
 ## 1. Rode local antes de criar qualquer recurso
 
 Clone o repositório e entre no lab:
+
+**Execute — PowerShell.**
 
 ```powershell
 git clone https://github.com/ricmmartins/agentic-infra-handbook.git
@@ -133,6 +139,7 @@ if (-not (Test-Path .\azure.yaml) -or -not (Test-Path .\pyproject.toml)) {
   throw "Execute este tutorial a partir de agentic-infra-handbook\labs\personal-assistant."
 }
 
+.\scripts\preflight.ps1 -LocalOnly
 Copy-Item .env.example .env
 py -3.12 -m venv .venv
 .\.venv\Scripts\Activate.ps1
@@ -142,6 +149,8 @@ python -m pytest -q
 ```
 
 O `.env.example` começa assim:
+
+**Código existente — não copie/não execute.** O arquivo já vem configurado para o modo local.
 
 ```dotenv
 APP_ENV=development
@@ -156,11 +165,15 @@ Com esses valores, a aplicação não tenta acessar o Azure. O modelo é determi
 
 Suba a API:
 
+**Execute — PowerShell.**
+
 ```powershell
 personal-assistant-api
 ```
 
 Em outro terminal:
+
+**Execute — PowerShell.**
 
 ```powershell
 Invoke-RestMethod `
@@ -172,7 +185,22 @@ Invoke-RestMethod `
 
 A resposta inclui texto, citações e, quando houver uma operação sensível, uma `pending_action`.
 
-Os testes cobrem o fluxo local e contratos que costumam quebrar só depois do deploy:
+**Saída esperada.** Os textos variam, mas uma consulta de leitura tem este formato:
+
+```json
+{
+  "answer": "...",
+  "citations": [
+    {
+      "source": "01-container-apps-auth.md",
+      "title": "..."
+    }
+  ],
+  "pending_action": null
+}
+```
+
+A suíte atual executa 15 casos (`15 passed`). Um teste parametrizado gera dois casos; em conjunto, eles cobrem o fluxo local e contratos que costumam quebrar só depois do deploy:
 
 1. o chat devolve resposta e fonte;
 2. uma ação de escrita fica pendente;
@@ -188,9 +216,11 @@ Os testes cobrem o fluxo local e contratos que costumam quebrar só depois do de
 
 O quarto teste parece detalhe até você imaginar dois usuários dividindo o mesmo backend. Um UUID difícil de adivinhar não substitui autorização.
 
-## 2. Separe desenvolvimento local de identidade gerenciada
+## 2. Como o desenvolvimento local se separa da identidade gerenciada
 
 No notebook do desenvolvedor, `DefaultAzureCredential` é conveniente porque encontra a sessão do Azure CLI. Dentro do Container App, prefiro uma credencial determinística.
+
+**Código existente — não copie/não execute.** Este recorte explica a seleção de credencial já implementada em `bootstrap.py`.
 
 ```python
 from azure.identity import DefaultAzureCredential, ManagedIdentityCredential
@@ -209,9 +239,11 @@ Para identidade atribuída pelo sistema, `managed_identity_client_id` fica vazio
 
 Essa diferença evita que o ambiente de produção percorra uma cadeia de credenciais que só faz sentido no computador do desenvolvedor.
 
-## 3. Conecte o Azure OpenAI sem usar API key
+## 3. Como o Azure OpenAI é conectado sem API key
 
 O cliente usa o endpoint v1 da API OpenAI:
+
+**Código existente — não copie/não execute.** Este recorte omite o restante do adapter e serve apenas para explicar a autenticação.
 
 ```python
 from azure.identity import get_bearer_token_provider
@@ -231,6 +263,8 @@ client = OpenAI(
 
 O valor passado em `model` é o nome do deployment, não necessariamente o nome comercial do modelo:
 
+**Código existente — não copie/não execute.**
+
 ```python
 response = client.chat.completions.create(
     model=config.azure_openai_chat_deployment,
@@ -244,6 +278,8 @@ O exemplo não envia `temperature`. O deployment usado no teste real foi `gpt-5-
 
 Para embeddings, fixei `text-embedding-3-small` em 1536 dimensões:
 
+**Código existente — não copie/não execute.**
+
 ```python
 response = client.embeddings.create(
     model=config.azure_openai_embedding_deployment,
@@ -254,9 +290,11 @@ response = client.embeddings.create(
 
 O modelo permite usar menos dimensões, mas o índice e as consultas precisam concordar. Trocar esse valor em um lugar e esquecer o outro produz erro ou, pior, uma migração de índice no meio do projeto.
 
-## 4. Crie o índice vetorial do Azure AI Search
+## 4. Como funciona o índice vetorial do Azure AI Search
 
 O adapter cria o índice de forma idempotente. Estes são os campos relevantes:
+
+**Código existente — não copie/não execute.** Este é apenas o campo vetorial dentro do schema completo.
 
 ```python
 {
@@ -273,6 +311,8 @@ O adapter cria o índice de forma idempotente. Estes são os campos relevantes:
 O vetor não volta na resposta. O modelo recebe título, fonte e conteúdo, que são os campos úteis para citar.
 
 A consulta combina texto e vetor:
+
+**Código existente — não copie/não execute.** Este é o payload montado pelo adapter.
 
 ```python
 payload = {
@@ -295,7 +335,7 @@ payload = {
 
 O Search executa as partes lexical e vetorial em paralelo, combina os resultados com Reciprocal Rank Fusion e aplica o semantic ranker. `top=3` controla quantos documentos voltam para o prompt. `k=50` deixa candidatos suficientes para o reranking.
 
-### Separe a indexação quando sair do lab
+### Como separar a indexação ao sair do lab
 
 Eu separaria as identidades assim:
 
@@ -308,9 +348,11 @@ A identidade da API consulta. A identidade do pipeline altera schema e documento
 
 No lab, `BOOTSTRAP_RAG_ON_STARTUP=true` existe para facilitar o primeiro deploy. Por isso, o template atribui Search Service Contributor e Search Index Data Contributor à identidade do Container App. Em produção, mova a ingestão para um job, deixe `BOOTSTRAP_RAG_ON_STARTUP=false` e reduza a API para Search Index Data Reader.
 
-## 5. Monte o agent loop
+## 5. Como o agent loop funciona
 
 O núcleo recebe a identidade, recupera documentos e carrega o histórico da sessão. A chave da memória inclui o ID do usuário:
+
+**Código existente — não copie/não execute.**
 
 ```python
 memory_session_id = f"{actor.actor_id}:{session_id}"
@@ -321,6 +363,8 @@ documents = knowledge_base.search(message)
 Isso impede que duas pessoas que escolheram `session_id="demo"` compartilhem contexto por acidente.
 
 Depois, o loop chama o modelo no máximo três vezes:
+
+**Código existente — não copie/não execute.** O recorte destaca o limite de iterações; a implementação completa permanece no repositório.
 
 ```python
 for _ in range(3):
@@ -349,9 +393,11 @@ for _ in range(3):
 
 O limite evita um modelo preso em chamadas de ferramenta. Em produção, eu também registraria o motivo do término: resposta final, limite de iterações, timeout ou erro de ferramenta.
 
-## 6. Trate leitura e escrita de formas diferentes
+## 6. Como leitura e escrita seguem caminhos diferentes
 
 A ferramenta de métricas é somente leitura:
+
+**Código existente — não copie/não execute.** Este é o schema da ferramenta registrado pela aplicação.
 
 ```python
 {
@@ -379,6 +425,8 @@ No lab, ela devolve números determinísticos. Trocar pelo Azure Monitor signifi
 
 `create_incident` segue outro caminho. A chamada do modelo apenas cria um registro pendente:
 
+**Código existente — não copie/não execute.**
+
 ```python
 record = pending_action_service.create_incident_request(
     session_id=session_id,
@@ -396,6 +444,8 @@ O usuário recebe um `action_id` e uma prévia. Nenhum incidente existe ainda.
 *O modelo prepara a ação, mas o backend só executa a escrita depois da confirmação explícita do usuário.*
 
 Para confirmar:
+
+**Execute — PowerShell.** Use este fluxo somente no modo local; no Azure, a identidade vem da sessão autenticada do navegador.
 
 ```powershell
 $chat = Invoke-RestMethod `
@@ -425,7 +475,7 @@ Só depois o adapter de incidente é executado. No lab, ele cria `INC-0001` em m
 - armazenamento durável do estado;
 - trilha de auditoria fora do processo.
 
-## 7. Use a identidade que o Container Apps já validou
+## 7. Como a identidade validada pelo Container Apps chega à API
 
 Azure Container Apps tem autenticação integrada. Quando o Microsoft Entra ID está configurado, o middleware da plataforma valida o usuário antes de entregar a requisição e injeta cabeçalhos como:
 
@@ -433,6 +483,8 @@ Azure Container Apps tem autenticação integrada. Quando o Microsoft Entra ID e
 - `X-MS-CLIENT-PRINCIPAL-NAME`.
 
 A API lê os dois:
+
+**Código existente — não copie/não execute.**
 
 ```python
 actor_id = request.headers.get("X-MS-CLIENT-PRINCIPAL-ID")
@@ -450,7 +502,7 @@ Tokens app-only podem não ter um nome de usuário. Nesse caso, o ID do principa
 
 Isso depende de manter a porta da aplicação acessível somente pelo ingress gerenciado com Easy Auth. Esses headers não têm uma assinatura verificável pela aplicação. Se você introduzir qualquer caminho alternativo até a porta 8000, valide o bearer token dentro da aplicação em vez de confiar nos headers.
 
-## 8. Entenda o que o template provisiona
+## 8. Como o template provisiona os recursos
 
 O deploy usa Azure Developer CLI e Bicep. `infra/main.bicep` roda no escopo da assinatura, cria um resource group isolado e chama `infra/app.bicep`.
 
@@ -482,30 +534,13 @@ O template mantém uma réplica. Como sessão e ações pendentes ainda vivem em
 
 ## 9. Crie o App Registration
 
-O Bicep configura a autenticação do Container App, mas recebe o client ID de um App Registration existente. O script completo e validado está na seção [Create and validate the Microsoft Entra App Registration](https://github.com/ricmmartins/agentic-infra-handbook/tree/master/labs/personal-assistant#create-and-validate-the-microsoft-entra-app-registration) do README.
+O Bicep configura a autenticação do Container App, mas recebe o client ID de um App Registration existente. Execute as seções [Create the Microsoft Entra App Registration](https://github.com/ricmmartins/agentic-infra-handbook/tree/master/labs/personal-assistant#6-create-the-microsoft-entra-app-registration) e [Create a short-lived Easy Auth credential](https://github.com/ricmmartins/agentic-infra-handbook/tree/master/labs/personal-assistant#7-create-a-short-lived-easy-auth-credential) do README.
 
-Esse script cria uma aplicação single-tenant, o escopo `api://<client-id>/user_impersonation`, tokens v2, ID tokens para o fluxo do Easy Auth e `groupMembershipClaims = "SecurityGroup"`. A chamada ao Microsoft Graph usa obrigatoriamente `Authorization = "Bearer $graphToken"` e valida o estado resultante antes de continuar. Sem `enableIdTokenIssuance`, o callback pode falhar com `AADSTS700054`.
+Esse script cria uma aplicação single-tenant, o escopo `api://<client-id>/user_impersonation`, tokens v2, ID tokens para o fluxo do Easy Auth e `groupMembershipClaims = "SecurityGroup"`. A chamada ao Microsoft Graph usa o esquema Bearer no cabeçalho `Authorization` e valida o estado resultante antes de continuar. Sem `enableIdTokenIssuance`, o callback pode falhar com `AADSTS700054`.
 
-Crie também um secret para o provedor de autenticação. Respeite o prazo máximo definido pela política do tenant:
+Não repliquei aqui um fragmento do script porque criar apenas o secret sem validar aplicação, service principal, token v2, ID token e escopo deixa o ambiente em um estado ambíguo. O README é a fonte operacional e também cobre prazo, armazenamento e rotação da credencial.
 
-```powershell
-$endDate = (Get-Date).ToUniversalTime().AddDays(30).ToString(
-  "yyyy-MM-ddTHH:mm:ssZ"
-)
-
-$credential = az ad app credential reset `
-  --id $clientId `
-  --append `
-  --display-name container-app-easy-auth `
-  --end-date $endDate | ConvertFrom-Json
-
-$clientSecret = $credential.password
-if ([string]::IsNullOrWhiteSpace($clientSecret)) {
-  throw "O Azure CLI não retornou o secret do App Registration."
-}
-```
-
-Alguns tenants exigem consentimento de administrador. Não contorne essa política com uma conta pessoal ou um tenant diferente. Trate o secret como uma credencial operacional e defina uma rotina de rotação antes do vencimento.
+Alguns tenants exigem consentimento de administrador. Não contorne essa política com uma conta pessoal ou um tenant diferente.
 
 `/healthz` fica fora da autenticação para atender os probes. Com `RedirectToLoginPage`, uma requisição anônima às rotas protegidas recebe `302` para o provedor de login. Um token inválido ou um ator que não pertence às allowlists pode receber `401` ou `403`, dependendo da etapa que rejeitou a requisição.
 
@@ -513,67 +548,28 @@ Alguns tenants exigem consentimento de administrador. Não contorne essa políti
 
 Entre com a conta correta no Azure CLI e no Azure Developer CLI:
 
+**Execute — PowerShell.** Antes, defina `$tenantId` e `$subscriptionId` conforme o [passo 5 do README](https://github.com/ricmmartins/agentic-infra-handbook/tree/master/labs/personal-assistant#5-select-the-tenant-subscription-regions-and-models).
+
 ```powershell
 az login --tenant $tenantId
 az account set --subscription $subscriptionId
 azd auth login
+azd auth status
 ```
 
-Crie um ambiente isolado e grave os parâmetros:
-
-As variáveis `$tenantId`, `$subscriptionId`, regiões, modelos, capacidades e allowlists são definidas e validadas no [passo 5 do README](https://github.com/ricmmartins/agentic-infra-handbook/tree/master/labs/personal-assistant#5-select-the-tenant-subscription-regions-and-models). Mantenha a mesma sessão PowerShell durante a criação do App Registration e a configuração do AZD.
-
-```powershell
-azd env new personal-assistant-dev
-azd env set AZURE_SUBSCRIPTION_ID $subscriptionId
-azd env set AZURE_LOCATION $location
-azd env set AZURE_SEARCH_LOCATION $searchLocation
-azd env set AZURE_OPENAI_CHAT_MODEL_NAME $chatModelName
-azd env set AZURE_OPENAI_CHAT_MODEL_VERSION $chatModelVersion
-azd env set AZURE_OPENAI_CHAT_DEPLOYMENT_SKU $chatDeploymentSku
-azd env set AZURE_OPENAI_CHAT_DEPLOYMENT_CAPACITY $chatDeploymentCapacity
-azd env set AZURE_OPENAI_EMBEDDING_MODEL_NAME $embeddingModelName
-azd env set AZURE_OPENAI_EMBEDDING_MODEL_VERSION $embeddingModelVersion
-azd env set AZURE_OPENAI_EMBEDDING_DEPLOYMENT_SKU $embeddingDeploymentSku
-azd env set AZURE_OPENAI_EMBEDDING_DEPLOYMENT_CAPACITY $embeddingDeploymentCapacity
-azd env set AZURE_OPENAI_EMBEDDING_DIMENSIONS $embeddingDimensions
-azd env set AUTH_CLIENT_ID $clientId
-azd env set AUTH_CLIENT_SECRET $clientSecret
-azd env set AUTH_ALLOWED_PRINCIPAL_IDS ($authAllowedPrincipalIds -join ",")
-azd env set AUTH_ALLOWED_GROUP_IDS ($authAllowedGroupIds -join ",")
-
-$clientSecret = $null
-```
+Crie o ambiente e grave todos os parâmetros executando a seção [Create and validate the AZD environment](https://github.com/ricmmartins/agentic-infra-handbook/tree/master/labs/personal-assistant#8-create-and-validate-the-azd-environment) do README. Ela define regiões, modelos, capacidades, allowlists, client ID e secret como uma unidade. Mantenha a mesma sessão PowerShell desde a seleção do tenant até essa etapa.
 
 Use a mesma região para `AZURE_LOCATION` e `AZURE_SEARCH_LOCATION` quando houver capacidade. Separar as duas é uma saída para indisponibilidade regional, não uma recomendação automática.
 
-Antes de criar recursos, registre os providers listados no README e execute o preflight Azure:
-
-```powershell
-.\scripts\preflight.ps1 `
-  -TenantId $tenantId `
-  -SubscriptionId $subscriptionId `
-  -ClientId $clientId `
-  -AllowedPrincipalIds $authAllowedPrincipalIds `
-  -AllowedGroupIds $authAllowedGroupIds `
-  -Location $location `
-  -SearchLocation $searchLocation `
-  -ChatModelName $chatModelName `
-  -ChatModelVersion $chatModelVersion `
-  -ChatDeploymentSku $chatDeploymentSku `
-  -ChatDeploymentCapacity $chatDeploymentCapacity `
-  -EmbeddingModelName $embeddingModelName `
-  -EmbeddingModelVersion $embeddingModelVersion `
-  -EmbeddingDeploymentSku $embeddingDeploymentSku `
-  -EmbeddingDeploymentCapacity $embeddingDeploymentCapacity `
-  -EmbeddingDimensions $embeddingDimensions
-```
+Antes de criar recursos, registre os providers do passo 5 e execute o preflight Azure completo do passo 8. Não monte a chamada a partir de parâmetros isolados deste artigo; o README acompanha a assinatura atual do script.
 
 O `azure.yaml` usa `remoteBuild: true`. O AZD envia o contexto para o ACR, compila a imagem lá e injeta `SERVICE_API_IMAGE_NAME` no Bicep. Isso evita a dependência de Docker local e impede que um novo `azd provision` restaure uma imagem placeholder.
 
 `AUTH_CLIENT_SECRET` entra no Bicep como parâmetro seguro e é armazenado como secret do Container App. Ele não deve aparecer no repositório.
 
 O comando `azd env set` também grava o valor no arquivo local `.azure/<ambiente>/.env`. Esse diretório está no `.gitignore`, mas o arquivo não é criptografado. Proteja o diretório com as permissões do usuário e remova o valor local depois do provisionamento:
+
+**Execute — PowerShell.** Faça isso somente depois de o provisionamento ter enviado o secret ao Container App.
 
 ```powershell
 azd env set AUTH_CLIENT_SECRET ''
@@ -585,6 +581,8 @@ O AZD 1.24.1 não oferece `env unset`; definir uma string vazia remove o valor s
 
 Compile o Bicep e rode os testes:
 
+**Execute — PowerShell.**
+
 ```powershell
 az bicep build --file infra\main.bicep --stdout | Out-Null
 if ($LASTEXITCODE -ne 0) { throw "Falha ao compilar o Bicep." }
@@ -592,6 +590,8 @@ python -m pytest -q
 ```
 
 Confira o que o Azure pretende criar:
+
+**Execute — PowerShell.** O preview consulta sua assinatura, mas não cria intencionalmente os recursos.
 
 ```powershell
 azd provision --preview --no-prompt
@@ -603,6 +603,8 @@ Não execute `azd package` neste lab. Para um serviço Docker, esse comando tent
 
 Com o ambiente validado:
 
+**Produção.** Execute no PowerShell; este comando cria recursos Azure faturáveis.
+
 ```powershell
 azd up
 ```
@@ -611,12 +613,25 @@ O comando provisiona a infraestrutura, executa o build remoto e publica a API. N
 
 Agora registre o callback e abra a aplicação:
 
+**Execute — PowerShell.**
+
 ```powershell
 $appUrl = azd env get-value API_URL
+if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($appUrl)) {
+  throw "O AZD não retornou API_URL."
+}
+$clientId = azd env get-value AUTH_CLIENT_ID
+if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($clientId)) {
+  throw "O AZD não retornou AUTH_CLIENT_ID."
+}
+$redirectUri = "$($appUrl.TrimEnd('/'))/.auth/login/aad/callback"
 
 az ad app update `
   --id $clientId `
-  --web-redirect-uris "$appUrl/.auth/login/aad/callback"
+  --web-redirect-uris $redirectUri
+if ($LASTEXITCODE -ne 0) {
+  throw "Não foi possível registrar o callback do Easy Auth."
+}
 
 azd env set AUTH_CLIENT_SECRET ''
 Start-Process $appUrl
@@ -625,6 +640,8 @@ Start-Process $appUrl
 O navegador redireciona para o login Microsoft e volta para uma interface de chat. A página mostra as fontes do RAG, consulta métricas e apresenta um botão de confirmação quando o modelo prepara uma ação sensível.
 
 Para publicar apenas uma mudança no código:
+
+**Opcional.** Execute no PowerShell apenas quando a infraestrutura não mudou.
 
 ```powershell
 azd deploy api
@@ -652,6 +669,8 @@ O Search e o Azure OpenAI usam `disableLocalAuth=true`. Não existe API key no c
 
 A configuração de Easy Auth redireciona navegadores anônimos para o Microsoft Entra ID e aceita os audiences:
 
+**Saída esperada.** O template deve produzir exatamente estes dois formatos de audience:
+
 ```text
 <client-id>
 api://<client-id>
@@ -662,6 +681,8 @@ Ela também restringe tokens app-only ao client ID autorizado. Isso não limita 
 ## 14. Observe o fluxo no Application Insights
 
 O pacote `azure-monitor-opentelemetry` usa a variável `APPLICATIONINSIGHTS_CONNECTION_STRING` entregue pelo Bicep:
+
+**Código existente — não copie/não execute.**
 
 ```python
 from azure.monitor.opentelemetry import configure_azure_monitor
@@ -681,12 +702,16 @@ No smoke test, os spans `chat.request`, `rag.search` e `tool.execute` apareceram
 
 Consultas úteis:
 
+**Execute — Application Insights.** Cole esta consulta em **Logs** para resumir os spans.
+
 ```kusto
 dependencies
 | where name in ("chat.request", "rag.search", "tool.execute")
 | summarize calls=count(), failures=countif(success == false) by name
 | order by failures desc
 ```
+
+**Execute — Application Insights.** Cole esta consulta em **Logs** para inspecionar os eventos de auditoria minimizados.
 
 ```kusto
 traces
@@ -697,7 +722,11 @@ traces
 
 ## 15. Teste o fluxo no Azure
 
+Para concluir todos os oito checks, inclua o object ID de um segundo usuário em `AUTH_ALLOWED_PRINCIPAL_IDS` antes do provisionamento. Esse usuário precisa conseguir abrir `/me`, mas não pode ser quem cria a ação pendente. Sem ele, o check de ownership não está concluído.
+
 Recupere a URL e espere o health check:
+
+**Execute — PowerShell.**
 
 ```powershell
 $appUrl = azd env get-value API_URL
@@ -706,6 +735,16 @@ Invoke-RestMethod "$appUrl/healthz"
 ```
 
 Abra `$appUrl` em uma janela sem sessão. A resposta anônima esperada nas rotas protegidas é `302`, seguida do login Microsoft. O script `.\scripts\smoke-test.ps1 -AppUrl $appUrl` valida o health endpoint e esse redirect sem precisar de credenciais. Os demais testes usam uma sessão autenticada no navegador.
+
+Depois do login do usuário principal, confirme a identidade:
+
+**Execute — console do navegador.**
+
+```javascript
+const meResponse = await fetch("/me");
+if (!meResponse.ok) throw new Error(`${meResponse.status}: ${await meResponse.text()}`);
+console.table(await meResponse.json());
+```
 
 Teste primeiro uma pergunta que só usa RAG. Depois, uma pergunta que chama a ferramenta de leitura. Por último, peça a criação de um incidente e confirme que:
 
@@ -728,6 +767,8 @@ Azure Cache for Redis está em processo de aposentadoria. Para novos projetos, u
 
 O serviço usa Microsoft Entra ID por padrão e aceita tokens no escopo:
 
+**Código existente — não copie/não execute.** Este é o escopo solicitado pelo client Redis ao obter o token.
+
 ```text
 https://redis.azure.com/.default
 ```
@@ -735,6 +776,8 @@ https://redis.azure.com/.default
 O client usa o object ID da identidade como usuário e o token como senha. O token precisa ser renovado antes de expirar. Não basta obter um token no startup e manter a conexão por dias.
 
 No código, a memória já depende de um protocolo:
+
+**Código existente — não copie/não execute.**
 
 ```python
 class ConversationMemoryStore(Protocol):
@@ -776,11 +819,13 @@ O ponto é saber exatamente o que falta. Isso é melhor do que chamar uma demo d
 
 Use primeiro o cleanup controlado pelo AZD, que conhece o estado do ambiente:
 
+**Cleanup.** Execute no PowerShell somente depois de revisar o ambiente ativo; o comando remove recursos.
+
 ```powershell
-azd down --purge --force
+azd down --purge
 ```
 
-Depois remova as credenciais `container-app-easy-auth`, o App Registration e qualquer service principal residual, e limpe o diretório `.azure\<ambiente>`. Se você usou `azd env set-secret`, remova também o segredo do Key Vault. O [procedimento completo de cleanup](https://github.com/ricmmartins/agentic-infra-handbook/tree/master/labs/personal-assistant#clean-up) inclui verificações e um fallback manual para estado AZD corrompido; revise o resource group antes de apagar qualquer coisa.
+Depois remova as credenciais `container-app-easy-auth`, o App Registration e qualquer service principal residual, e limpe o diretório `.azure\<ambiente>`. Se você usou `azd env set-secret`, remova também o segredo do Key Vault. O [procedimento completo de cleanup](https://github.com/ricmmartins/agentic-infra-handbook/tree/master/labs/personal-assistant#14-complete-cleanup) inclui verificações e um fallback manual para estado AZD corrompido; revise o resource group antes de apagar qualquer coisa.
 
 ## Referências
 
