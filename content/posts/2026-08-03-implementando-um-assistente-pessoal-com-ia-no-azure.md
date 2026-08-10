@@ -21,7 +21,7 @@ series:
 
 No [post anterior](/projetando-um-assistente-ai-pessoal/), eu desenhei um assistente que consulta runbooks, mantém contexto e chama ferramentas de infraestrutura. A arquitetura fazia sentido, mas ainda tinha um problema: os exemplos eram recortes. Faltavam os arquivos que conectam uma parte à outra.
 
-Este post fecha essa lacuna. Vamos partir de uma aplicação que roda localmente sem Azure e levar a mesma vertical slice para Container Apps, Azure OpenAI e Azure AI Search.
+Neste post, parto de uma aplicação que roda localmente sem Azure e levo a mesma vertical slice para Container Apps, Azure OpenAI e Azure AI Search.
 
 O código está no repositório [agentic-infra-handbook](https://github.com/ricmmartins/agentic-infra-handbook/tree/master/labs/personal-assistant), em `labs/personal-assistant`. O README do lab também traz um [passo a passo independente para executar o projeto localmente e fazer o deploy no Azure](https://github.com/ricmmartins/agentic-infra-handbook/tree/master/labs/personal-assistant#deploy-to-azure-step-by-step), incluindo App Registration, configuração do AZD, callback de autenticação, validação e limpeza dos recursos.
 
@@ -29,7 +29,7 @@ O README é a referência operacional deste post. Ele contém os comandos comple
 
 ## O que vamos entregar
 
-Ao final, teremos:
+Ao final, a aplicação terá:
 
 - uma API FastAPI com endpoint de chat;
 - RAG sobre runbooks em Markdown;
@@ -61,7 +61,7 @@ Esta é uma referência didática, não uma baseline pronta para produção. Ela
 | Azure Managed Redis | Interface pronta, implementação posterior |
 | Cosmos DB para memória longa | Interface pronta, implementação posterior |
 
-Esse escopo menor não é um atalho. Ele evita descobrir cinco problemas de infraestrutura ao mesmo tempo sem saber qual deles quebrou a resposta.
+Mantive esse escopo menor para isolar falhas. Com cinco serviços de dados novos no primeiro deploy, uma resposta com erro não indica qual limite quebrou.
 
 ![Assistente respondendo com RAG e citações dos runbooks](/img/personal-assistant-rag-citations.gif)
 
@@ -115,7 +115,7 @@ Docker local é opcional. O `azure.yaml` usa build remoto no Azure Container Reg
 
 Antes de começar, confirme as versões:
 
-*PowerShell — execute:*
+*PowerShell: execute:*
 
 ```powershell
 $PSVersionTable.PSVersion
@@ -129,7 +129,7 @@ azd version
 
 Clone o repositório e entre no lab:
 
-*PowerShell — execute:*
+*PowerShell: execute:*
 
 ```powershell
 git clone https://github.com/ricmmartins/agentic-infra-handbook.git
@@ -165,7 +165,7 @@ Com esses valores, a aplicação não tenta acessar o Azure. O modelo é determi
 
 Suba a API:
 
-*PowerShell — execute:*
+*PowerShell: execute:*
 
 ```powershell
 personal-assistant-api
@@ -173,7 +173,7 @@ personal-assistant-api
 
 Em outro terminal:
 
-*PowerShell — execute:*
+*PowerShell: execute:*
 
 ```powershell
 Invoke-RestMethod `
@@ -445,7 +445,7 @@ O usuário recebe um `action_id` e uma prévia. Nenhum incidente existe ainda.
 
 Para confirmar:
 
-*PowerShell — execute:* Use este fluxo somente no modo local; no Azure, a identidade vem da sessão autenticada do navegador.
+*PowerShell: execute:* Use este fluxo somente no modo local; no Azure, a identidade vem da sessão autenticada do navegador.
 
 ```powershell
 $chat = Invoke-RestMethod `
@@ -548,7 +548,7 @@ Alguns tenants exigem consentimento de administrador. Não contorne essa políti
 
 Entre com a conta correta no Azure CLI e no Azure Developer CLI:
 
-*PowerShell — execute:* Antes, defina `$tenantId` e `$subscriptionId` conforme o [passo 5 do README](https://github.com/ricmmartins/agentic-infra-handbook/tree/master/labs/personal-assistant#5-select-the-tenant-subscription-regions-and-models).
+*PowerShell: execute:* Antes, defina `$tenantId` e `$subscriptionId` conforme o [passo 5 do README](https://github.com/ricmmartins/agentic-infra-handbook/tree/master/labs/personal-assistant#5-select-the-tenant-subscription-regions-and-models).
 
 ```powershell
 az login --tenant $tenantId
@@ -569,7 +569,7 @@ O `azure.yaml` usa `remoteBuild: true`. O AZD envia o contexto para o ACR, compi
 
 O comando `azd env set` também grava o valor no arquivo local `.azure/<ambiente>/.env`. Esse diretório está no `.gitignore`, mas o arquivo não é criptografado. Proteja o diretório com as permissões do usuário e remova o valor local depois do provisionamento:
 
-*PowerShell — execute:* Faça isso somente depois de o provisionamento ter enviado o secret ao Container App.
+*PowerShell: execute:* Faça isso somente depois de o provisionamento ter enviado o secret ao Container App.
 
 ```powershell
 azd env set AUTH_CLIENT_SECRET ''
@@ -581,7 +581,7 @@ O AZD 1.24.1 não oferece `env unset`; definir uma string vazia remove o valor s
 
 Compile o Bicep e rode os testes:
 
-*PowerShell — execute:*
+*PowerShell: execute:*
 
 ```powershell
 az bicep build --file infra\main.bicep --stdout | Out-Null
@@ -591,7 +591,7 @@ python -m pytest -q
 
 Confira o que o Azure pretende criar:
 
-*PowerShell — execute:* O preview consulta sua assinatura, mas não cria intencionalmente os recursos.
+*PowerShell: execute:* O preview consulta sua assinatura, mas não cria intencionalmente os recursos.
 
 ```powershell
 azd provision --preview --no-prompt
@@ -613,7 +613,7 @@ O comando provisiona a infraestrutura, executa o build remoto e publica a API. N
 
 Agora registre o callback e abra a aplicação:
 
-*PowerShell — execute:*
+*PowerShell: execute:*
 
 ```powershell
 $appUrl = azd env get-value API_URL
@@ -696,13 +696,13 @@ if config.applicationinsights_connection_string:
 
 O código cria spans para chat, RAG e ferramentas. Ele registra contagens, backend usado e presença de ação pendente. Não envia o texto da pergunta como atributo de telemetria.
 
-Esse cuidado evita transformar Application Insights em uma cópia dos prompts ou do incidente. A telemetria de auditoria contém apenas o tipo do evento, `action_id` e `actor_ref`, uma referência derivada de SHA-256 truncado. Nome, object ID, session ID, título, detalhes e resultado não são enviados ao Application Insights.
+Assim, o Application Insights não vira uma cópia dos prompts ou do incidente. A telemetria de auditoria contém apenas o tipo do evento, `action_id` e `actor_ref`, uma referência derivada de SHA-256 truncado. Nome, object ID, session ID, título, detalhes e resultado não são enviados ao Application Insights.
 
 No smoke test, os spans `chat.request`, `rag.search` e `tool.execute` apareceram em `dependencies`. A trilha do incidente registrou `pending_action_created`, `pending_action_confirmed` e `pending_action_result`.
 
 Consultas úteis:
 
-**Execute — Application Insights.** Cole esta consulta em **Logs** para resumir os spans.
+**Execute: Application Insights.** Cole esta consulta em **Logs** para resumir os spans.
 
 ```kusto
 dependencies
@@ -711,7 +711,7 @@ dependencies
 | order by failures desc
 ```
 
-**Execute — Application Insights.** Cole esta consulta em **Logs** para inspecionar os eventos de auditoria minimizados.
+**Execute: Application Insights.** Cole esta consulta em **Logs** para inspecionar os eventos de auditoria minimizados.
 
 ```kusto
 traces
@@ -726,7 +726,7 @@ Para concluir todos os oito checks, inclua o object ID de um segundo usuário em
 
 Recupere a URL e espere o health check:
 
-*PowerShell — execute:*
+*PowerShell: execute:*
 
 ```powershell
 $appUrl = azd env get-value API_URL
@@ -738,7 +738,7 @@ Abra `$appUrl` em uma janela sem sessão. A resposta anônima esperada nas rotas
 
 Depois do login do usuário principal, confirme a identidade:
 
-**Execute — console do navegador.**
+**Execute: console do navegador.**
 
 ```javascript
 const meResponse = await fetch("/me");
@@ -801,7 +801,7 @@ Políticas e índices vetoriais do container são imutáveis depois da criação
 
 ## O que eu mudaria antes de produção
 
-Esta vertical slice prova a arquitetura. Ainda faltam alguns controles:
+Esta vertical slice demonstra a arquitetura, mas ainda faltam estes controles:
 
 - persistir sessões e ações pendentes fora do processo;
 - separar o pipeline de ingestão do runtime;
@@ -813,7 +813,7 @@ Esta vertical slice prova a arquitetura. Ainda faltam alguns controles:
 - definir retenção e exclusão de memória por usuário;
 - adicionar rate limiting por identidade.
 
-O ponto é saber exatamente o que falta. Isso é melhor do que chamar uma demo de "production-ready" porque ela respondeu três perguntas no notebook.
+Prefiro sair da demo com uma lista precisa do que falta a chamá-la de "production-ready" porque respondeu três perguntas no notebook.
 
 ## Limpeza
 
