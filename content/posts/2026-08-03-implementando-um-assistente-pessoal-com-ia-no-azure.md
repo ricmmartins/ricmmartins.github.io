@@ -69,7 +69,7 @@ Esse escopo menor não é um atalho. Ele evita descobrir cinco problemas de infr
 
 ## Estrutura do projeto
 
-**Código existente — não copie/não execute.** Esta árvore mostra os arquivos que já existem no repositório.
+*Estrutura atual do repositório:*
 
 ```text
 labs/personal-assistant/
@@ -115,7 +115,7 @@ Docker local é opcional. O `azure.yaml` usa build remoto no Azure Container Reg
 
 Antes de começar, confirme as versões:
 
-**Execute — PowerShell.**
+*PowerShell — execute:*
 
 ```powershell
 $PSVersionTable.PSVersion
@@ -129,7 +129,7 @@ azd version
 
 Clone o repositório e entre no lab:
 
-**Execute — PowerShell.**
+*PowerShell — execute:*
 
 ```powershell
 git clone https://github.com/ricmmartins/agentic-infra-handbook.git
@@ -150,7 +150,7 @@ python -m pytest -q
 
 O `.env.example` começa assim:
 
-**Código existente — não copie/não execute.** O arquivo já vem configurado para o modo local.
+*Trecho do código existente, mostrado apenas para referência:*
 
 ```dotenv
 APP_ENV=development
@@ -165,7 +165,7 @@ Com esses valores, a aplicação não tenta acessar o Azure. O modelo é determi
 
 Suba a API:
 
-**Execute — PowerShell.**
+*PowerShell — execute:*
 
 ```powershell
 personal-assistant-api
@@ -173,7 +173,7 @@ personal-assistant-api
 
 Em outro terminal:
 
-**Execute — PowerShell.**
+*PowerShell — execute:*
 
 ```powershell
 Invoke-RestMethod `
@@ -220,7 +220,7 @@ O quarto teste parece detalhe até você imaginar dois usuários dividindo o mes
 
 No notebook do desenvolvedor, `DefaultAzureCredential` é conveniente porque encontra a sessão do Azure CLI. Dentro do Container App, prefiro uma credencial determinística.
 
-**Código existente — não copie/não execute.** Este recorte explica a seleção de credencial já implementada em `bootstrap.py`.
+*Trecho do código existente, mostrado apenas para referência:* Este recorte explica a seleção de credencial já implementada em `bootstrap.py`.
 
 ```python
 from azure.identity import DefaultAzureCredential, ManagedIdentityCredential
@@ -243,7 +243,7 @@ Essa diferença evita que o ambiente de produção percorra uma cadeia de creden
 
 O cliente usa o endpoint v1 da API OpenAI:
 
-**Código existente — não copie/não execute.** Este recorte omite o restante do adapter e serve apenas para explicar a autenticação.
+*Trecho do código existente, mostrado apenas para referência:* Este recorte omite o restante do adapter e serve apenas para explicar a autenticação.
 
 ```python
 from azure.identity import get_bearer_token_provider
@@ -263,7 +263,7 @@ client = OpenAI(
 
 O valor passado em `model` é o nome do deployment, não necessariamente o nome comercial do modelo:
 
-**Código existente — não copie/não execute.**
+*Trecho do código existente, mostrado apenas para referência:*
 
 ```python
 response = client.chat.completions.create(
@@ -278,7 +278,7 @@ O exemplo não envia `temperature`. O deployment usado no teste real foi `gpt-5-
 
 Para embeddings, fixei `text-embedding-3-small` em 1536 dimensões:
 
-**Código existente — não copie/não execute.**
+*Trecho do código existente, mostrado apenas para referência:*
 
 ```python
 response = client.embeddings.create(
@@ -294,7 +294,7 @@ O modelo permite usar menos dimensões, mas o índice e as consultas precisam co
 
 O adapter cria o índice de forma idempotente. Estes são os campos relevantes:
 
-**Código existente — não copie/não execute.** Este é apenas o campo vetorial dentro do schema completo.
+*Trecho do código existente, mostrado apenas para referência:* Este é apenas o campo vetorial dentro do schema completo.
 
 ```python
 {
@@ -312,7 +312,7 @@ O vetor não volta na resposta. O modelo recebe título, fonte e conteúdo, que 
 
 A consulta combina texto e vetor:
 
-**Código existente — não copie/não execute.** Este é o payload montado pelo adapter.
+*Trecho do código existente, mostrado apenas para referência:* Este é o payload montado pelo adapter.
 
 ```python
 payload = {
@@ -352,7 +352,7 @@ No lab, `BOOTSTRAP_RAG_ON_STARTUP=true` existe para facilitar o primeiro deploy.
 
 O núcleo recebe a identidade, recupera documentos e carrega o histórico da sessão. A chave da memória inclui o ID do usuário:
 
-**Código existente — não copie/não execute.**
+*Trecho do código existente, mostrado apenas para referência:*
 
 ```python
 memory_session_id = f"{actor.actor_id}:{session_id}"
@@ -364,7 +364,7 @@ Isso impede que duas pessoas que escolheram `session_id="demo"` compartilhem con
 
 Depois, o loop chama o modelo no máximo três vezes:
 
-**Código existente — não copie/não execute.** O recorte destaca o limite de iterações; a implementação completa permanece no repositório.
+*Trecho do código existente, mostrado apenas para referência:* O recorte destaca o limite de iterações; a implementação completa permanece no repositório.
 
 ```python
 for _ in range(3):
@@ -397,7 +397,7 @@ O limite evita um modelo preso em chamadas de ferramenta. Em produção, eu tamb
 
 A ferramenta de métricas é somente leitura:
 
-**Código existente — não copie/não execute.** Este é o schema da ferramenta registrado pela aplicação.
+*Trecho do código existente, mostrado apenas para referência:* Este é o schema da ferramenta registrado pela aplicação.
 
 ```python
 {
@@ -425,7 +425,7 @@ No lab, ela devolve números determinísticos. Trocar pelo Azure Monitor signifi
 
 `create_incident` segue outro caminho. A chamada do modelo apenas cria um registro pendente:
 
-**Código existente — não copie/não execute.**
+*Trecho do código existente, mostrado apenas para referência:*
 
 ```python
 record = pending_action_service.create_incident_request(
@@ -445,7 +445,7 @@ O usuário recebe um `action_id` e uma prévia. Nenhum incidente existe ainda.
 
 Para confirmar:
 
-**Execute — PowerShell.** Use este fluxo somente no modo local; no Azure, a identidade vem da sessão autenticada do navegador.
+*PowerShell — execute:* Use este fluxo somente no modo local; no Azure, a identidade vem da sessão autenticada do navegador.
 
 ```powershell
 $chat = Invoke-RestMethod `
@@ -484,7 +484,7 @@ Azure Container Apps tem autenticação integrada. Quando o Microsoft Entra ID e
 
 A API lê os dois:
 
-**Código existente — não copie/não execute.**
+*Trecho do código existente, mostrado apenas para referência:*
 
 ```python
 actor_id = request.headers.get("X-MS-CLIENT-PRINCIPAL-ID")
@@ -548,7 +548,7 @@ Alguns tenants exigem consentimento de administrador. Não contorne essa políti
 
 Entre com a conta correta no Azure CLI e no Azure Developer CLI:
 
-**Execute — PowerShell.** Antes, defina `$tenantId` e `$subscriptionId` conforme o [passo 5 do README](https://github.com/ricmmartins/agentic-infra-handbook/tree/master/labs/personal-assistant#5-select-the-tenant-subscription-regions-and-models).
+*PowerShell — execute:* Antes, defina `$tenantId` e `$subscriptionId` conforme o [passo 5 do README](https://github.com/ricmmartins/agentic-infra-handbook/tree/master/labs/personal-assistant#5-select-the-tenant-subscription-regions-and-models).
 
 ```powershell
 az login --tenant $tenantId
@@ -569,7 +569,7 @@ O `azure.yaml` usa `remoteBuild: true`. O AZD envia o contexto para o ACR, compi
 
 O comando `azd env set` também grava o valor no arquivo local `.azure/<ambiente>/.env`. Esse diretório está no `.gitignore`, mas o arquivo não é criptografado. Proteja o diretório com as permissões do usuário e remova o valor local depois do provisionamento:
 
-**Execute — PowerShell.** Faça isso somente depois de o provisionamento ter enviado o secret ao Container App.
+*PowerShell — execute:* Faça isso somente depois de o provisionamento ter enviado o secret ao Container App.
 
 ```powershell
 azd env set AUTH_CLIENT_SECRET ''
@@ -581,7 +581,7 @@ O AZD 1.24.1 não oferece `env unset`; definir uma string vazia remove o valor s
 
 Compile o Bicep e rode os testes:
 
-**Execute — PowerShell.**
+*PowerShell — execute:*
 
 ```powershell
 az bicep build --file infra\main.bicep --stdout | Out-Null
@@ -591,7 +591,7 @@ python -m pytest -q
 
 Confira o que o Azure pretende criar:
 
-**Execute — PowerShell.** O preview consulta sua assinatura, mas não cria intencionalmente os recursos.
+*PowerShell — execute:* O preview consulta sua assinatura, mas não cria intencionalmente os recursos.
 
 ```powershell
 azd provision --preview --no-prompt
@@ -613,7 +613,7 @@ O comando provisiona a infraestrutura, executa o build remoto e publica a API. N
 
 Agora registre o callback e abra a aplicação:
 
-**Execute — PowerShell.**
+*PowerShell — execute:*
 
 ```powershell
 $appUrl = azd env get-value API_URL
@@ -682,7 +682,7 @@ Ela também restringe tokens app-only ao client ID autorizado. Isso não limita 
 
 O pacote `azure-monitor-opentelemetry` usa a variável `APPLICATIONINSIGHTS_CONNECTION_STRING` entregue pelo Bicep:
 
-**Código existente — não copie/não execute.**
+*Trecho do código existente, mostrado apenas para referência:*
 
 ```python
 from azure.monitor.opentelemetry import configure_azure_monitor
@@ -726,7 +726,7 @@ Para concluir todos os oito checks, inclua o object ID de um segundo usuário em
 
 Recupere a URL e espere o health check:
 
-**Execute — PowerShell.**
+*PowerShell — execute:*
 
 ```powershell
 $appUrl = azd env get-value API_URL
@@ -767,7 +767,7 @@ Azure Cache for Redis está em processo de aposentadoria. Para novos projetos, u
 
 O serviço usa Microsoft Entra ID por padrão e aceita tokens no escopo:
 
-**Código existente — não copie/não execute.** Este é o escopo solicitado pelo client Redis ao obter o token.
+*Trecho do código existente, mostrado apenas para referência:* Este é o escopo solicitado pelo client Redis ao obter o token.
 
 ```text
 https://redis.azure.com/.default
@@ -777,7 +777,7 @@ O client usa o object ID da identidade como usuário e o token como senha. O tok
 
 No código, a memória já depende de um protocolo:
 
-**Código existente — não copie/não execute.**
+*Trecho do código existente, mostrado apenas para referência:*
 
 ```python
 class ConversationMemoryStore(Protocol):
