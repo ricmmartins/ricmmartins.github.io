@@ -7,7 +7,7 @@ aliases:
   - /projects/
 summary: "Projetos, publicações e contribuições open-source"
 date: 2024-01-01
-lastmod: 2026-10-30
+lastmod: 2026-11-02
 ShowToc: true
 ShowBreadCrumbs: false
 ---
@@ -23,7 +23,8 @@ O log completo e sempre atualizado está no [Activity Log](https://github.com/ri
 | Projeto | Descrição | Link |
 |---------|-----------|------|
 | AKS Learning | Do zero à produção no Azure Kubernetes Service. Networking, segurança, observabilidade, escalabilidade, GitOps, workloads AI/ML e boas práticas | [aks-learning.github.io](https://aks-learning.github.io/) |
-| Decodifica.Tech | Resumo diário das principais notícias de tecnologia sintetizadas de 290+ fontes internacionais em PT-BR. Cloud, IA, DevOps, segurança e engenharia de software — com podcast diário no Spotify | [decodifica.tech](https://decodifica.tech) |
+| Decodifica.Tech | Resumo diário em PT-BR das principais notícias de tecnologia, com curadoria de fontes internacionais. Cloud, IA, DevOps, segurança e engenharia de software — com podcast diário no Spotify | [decodifica.tech](https://decodifica.tech) |
+| Decode the Stack | Briefing diário de tecnologia em inglês, com curadoria de fontes internacionais, análise com IA e links às notícias originais. Cloud, IA, DevOps, segurança e engenharia de software — com podcast de três apresentadores no site e no Spotify. Projeto irmão do Decodifica.Tech, com edições geradas independentemente, não traduções | [decodethestack.com](https://decodethestack.com/) |
 | AI for Infra | Handbook prático de AI para engenheiros de infraestrutura. 220+ páginas, 15 capítulos, 10 cenários de troubleshooting | [ai4infra.com](https://ai4infra.com) |
 | From Server to Cluster | Ebook de Kubernetes para profissionais Linux. 15 capítulos mapeando conceitos Linux → K8s com labs práticos | [fromservertocluster.com](https://fromservertocluster.com) |
 | K8s Hackathon | Hackathon hands-on de Kubernetes. 20 desafios cobrindo 100% dos domínios CKA + CKAD + CKS | [k8shackathon.com](https://k8shackathon.com) |
